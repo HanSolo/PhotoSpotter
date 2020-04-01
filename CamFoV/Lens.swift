@@ -8,18 +8,16 @@
 
 import Foundation
 
-public class Lens {
+public class Lens: NSObject, NSCoding {
     var name          : String
     var minFocalLength: Double
     var maxFocalLength: Double
     var minAperture   : Double
     var maxAperture   : Double
-    var focalLength   : Double
-    var aperture      : Double
     var isPrime       : Bool
     
     
-    convenience init() {
+    convenience override init() {
         self.init(name: "Lens", minFocalLength: 8, maxFocalLength: 1000, minAperture: 0.7, maxAperture: 50)
     }
     convenience init(name: String, focalLength: Double, minAperture: Double, maxAperture: Double) {
@@ -31,9 +29,24 @@ public class Lens {
         self.maxFocalLength = maxFocalLength
         self.minAperture    = minAperture
         self.maxAperture    = maxAperture
-        self.focalLength    = minFocalLength
-        self.aperture       = minAperture
         self.isPrime        = minFocalLength == maxFocalLength
+    }
+    public required init?(coder: NSCoder) {
+        self.name           = coder.decodeObject(forKey: "name") as? String ?? ""
+        self.minFocalLength = coder.decodeDouble(forKey: "minFocalLength")
+        self.maxFocalLength = coder.decodeDouble(forKey: "maxFocalLength")
+        self.minAperture    = coder.decodeDouble(forKey: "minAperture")
+        self.maxAperture    = coder.decodeDouble(forKey: "maxAperture")
+        self.isPrime        = minFocalLength == maxFocalLength
+    }
+    
+    
+    public func encode(with coder: NSCoder) {
+        coder.encode(self.name,                     forKey: "name")
+        coder.encode(self.minFocalLength as Double, forKey: "minFocalLength")
+        coder.encode(self.maxFocalLength as Double, forKey: "maxFocalLength")
+        coder.encode(self.minAperture    as Double, forKey: "minAperture")
+        coder.encode(self.maxAperture    as Double, forKey: "maxAperture")
     }
     
     

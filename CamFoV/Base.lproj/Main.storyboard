@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--MapViewController-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CamFoV" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapViewController" title="MapViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MapViewController" customModule="CamFoV" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -23,6 +23,7 @@
                                     <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                 </textAttributes>
                                 <textAttributes key="largeTitleTextAttributes">
+                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                     <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                 </textAttributes>
                                 <items>
@@ -36,7 +37,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="82"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vaj-LL-b9k">
-                                                <rect key="frame" x="10" y="0.0" width="761" height="72"/>
+                                                <rect key="frame" x="10" y="0.0" width="670.5" height="72"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="ExD-5G-fbV" userLabel="LensView">
                                                         <rect key="frame" x="0.0" y="0.0" width="320" height="72"/>
@@ -76,27 +77,8 @@
                                                             </switch>
                                                         </subviews>
                                                     </stackView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LlV-NR-Pcu" userLabel="SaveViewButton">
-                                                        <rect key="frame" x="389" y="0.0" width="71" height="72"/>
-                                                        <state key="normal" title="Save View">
-                                                            <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="saveViewPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qkk-hh-sX5"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xp3-1c-EGH" userLabel="CameraButton">
-                                                        <rect key="frame" x="470" y="0.0" width="72" height="72"/>
-                                                        <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
-                                                        <state key="normal" image="cameraicon">
-                                                            <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="cameraButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mPj-he-TZ7"/>
-                                                        </connections>
-                                                    </button>
                                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dt3-lS-mdA">
-                                                        <rect key="frame" x="552" y="0.0" width="209" height="73"/>
+                                                        <rect key="frame" x="389" y="0.0" width="209" height="73"/>
                                                         <segments>
                                                             <segment title="Map"/>
                                                             <segment title="Satellite"/>
@@ -107,6 +89,30 @@
                                                             <action selector="mapStyleChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="IB0-cV-PO8"/>
                                                         </connections>
                                                     </segmentedControl>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xp3-1c-EGH" userLabel="CameraButton">
+                                                        <rect key="frame" x="608" y="0.0" width="29.5" height="72"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <state key="normal" image="camera.fill" catalog="system">
+                                                            <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="cameraButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mPj-he-TZ7"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LlV-NR-Pcu" userLabel="SaveViewButton">
+                                                        <rect key="frame" x="647.5" y="0.0" width="23" height="72"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <state key="normal" image="square.and.arrow.down" catalog="system">
+                                                            <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="saveViewPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qkk-hh-sX5"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
@@ -115,9 +121,6 @@
                                             <constraint firstAttribute="height" constant="82" id="bcp-Qe-act"/>
                                         </constraints>
                                     </view>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eEB-0J-bVb">
-                                        <rect key="frame" x="0.0" y="82" width="1024" height="1082"/>
-                                    </mapView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aqf-A2-Z0Z" userLabel="ControlsView">
                                         <rect key="frame" x="0.0" y="1164" width="1024" height="82"/>
                                         <subviews>
@@ -128,16 +131,16 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="66"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="gNZ-Tm-wsA">
-                                                                <rect key="frame" x="10" y="3" width="748" height="54.5"/>
+                                                                <rect key="frame" x="10" y="3" width="272" height="54.5"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XW8-VG-CXA" userLabel="FocalLengthLabel">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="748" height="20.5"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="272" height="20.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="5g9-yX-Oyo">
-                                                                        <rect key="frame" x="0.0" y="24.5" width="748" height="30"/>
+                                                                        <rect key="frame" x="0.0" y="24.5" width="272" height="30"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="94S-EW-znH" userLabel="MinFocalLength">
                                                                                 <rect key="frame" x="0.0" y="7" width="33" height="16"/>
@@ -146,9 +149,9 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="nZ1-QP-Zsj" userLabel="FocalLengthSlider">
-                                                                                <rect key="frame" x="34" y="0.0" width="680" height="31"/>
+                                                                                <rect key="frame" x="34" y="0.0" width="204" height="31"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="9TQ-7G-snC"/>
+                                                                                    <constraint firstAttribute="width" constant="200" id="9TQ-7G-snC"/>
                                                                                 </constraints>
                                                                                 <color key="minimumTrackTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                 <connections>
@@ -156,7 +159,7 @@
                                                                                 </connections>
                                                                             </slider>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yrb-FZ-o2Y" userLabel="MaxFocalLength">
-                                                                                <rect key="frame" x="715" y="7" width="33" height="16"/>
+                                                                                <rect key="frame" x="239" y="7" width="33" height="16"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                                 <nil key="highlightedColor"/>
@@ -178,16 +181,16 @@
                                                         <rect key="frame" x="434" y="0.0" width="300" height="66"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="GoN-zd-yAX">
-                                                                <rect key="frame" x="10" y="3" width="732" height="57.5"/>
+                                                                <rect key="frame" x="10" y="3" width="272" height="57.5"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rzu-Sh-PkG" userLabel="ApertureLabel">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="732" height="20.5"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="272" height="20.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="xEw-xt-DZh">
-                                                                        <rect key="frame" x="0.0" y="27.5" width="732" height="30"/>
+                                                                        <rect key="frame" x="0.0" y="27.5" width="272" height="30"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VpR-RU-dec" userLabel="MinApertureLabel">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="33" height="30"/>
@@ -196,9 +199,9 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Crf-to-ZRf" userLabel="ApertureSlider">
-                                                                                <rect key="frame" x="34" y="0.0" width="664" height="31"/>
+                                                                                <rect key="frame" x="34" y="0.0" width="204" height="31"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="qCp-Cb-ugm"/>
+                                                                                    <constraint firstAttribute="width" constant="200" id="qCp-Cb-ugm"/>
                                                                                 </constraints>
                                                                                 <color key="minimumTrackTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                 <connections>
@@ -206,7 +209,7 @@
                                                                                 </connections>
                                                                             </slider>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tSc-J2-ANQ" userLabel="MaxApertureLabel">
-                                                                                <rect key="frame" x="699" y="0.0" width="33" height="30"/>
+                                                                                <rect key="frame" x="239" y="0.0" width="33" height="30"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                                 <nil key="highlightedColor"/>
@@ -264,6 +267,9 @@
                                             <constraint firstAttribute="bottomMargin" secondItem="sHc-ik-fhZ" secondAttribute="bottom" id="q4t-Si-r1e"/>
                                         </constraints>
                                     </view>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eEB-0J-bVb">
+                                        <rect key="frame" x="0.0" y="82" width="1024" height="1082"/>
+                                    </mapView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
@@ -282,14 +288,29 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="22Y-OU-r3J">
                                 <rect key="frame" x="0.0" y="1296" width="1024" height="50"/>
                                 <items>
-                                    <barButtonItem title="Cameras" id="xUA-Eg-sBT" userLabel="Cameras">
+                                    <barButtonItem title="Map" id="rio-ZN-eyu" userLabel="MapButton">
                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="mapButtonPressed:" destination="BYZ-38-t0r" id="i5H-oC-GYy"/>
+                                        </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Lenses" id="UzU-FK-IMU" userLabel="Lenses">
+                                    <barButtonItem title="Cameras" id="xUA-Eg-sBT" userLabel="CamerasButton">
                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="camerasButtonPressed:" destination="BYZ-38-t0r" id="iF8-yd-qo6"/>
+                                        </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Views" id="hH1-Gl-vEn">
+                                    <barButtonItem title="Lenses" id="UzU-FK-IMU" userLabel="LensesButton">
                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="lensesButtonPressed:" destination="BYZ-38-t0r" id="CFc-lw-JeS"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Views" id="hH1-Gl-vEn" userLabel="ViewsButton">
+                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="viewsButtonPressed:" destination="BYZ-38-t0r" id="uZc-N8-fx3"/>
+                                        </connections>
                                     </barButtonItem>
                                 </items>
                                 <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -310,16 +331,20 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="dXo-Vs-U5v"/>
                     <connections>
                         <outlet property="apertureLabel" destination="rzu-Sh-PkG" id="pSv-pF-6Dl"/>
                         <outlet property="apertureSlider" destination="Crf-to-ZRf" id="9iY-on-KpT"/>
                         <outlet property="cameraButton" destination="xp3-1c-EGH" id="RKG-WR-YCE"/>
+                        <outlet property="camerasButton" destination="xUA-Eg-sBT" id="WdR-pf-7Pg"/>
                         <outlet property="dofLabel" destination="K17-ob-8JU" id="yMx-ug-cia"/>
                         <outlet property="dofSwitch" destination="YGW-JU-aL2" id="TUs-IT-RnP"/>
                         <outlet property="focalLengthLabel" destination="XW8-VG-CXA" id="1o5-8C-ZiB"/>
                         <outlet property="focalLengthSlider" destination="nZ1-QP-Zsj" id="HE1-DM-Nks"/>
                         <outlet property="lensLabel" destination="gda-t0-wAN" id="7FA-ih-quE"/>
                         <outlet property="lensPicker" destination="d0h-18-1oo" id="Zza-7g-hGe"/>
+                        <outlet property="lensesButton" destination="UzU-FK-IMU" id="Ytl-r1-DjA"/>
+                        <outlet property="mapButton" destination="rio-ZN-eyu" id="BtR-ih-2gd"/>
                         <outlet property="mapStyleSelector" destination="dt3-lS-mdA" id="jjb-kd-1rX"/>
                         <outlet property="mapView" destination="eEB-0J-bVb" id="FkA-ix-mSb"/>
                         <outlet property="maxApertureLabel" destination="tSc-J2-ANQ" id="TUi-R4-Z53"/>
@@ -329,14 +354,177 @@
                         <outlet property="orientationLabel" destination="gUG-5N-Aoe" id="ukM-nH-HC1"/>
                         <outlet property="orientationSwitch" destination="fMo-wL-kuF" id="xRb-Zp-Odp"/>
                         <outlet property="saveViewButton" destination="LlV-NR-Pcu" id="1uO-bd-br4"/>
+                        <outlet property="viewsButton" destination="hH1-Gl-vEn" id="tH5-EU-X19"/>
+                        <segue destination="r0P-5x-ec1" kind="show" identifier="mapViewToCamerasView" destinationCreationSelector="exitMapViewController:" id="6Gl-Tl-cdW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138.8671875" y="137.48169838945827"/>
+            <point key="canvasLocation" x="-366" y="139"/>
+        </scene>
+        <!--CameraViewController-->
+        <scene sceneID="sVy-pe-ezY">
+            <objects>
+                <viewController storyboardIdentifier="CamerasViewController" title="CameraViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="r0P-5x-ec1" customClass="CameraViewController" customModule="CamFoV" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jEg-Xb-jhg">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gp-AP-Bmr">
+                                <rect key="frame" x="0.0" y="658" width="1024" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="barTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                    <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </textAttributes>
+                                <textAttributes key="largeTitleTextAttributes">
+                                    <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="CamFoV" id="dyw-UK-Tjd"/>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E32-vT-xd1" userLabel="MainView">
+                                <rect key="frame" x="0.0" y="50" width="1024" height="1246"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TIv-ey-g5L" userLabel="ToolsView">
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="82"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="WjI-uE-o66">
+                                                <rect key="frame" x="10" y="26" width="519" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Khv-3p-SaC" userLabel="EditCameraButton">
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                        <state key="normal" title="Edit">
+                                                            <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="editCameraButtonPressed:" destination="r0P-5x-ec1" eventType="touchUpInside" id="8Pb-xm-CVZ"/>
+                                                        </connections>
+                                                    </button>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbd-1R-P4e" userLabel="CameraLabel">
+                                                        <rect key="frame" x="223" y="-2.5" width="81.5" height="29"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HzJ-Sl-xYq" userLabel="AddCameraButton">
+                                                        <rect key="frame" x="497.5" y="3.5" width="21.5" height="22"/>
+                                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
+                                                        <state key="normal" image="plus" catalog="system">
+                                                            <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="addCameraButtonPressed:" destination="r0P-5x-ec1" eventType="touchUpInside" id="IwK-Pp-kBe"/>
+                                                            <action selector="saveViewPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EaU-uD-aCL"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="82" id="3sI-sM-CgP"/>
+                                        </constraints>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aPu-Xv-FEd" userLabel="CameraTableView">
+                                        <rect key="frame" x="0.0" y="82" width="1024" height="1164"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="aPu-Xv-FEd" firstAttribute="leading" secondItem="E32-vT-xd1" secondAttribute="leading" id="2KF-EB-9bg"/>
+                                    <constraint firstAttribute="trailing" secondItem="aPu-Xv-FEd" secondAttribute="trailing" id="2i0-YH-XaQ"/>
+                                    <constraint firstItem="aPu-Xv-FEd" firstAttribute="top" secondItem="TIv-ey-g5L" secondAttribute="bottom" id="9pI-sz-mt5"/>
+                                    <constraint firstItem="TIv-ey-g5L" firstAttribute="leading" secondItem="E32-vT-xd1" secondAttribute="leading" id="A5S-Qe-4rb"/>
+                                    <constraint firstAttribute="bottom" secondItem="aPu-Xv-FEd" secondAttribute="bottom" id="XYI-dE-oYJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="TIv-ey-g5L" secondAttribute="trailing" id="eVh-Se-MRp"/>
+                                    <constraint firstItem="TIv-ey-g5L" firstAttribute="top" secondItem="E32-vT-xd1" secondAttribute="top" id="y3R-zH-Vy0"/>
+                                </constraints>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ctc-CX-TvR">
+                                <rect key="frame" x="0.0" y="1296" width="1024" height="50"/>
+                                <items>
+                                    <barButtonItem title="Map" id="rhp-eT-sbI" userLabel="MapButton">
+                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="mapButtonPressed:" destination="r0P-5x-ec1" id="aCA-0S-1Ag"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Cameras" id="WHb-eT-ZFP" userLabel="CamerasButton">
+                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </barButtonItem>
+                                    <barButtonItem title="Lenses" id="zRr-qX-d3W" userLabel="LensesButton">
+                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="lensesButtonPressed:" destination="r0P-5x-ec1" id="CJ8-u6-Pbj"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Views" id="igL-Oe-WgJ" userLabel="ViewsButton">
+                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="viewsButtonPressed:" destination="r0P-5x-ec1" id="H1y-lv-AXV"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </toolbar>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QN9-0I-M3X">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="50"/>
+                                <color key="barTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                    <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </textAttributes>
+                                <textAttributes key="largeTitleTextAttributes">
+                                    <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="CamFoV" id="Rkg-vf-mms"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="E32-vT-xd1" firstAttribute="top" secondItem="QN9-0I-M3X" secondAttribute="bottom" id="12S-ND-1Pc"/>
+                            <constraint firstItem="QN9-0I-M3X" firstAttribute="leading" secondItem="wln-Ga-bld" secondAttribute="leading" id="9ak-RJ-MPL"/>
+                            <constraint firstItem="ctc-CX-TvR" firstAttribute="top" secondItem="E32-vT-xd1" secondAttribute="bottom" id="9lV-x8-AFL"/>
+                            <constraint firstItem="E32-vT-xd1" firstAttribute="leading" secondItem="wln-Ga-bld" secondAttribute="leading" id="Nmg-rg-5rS"/>
+                            <constraint firstItem="ctc-CX-TvR" firstAttribute="top" secondItem="E32-vT-xd1" secondAttribute="bottom" id="cDY-3C-nqD"/>
+                            <constraint firstItem="E32-vT-xd1" firstAttribute="trailing" secondItem="wln-Ga-bld" secondAttribute="trailing" id="ewg-q8-Fzm"/>
+                            <constraint firstItem="QN9-0I-M3X" firstAttribute="trailing" secondItem="wln-Ga-bld" secondAttribute="trailing" id="kIG-K2-bfp"/>
+                            <constraint firstItem="QN9-0I-M3X" firstAttribute="top" secondItem="wln-Ga-bld" secondAttribute="top" id="lFo-Tt-wjW"/>
+                            <constraint firstItem="ctc-CX-TvR" firstAttribute="leading" secondItem="wln-Ga-bld" secondAttribute="leading" id="n8i-Ac-Zx8"/>
+                            <constraint firstItem="E32-vT-xd1" firstAttribute="top" secondItem="QN9-0I-M3X" secondAttribute="bottom" id="ovE-xc-4c7"/>
+                            <constraint firstItem="ctc-CX-TvR" firstAttribute="bottom" secondItem="wln-Ga-bld" secondAttribute="bottom" id="qcu-KQ-pGe"/>
+                            <constraint firstItem="ctc-CX-TvR" firstAttribute="trailing" secondItem="wln-Ga-bld" secondAttribute="trailing" id="rbw-Wi-EWr"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="wln-Ga-bld"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="IZ0-we-4Lt"/>
+                    <connections>
+                        <outlet property="addCameraButton" destination="HzJ-Sl-xYq" id="5Xu-nL-m1Z"/>
+                        <outlet property="camerasButton" destination="WHb-eT-ZFP" id="G7l-XD-Vfx"/>
+                        <outlet property="editCameraButton" destination="Khv-3p-SaC" id="1v7-Ku-E7V"/>
+                        <outlet property="lensesButton" destination="zRr-qX-d3W" id="4WE-B2-4tr"/>
+                        <outlet property="mapButton" destination="rhp-eT-sbI" id="Mm7-Nd-AoC"/>
+                        <outlet property="tableView" destination="aPu-Xv-FEd" id="eM7-RC-XYy"/>
+                        <outlet property="viewsButton" destination="igL-Oe-WgJ" id="7Q7-v9-hxN"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="camerasViewToMapView" destinationCreationSelector="exitCamerasViewController:" id="8Mg-Zc-6jN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HNz-Z9-Js7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="767.578125" y="138.79941434846265"/>
         </scene>
     </scenes>
     <resources>
-        <image name="cameraicon" width="72" height="72"/>
+        <image name="camera.fill" catalog="system" width="128" height="96"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="square.and.arrow.down" catalog="system" width="121" height="128"/>
     </resources>
 </document>

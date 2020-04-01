@@ -39,7 +39,7 @@ public class View {
         self.name        = viewData.name!
         self.description = viewData.description!
         self.cameraPoint = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees((viewData.cameraLat! as NSString).doubleValue), longitude: CLLocationDegrees((viewData.cameraLon! as NSString).doubleValue)))
-        self.motifPoint  = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees((viewData.cameraLat! as NSString).doubleValue), longitude: CLLocationDegrees((viewData.cameraLon! as NSString).doubleValue)))
+        self.motifPoint  = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees((viewData.motifLat! as NSString).doubleValue), longitude: CLLocationDegrees((viewData.motifLon! as NSString).doubleValue)))
         if let cameraFound = cameras.first(where: {$0.name == viewData.cameraName!}) {
             self.camera = cameraFound
         } else {

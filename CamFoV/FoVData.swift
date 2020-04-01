@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 
 
-public class Data {
+public class FoVData {
     public let camera                    : MKMapPoint
     public let motif                     : MKMapPoint
     public let focalLength               : Double

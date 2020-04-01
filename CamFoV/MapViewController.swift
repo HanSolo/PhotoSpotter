@@ -55,7 +55,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var fovTriangleFrame : MKPolygon?
     var fovCenterLine    : MKPolyline?
     var dofTrapezoid     : MKPolygon?
-    var data             : Data?
+    var data             : FoVData?
     var fovVisible       : Bool          = true
     var dofVisible       : Bool          = false
     var focalLength      : Double        = 50
@@ -84,28 +84,67 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-                
-        self.mapView.delegate      = self
-        self.lensPicker.dataSource = self
-        self.lensPicker.delegate   = self
         
-        self.camera = Camera(name: "Nikon D850", sensorFormat: SensorFormat.FULL_FORMAT)
-        self.lens   = lenses[0]
+        mapView.mapType           = MKMapType.standard
+        mapView.isZoomEnabled     = true
+        mapView.isScrollEnabled   = true
+        mapView.showsScale        = true
+        mapView.showsCompass      = true
+        mapView.showsUserLocation = true
+        
+    
+        self.triangle    = Triangle()
+        self.minTriangle = Triangle()
+        self.maxTriangle = Triangle()
+        self.trapezoid   = Trapezoid()
+        
+        self.mapView.delegate               = self
+        self.lensPicker.dataSource          = self
+        self.lensPicker.delegate            = self
+        
+        let defaults = UserDefaults.standard
+        if defaults.object(forKey: "lenses") != nil {
+            let lensesData   = defaults.object(forKey: "lenses") as! Data
+            self.lenses      = NSKeyedUnarchiver.unarchiveObject(with: lensesData) as! [Lens]
+            let camerasData  = defaults.object(forKey: "cameras") as! Data
+            self.cameras     = NSKeyedUnarchiver.unarchiveObject(with: camerasData) as! [Camera]
+            let dictionary : Dictionary<String,String> = defaults.dictionary(forKey: "mapView")! as! Dictionary<String,String>
+            let view       : View                      = Helper.dictionaryToView(dictionary: dictionary, cameras: cameras, lenses: lenses)
+            
+            self.camera      = view.camera
+            self.lens        = view.lens
+            self.focalLength = view.focalLength
+            self.aperture    = view.aperture
+            self.orientation = view.orientation
+        
+            self.cameraPin   = MapPin(pinType: PinType.CAMERA, coordinate: view.cameraPoint.coordinate)
+            self.motifPin    = MapPin(pinType: PinType.MOTIF, coordinate: view.motifPoint.coordinate)
+            mapPins.append(self.cameraPin!)
+            mapPins.append(self.motifPin!)
+        } else {
+            self.camera      = Camera(name: "Nikon D850", sensorFormat: SensorFormat.FULL_FORMAT)
+            self.lens        = lenses[0]
+            self.focalLength = self.lens!.minFocalLength + (self.lens!.maxFocalLength - self.lens!.minFocalLength) / 2
+            self.aperture    = self.lens!.minAperture + (self.lens!.maxAperture - self.lens!.minAperture) / 2
+            
+            let motifLocation : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: Helper.DEFAULT_POSITION.coordinate.latitude + 0.005, longitude: Helper.DEFAULT_POSITION.coordinate.longitude)
+            self.cameraPin = MapPin(pinType: PinType.CAMERA, coordinate: Helper.DEFAULT_POSITION.coordinate)
+            self.motifPin  = MapPin(pinType: PinType.MOTIF, coordinate: motifLocation)
+            mapPins.append(self.cameraPin!)
+            mapPins.append(self.motifPin!)
+        }
+        mapView.addAnnotations(mapPins)
         
         self.focalLengthSlider.minimumValue = Float(self.lens!.minFocalLength)
         self.focalLengthSlider.maximumValue = Float(self.lens!.maxFocalLength)
-        self.focalLengthSlider.value        = self.focalLengthSlider.minimumValue + (self.focalLengthSlider.maximumValue - self.focalLengthSlider.minimumValue) / 2
+        self.focalLengthSlider.value        = Float(self.focalLength)
         self.focalLengthLabel.text          = String(format: "%.0f mm", Double(round(self.focalLengthSlider!.value)))
         self.minFocalLengthLabel.text       = String(format: "%.0f", Double(round(self.lens!.minFocalLength)))
         self.maxFocalLengthLabel.text       = String(format: "%.0f", Double(round(self.lens!.maxFocalLength)))
         
         self.apertureSlider.minimumValue    = Float(self.lens!.minAperture)
         self.apertureSlider.maximumValue    = Float(self.lens!.maxAperture)
-        self.apertureSlider.value           = self.apertureSlider.minimumValue + (self.apertureSlider.maximumValue - self.apertureSlider.minimumValue) / 2
+        self.apertureSlider.value           = Float(self.aperture)
         self.apertureLabel.text             = String(format: "f %.1f", Double(round(self.apertureSlider!.value * 10) / 10))
         self.minApertureLabel.text          = String(format: "%.1f", Double(round(self.lens!.minAperture * 10) / 10))
         self.maxApertureLabel.text          = String(format: "%.1f", Double(round(self.lens!.maxAperture * 10) / 10))
@@ -120,7 +159,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let mapTypeSelectorTextAttrSelected = [NSAttributedString.Key.foregroundColor: UIColor.white]
         mapStyleSelector.setTitleTextAttributes(mapTypeSelectorTextAttr, for: .normal)
         mapStyleSelector.setTitleTextAttributes(mapTypeSelectorTextAttrSelected, for: .selected)
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+            
         createMapView()
     }
     
@@ -134,6 +177,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBAction func mapButtonPressed(_ sender: Any) {
     }
     @IBAction func camerasButtonPressed(_ sender: Any) {
+        let defaults = UserDefaults.standard
+        do {
+            let camerasData = try NSKeyedArchiver.archivedData(withRootObject: cameras, requiringSecureCoding: false)
+            defaults.set(camerasData, forKey: "cameras")
+        
+            let lensesData = try NSKeyedArchiver.archivedData(withRootObject: lenses, requiringSecureCoding: false)
+            defaults.set(lensesData, forKey: "lenses")
+        } catch {
+            print(error)
+        }
+        let dictionary : Dictionary<String,String> = Helper.viewToDictionary(view: getView(name: "current", description: ""))
+        defaults.set(dictionary, forKey: "mapView")
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let camerasVC = storyboard.instantiateViewController(identifier: "CamerasViewController")
         show(camerasVC, sender: self)
@@ -187,7 +243,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         print(dictionary)
         let newView = Helper.dictionaryToView(dictionary: dictionary, cameras: cameras, lenses: lenses)
         print(newView.toJsonString())
-        UserDefaults.standard.set(dictionary, forKey: "fovView")
+        //UserDefaults.standard.set(dictionary, forKey: "fovView")
     }
     
     @IBAction func cameraButtonPressed(_ sender: Any) {
@@ -216,32 +272,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     
     func createMapView() {
-        let cameraLocation: CLLocationCoordinate2D = Helper.DEFAULT_POSITION.coordinate
-        let motifLocation : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: cameraLocation.latitude + 0.005, longitude: cameraLocation.longitude)
-        
         let span   = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-        let region = MKCoordinateRegion(center: cameraLocation, span: span)
-                    
-        mapView.mapType           = MKMapType.standard
-        mapView.isZoomEnabled     = true
-        mapView.isScrollEnabled   = true
-        mapView.showsScale        = true
-        mapView.showsCompass      = true
-        mapView.showsUserLocation = true
+        let region = MKCoordinateRegion(center: cameraPin!.coordinate, span: span)
         mapView.setRegion(region, animated: true)
         mapView.register(MapPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        
-        self.triangle    = Triangle()
-        self.minTriangle = Triangle()
-        self.maxTriangle = Triangle()
-        self.trapezoid   = Trapezoid()
-            
-        self.cameraPin = MapPin(pinType: PinType.CAMERA, coordinate: cameraLocation)
-        self.motifPin  = MapPin(pinType: PinType.MOTIF, coordinate: motifLocation)
-        
-        mapPins.append(self.cameraPin!)
-        mapPins.append(self.motifPin!)
-        mapView.addAnnotations(mapPins)
         
         updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
         updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
