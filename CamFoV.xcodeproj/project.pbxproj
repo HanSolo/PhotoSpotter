@@ -3,19 +3,34 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F13D831243457E400903059 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D830243457E400903059 /* Camera.swift */; };
+		4F13D83324345B7400903059 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D83224345B7400903059 /* View.swift */; };
 		4F7D7B50242E270F00771992 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B4F242E270F00771992 /* AppDelegate.swift */; };
 		4F7D7B52242E270F00771992 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B51242E270F00771992 /* SceneDelegate.swift */; };
 		4F7D7B54242E270F00771992 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B53242E270F00771992 /* ViewController.swift */; };
 		4F7D7B57242E270F00771992 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7D7B55242E270F00771992 /* Main.storyboard */; };
 		4F7D7B59242E271000771992 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F7D7B58242E271000771992 /* Assets.xcassets */; };
 		4F7D7B5C242E271000771992 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7D7B5A242E271000771992 /* LaunchScreen.storyboard */; };
+		4F7D7B71242E28D900771992 /* Lenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B63242E28D900771992 /* Lenses.swift */; };
+		4F7D7B72242E28D900771992 /* SensorFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B64242E28D900771992 /* SensorFormat.swift */; };
+		4F7D7B73242E28D900771992 /* FoVError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B65242E28D900771992 /* FoVError.swift */; };
+		4F7D7B74242E28D900771992 /* CardinalDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B66242E28D900771992 /* CardinalDirection.swift */; };
+		4F7D7B77242E28D900771992 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B69242E28D900771992 /* Helper.swift */; };
+		4F7D7B78242E28D900771992 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B6A242E28D900771992 /* Triangle.swift */; };
+		4F7D7B79242E28D900771992 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B6B242E28D900771992 /* Orientation.swift */; };
+		4F7D7B7B242E28D900771992 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B6D242E28D900771992 /* Data.swift */; };
+		4F7D7B7D242E28D900771992 /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B6F242E28D900771992 /* Lens.swift */; };
+		4F7D7B7E242E28D900771992 /* Trapezoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B70242E28D900771992 /* Trapezoid.swift */; };
+		4F9B85A724346EDD00289E8A /* ViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9B85A624346EDD00289E8A /* ViewData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F13D830243457E400903059 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		4F13D83224345B7400903059 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		4F7D7B4C242E270F00771992 /* CamFoV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CamFoV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F7D7B4F242E270F00771992 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F7D7B51242E270F00771992 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +39,17 @@
 		4F7D7B58242E271000771992 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F7D7B5B242E271000771992 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4F7D7B5D242E271000771992 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F7D7B63242E28D900771992 /* Lenses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lenses.swift; sourceTree = "<group>"; };
+		4F7D7B64242E28D900771992 /* SensorFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorFormat.swift; sourceTree = "<group>"; };
+		4F7D7B65242E28D900771992 /* FoVError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoVError.swift; sourceTree = "<group>"; };
+		4F7D7B66242E28D900771992 /* CardinalDirection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardinalDirection.swift; sourceTree = "<group>"; };
+		4F7D7B69242E28D900771992 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		4F7D7B6A242E28D900771992 /* Triangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
+		4F7D7B6B242E28D900771992 /* Orientation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
+		4F7D7B6D242E28D900771992 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		4F7D7B6F242E28D900771992 /* Lens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lens.swift; sourceTree = "<group>"; };
+		4F7D7B70242E28D900771992 /* Trapezoid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trapezoid.swift; sourceTree = "<group>"; };
+		4F9B85A624346EDD00289E8A /* ViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +82,36 @@
 		4F7D7B4E242E270F00771992 /* CamFoV */ = {
 			isa = PBXGroup;
 			children = (
+				4F894B5D242FB61E00B27FCC /* Extensions */,
 				4F7D7B4F242E270F00771992 /* AppDelegate.swift */,
 				4F7D7B51242E270F00771992 /* SceneDelegate.swift */,
 				4F7D7B53242E270F00771992 /* ViewController.swift */,
 				4F7D7B55242E270F00771992 /* Main.storyboard */,
+				4F7D7B66242E28D900771992 /* CardinalDirection.swift */,
+				4F7D7B6D242E28D900771992 /* Data.swift */,
+				4F7D7B65242E28D900771992 /* FoVError.swift */,
+				4F7D7B69242E28D900771992 /* Helper.swift */,
+				4F7D7B6F242E28D900771992 /* Lens.swift */,
+				4F7D7B63242E28D900771992 /* Lenses.swift */,
+				4F7D7B6B242E28D900771992 /* Orientation.swift */,
+				4F7D7B64242E28D900771992 /* SensorFormat.swift */,
+				4F7D7B70242E28D900771992 /* Trapezoid.swift */,
+				4F7D7B6A242E28D900771992 /* Triangle.swift */,
 				4F7D7B58242E271000771992 /* Assets.xcassets */,
 				4F7D7B5A242E271000771992 /* LaunchScreen.storyboard */,
 				4F7D7B5D242E271000771992 /* Info.plist */,
+				4F13D830243457E400903059 /* Camera.swift */,
+				4F13D83224345B7400903059 /* View.swift */,
+				4F9B85A624346EDD00289E8A /* ViewData.swift */,
 			);
 			path = CamFoV;
+			sourceTree = "<group>";
+		};
+		4F894B5D242FB61E00B27FCC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -103,7 +150,7 @@
 				};
 			};
 			buildConfigurationList = 4F7D7B47242E270F00771992 /* Build configuration list for PBXProject "CamFoV" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -139,7 +186,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F7D7B54242E270F00771992 /* ViewController.swift in Sources */,
+				4F7D7B71242E28D900771992 /* Lenses.swift in Sources */,
+				4F7D7B72242E28D900771992 /* SensorFormat.swift in Sources */,
+				4F7D7B79242E28D900771992 /* Orientation.swift in Sources */,
+				4F7D7B7E242E28D900771992 /* Trapezoid.swift in Sources */,
+				4F13D83324345B7400903059 /* View.swift in Sources */,
 				4F7D7B50242E270F00771992 /* AppDelegate.swift in Sources */,
+				4F13D831243457E400903059 /* Camera.swift in Sources */,
+				4F7D7B7D242E28D900771992 /* Lens.swift in Sources */,
+				4F7D7B73242E28D900771992 /* FoVError.swift in Sources */,
+				4F7D7B7B242E28D900771992 /* Data.swift in Sources */,
+				4F7D7B74242E28D900771992 /* CardinalDirection.swift in Sources */,
+				4F7D7B78242E28D900771992 /* Triangle.swift in Sources */,
+				4F7D7B77242E28D900771992 /* Helper.swift in Sources */,
+				4F9B85A724346EDD00289E8A /* ViewData.swift in Sources */,
 				4F7D7B52242E270F00771992 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
