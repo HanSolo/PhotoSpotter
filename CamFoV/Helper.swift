@@ -11,19 +11,6 @@ import MapKit
 
 
 public class Helper {
-    public static let EARTH_RADIUS     : Double = 6_378_137 // in m
-    public static let DEFAULT_POSITION : MKMapPoint = MKMapPoint(CLLocationCoordinate2D(latitude: 51.911821, longitude: 7.633703))
-    public static let DEFAULT_CAMERA   : Camera = Camera(name: "DSLR", sensorFormat: SensorFormat.FULL_FORMAT)
-    public static let DEFAULT_LENS     : Lens   = Lens(name: "24-70mm f2.8", minFocalLength: 24, maxFocalLength: 70, minAperture: 2.8, maxAperture: 22)
-    public static let DEFAULT_VIEW     : View   = View(name: "View", description: "Default View",
-                                                     cameraPoint: DEFAULT_POSITION,
-                                                     motifPoint: MKMapPoint(CLLocationCoordinate2D(latitude: DEFAULT_POSITION.coordinate.latitude + 0.005, longitude: DEFAULT_POSITION.coordinate.longitude)),
-                                                     camera: DEFAULT_CAMERA,
-                                                     lens: DEFAULT_LENS,
-                                                     focalLength: DEFAULT_LENS.minFocalLength + (DEFAULT_LENS.maxFocalLength - DEFAULT_LENS.minFocalLength) / 2,
-                                                     aperture: DEFAULT_LENS.minAperture + (DEFAULT_LENS.maxAperture - DEFAULT_LENS.minAperture) / 2,
-                                                     orientation: Orientation.LANDSCAPE)
-    
     public static func toDegrees(radians: Double) -> Double {
         return radians * 180 / .pi
     }
@@ -75,7 +62,7 @@ public class Helper {
         let phi           : Double = asin(2.0 / 3.605551)
         let fovWidth      : Double
         let fovHeight     : Double
-        if Orientation.LANDSCAPE == orientation {
+        if Orientation.landscape == orientation {
             fovWidth  = cos(phi) * diagonalLength
             fovHeight = sin(phi) * diagonalLength
         } else {
@@ -155,7 +142,7 @@ public class Helper {
     public static func calcCoord(start: MKMapPoint, distance: Double, bearing: Double) -> MKMapPoint {
         let lat1   = toRadians(degrees: Double(start.coordinate.latitude))
         let lon1   = toRadians(degrees: Double(start.coordinate.longitude))
-        let radius = distance / EARTH_RADIUS
+        let radius = distance / Constants.EARTH_RADIUS
 
         let lat2 = asin(sin(lat1) * cos(radius) + cos(lat1) * sin(radius) * cos(bearing))
         var lon2 = lon1 + atan2(sin(bearing) * sin(radius) * cos(lat1), cos(radius) - sin(lat1) * sin(lat2))
@@ -190,7 +177,7 @@ public class Helper {
         do {
             return try View(dictionary: dictionary, cameras: cameras, lenses: lenses)
         } catch {
-            return Helper.DEFAULT_VIEW
+            return Constants.DEFAULT_VIEW
         }
     }
 }

@@ -9,13 +9,13 @@
 import Foundation
 
 public enum Orientation: String {
-    case LANDSCAPE
-    case PORTRAIT
+    case landscape
+    case portrait
     
     var name: String {
         switch self {
-            case .LANDSCAPE: return "Landscape"
-            case .PORTRAIT : return "Portrait"
+            case .landscape: return "Landscape"
+            case .portrait : return "Portrait"
         }
     }
 

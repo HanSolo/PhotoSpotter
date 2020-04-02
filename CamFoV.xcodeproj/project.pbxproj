@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		4F13D831243457E400903059 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D830243457E400903059 /* Camera.swift */; };
 		4F13D83324345B7400903059 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D83224345B7400903059 /* View.swift */; };
+		4F5DDD362435A29900A49C20 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD352435A29900A49C20 /* StateController.swift */; };
+		4F5DDD382435A42E00A49C20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD372435A42E00A49C20 /* Constants.swift */; };
+		4F5DDD3A2435A8D500A49C20 /* FoVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD392435A8D500A49C20 /* FoVController.swift */; };
 		4F7D7B50242E270F00771992 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B4F242E270F00771992 /* AppDelegate.swift */; };
 		4F7D7B52242E270F00771992 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B51242E270F00771992 /* SceneDelegate.swift */; };
 		4F7D7B54242E270F00771992 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B53242E270F00771992 /* MapViewController.swift */; };
@@ -31,6 +34,9 @@
 /* Begin PBXFileReference section */
 		4F13D830243457E400903059 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		4F13D83224345B7400903059 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		4F5DDD352435A29900A49C20 /* StateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
+		4F5DDD372435A42E00A49C20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4F5DDD392435A8D500A49C20 /* FoVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoVController.swift; sourceTree = "<group>"; };
 		4F7D7B4C242E270F00771992 /* CamFoV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CamFoV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F7D7B4F242E270F00771992 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F7D7B51242E270F00771992 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +109,9 @@
 				4F13D83224345B7400903059 /* View.swift */,
 				4F9B85A624346EDD00289E8A /* ViewData.swift */,
 				4F9B85AA2434CABF00289E8A /* CameraViewController.swift */,
+				4F5DDD372435A42E00A49C20 /* Constants.swift */,
+				4F5DDD392435A8D500A49C20 /* FoVController.swift */,
+				4F5DDD352435A29900A49C20 /* StateController.swift */,
 			);
 			path = CamFoV;
 			sourceTree = "<group>";
@@ -192,6 +201,7 @@
 				4F7D7B79242E28D900771992 /* Orientation.swift in Sources */,
 				4F7D7B7E242E28D900771992 /* Trapezoid.swift in Sources */,
 				4F13D83324345B7400903059 /* View.swift in Sources */,
+				4F5DDD362435A29900A49C20 /* StateController.swift in Sources */,
 				4F7D7B50242E270F00771992 /* AppDelegate.swift in Sources */,
 				4F13D831243457E400903059 /* Camera.swift in Sources */,
 				4F7D7B7D242E28D900771992 /* Lens.swift in Sources */,
@@ -201,6 +211,8 @@
 				4F7D7B77242E28D900771992 /* Helper.swift in Sources */,
 				4F9B85A724346EDD00289E8A /* ViewData.swift in Sources */,
 				4F7D7B52242E270F00771992 /* SceneDelegate.swift in Sources */,
+				4F5DDD382435A42E00A49C20 /* Constants.swift in Sources */,
+				4F5DDD3A2435A8D500A49C20 /* FoVController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

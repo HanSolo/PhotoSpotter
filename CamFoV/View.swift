@@ -43,12 +43,12 @@ public class View {
         if let cameraFound = cameras.first(where: {$0.name == viewData.cameraName!}) {
             self.camera = cameraFound
         } else {
-            self.camera = Helper.DEFAULT_CAMERA
+            self.camera = Constants.DEFAULT_CAMERA
         }
         if let lensFound = lenses.first(where: {$0.name == viewData.lensName!}) {
             self.lens = lensFound
         } else {
-            self.lens = Helper.DEFAULT_LENS
+            self.lens = Constants.DEFAULT_LENS
         }
         self.focalLength = Double(viewData.focalLength!)!
         self.aperture    = Double(viewData.aperture!)!

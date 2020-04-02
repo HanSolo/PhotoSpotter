@@ -27,6 +27,10 @@ public enum SensorFormat: String {
         }
     }
     
+    var description: String {
+        return self.name + " [\(self.width)mm x \(self.height)mm]"
+    }
+    
     var width: Double {
         switch self {
             case .MEDIUM_FORMAT    : return 53.7
