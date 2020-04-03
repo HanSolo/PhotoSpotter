@@ -32,12 +32,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var minApertureLabel   : UILabel!
     @IBOutlet weak var maxApertureLabel   : UILabel!    
     @IBOutlet weak var lensPicker         : UIPickerView!
-    @IBOutlet weak var lensLabel          : UILabel!
-    @IBOutlet weak var dofSwitch          : UISwitch!
-    @IBOutlet weak var dofLabel           : UILabel!
-    @IBOutlet weak var cameraButton       : UIButton!    
+    @IBOutlet weak var cameraPicker       : UIPickerView!
+    @IBOutlet weak var dofButton          : UIButton!
+    @IBOutlet weak var cameraButton       : UIButton!
     @IBOutlet weak var orientationButton  : UIButton!
     @IBOutlet weak var mapTypeSelector    : UISegmentedControl!
+    @IBOutlet weak var distanceLabel      : UILabel!
+    @IBOutlet weak var widthLabel         : UILabel!
+    @IBOutlet weak var heightLabel        : UILabel!
+    @IBOutlet weak var moonButton         : UIButton!
+    @IBOutlet weak var sunButton          : UIButton!
     
     
     var locationManager  : CLLocationManager!
@@ -54,14 +58,26 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var fovTriangleFrame : MKPolygon?
     var fovCenterLine    : MKPolyline?
     var dofTrapezoid     : MKPolygon?
+    var moonriseLine     : MKPolyline?
+    var moonsetLine      : MKPolyline?
+    var sunriseLine      : MKPolyline?
+    var sunsetLine       : MKPolyline?
     var data             : FoVData?
     var fovVisible       : Bool          = true
     var dofVisible       : Bool          = false
+    var moonVisible      : Bool          = false
+    var sunVisible       : Bool          = false
     var focalLength      : Double        = 50
     var aperture         : Double        = 2.8
     var orientation      : Orientation   = Orientation.landscape
     var camera           : Camera?
     var lens             : Lens?
+    let sunMoonCalc      : SunMoon       = SunMoon()
+    var eventAngles      : Dictionary<String, (Double, Double)>?
+    var pointsSunrise    : [MKMapPoint]  = []
+    var pointsSunset     : [MKMapPoint]  = []
+    var pointsMoonrise   : [MKMapPoint]  = []
+    var pointsMoonset    : [MKMapPoint]  = []
     /*
     var lenses           : [Lens]        = [
         Constants.DEFAULT_LENS,
@@ -105,12 +121,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.lensPicker.dataSource          = self
         self.lensPicker.delegate            = self
         
-        self.camera                         = stateController!.view.camera
-        self.lens                           = stateController!.view.lens
-        self.focalLength                    = stateController!.view.focalLength
-        self.aperture                       = stateController!.view.aperture
-        self.orientation                    = stateController!.view.orientation
-    
+        self.cameraPicker.dataSource        = self
+        self.cameraPicker.delegate          = self
+        
         self.cameraPin                      = MapPin(pinType: PinType.camera, coordinate: stateController!.view.cameraPoint.coordinate)
         self.motifPin                       = MapPin(pinType: PinType.motif, coordinate: stateController!.view.motifPoint.coordinate)
         mapPins.removeAll()
@@ -118,28 +131,26 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapPins.append(self.motifPin!)
         mapView.addAnnotations(mapPins)
         
-        self.focalLengthSlider.minimumValue = Float(self.lens!.minFocalLength)
-        self.focalLengthSlider.maximumValue = Float(self.lens!.maxFocalLength)
-        self.focalLengthSlider.value        = Float(self.focalLength)
+        self.focalLengthSlider.minimumValue = Float(stateController!.view.lens.minFocalLength)
+        self.focalLengthSlider.maximumValue = Float(stateController!.view.lens.maxFocalLength)
+        self.focalLengthSlider.value        = Float(stateController!.view.focalLength)
         self.focalLengthLabel.text          = String(format: "%.0f mm", Double(round(self.focalLengthSlider!.value)))
-        self.minFocalLengthLabel.text       = String(format: "%.0f", Double(round(self.lens!.minFocalLength)))
-        self.maxFocalLengthLabel.text       = String(format: "%.0f", Double(round(self.lens!.maxFocalLength)))
+        self.minFocalLengthLabel.text       = String(format: "%.0f", Double(round(stateController!.view.lens.minFocalLength)))
+        self.maxFocalLengthLabel.text       = String(format: "%.0f", Double(round(stateController!.view.lens.maxFocalLength)))
         
-        self.apertureSlider.minimumValue    = Float(self.lens!.minAperture)
-        self.apertureSlider.maximumValue    = Float(self.lens!.maxAperture)
-        self.apertureSlider.value           = Float(self.aperture)
+        self.apertureSlider.minimumValue    = Float(stateController!.view.lens.minAperture)
+        self.apertureSlider.maximumValue    = Float(stateController!.view.lens.maxAperture)
+        self.apertureSlider.value           = Float(stateController!.view.aperture)
         self.apertureLabel.text             = String(format: "f %.1f", Double(round(self.apertureSlider!.value * 10) / 10))
-        self.minApertureLabel.text          = String(format: "%.1f", Double(round(self.lens!.minAperture * 10) / 10))
-        self.maxApertureLabel.text          = String(format: "%.1f", Double(round(self.lens!.maxAperture * 10) / 10))
-        
-        self.dofLabel.text                  = self.dofSwitch.isOn ? "DoF Visible" : "DoF Hidden"
+        self.minApertureLabel.text          = String(format: "%.1f", Double(round(stateController!.view.lens.minAperture * 10) / 10))
+        self.maxApertureLabel.text          = String(format: "%.1f", Double(round(stateController!.view.lens.maxAperture * 10) / 10))
                 
-        self.lensLabel.text                 = "Selected lens"
-        
         let mapTypeSelectorTextAttr         = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let mapTypeSelectorTextAttrSelected = [NSAttributedString.Key.foregroundColor: UIColor.white]
         mapTypeSelector.setTitleTextAttributes(mapTypeSelectorTextAttr, for: .normal)
         mapTypeSelector.setTitleTextAttributes(mapTypeSelectorTextAttrSelected, for: .selected)
+        
+        self.eventAngles                    = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -158,7 +169,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBAction func mapButtonPressed(_ sender: Any) {
     }
     @IBAction func camerasButtonPressed(_ sender: Any) {
-        stateController!.updateView(getView(name: "current", description: ""))
+        stateController!.updateView(createView(name: "current", description: ""))
         stateController!.store()
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -171,33 +182,28 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     @IBAction func focalLengthChanged(_ sender: Any) {
-        //print("focalLength: \(Double(round(focalLengthSlider!.value)))")
         self.focalLengthLabel.text = String(format: "%.0f mm", Double(round(focalLengthSlider!.value)))
-        self.focalLength = Double(round(focalLengthSlider!.value))
-        stateController!.view.focalLength = self.focalLength
+        stateController!.view.focalLength = Double(round(focalLengthSlider!.value))
         
-        updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
-        updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
+        updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
+        updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
     @IBAction func apertureChanged(_ sender: Any) {
-        //print("aperture: \(Double(round(apertureSlider!.value * 10) / 10))")
         self.apertureLabel.text = String(format: "f %.1f", Double(round(apertureSlider!.value * 10) / 10))
-        self.aperture = Double(round(apertureSlider!.value * 10) / 10)
-        stateController!.view.aperture = self.aperture
+        stateController!.view.aperture = Double(round(apertureSlider!.value * 10) / 10)
         
         if dofVisible {
-            updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
-            updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
+            updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
+            updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
             updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
         }
     }
     
-    @IBAction func orientationChanged1(_ sender: Any) {
-        self.orientation = Orientation.landscape == self.orientation ? Orientation.portrait : Orientation.landscape
-        stateController!.view.orientation = self.orientation
-        switch self.orientation {
+    @IBAction func orientationChanged(_ sender: Any) {
+        stateController!.view.orientation = Orientation.landscape == stateController!.view.orientation ? Orientation.portrait : Orientation.landscape
+        switch stateController!.view.orientation {
             case .landscape:
                 self.orientationButton.transform = CGAffineTransform.identity
                 break
@@ -206,16 +212,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 break
         }
         
-        updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
-        updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
+        updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
+        updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
         updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
     
     @IBAction func dofChanged(_ sender: Any) {
-        self.dofLabel.text = dofSwitch.isOn ? "DoF visible" : "DoF hidden"
-        self.dofVisible    = dofSwitch.isOn
+        if self.dofVisible {
+            self.dofVisible = false
+            dofButton.setImage(UIImage(systemName: "arrowtriangle.down"), for: UIControl.State.normal)
+        } else {
+            self.dofVisible = true
+            dofButton.setImage(UIImage(systemName: "arrowtriangle.down.fill"), for: UIControl.State.normal)
+        }
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
         
@@ -227,11 +238,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.motifPin!.coordinate  = MKMapPoint(x: self.cameraPin!.point().x + dX, y: self.cameraPin!.point().y + dY).coordinate
         mapView.addAnnotations(mapPins)
         
-        stateController!.view.cameraPoint = self.cameraPin!.point()
-        stateController!.view.motifPoint = self.motifPin!.point()
+        self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
         
-        updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
-        updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
+        stateController!.view.cameraPoint = self.cameraPin!.point()
+        stateController!.view.motifPoint  = self.motifPin!.point()
+        
+        updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
+        updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
@@ -245,7 +258,29 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.stateController!.updateMapType(mapTypeSelector.selectedSegmentIndex)
     }
     
+    @IBAction func moonButtonPressed(_ sender: Any) {
+        if self.moonVisible {
+            self.moonVisible = false
+            moonButton.setImage(UIImage(systemName: "moon"), for: UIControl.State.normal)
+        } else {
+            self.moonVisible = true
+            moonButton.setImage(UIImage(systemName: "moon.fill"), for: UIControl.State.normal)
+        }
+        self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
+        updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
+    }
     
+    @IBAction func sunButtonPressed(_ sender: Any) {
+        if self.sunVisible {
+            self.sunVisible = false
+            sunButton.setImage(UIImage(systemName: "sun.max"), for: UIControl.State.normal)
+        } else {
+            self.sunVisible = true
+            sunButton.setImage(UIImage(systemName: "sun.max.fill"), for: UIControl.State.normal)
+        }
+        self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
+        updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
+    }
     
     
     func createMapView() {
@@ -263,8 +298,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.setRegion(region, animated: true)
         mapView.register(MapPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         
-        updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
-        updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
+        updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
+        updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
@@ -303,14 +338,24 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             pickerLabel?.backgroundColor = UIColor.clear
             pickerLabel?.textAlignment   = NSTextAlignment.center
         }
-        pickerLabel?.text = stateController!.lenses[row].name
+        
+        if pickerView === lensPicker {
+            pickerLabel?.text = stateController!.lenses[row].name
+        } else if pickerView === cameraPicker {
+            pickerLabel?.text = stateController!.cameras[row].name
+        }
         return pickerLabel!
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        updateLens(lens: stateController!.lenses[row])
-        updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
-        updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
+                
+        if pickerView === lensPicker {
+            updateLens(lens: stateController!.lenses[row])
+        } else if pickerView === cameraPicker {
+            updateCamera(camera: stateController!.cameras[row])
+        }
+        updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
+        updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
@@ -349,8 +394,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             case .dragging:
                 break;
             case .ending, .canceling:
-                updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
-                updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
+                self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
+                updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
+                updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
                 updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
                 break;
             default: break
@@ -359,12 +405,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MapPin {
             let mapPin : MapPin = annotation as! MapPin
-            print("MapPin: \(String(describing: mapPin.title)) found")
+            //print("MapPin: \(String(describing: mapPin.title)) found")
             if mapPin.title == "Camera" || mapPin.title == "Motif" {
                 let mapPinAnnotationView : MapPinAnnotationView = MapPinAnnotationView(annotation: annotation, reuseIdentifier: mapPin.title)
                 mapPinAnnotationView.mapView = mapView
                 mapPinAnnotationView.setOnMapPinEvent(observer: self)
-                print("Observer added")
                 return mapPinAnnotationView
             }
         }
@@ -414,6 +459,27 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 polylineView.strokeColor = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue:  0.8627451, alpha: 1.0)
                 polylineView.lineWidth   = 1.0
                 return polylineView
+            } else if overlay.id == "moonrise" && moonVisible {
+                let polylineView         = MKPolylineRenderer(overlay: overlay)
+                polylineView.strokeColor = UIColor.init(displayP3Red: 0.25, green: 0.25, blue:  0.25, alpha: 1.0)
+                polylineView.lineWidth   = 1.5
+                return polylineView
+            } else if overlay.id == "moonset" && moonVisible {
+                let polylineView         = MKPolylineRenderer(overlay: overlay)
+                polylineView.strokeColor = UIColor.init(displayP3Red: 0.4, green: 0.4, blue:  0.4, alpha: 1.0)
+                polylineView.lineWidth   = 1.5
+                return polylineView
+            } else if overlay.id == "sunrise" && sunVisible {
+                let polylineView         = MKPolylineRenderer(overlay: overlay)
+                polylineView.strokeColor = UIColor.init(displayP3Red: 1.0, green: 1.0, blue:  0.0, alpha: 1.0)
+                polylineView.lineWidth   = 1.5
+                print("sunrise should be visible")
+                return polylineView
+            } else if overlay.id == "sunset" && sunVisible {
+                let polylineView         = MKPolylineRenderer(overlay: overlay)
+                polylineView.strokeColor = UIColor.init(displayP3Red: 0.85, green: 0.85, blue:  0.0, alpha: 1.0)
+                polylineView.lineWidth   = 1.5
+                return polylineView
             } else {
                 return MKPolylineRenderer()
             }
@@ -425,10 +491,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     // MapPin event handling
     func onMapPinEvent(evt: MapPinEvent) {
         if evt.src === cameraPin {
-            updateFoVTriangle(cameraPoint: evt.point, motifPoint: self.motifPin!.point(), focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
+            updateFoVTriangle(cameraPoint: evt.point, motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
             updateDragOverlay(cameraPoint: evt.point, motifPoint: self.motifPin!.point())
         } else if evt.src === motifPin {
-            updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: evt.point, focalLength: self.focalLength, aperture: self.aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation)
+            updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: evt.point, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
             updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: evt.point)
         }
     }
@@ -436,10 +502,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     // Update methods
     func updateLens(lens: Lens) -> Void {
-        self.lens! = lens        
+        stateController!.view.lens = lens
         
-        self.focalLength = lens.minFocalLength + (lens.maxFocalLength - lens.minFocalLength)
-        self.aperture    = lens.minAperture + (lens.maxAperture - lens.minAperture)
+        stateController!.view.focalLength = lens.minFocalLength + (lens.maxFocalLength - lens.minFocalLength)
+        stateController!.view.aperture    = lens.minAperture + (lens.maxAperture - lens.minAperture)
         
         focalLengthSlider.minimumValue = Float(lens.minFocalLength)
         focalLengthSlider.maximumValue = Float(lens.maxFocalLength)
@@ -456,31 +522,38 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         maxApertureLabel.text          = String(format: "%.1f", Double(round(lens.maxAperture * 10) / 10))
     }
     
+    func updateCamera(camera: Camera) -> Void {
+        stateController!.view.camera = camera
+    }
+    
     func updateFoVTriangle(cameraPoint: MKMapPoint, motifPoint: MKMapPoint, focalLength: Double, aperture: Double, sensorFormat: SensorFormat, orientation: Orientation) -> Void {
         let distance : CLLocationDistance = cameraPoint.distance(to: motifPoint)
         if distance < 0.01 || distance > 9999 { return }
         
-        let oldData = self.data
+        
         do {
-            self.data = try Helper.calc(camera: cameraPoint, motif: motifPoint, focalLengthInMM: focalLength, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
+            let fovData = try Helper.calc(camera: cameraPoint, motif: motifPoint, focalLengthInMM: focalLength, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
+            self.distanceLabel!.text = String(format: "Distance %.1f m", fovData.distance)
+            self.widthLabel!.text    = String(format: "Field width %.1f m", fovData.fovWidth)
+            self.heightLabel!.text   = String(format: "Field height %.1f m", fovData.fovHeight)
         } catch {
-            self.data = oldData
+            print(error)
         }
         
         // Update FoV Triangle
-        Helper.updateTriangle(camera: cameraPoint, motif: motifPoint, focalLengthInMM: focalLength, aperture: aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation, triangle: self.triangle!)
+        Helper.updateTriangle(camera: cameraPoint, motif: motifPoint, focalLengthInMM: focalLength, aperture: aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation, triangle: self.triangle!)
         let angle: Double = Helper.toRadians(degrees: Helper.calculateBearing(location1: cameraPoint, location2: motifPoint))
         self.triangle!.p2 = Helper.rotatePointAroundCenter(point: self.triangle!.p2, rotationCenter: cameraPoint, rad: angle)
         self.triangle!.p3 = Helper.rotatePointAroundCenter(point: self.triangle!.p3, rotationCenter: cameraPoint, rad: angle)
         
         // Update min FoV Triangle
-        Helper.updateTriangle(camera: cameraPoint, motif: motifPoint, focalLengthInMM: self.lens!.maxFocalLength, aperture: aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation, triangle: self.minTriangle!)
+        Helper.updateTriangle(camera: cameraPoint, motif: motifPoint, focalLengthInMM: stateController!.view.lens.maxFocalLength, aperture: aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation, triangle: self.minTriangle!)
         let minAngle: Double = Helper.toRadians(degrees: Helper.calculateBearing(location1: cameraPoint, location2: motifPoint))
         self.minTriangle!.p2 = Helper.rotatePointAroundCenter(point: self.minTriangle!.p2, rotationCenter: cameraPoint, rad: minAngle)
         self.minTriangle!.p3 = Helper.rotatePointAroundCenter(point: self.minTriangle!.p3, rotationCenter: cameraPoint, rad: minAngle)
         
         // Update max FoV Triangle
-        Helper.updateTriangle(camera: cameraPoint, motif: motifPoint, focalLengthInMM: self.lens!.minFocalLength, aperture: aperture, sensorFormat: self.camera!.sensorFormat, orientation: self.orientation, triangle: self.maxTriangle!)
+        Helper.updateTriangle(camera: cameraPoint, motif: motifPoint, focalLengthInMM: stateController!.view.lens.minFocalLength, aperture: aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation, triangle: self.maxTriangle!)
         let maxAngle: Double = Helper.toRadians(degrees: Helper.calculateBearing(location1: cameraPoint, location2: motifPoint))
         self.maxTriangle!.p2 = Helper.rotatePointAroundCenter(point: self.maxTriangle!.p2, rotationCenter: cameraPoint, rad: maxAngle)
         self.maxTriangle!.p3 = Helper.rotatePointAroundCenter(point: self.maxTriangle!.p3, rotationCenter: cameraPoint, rad: maxAngle)
@@ -557,6 +630,86 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         self.dofTrapezoid = nil
         
+        if let moonriseLine = self.moonriseLine {
+            mapView.removeOverlay(moonriseLine)
+        }
+        self.moonriseLine = nil
+        
+        if let moonsetLine = self.moonsetLine {
+            mapView.removeOverlay(moonsetLine)
+        }
+        self.moonsetLine = nil
+        
+        if let sunriseLine = self.sunriseLine {
+            mapView.removeOverlay(sunriseLine)
+        }
+        self.sunriseLine = nil
+        
+        if let sunsetLine = self.sunsetLine {
+            mapView.removeOverlay(sunsetLine)
+        }
+        self.sunsetLine = nil
+        
+        
+        // Draw moon rise/set
+        
+        let distance : Double = 10000000
+        
+        pointsMoonrise.removeAll()
+        pointsMoonrise.append(cameraPoint)
+        pointsMoonset.removeAll()
+        pointsMoonset.append(cameraPoint)
+    
+        pointsSunrise.removeAll()
+        pointsSunrise.append(cameraPoint)
+        pointsSunset.removeAll()
+        pointsSunset.append(cameraPoint)
+        
+        for (event, angles) in eventAngles! {
+            let startAngle : Double     = Helper.toDegrees(radians: angles.0) + 180.0
+            let point      : MKMapPoint = Helper.getPointByAngleAndDistance(point: cameraPoint, distanceInMeters: distance, angleDeg: startAngle)
+            switch event {
+                case Constants.SUNRISE:
+                    pointsSunrise.append(point)
+                    break
+                case Constants.SUNSET:
+                    pointsSunset.append(point)
+                    break
+                case Constants.MOONRISE:
+                    pointsMoonrise.append(point)
+                    break
+                case Constants.MOONSET:
+                    pointsMoonset.append(point)
+                    break
+                default:
+                    break
+            }
+        }
+
+        // Create coordinates for moonrise line
+        let moonriseLine :Line = Line(points: pointsMoonrise, count: pointsMoonrise.count)
+        moonriseLine.id = "moonrise"
+        mapView.addOverlay(moonriseLine)
+        self.moonriseLine = moonriseLine
+        
+        // Create coordinates for moonset line
+        let moonsetLine :Line = Line(points: pointsMoonset, count: pointsMoonset.count)
+        moonsetLine.id = "moonset"
+        mapView.addOverlay(moonsetLine)
+        self.moonsetLine  = moonsetLine
+        
+        // Create coordinates for sunrise line
+        let sunriseLine :Line = Line(points: pointsSunrise, count: pointsSunrise.count)
+        sunriseLine.id = "sunrise"
+        mapView.addOverlay(sunriseLine)
+        self.sunriseLine = sunriseLine
+        
+        // Create coordinates for sunset line
+        let sunsetLine :Line = Line(points: pointsSunset, count: pointsSunset.count)
+        sunsetLine.id = "sunset"
+        mapView.addOverlay(sunsetLine)
+        self.sunsetLine  = sunsetLine
+        
         
         // Create coordinates for min fov triangle
         let minFovTriangleCoordinates = minTriangle!.getPoints().map({ $0.coordinate })
@@ -595,8 +748,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     
-    func getView(name: String, description: String) -> View {
-        return View(name: name, description: description, cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), camera: self.camera!, lens: self.lens!, focalLength: self.focalLength, aperture: self.aperture, orientation: self.orientation)
+    func createView(name: String, description: String) -> View {
+        return View(name: name, description: description, cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation)
     }
     
     

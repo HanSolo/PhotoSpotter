@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4F13D831243457E400903059 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D830243457E400903059 /* Camera.swift */; };
 		4F13D83324345B7400903059 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D83224345B7400903059 /* View.swift */; };
+		4F2E8A392436F3A0007C9360 /* SunMoon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8A382436F3A0007C9360 /* SunMoon.swift */; };
 		4F5DDD362435A29900A49C20 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD352435A29900A49C20 /* StateController.swift */; };
 		4F5DDD382435A42E00A49C20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD372435A42E00A49C20 /* Constants.swift */; };
 		4F5DDD3A2435A8D500A49C20 /* FoVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD392435A8D500A49C20 /* FoVController.swift */; };
@@ -34,6 +35,7 @@
 /* Begin PBXFileReference section */
 		4F13D830243457E400903059 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		4F13D83224345B7400903059 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		4F2E8A382436F3A0007C9360 /* SunMoon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunMoon.swift; sourceTree = "<group>"; };
 		4F5DDD352435A29900A49C20 /* StateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 		4F5DDD372435A42E00A49C20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4F5DDD392435A8D500A49C20 /* FoVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoVController.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				4F5DDD372435A42E00A49C20 /* Constants.swift */,
 				4F5DDD392435A8D500A49C20 /* FoVController.swift */,
 				4F5DDD352435A29900A49C20 /* StateController.swift */,
+				4F2E8A382436F3A0007C9360 /* SunMoon.swift */,
 			);
 			path = CamFoV;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 				4F7D7B52242E270F00771992 /* SceneDelegate.swift in Sources */,
 				4F5DDD382435A42E00A49C20 /* Constants.swift in Sources */,
 				4F5DDD3A2435A8D500A49C20 /* FoVController.swift in Sources */,
+				4F2E8A392436F3A0007C9360 /* SunMoon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

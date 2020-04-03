@@ -180,4 +180,35 @@ public class Helper {
             return Constants.DEFAULT_VIEW
         }
     }
+    
+    public static func getPointByAngleAndDistance(point: MKMapPoint, distanceInMeters: Double, angleDeg: Double) -> MKMapPoint {
+        let latlon : (Double, Double) = getLatLonByAngleAndDistance(lat: point.coordinate.latitude, lon: point.coordinate.longitude, distanceInMeters: distanceInMeters, angleDeg: angleDeg)
+        return MKMapPoint(CLLocationCoordinate2D(latitude: latlon.0, longitude: latlon.1))
+    }
+    
+    public static func getLatLonByAngleAndDistance(lat :Double, lon :Double, distanceInMeters :Double, angleDeg: Double) -> (Double, Double){
+        let earthRadius      :Double = 6_371_000.0 // m
+        let radians          :Double = toRadians(degrees: angleDeg)
+        
+        let originLatRad     :Double = toRadians(degrees: lat)
+        let originLonRad     :Double = toRadians(degrees: lon)
+        
+        let distanceToRadius :Double = distanceInMeters / earthRadius
+        
+        let targetLatRad     :Double = asin(sin(originLatRad) * cos(distanceToRadius) + cos(originLatRad) * sin(distanceToRadius) * cos(radians))
+        let targetLonRad     :Double = originLonRad + atan2(sin(radians) * sin(distanceToRadius) * cos(originLatRad), cos(distanceToRadius) - sin(originLatRad) * sin(targetLatRad))
+        
+        let targetLat        :Double = toDegrees(radians: targetLatRad)
+        let targetLon        :Double = toDegrees(radians: targetLonRad)
+        
+        return (targetLat, targetLon)
+    }
+    
+    // return date string with given format e.g. "dd.MM.yyyy HH:mm:ss"
+    public static func dateToString(fromDate date:Date, formatString :String) -> String {
+        let dateFormatter        = DateFormatter()
+        dateFormatter.timeZone   = TimeZone.current
+        dateFormatter.dateFormat = formatString.isEmpty ? "dd.MM.yyyy HH:mm:ss" : formatString
+        return dateFormatter.string(from: date)
+    }
 }

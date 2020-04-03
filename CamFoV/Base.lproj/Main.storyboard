@@ -36,75 +36,115 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ga6-U4-gEU" userLabel="ToolsView">
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="82"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vaj-LL-b9k">
-                                                <rect key="frame" x="10" y="0.0" width="458" height="72"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Pob-gc-IPy">
+                                                <rect key="frame" x="10" y="0.0" width="1004" height="82"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="ExD-5G-fbV" userLabel="LensView">
-                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="72"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vaj-LL-b9k" userLabel="TopControls">
+                                                        <rect key="frame" x="0.0" y="0.0" width="1004" height="41"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gda-t0-wAN" userLabel="LensLabel">
-                                                                <rect key="frame" x="139" y="0.0" width="42" height="28"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
                                                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0h-18-1oo" userLabel="LensPicker">
-                                                                <rect key="frame" x="0.0" y="31" width="320" height="41"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="41" id="mXJ-tV-lg5"/>
-                                                                </constraints>
+                                                                <rect key="frame" x="0.0" y="0.0" width="387" height="41"/>
                                                             </pickerView>
+                                                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AsJ-pE-SXZ" userLabel="CameraPicker">
+                                                                <rect key="frame" x="397" y="0.0" width="387" height="41"/>
+                                                            </pickerView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I8n-ya-JHH" userLabel="SunButton">
+                                                                <rect key="frame" x="794" y="0.0" width="32" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <state key="normal" image="sun.max" catalog="system">
+                                                                    <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="sunButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="J43-Ia-lZj"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9KS-Fw-qnA" userLabel="MoonButton">
+                                                                <rect key="frame" x="836" y="0.0" width="30" height="41"/>
+                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <state key="normal" image="moon" catalog="system">
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="moonButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AJG-w7-bjK"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFe-Iv-Phh" userLabel="DoFButton">
+                                                                <rect key="frame" x="876" y="0.0" width="24" height="41"/>
+                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <state key="normal" image="arrowtriangle.down" catalog="system">
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="dofChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xOC-UF-u1s"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIT-Ve-K0R" userLabel="OrientationButton">
+                                                                <rect key="frame" x="910" y="0.0" width="35.5" height="41"/>
+                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <state key="normal" image="camera.rotate.fill" catalog="system">
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="orientationChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l9l-5O-Vaa"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xp3-1c-EGH" userLabel="CameraButton">
+                                                                <rect key="frame" x="955.5" y="0.0" width="48.5" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <state key="normal" image="camera.fill" catalog="system">
+                                                                    <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="cameraButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mPj-he-TZ7"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="y9f-OL-7hT" userLabel="DoFView">
-                                                        <rect key="frame" x="330" y="0.0" width="49" height="72"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Lc7-b6-13R" userLabel="FoVInfo">
+                                                        <rect key="frame" x="0.0" y="41" width="1004" height="41"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K17-ob-8JU" userLabel="DoFLabel">
-                                                                <rect key="frame" x="3.5" y="0.0" width="42" height="26"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1m-Vc-WVH" userLabel="DistanceLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="60" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YGW-JU-aL2" userLabel="DoFSwitch">
-                                                                <rect key="frame" x="0.0" y="31" width="51" height="41"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="41" id="Mgt-2h-u5G"/>
-                                                                </constraints>
-                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <connections>
-                                                                    <action selector="dofChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="bZd-rx-gF7"/>
-                                                                </connections>
-                                                            </switch>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Width" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RmB-Ja-Iry" userLabel="FoVWidthLabel">
+                                                                <rect key="frame" x="489" y="0.0" width="41" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Height" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVq-V9-mwq" userLabel="FoVHeightLabel">
+                                                                <rect key="frame" x="958.5" y="0.0" width="45.5" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
                                                         </subviews>
                                                     </stackView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIT-Ve-K0R">
-                                                        <rect key="frame" x="389" y="0.0" width="29.5" height="72"/>
-                                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <state key="normal" image="camera.rotate.fill" catalog="system">
-                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="orientationChanged1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l9l-5O-Vaa"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xp3-1c-EGH" userLabel="CameraButton">
-                                                        <rect key="frame" x="428.5" y="0.0" width="29.5" height="72"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <state key="normal" image="camera.fill" catalog="system">
-                                                            <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="cameraButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mPj-he-TZ7"/>
-                                                        </connections>
-                                                    </button>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="Lc7-b6-13R" secondAttribute="bottom" id="GPI-KH-J17"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Vaj-LL-b9k" secondAttribute="trailing" id="HBW-k3-SVh"/>
+                                                    <constraint firstItem="Lc7-b6-13R" firstAttribute="top" secondItem="Vaj-LL-b9k" secondAttribute="bottom" id="mNX-li-csq"/>
+                                                    <constraint firstItem="Lc7-b6-13R" firstAttribute="leading" secondItem="Pob-gc-IPy" secondAttribute="leading" id="mpU-hV-yDF"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Lc7-b6-13R" secondAttribute="trailing" id="npN-NT-yRh"/>
+                                                    <constraint firstItem="Vaj-LL-b9k" firstAttribute="leading" secondItem="Pob-gc-IPy" secondAttribute="leading" id="sOp-DD-Zel"/>
+                                                </constraints>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Pob-gc-IPy" secondAttribute="trailing" constant="10" id="CzV-wn-VsJ"/>
+                                            <constraint firstAttribute="bottom" secondItem="Pob-gc-IPy" secondAttribute="bottom" id="H3E-4M-xel"/>
+                                            <constraint firstItem="Pob-gc-IPy" firstAttribute="leading" secondItem="ga6-U4-gEU" secondAttribute="leading" constant="10" id="XfM-97-OXC"/>
                                             <constraint firstAttribute="height" constant="82" id="bcp-Qe-act"/>
+                                            <constraint firstItem="Pob-gc-IPy" firstAttribute="top" secondItem="ga6-U4-gEU" secondAttribute="top" id="hbV-up-Qz0"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aqf-A2-Z0Z" userLabel="ControlsView">
@@ -116,17 +156,17 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="axX-xh-u3s" userLabel="FocalLengthView">
                                                         <rect key="frame" x="0.0" y="0.0" width="479" height="66"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gNZ-Tm-wsA">
-                                                                <rect key="frame" x="10" y="3" width="376" height="58.5"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gNZ-Tm-wsA">
+                                                                <rect key="frame" x="0.0" y="0.0" width="479" height="66"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XW8-VG-CXA" userLabel="FocalLengthLabel">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="376" height="20.5"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="479" height="28"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="5g9-yX-Oyo">
-                                                                        <rect key="frame" x="0.0" y="28.5" width="376" height="30"/>
+                                                                        <rect key="frame" x="0.0" y="36" width="479" height="30"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="94S-EW-znH" userLabel="MinFocalLength">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="33" height="30"/>
@@ -135,7 +175,7 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="nZ1-QP-Zsj" userLabel="FocalLengthSlider">
-                                                                                <rect key="frame" x="34" y="0.0" width="308" height="31"/>
+                                                                                <rect key="frame" x="34" y="0.0" width="411" height="31"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="4HC-AJ-Tva"/>
                                                                                 </constraints>
@@ -145,7 +185,7 @@
                                                                                 </connections>
                                                                             </slider>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yrb-FZ-o2Y" userLabel="MaxFocalLength">
-                                                                                <rect key="frame" x="343" y="0.0" width="33" height="30"/>
+                                                                                <rect key="frame" x="446" y="0.0" width="33" height="30"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                                 <nil key="highlightedColor"/>
@@ -156,21 +196,27 @@
                                                             </stackView>
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="gNZ-Tm-wsA" secondAttribute="trailing" id="4Xm-cy-Gey"/>
+                                                            <constraint firstItem="gNZ-Tm-wsA" firstAttribute="top" secondItem="axX-xh-u3s" secondAttribute="top" id="86o-Gc-nfh"/>
+                                                            <constraint firstAttribute="bottom" secondItem="gNZ-Tm-wsA" secondAttribute="bottom" id="M92-JZ-XAx"/>
+                                                            <constraint firstItem="gNZ-Tm-wsA" firstAttribute="leading" secondItem="axX-xh-u3s" secondAttribute="leading" id="aPg-T5-grD"/>
+                                                        </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FRc-cy-6WV" userLabel="ApertureView">
                                                         <rect key="frame" x="509" y="0.0" width="479" height="66"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GoN-zd-yAX">
-                                                                <rect key="frame" x="10" y="3" width="372" height="58.5"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GoN-zd-yAX">
+                                                                <rect key="frame" x="0.0" y="0.0" width="479" height="66"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rzu-Sh-PkG" userLabel="ApertureLabel">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="372" height="20.5"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="479" height="28"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="xEw-xt-DZh">
-                                                                        <rect key="frame" x="0.0" y="28.5" width="372" height="30"/>
+                                                                        <rect key="frame" x="0.0" y="36" width="479" height="30"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VpR-RU-dec" userLabel="MinApertureLabel">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="33" height="30"/>
@@ -179,7 +225,7 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Crf-to-ZRf" userLabel="ApertureSlider">
-                                                                                <rect key="frame" x="34" y="0.0" width="304" height="31"/>
+                                                                                <rect key="frame" x="34" y="0.0" width="411" height="31"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="Jgy-oc-zbx"/>
                                                                                 </constraints>
@@ -189,7 +235,7 @@
                                                                                 </connections>
                                                                             </slider>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tSc-J2-ANQ" userLabel="MaxApertureLabel">
-                                                                                <rect key="frame" x="339" y="0.0" width="33" height="30"/>
+                                                                                <rect key="frame" x="446" y="0.0" width="33" height="30"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                                 <nil key="highlightedColor"/>
@@ -200,6 +246,12 @@
                                                             </stackView>
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="GoN-zd-yAX" secondAttribute="trailing" id="8Nw-bd-abg"/>
+                                                            <constraint firstItem="GoN-zd-yAX" firstAttribute="top" secondItem="FRc-cy-6WV" secondAttribute="top" id="B3H-AT-sbR"/>
+                                                            <constraint firstAttribute="bottom" secondItem="GoN-zd-yAX" secondAttribute="bottom" id="fK8-nI-N9b"/>
+                                                            <constraint firstItem="GoN-zd-yAX" firstAttribute="leading" secondItem="FRc-cy-6WV" secondAttribute="leading" id="p61-nD-GHl"/>
+                                                        </constraints>
                                                     </view>
                                                 </subviews>
                                             </stackView>
@@ -217,7 +269,7 @@
                                         <rect key="frame" x="0.0" y="82" width="1024" height="1082"/>
                                     </mapView>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dt3-lS-mdA">
-                                        <rect key="frame" x="795" y="102" width="209" height="41"/>
+                                        <rect key="frame" x="805" y="92" width="209" height="41"/>
                                         <color key="backgroundColor" red="0.27450980392156865" green="0.27450980392156865" blue="0.27450980392156865" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="z9f-l8-NS9"/>
@@ -242,8 +294,8 @@
                                     <constraint firstAttribute="trailing" secondItem="ga6-U4-gEU" secondAttribute="trailing" id="SUS-Yk-3cd"/>
                                     <constraint firstItem="aqf-A2-Z0Z" firstAttribute="top" secondItem="eEB-0J-bVb" secondAttribute="bottom" id="kvv-W4-PiC"/>
                                     <constraint firstItem="eEB-0J-bVb" firstAttribute="top" secondItem="ga6-U4-gEU" secondAttribute="bottom" id="lA0-eI-5jn"/>
-                                    <constraint firstAttribute="trailing" secondItem="dt3-lS-mdA" secondAttribute="trailing" constant="20" id="oth-SB-bz0"/>
-                                    <constraint firstItem="dt3-lS-mdA" firstAttribute="top" secondItem="ga6-U4-gEU" secondAttribute="bottom" constant="20" id="qAz-qG-mJE"/>
+                                    <constraint firstAttribute="trailing" secondItem="dt3-lS-mdA" secondAttribute="trailing" constant="10" id="oth-SB-bz0"/>
+                                    <constraint firstItem="dt3-lS-mdA" firstAttribute="top" secondItem="ga6-U4-gEU" secondAttribute="bottom" constant="10" id="qAz-qG-mJE"/>
                                     <constraint firstAttribute="trailing" secondItem="aqf-A2-Z0Z" secondAttribute="trailing" id="s2c-bN-oDk"/>
                                     <constraint firstAttribute="trailing" secondItem="eEB-0J-bVb" secondAttribute="trailing" id="wLZ-dg-nVd"/>
                                     <constraint firstItem="ga6-U4-gEU" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" id="zuE-Un-gX2"/>
@@ -258,16 +310,16 @@
                                             <action selector="mapButtonPressed:" destination="BYZ-38-t0r" id="i5H-oC-GYy"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Cameras" id="xUA-Eg-sBT" userLabel="CamerasButton">
-                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <action selector="camerasButtonPressed:" destination="BYZ-38-t0r" id="iF8-yd-qo6"/>
-                                        </connections>
-                                    </barButtonItem>
                                     <barButtonItem title="Lenses" id="UzU-FK-IMU" userLabel="LensesButton">
                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="lensesButtonPressed:" destination="BYZ-38-t0r" id="CFc-lw-JeS"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Cameras" id="xUA-Eg-sBT" userLabel="CamerasButton">
+                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="camerasButtonPressed:" destination="BYZ-38-t0r" id="iF8-yd-qo6"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem title="Views" id="hH1-Gl-vEn" userLabel="ViewsButton">
@@ -300,12 +352,13 @@
                         <outlet property="apertureLabel" destination="rzu-Sh-PkG" id="pSv-pF-6Dl"/>
                         <outlet property="apertureSlider" destination="Crf-to-ZRf" id="9iY-on-KpT"/>
                         <outlet property="cameraButton" destination="xp3-1c-EGH" id="RKG-WR-YCE"/>
+                        <outlet property="cameraPicker" destination="AsJ-pE-SXZ" id="gcF-NU-QO5"/>
                         <outlet property="camerasButton" destination="xUA-Eg-sBT" id="WdR-pf-7Pg"/>
-                        <outlet property="dofLabel" destination="K17-ob-8JU" id="yMx-ug-cia"/>
-                        <outlet property="dofSwitch" destination="YGW-JU-aL2" id="TUs-IT-RnP"/>
+                        <outlet property="distanceLabel" destination="g1m-Vc-WVH" id="nQT-DG-QlX"/>
+                        <outlet property="dofButton" destination="kFe-Iv-Phh" id="BdE-6l-LkE"/>
                         <outlet property="focalLengthLabel" destination="XW8-VG-CXA" id="1o5-8C-ZiB"/>
                         <outlet property="focalLengthSlider" destination="nZ1-QP-Zsj" id="HE1-DM-Nks"/>
-                        <outlet property="lensLabel" destination="gda-t0-wAN" id="7FA-ih-quE"/>
+                        <outlet property="heightLabel" destination="UVq-V9-mwq" id="Wqo-YG-qzo"/>
                         <outlet property="lensPicker" destination="d0h-18-1oo" id="Zza-7g-hGe"/>
                         <outlet property="lensesButton" destination="UzU-FK-IMU" id="Ytl-r1-DjA"/>
                         <outlet property="mapButton" destination="rio-ZN-eyu" id="BtR-ih-2gd"/>
@@ -315,14 +368,17 @@
                         <outlet property="maxFocalLengthLabel" destination="yrb-FZ-o2Y" id="vMH-kL-dmt"/>
                         <outlet property="minApertureLabel" destination="VpR-RU-dec" id="8t5-12-jFk"/>
                         <outlet property="minFocalLengthLabel" destination="94S-EW-znH" id="eTv-iH-eIZ"/>
+                        <outlet property="moonButton" destination="9KS-Fw-qnA" id="M5G-eZ-uik"/>
                         <outlet property="orientationButton" destination="oIT-Ve-K0R" id="jMp-v7-FTy"/>
+                        <outlet property="sunButton" destination="I8n-ya-JHH" id="6rF-Lh-ncv"/>
                         <outlet property="viewsButton" destination="hH1-Gl-vEn" id="tH5-EU-X19"/>
+                        <outlet property="widthLabel" destination="RmB-Ja-Iry" id="92x-8t-yw4"/>
                         <segue destination="r0P-5x-ec1" kind="show" identifier="mapViewToCamerasView" destinationCreationSelector="exitMapViewController:" id="6Gl-Tl-cdW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-366" y="139"/>
+            <point key="canvasLocation" x="-366.2109375" y="138.79941434846265"/>
         </scene>
         <!--CameraViewController-->
         <scene sceneID="sVy-pe-ezY">
@@ -489,8 +545,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrowtriangle.down" catalog="system" width="128" height="124"/>
         <image name="camera.fill" catalog="system" width="128" height="96"/>
         <image name="camera.rotate.fill" catalog="system" width="128" height="96"/>
+        <image name="moon" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="sun.max" catalog="system" width="128" height="124"/>
     </resources>
 </document>
