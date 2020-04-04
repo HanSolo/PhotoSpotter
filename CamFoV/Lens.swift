@@ -50,6 +50,18 @@ public class Lens: NSObject, NSCoding {
     }
     
     
+    func description() -> String {
+        var description = String(format: "%.0f", minFocalLength)
+        if isPrime {
+            description += " mm f\(String(format: "%.1f", minAperture))"
+            return description
+        } else {
+            description += " mm - \(String(format: "%.0f", maxFocalLength)) mm f\(String(format: "%.1f", minAperture))"
+            return description
+        }
+    }
+    
+    
     func toJsonString() -> String {
         var jsonString : String = "{"
         jsonString += "\"name\":\"\(name)\","

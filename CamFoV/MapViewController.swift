@@ -173,10 +173,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         stateController!.store()
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let camerasVC = storyboard.instantiateViewController(identifier: "CamerasViewController")
-        show(camerasVC, sender: self)
+        let cameraVC = storyboard.instantiateViewController(identifier: "CameraViewController")
+        show(cameraVC, sender: self)
     }
     @IBAction func lensesButtonPressed(_ sender: Any) {
+        stateController!.updateView(createView(name: "current", description: ""))
+        stateController!.store()
+        
+        /*
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let lensVC = storyboard.instantiateViewController(identifier: "LensViewController")
+        show(lensVC, sender: self)
+        */
+        performSegue(withIdentifier: "mapViewToLensesView", sender: self)
     }
     @IBAction func viewsButtonPressed(_ sender: Any) {
     }
@@ -326,7 +335,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return stateController?.lenses.count ?? 0
+        if pickerView === lensPicker {
+            return stateController?.lenses.count ?? 0
+        } else if pickerView === cameraPicker {
+            return stateController?.cameras.count ?? 0
+        } else {
+            return 0
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
@@ -461,23 +476,23 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 return polylineView
             } else if overlay.id == "moonrise" && moonVisible {
                 let polylineView         = MKPolylineRenderer(overlay: overlay)
-                polylineView.strokeColor = UIColor.init(displayP3Red: 0.25, green: 0.25, blue:  0.25, alpha: 1.0)
+                polylineView.strokeColor = UIColor.init(displayP3Red: 0.5, green: 0.5, blue:  0.5, alpha: 1.0)
                 polylineView.lineWidth   = 1.5
                 return polylineView
             } else if overlay.id == "moonset" && moonVisible {
                 let polylineView         = MKPolylineRenderer(overlay: overlay)
-                polylineView.strokeColor = UIColor.init(displayP3Red: 0.4, green: 0.4, blue:  0.4, alpha: 1.0)
+                polylineView.strokeColor = UIColor.init(displayP3Red: 0.25, green: 0.25, blue:  0.25, alpha: 1.0)
                 polylineView.lineWidth   = 1.5
                 return polylineView
             } else if overlay.id == "sunrise" && sunVisible {
                 let polylineView         = MKPolylineRenderer(overlay: overlay)
-                polylineView.strokeColor = UIColor.init(displayP3Red: 1.0, green: 1.0, blue:  0.0, alpha: 1.0)
+                polylineView.strokeColor = UIColor.init(displayP3Red: 0.9, green: 0.9, blue:  0.0, alpha: 1.0)
                 polylineView.lineWidth   = 1.5
                 print("sunrise should be visible")
                 return polylineView
             } else if overlay.id == "sunset" && sunVisible {
                 let polylineView         = MKPolylineRenderer(overlay: overlay)
-                polylineView.strokeColor = UIColor.init(displayP3Red: 0.85, green: 0.85, blue:  0.0, alpha: 1.0)
+                polylineView.strokeColor = UIColor.init(displayP3Red: 0.75, green: 0.75, blue:  0.0, alpha: 1.0)
                 polylineView.lineWidth   = 1.5
                 return polylineView
             } else {

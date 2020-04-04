@@ -15,16 +15,18 @@ class StateController {
     private(set) var lenses : [Lens] = [
         Constants.DEFAULT_LENS
     ]
-    func updateLenses(_ lens: Lens) {
-        for (index, old) in lenses.enumerated() {
-            if old.name == lens.name {
-                lenses[index] = lens
-                break
-            }
+    func addLens(_ lens: Lens) {
+        if lenses.contains(where: { $0.name == lens.name && $0.description() == lens.description() }) {
+            return
+        } else {
+            lenses.append(lens)
         }
     }
-    func updateAllLenses(_ lenses: [Lens]) {
+    func setLenses(_ lenses: [Lens]) {
         self.lenses = lenses
+    }
+    func removeLens(_ lens: Lens) {
+        lenses.removeAll { $0 === lens }
     }
     
     
@@ -32,16 +34,18 @@ class StateController {
     private(set) var cameras : [Camera] = [
         Constants.DEFAULT_CAMERA
     ]
-    func updateCameras(_ camera: Camera) {
-        for (index, old) in cameras.enumerated() {
-            if old.name == camera.name {
-                cameras[index] = camera
-                break;
-            }
+    func addCamera(_ camera: Camera) {
+        if cameras.contains(where: { $0.name == camera.name && $0.sensorFormat == camera.sensorFormat }) {
+            return
+        } else {
+            cameras.append(camera)
         }
     }
-    func updateAllCameras(_ cameras: [Camera]) {
+    func setCameras(_ cameras: [Camera]) {
         self.cameras = cameras
+    }
+    func removeCamera(_ camera: Camera) {
+        cameras.removeAll { $0 === camera }
     }
     
     
@@ -49,16 +53,18 @@ class StateController {
     private(set) var views : [View] = [
         Constants.DEFAULT_VIEW
     ]
-    func updateViews(_ view: View) {
-        for (index, old) in views.enumerated() {
-            if old.name == view.name {
-                views[index] = view
-                break;
-            }
+    func addView(_ view: View) {
+        if views.contains(where: { $0.name == view.name }) {
+            return
+        } else {
+            views.append(view)
         }
     }
-    func updateAllViews(_ views: [View]) {
+    func setViews(_ views: [View]) {
         self.views = views
+    }
+    func removeView(_ view: View) {
+        views.removeAll { $0 === view }
     }
     
     
@@ -86,13 +92,16 @@ class StateController {
         
             let lensesData = try NSKeyedArchiver.archivedData(withRootObject: self.lenses, requiringSecureCoding: false)
             defaults.set(lensesData, forKey: "lenses")
+            print("Cameras and Lenses stored to defaults")
         } catch {
-            print(error)
+            print("Error saving cameras and lenses: \(error)")
         }
         let dictionary : Dictionary<String,String> = Helper.viewToDictionary(view: self.view)
         defaults.set(dictionary, forKey: "view")
+        print("Views stored to defaults")
         
         defaults.set(self.mapType, forKey: "mapType")
+        print("MapType stored to defaults")
     }
     
     // Retrieve from UserDefaults
@@ -103,7 +112,7 @@ class StateController {
                 guard let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(lensesData) as? [Lens] else {
                     fatalError("Error loading lenses form UserDefaults")
                 }
-                updateAllLenses(array)
+                setLenses(array)
             } catch {
                 fatalError("load lenses - Can't encode data: \(error)")
             }
@@ -111,11 +120,11 @@ class StateController {
         if let camerasData = UserDefaults.standard.data(forKey: "cameras") {
             do {
                 guard let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(camerasData) as? [Camera] else {
-                    fatalError("Error loading lenses form UserDefaults")
+                    fatalError("Error loading cameras form UserDefaults")
                 }
-                updateAllCameras(array)
+                setCameras(array)
             } catch {
-                fatalError("load lenses - Can't encode data: \(error)")
+                fatalError("load cameras - Can't encode data: \(error)")
             }
         }
         if defaults.dictionary(forKey: "view") != nil {
