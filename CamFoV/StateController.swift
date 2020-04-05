@@ -70,7 +70,7 @@ class StateController {
     
     // Current view
     private(set) var view : View = Constants.DEFAULT_VIEW
-    func updateView(_ view: View) {
+    func setView(_ view: View) {
         self.view = view
     }
     
@@ -92,16 +92,28 @@ class StateController {
         
             let lensesData = try NSKeyedArchiver.archivedData(withRootObject: self.lenses, requiringSecureCoding: false)
             defaults.set(lensesData, forKey: "lenses")
-            print("Cameras and Lenses stored to defaults")
+            
+            var viewDict : [Dictionary<String,String>] = []
+            for view in views {
+                let dictionary : Dictionary<String,String> = Helper.viewToDictionary(view: view)
+                viewDict.append(dictionary)
+            }
+            let viewsData = try NSKeyedArchiver.archivedData(withRootObject: viewDict, requiringSecureCoding: false)
+            defaults.set(viewsData, forKey: "views")
+            
+            print("Cameras, Lenses and views stored to defaults")
         } catch {
             print("Error saving cameras and lenses: \(error)")
         }
+        
         let dictionary : Dictionary<String,String> = Helper.viewToDictionary(view: self.view)
         defaults.set(dictionary, forKey: "view")
-        print("Views stored to defaults")
+        print("Current view stored to defaults")
         
         defaults.set(self.mapType, forKey: "mapType")
         print("MapType stored to defaults")
+        
+        // Store mapview zoom or region
     }
     
     // Retrieve from UserDefaults
@@ -127,9 +139,24 @@ class StateController {
                 fatalError("load cameras - Can't encode data: \(error)")
             }
         }
+        if let viewsData = UserDefaults.standard.data(forKey: "views") {
+            do {
+                guard let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(viewsData) as? [Dictionary<String,String>] else {
+                    fatalError("Error loading views form UserDefaults")
+                }
+                var loadedViews : [View] = []
+                for dict in array {
+                    let view : View = Helper.dictionaryToView(dictionary: dict, cameras: self.cameras, lenses: self.lenses)
+                    loadedViews.append(view)
+                }
+                setViews(loadedViews)
+            } catch {
+                fatalError("load views - Can't encode data: \(error)")
+            }
+        }
         if defaults.dictionary(forKey: "view") != nil {
         let dictionary : Dictionary<String,String> = defaults.dictionary(forKey: "view")! as! Dictionary<String,String>
-            updateView(Helper.dictionaryToView(dictionary: dictionary, cameras: self.cameras, lenses: self.lenses))
+            setView(Helper.dictionaryToView(dictionary: dictionary, cameras: self.cameras, lenses: self.lenses))
         } else {
             print("No view found in UserDefaults")
         }        

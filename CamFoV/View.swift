@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 
 
-public class View {
+public class View: Equatable {
     var name        : String
     var description : String
     var cameraPoint : MKMapPoint
@@ -55,6 +55,12 @@ public class View {
         self.orientation = Orientation(rawValue: viewData.orientation!)!
     }
     
+    public static func ==(lhs: View, rhs: View) -> Bool {
+        return lhs.name == rhs.name &&
+               lhs.description == rhs.description &&
+               lhs.camera == rhs.camera &&
+               lhs.lens == rhs.lens
+    }
     
     func toJsonString() -> String {
         var jsonString : String = "{"

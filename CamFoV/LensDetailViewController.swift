@@ -80,6 +80,21 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
     private func validateForm() -> Void {
         self.doneButton.isEnabled = self.nameValid && self.minApertureValid && self.maxFocalLengthValid && self.minApertureValid && self.maxApertureValid
         self.doneButton.alpha     = self.doneButton.isEnabled ? 1.0 : 0.5
+        
+        self.lensNameTextField.layer.borderColor = self.nameValid ? Constants.VALID_CLEAR : Constants.INVALID_RED
+        self.lensNameTextField.layer.borderWidth = self.nameValid ? 0 : 1
+        
+        self.minFocalLengthTextField.layer.borderColor = self.nameValid ? Constants.VALID_CLEAR : Constants.INVALID_RED
+        self.minFocalLengthTextField.layer.borderWidth = self.nameValid ? 0 : 1
+        
+        self.maxFocalLengthTextField.layer.borderColor = self.nameValid ? Constants.VALID_CLEAR : Constants.INVALID_RED
+        self.maxFocalLengthTextField.layer.borderWidth = self.nameValid ? 0 : 1
+        
+        self.minApertureTextField.layer.borderColor = self.nameValid ? Constants.VALID_CLEAR : Constants.INVALID_RED
+        self.minApertureTextField.layer.borderWidth = self.nameValid ? 0 : 1
+        
+        self.maxApertureTextField.layer.borderColor = self.nameValid ? Constants.VALID_CLEAR : Constants.INVALID_RED
+        self.maxApertureTextField.layer.borderWidth = self.nameValid ? 0 : 1
     }
     
     
@@ -106,21 +121,24 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
         return true
     }
     
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+        validateForm()
+    }
     public func textFieldDidEndEditing(_ textField: UITextField) {
         if textField === self.lensNameTextField {
             self.nameValid = !textField.text!.isEmpty
         } else if textField === self.minFocalLengthTextField {
             let value : Double = (textField.text! as NSString).doubleValue
-            self.minFocalLengthValid = value >= Constants.DEFAULT_LENS.minFocalLength
+            self.minFocalLengthValid = value >= Constants.DEFAULT_LENS.minFocalLength && value < self.maxFocalLength
         } else if textField == self.maxFocalLengthTextField {
             let value : Double = (textField.text! as NSString).doubleValue
-            self.maxFocalLengthValid = value <= Constants.DEFAULT_LENS.maxFocalLength
+            self.maxFocalLengthValid = value <= Constants.DEFAULT_LENS.maxFocalLength && value > self.minFocalLength
         } else if textField == self.minApertureTextField {
             let value : Double = (textField.text! as NSString).doubleValue
-            self.minApertureValid = value >= Constants.DEFAULT_LENS.minAperture
+            self.minApertureValid = value >= Constants.DEFAULT_LENS.minAperture && value < self.maxAperture
         } else if textField == self.maxApertureTextField {
             let value : Double = (textField.text! as NSString).doubleValue
-            self.maxApertureValid = value <= Constants.DEFAULT_LENS.maxAperture
+            self.maxApertureValid = value <= Constants.DEFAULT_LENS.maxAperture && value > self.minAperture
         }
         validateForm()
     }

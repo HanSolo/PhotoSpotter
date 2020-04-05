@@ -15,6 +15,8 @@
 		4F5DDD362435A29900A49C20 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD352435A29900A49C20 /* StateController.swift */; };
 		4F5DDD382435A42E00A49C20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD372435A42E00A49C20 /* Constants.swift */; };
 		4F5DDD3A2435A8D500A49C20 /* FoVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD392435A8D500A49C20 /* FoVController.swift */; };
+		4F79B0DA2439A50400F61CF4 /* ViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F79B0D92439A50400F61CF4 /* ViewViewController.swift */; };
+		4F79B0DC2439A80500F61CF4 /* ViewDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F79B0DB2439A80500F61CF4 /* ViewDetailViewController.swift */; };
 		4F7D7B50242E270F00771992 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B4F242E270F00771992 /* AppDelegate.swift */; };
 		4F7D7B52242E270F00771992 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B51242E270F00771992 /* SceneDelegate.swift */; };
 		4F7D7B54242E270F00771992 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B53242E270F00771992 /* MapViewController.swift */; };
@@ -44,6 +46,8 @@
 		4F5DDD352435A29900A49C20 /* StateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 		4F5DDD372435A42E00A49C20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4F5DDD392435A8D500A49C20 /* FoVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoVController.swift; sourceTree = "<group>"; };
+		4F79B0D92439A50400F61CF4 /* ViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewViewController.swift; sourceTree = "<group>"; };
+		4F79B0DB2439A80500F61CF4 /* ViewDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDetailViewController.swift; sourceTree = "<group>"; };
 		4F7D7B4C242E270F00771992 /* CamFoV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CamFoV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F7D7B4F242E270F00771992 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F7D7B51242E270F00771992 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,10 +124,12 @@
 				4FF364F124376B0800A749A1 /* CameraDetailViewController.swift */,
 				4F135D92243857C4001B3F3F /* LensViewController.swift */,
 				4F135D9424386FE8001B3F3F /* LensDetailViewController.swift */,
+				4F79B0D92439A50400F61CF4 /* ViewViewController.swift */,
+				4F79B0DB2439A80500F61CF4 /* ViewDetailViewController.swift */,
 				4F5DDD372435A42E00A49C20 /* Constants.swift */,
 				4F5DDD392435A8D500A49C20 /* FoVController.swift */,
-				4F5DDD352435A29900A49C20 /* StateController.swift */,
 				4F2E8A382436F3A0007C9360 /* SunMoon.swift */,
+				4F5DDD352435A29900A49C20 /* StateController.swift */,
 			);
 			path = CamFoV;
 			sourceTree = "<group>";
@@ -209,6 +215,7 @@
 				4F7D7B54242E270F00771992 /* MapViewController.swift in Sources */,
 				4F7D7B71242E28D900771992 /* Lenses.swift in Sources */,
 				4F135D93243857C4001B3F3F /* LensViewController.swift in Sources */,
+				4F79B0DC2439A80500F61CF4 /* ViewDetailViewController.swift in Sources */,
 				4F7D7B72242E28D900771992 /* SensorFormat.swift in Sources */,
 				4F9B85AB2434CABF00289E8A /* CameraViewController.swift in Sources */,
 				4F7D7B79242E28D900771992 /* Orientation.swift in Sources */,
@@ -227,6 +234,7 @@
 				4F9B85A724346EDD00289E8A /* ViewData.swift in Sources */,
 				4F7D7B52242E270F00771992 /* SceneDelegate.swift in Sources */,
 				4F5DDD382435A42E00A49C20 /* Constants.swift in Sources */,
+				4F79B0DA2439A50400F61CF4 /* ViewViewController.swift in Sources */,
 				4F5DDD3A2435A8D500A49C20 /* FoVController.swift in Sources */,
 				4F2E8A392436F3A0007C9360 /* SunMoon.swift in Sources */,
 			);

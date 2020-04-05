@@ -1,18 +1,19 @@
 //
-//  LensViewController.swift
+//  ViewViewController.swift
 //  CamFoV
 //
-//  Created by Gerrit Grunwald on 04.04.20.
+//  Created by Gerrit Grunwald on 05.04.20.
 //  Copyright © 2020 Gerrit Grunwald. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-class LensViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FoVController {
+class ViewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FoVController {
     var stateController : StateController?
     
     // cell reuse id (cells that scroll out of view can be reused)
-    let cellReuseIdentifier = "lensCell"
+    let cellReuseIdentifier = "viewCell"
     
     @IBOutlet weak var mapButton     : UIBarButtonItem!
     @IBOutlet weak var camerasButton : UIBarButtonItem!
@@ -20,9 +21,9 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var viewsButton   : UIBarButtonItem!
     
     @IBOutlet weak var tableView     : UITableView!
-    @IBOutlet weak var editLensButton: UIButton!
-    @IBOutlet weak var addLensButton : UIButton!
-        
+    @IBOutlet weak var editViewButton: UIButton!
+    @IBOutlet weak var addViewButton : UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,60 +33,49 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Register the table view cell class and its reuse id
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        self.tableView.register(LensCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        self.tableView.register(ViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
 
         // (optional) include this line if you want to remove the extra empty cell divider lines
         self.tableView.tableFooterView = UIView()
 
-        
         // This view controller itself will provide the delegate methods and row data for the table view.
         tableView.delegate   = self
         tableView.dataSource = self
         
-        let lensIndex : IndexPath = IndexPath(row: (stateController!.lenses.firstIndex(of: stateController!.view.lens) ?? 0), section: 0)
-        tableView.selectRow(at: lensIndex, animated: true, scrollPosition: .none)
-        tableView.cellForRow(at: lensIndex)?.accessoryType = .checkmark
+        let viewIndex : IndexPath = IndexPath(row: (stateController!.views.firstIndex(of: stateController!.view) ?? 0), section: 0)
+        tableView.selectRow(at: viewIndex, animated: true, scrollPosition: .none)
+        tableView.cellForRow(at: viewIndex)?.accessoryType = .checkmark
     }
     
     
     // MARK: Event handling
     @IBAction func mapButtonPressed(_ sender: Any) {
         stateController!.store()
-        /*
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mapVC      = storyboard.instantiateViewController(identifier: "MapViewController")
-        show(mapVC, sender: self)
-        */
-        performSegue(withIdentifier: "lensesViewToMapView", sender: self)
+        performSegue(withIdentifier: "viewsViewToMapView", sender: self)
     }
     @IBAction func camerasButtonPressed(_ sender: Any) {
         stateController!.store()
-        /*
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let cameraVC   = storyboard.instantiateViewController(identifier: "CameraViewController")
-        show(cameraVC, sender: self)
-        */
-        performSegue(withIdentifier: "lensesViewToCamerasView", sender: self)
+        performSegue(withIdentifier: "viewsViewToCamerasView", sender: self)
     }
     @IBAction func lensesButtonPressed(_ sender: Any) {
+        stateController!.store()
+        performSegue(withIdentifier: "viewsViewToLensesView", sender: self)
     }
     @IBAction func viewsButtonPressed(_ sender: Any) {
-        stateController!.store()
-        performSegue(withIdentifier: "lensesViewToViewsView", sender: self)
     }
     
-    @IBAction func addLensButtonPressed(_ sender: Any) {
-        performSegue(withIdentifier: "lensesViewToLensDetailsView", sender: self)
+    @IBAction func addViewButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "viewsViewToViewDetailsView", sender: self)
     }
     
-    @IBAction func editLensButtonPressed(_ sender: Any) {
+    @IBAction func editViewButtonPressed(_ sender: Any) {
     }
     
     
     @IBAction func done(segue:UIStoryboardSegue) {
-        let lensDetailVC = segue.source as! LensDetailViewController
-        let lens = Lens(name: lensDetailVC.lensName, minFocalLength: lensDetailVC.minFocalLength, maxFocalLength: lensDetailVC.maxFocalLength, minAperture: lensDetailVC.minAperture, maxAperture: lensDetailVC.maxAperture)
-        stateController?.addLens(lens)
+        let viewDetailVC = segue.source as! ViewDetailViewController
+        let view = View(name: viewDetailVC.name, description: viewDetailVC.descr, cameraPoint: stateController!.view.cameraPoint, motifPoint: stateController!.view.motifPoint, camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation)
+        stateController?.addView(view)
         tableView.reloadData()
     }
     
@@ -96,15 +86,15 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stateController!.lenses.count
+        return stateController!.views.count
     }
 
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell                   = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! LensCell
-        let lens : Lens            = stateController!.lenses[indexPath.item]
-        cell.textLabel?.text       = lens.name
-        cell.detailTextLabel?.text = "[\(lens.description())]"
+        let cell                   = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ViewCell
+        let view : View            = stateController!.views[indexPath.item]
+        cell.textLabel?.text       = view.name
+        cell.detailTextLabel?.text = view.description
         return cell
     }
     
@@ -115,8 +105,8 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let lens = stateController!.lenses[indexPath.item]
-        stateController!.view.lens = lens
+        let view = stateController!.views[indexPath.item]
+        stateController!.setView(view)
         
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
     }
@@ -131,7 +121,7 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
 }
 
 
-class LensCell: UITableViewCell {
+class ViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         self.tintColor = UIColor.systemTeal

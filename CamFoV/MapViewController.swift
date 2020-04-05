@@ -70,8 +70,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var focalLength      : Double        = 50
     var aperture         : Double        = 2.8
     var orientation      : Orientation   = Orientation.landscape
-    var camera           : Camera?
-    var lens             : Lens?
     let sunMoonCalc      : SunMoon       = SunMoon()
     var eventAngles      : Dictionary<String, (Double, Double)>?
     var pointsSunrise    : [MKMapPoint]  = []
@@ -111,7 +109,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.showsCompass                = true
         mapView.showsUserLocation           = true
         
-    
         self.triangle                       = Triangle()
         self.minTriangle                    = Triangle()
         self.maxTriangle                    = Triangle()
@@ -144,6 +141,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.apertureLabel.text             = String(format: "f %.1f", Double(round(self.apertureSlider!.value * 10) / 10))
         self.minApertureLabel.text          = String(format: "%.1f", Double(round(stateController!.view.lens.minAperture * 10) / 10))
         self.maxApertureLabel.text          = String(format: "%.1f", Double(round(stateController!.view.lens.maxAperture * 10) / 10))
+        
+        let lensIndex : Int = stateController!.lenses.firstIndex(of: stateController!.view.lens) ?? 0
+        //self.lensPicker.selectedRow(inComponent: lensIndex)
+        print("lens index: \(lensIndex)")
+        
+        let cameraIndex : Int = stateController!.cameras.firstIndex(of: stateController!.view.camera) ?? 0
+        //self.cameraPicker.selectedRow(inComponent: cameraIndex)
                 
         let mapTypeSelectorTextAttr         = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let mapTypeSelectorTextAttrSelected = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -169,7 +173,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBAction func mapButtonPressed(_ sender: Any) {
     }
     @IBAction func camerasButtonPressed(_ sender: Any) {
-        stateController!.updateView(createView(name: "current", description: ""))
+        stateController!.setView(createView(name: "current", description: ""))
         stateController!.store()
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -177,17 +181,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         show(cameraVC, sender: self)
     }
     @IBAction func lensesButtonPressed(_ sender: Any) {
-        stateController!.updateView(createView(name: "current", description: ""))
+        stateController!.setView(createView(name: "current", description: ""))
         stateController!.store()
-        
-        /*
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let lensVC = storyboard.instantiateViewController(identifier: "LensViewController")
-        show(lensVC, sender: self)
-        */
         performSegue(withIdentifier: "mapViewToLensesView", sender: self)
     }
     @IBAction func viewsButtonPressed(_ sender: Any) {
+        stateController!.store()
+        performSegue(withIdentifier: "mapViewToViewsView", sender: self)
     }
     
     @IBAction func focalLengthChanged(_ sender: Any) {

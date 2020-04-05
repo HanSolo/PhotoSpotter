@@ -25,7 +25,7 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView        : UITableView!
     @IBOutlet weak var editCameraButton : UIButton!
     @IBOutlet weak var addCameraButton  : UIButton!
-    
+        
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +44,10 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // This view controller itself will provide the delegate methods and row data for the table view.
         tableView.delegate   = self
         tableView.dataSource = self
+                
+        let cameraIndex : IndexPath = IndexPath(row: (stateController!.cameras.firstIndex(of: stateController!.view.camera) ?? 0), section: 0)
+        tableView.selectRow(at: cameraIndex, animated: true, scrollPosition: .none)
+        tableView.cellForRow(at: cameraIndex)?.accessoryType = .checkmark
     }
 
     
@@ -57,13 +61,16 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     @IBAction func lensesButtonPressed(_ sender: Any) {
         stateController!.store()
-        
+        /*
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let lensVC   = storyboard.instantiateViewController(identifier: "LensViewController")
         show(lensVC, sender: self)
+        */
+        performSegue(withIdentifier: "camerasViewToLensesView", sender: self)
     }
     @IBAction func viewsButtonPressed(_ sender: Any) {
-    
+        stateController!.store()
+        performSegue(withIdentifier: "camerasViewToViewsView", sender: self)
     }
     
     @IBAction func editCameraButtonPressed(_ sender: Any) {
@@ -110,13 +117,18 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let camera = stateController!.cameras[indexPath.item]
-        print("You tapped camera \(camera.name).")
         stateController!.view.camera = camera
         
+        self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        /*
         let alertController = UIAlertController(title: camera.name, message: " is in da house!", preferredStyle: .alert)
         let action = UIAlertAction(title: "Ok", style: .default) { _ in }
         alertController.addAction(action)
         self.present(alertController, animated: true, completion: nil)
+        */
+    }
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
     }
 }
 
@@ -124,6 +136,7 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
 class CameraCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        self.tintColor = UIColor.systemTeal
     }
     
     required init?(coder: NSCoder) {
