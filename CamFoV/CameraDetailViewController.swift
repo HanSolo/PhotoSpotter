@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class CameraDetailViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, FoVController {
+public class CameraDetailViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, FoVController {
     var stateController: StateController?
     
     
@@ -18,10 +18,10 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
     @IBOutlet weak var cancelButton       : UIButton!
     @IBOutlet weak var doneButton         : UIButton!
     
-    var nameIconView         : UIImageView            = UIImageView(image: Constants.INFO_ICON)
+    var nameIconView         : UIView?
     var tapGestureRecognizer : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showAlert(sender:)))
     
-    var cameraName           : String                 = ""
+    var name                 : String                 = ""
     var sensorFormat         : SensorFormat           = SensorFormat.FULL_FORMAT
     
     var nameValid            : Bool                   = false
@@ -35,34 +35,42 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
         
         self.sensorFormatPicker.dataSource = self
         self.sensorFormatPicker.delegate   = self
-        
-        nameTextField.addTarget(self, action: #selector(updateName), for: .editingChanged)
+                
+        nameTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
         
         tapGestureRecognizer.numberOfTapsRequired = 1
-        Helper.setupTextFieldWithIcon(field: nameTextField, imageView: nameIconView, gestureRecognizer: tapGestureRecognizer)
+        nameIconView = Helper.setupTextFieldWithAlertIcon(field: nameTextField, gestureRecognizer: tapGestureRecognizer)
     }
     
     
     @objc private func updateName() -> Void {
-        self.cameraName = nameTextField!.text!
+        self.name = nameTextField!.text!
         self.nameValid  = !nameTextField!.text!.isEmpty
     }
     
     
     public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "doneSegue" {
-            cameraName   = nameTextField.text!
+            name   = nameTextField.text!
             //sensorFormat = Constants.SENSOR_FORMATS[sensorFormatPicker.selectedRow(inComponent: 0)]
             print("doneSegue prepared with data: \(String(describing: nameTextField!.text))")
         }
     }
     
     
+    @objc private func textFieldChanged(_ textField: UITextField) -> Void {
+        if (textField === nameTextField) {
+            self.name      = textField.text!
+            self.nameValid = !textField.text!.isEmpty
+        }
+        validateForm()
+    }
+    
     private func validateForm() -> Void {
         self.doneButton.isEnabled = self.nameValid
         self.doneButton.alpha     = self.doneButton.isEnabled ? 1.0 : 0.5
         
-        nameIconView.isHidden = nameValid
+        nameIconView!.isHidden = nameValid
     }
     
     @objc private func showAlert(sender: UIGestureRecognizer) -> Void {
@@ -112,16 +120,5 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
         if pickerView === sensorFormatPicker {
             self.sensorFormat = Constants.SENSOR_FORMATS[row]
         }
-    }
-    
-    //MARK - UITextField Delegates
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
-        validateForm()
-    }
-    public func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField === self.nameTextField {
-            self.nameValid = !textField.text!.isEmpty
-        }
-        validateForm()
     }
 }

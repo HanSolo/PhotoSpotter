@@ -212,12 +212,22 @@ public class Helper {
         return dateFormatter.string(from: date)
     }
     
-    public static func setupTextFieldWithIcon(field: UITextField, imageView: UIImageView, gestureRecognizer: UITapGestureRecognizer) -> Void {
-        field.rightViewMode                = .always
-        field.rightView                    = imageView
-        imageView.isHidden                 = true
-        imageView.tintColor                = UIColor.red
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(gestureRecognizer)
+    public static func setupTextFieldWithAlertIcon(field: UITextField, gestureRecognizer: UITapGestureRecognizer) -> UIView {
+        let iconView       = UIImageView(frame: CGRect(x: 0, y: 0, width: Constants.ATTENTION_ICON.size.width, height: Constants.ATTENTION_ICON.size.height))
+        iconView.image     = Constants.ATTENTION_ICON
+        iconView.tintColor = UIColor.red
+        
+        let iconContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: Constants.ATTENTION_ICON.size.width + 5, height: Constants.ATTENTION_ICON.size.height))
+        iconContainerView.addSubview(iconView)
+        
+        field.rightViewMode                        = .always
+        
+        field.rightView                            = iconContainerView
+        iconContainerView.isHidden                 = true
+        iconContainerView.tintColor                = UIColor.red
+        iconContainerView.isUserInteractionEnabled = true
+        iconContainerView.addGestureRecognizer(gestureRecognizer)
+        
+        return iconContainerView
     }
 }

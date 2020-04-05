@@ -85,7 +85,7 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBAction func done(segue:UIStoryboardSegue) {
         let cameraDetailVC = segue.source as! CameraDetailViewController
-        let camera = Camera(name: cameraDetailVC.cameraName, sensorFormat: cameraDetailVC.sensorFormat)
+        let camera = Camera(name: cameraDetailVC.name, sensorFormat: cameraDetailVC.sensorFormat)
         stateController?.addCamera(camera)
         tableView.reloadData()
     }

@@ -22,11 +22,11 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
     @IBOutlet weak var cancelButton            : UIButton!
     @IBOutlet weak var doneButton              : UIButton!
     
-    var nameIconView           : UIImageView = UIImageView(image: Constants.INFO_ICON)
-    var minFocalLengthIconView : UIImageView = UIImageView(image: Constants.INFO_ICON)
-    var maxFocalLengthIconView : UIImageView = UIImageView(image: Constants.INFO_ICON)
-    var minApertureIconView    : UIImageView = UIImageView(image: Constants.INFO_ICON)
-    var maxApertureIconView    : UIImageView = UIImageView(image: Constants.INFO_ICON)
+    var nameIconView           : UIView?
+    var minFocalLengthIconView : UIView?
+    var maxFocalLengthIconView : UIView?
+    var minApertureIconView    : UIView?
+    var maxApertureIconView    : UIView?
     var tapGestureRecognizer   : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showAlert(sender:)))
     
     var lensName               : String = ""
@@ -36,10 +36,10 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
     var maxAperture            : Double = Constants.DEFAULT_LENS.maxAperture
     
     var nameValid              : Bool   = false
-    var minFocalLengthValid    : Bool = false
-    var maxFocalLengthValid    : Bool = false
-    var minApertureValid       : Bool = false
-    var maxApertureValid       : Bool = false
+    var minFocalLengthValid    : Bool   = false
+    var maxFocalLengthValid    : Bool   = false
+    var minApertureValid       : Bool   = false
+    var maxApertureValid       : Bool   = false
     
     
     public override func viewDidLoad() {
@@ -48,60 +48,57 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
         self.stateController = appDelegate.stateController
         
-        nameTextField.delegate       = self
+        nameTextField.delegate           = self
         minFocalLengthTextField.delegate = self
         maxFocalLengthTextField.delegate = self
         minApertureTextField.delegate    = self
         maxApertureTextField.delegate    = self
         
-        nameTextField.addTarget(self, action: #selector(updateName), for: .editingChanged)
-        minFocalLengthTextField.addTarget(self, action: #selector(updateMinFocalLength), for: .editingChanged)
-        maxFocalLengthTextField.addTarget(self, action: #selector(updateMaxFocalLength), for: .editingChanged)
-        minApertureTextField.addTarget(self, action: #selector(updateMinAperture), for: .editingChanged)
-        maxApertureTextField.addTarget(self, action: #selector(updateMaxAperture), for: .editingChanged)
+        nameTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+        minFocalLengthTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+        maxFocalLengthTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+        minApertureTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+        maxApertureTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
         
         tapGestureRecognizer.numberOfTapsRequired = 1
-        Helper.setupTextFieldWithIcon(field: nameTextField,       imageView: nameIconView, gestureRecognizer: tapGestureRecognizer)
-        Helper.setupTextFieldWithIcon(field: minFocalLengthTextField, imageView: minFocalLengthIconView, gestureRecognizer: tapGestureRecognizer)
-        Helper.setupTextFieldWithIcon(field: maxFocalLengthTextField, imageView: maxFocalLengthIconView, gestureRecognizer: tapGestureRecognizer)
-        Helper.setupTextFieldWithIcon(field: minApertureTextField,    imageView: minApertureIconView, gestureRecognizer: tapGestureRecognizer)
-        Helper.setupTextFieldWithIcon(field: maxApertureTextField,    imageView: maxApertureIconView, gestureRecognizer: tapGestureRecognizer)
+        nameIconView           = Helper.setupTextFieldWithAlertIcon(field: nameTextField,           gestureRecognizer: tapGestureRecognizer)
+        minFocalLengthIconView = Helper.setupTextFieldWithAlertIcon(field: minFocalLengthTextField, gestureRecognizer: tapGestureRecognizer)
+        maxFocalLengthIconView = Helper.setupTextFieldWithAlertIcon(field: maxFocalLengthTextField, gestureRecognizer: tapGestureRecognizer)
+        minApertureIconView    = Helper.setupTextFieldWithAlertIcon(field: minApertureTextField,    gestureRecognizer: tapGestureRecognizer)
+        maxApertureIconView    = Helper.setupTextFieldWithAlertIcon(field: maxApertureTextField,    gestureRecognizer: tapGestureRecognizer)
     }
     
     
-    @objc private func updateName() -> Void {
-        self.lensName  = nameTextField!.text!
-        self.nameValid = !nameTextField!.text!.isEmpty
+    @objc private func textFieldChanged(_ textField: UITextField) -> Void {
+        if (textField === nameTextField) {
+            self.lensName      = textField.text!
+            self.nameValid = !textField.text!.isEmpty
+        } else if textField === minFocalLengthTextField {
+            self.minFocalLength      = (textField.text! as NSString).doubleValue
+            self.minFocalLengthValid = minFocalLength >= Constants.DEFAULT_LENS.minFocalLength && minFocalLength < self.maxFocalLength
+        } else if textField === maxFocalLengthTextField {
+            self.maxFocalLength      = (textField.text! as NSString).doubleValue
+            self.maxFocalLengthValid = maxFocalLength <= Constants.DEFAULT_LENS.maxFocalLength && maxFocalLength > self.minFocalLength
+        } else if textField === minApertureTextField {
+            self.minAperture      = (textField.text! as NSString).doubleValue
+            self.minApertureValid = minAperture >= Constants.DEFAULT_LENS.minAperture && minAperture < self.maxAperture
+        } else if textField === maxApertureTextField {
+            self.maxAperture      = (textField.text! as NSString).doubleValue
+            self.maxApertureValid = maxAperture <= Constants.DEFAULT_LENS.maxAperture && maxAperture > self.minAperture
+        }
+        validateForm()
     }
-    @objc private func updateMinFocalLength() -> Void {
-        self.minFocalLength      = (minFocalLengthTextField!.text! as NSString).doubleValue
-        self.minFocalLengthValid = !minFocalLengthTextField!.text!.isEmpty
-    }
-    @objc private func updateMaxFocalLength() -> Void {
-        self.maxFocalLength      = (maxFocalLengthTextField!.text! as NSString).doubleValue
-        self.maxFocalLengthValid = !maxFocalLengthTextField!.text!.isEmpty
-    }
-    @objc private func updateMinAperture() -> Void {
-        self.minAperture      = (minApertureTextField!.text! as NSString).doubleValue
-        self.minApertureValid = !minApertureTextField!.text!.isEmpty
-    }
-    @objc private func updateMaxAperture() -> Void {
-        self.maxAperture      = (maxApertureTextField!.text! as NSString).doubleValue
-        self.maxApertureValid = !maxApertureTextField!.text!.isEmpty
-    }
-    
-    
     
     
     private func validateForm() -> Void {
         self.doneButton.isEnabled = self.nameValid && self.minApertureValid && self.maxFocalLengthValid && self.minApertureValid && self.maxApertureValid
         self.doneButton.alpha     = self.doneButton.isEnabled ? 1.0 : 0.5
     
-        nameIconView.isHidden           = self.nameValid
-        minFocalLengthIconView.isHidden = self.minFocalLengthValid
-        maxFocalLengthIconView.isHidden = self.maxFocalLengthValid
-        minApertureIconView.isHidden    = self.minApertureValid
-        maxApertureIconView.isHidden    = self.maxApertureValid
+        nameIconView!.isHidden           = self.nameValid
+        minFocalLengthIconView!.isHidden = self.minFocalLengthValid
+        maxFocalLengthIconView!.isHidden = self.maxFocalLengthValid
+        minApertureIconView!.isHidden    = self.minApertureValid
+        maxApertureIconView!.isHidden    = self.maxApertureValid
     }
 
     
@@ -140,27 +137,5 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
             }
         }
         return true
-    }
-    
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
-        validateForm()
-    }
-    public func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField === self.nameTextField {
-            self.nameValid = !textField.text!.isEmpty
-        } else if textField === self.minFocalLengthTextField {
-            let value : Double = (textField.text! as NSString).doubleValue
-            self.minFocalLengthValid = value >= Constants.DEFAULT_LENS.minFocalLength && value < self.maxFocalLength
-        } else if textField == self.maxFocalLengthTextField {
-            let value : Double = (textField.text! as NSString).doubleValue
-            self.maxFocalLengthValid = value <= Constants.DEFAULT_LENS.maxFocalLength && value > self.minFocalLength
-        } else if textField == self.minApertureTextField {
-            let value : Double = (textField.text! as NSString).doubleValue
-            self.minApertureValid = value >= Constants.DEFAULT_LENS.minAperture && value < self.maxAperture
-        } else if textField == self.maxApertureTextField {
-            let value : Double = (textField.text! as NSString).doubleValue
-            self.maxApertureValid = value <= Constants.DEFAULT_LENS.maxAperture && value > self.minAperture
-        }
-        validateForm()
     }
 }

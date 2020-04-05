@@ -542,7 +542,7 @@
                         <segue destination="BYZ-38-t0r" kind="show" identifier="camerasViewToMapView" destinationCreationSelector="exitCamerasViewController:" id="8Mg-Zc-6jN"/>
                         <segue destination="ZSD-z4-pEY" kind="presentation" identifier="camerasViewToCameraDetailsView" id="DbK-qt-g9Q"/>
                         <segue destination="jc5-Uv-5Ut" kind="show" identifier="camerasViewToLensesView" id="Gpb-NS-Hlh"/>
-                        <segue destination="5BG-JW-kIW" kind="show" identifier="camerasViewToViewsViiew" id="xGg-4x-7zw"/>
+                        <segue destination="5BG-JW-kIW" kind="show" identifier="camerasViewToViewsView" id="xGg-4x-7zw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HNz-Z9-Js7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

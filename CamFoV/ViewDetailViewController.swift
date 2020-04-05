@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class ViewDetailViewController: UIViewController, UITextFieldDelegate, FoVController {
+public class ViewDetailViewController: UIViewController, FoVController {
     var stateController: StateController?
     
     
@@ -21,7 +21,7 @@ public class ViewDetailViewController: UIViewController, UITextFieldDelegate, Fo
     @IBOutlet weak var cancelButton         : UIButton!
     @IBOutlet weak var doneButton           : UIButton!
     
-    var nameIconView         : UIImageView = UIImageView(image: Constants.INFO_ICON)
+    var nameIconView         : UIView?
     var tapGestureRecognizer : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showAlert(sender:)))
     
     var name                 : String      = ""
@@ -37,37 +37,31 @@ public class ViewDetailViewController: UIViewController, UITextFieldDelegate, Fo
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
         self.stateController = appDelegate.stateController
         
-        nameTextField.delegate        = self
-        descriptionTextField.delegate = self
-        
-        nameTextField.addTarget(self, action: #selector(updateName), for: .editingChanged)
-        descriptionTextField.addTarget(self, action: #selector(updateDescription), for: .editingChanged)
+        nameTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
         
         cameraTextField.text  = stateController!.view.camera.name
         lensTextField.text    = stateController!.view.lens.name
-                
+        
         tapGestureRecognizer.numberOfTapsRequired = 1
         
-        Helper.setupTextFieldWithIcon(field: nameTextField, imageView: nameIconView, gestureRecognizer: tapGestureRecognizer)
+        nameIconView = Helper.setupTextFieldWithAlertIcon(field: nameTextField, gestureRecognizer: tapGestureRecognizer)
     }
     
     
-    @objc private func updateName() -> Void {
-        self.name      = nameTextField!.text!
-        self.nameValid = !nameTextField!.text!.isEmpty
+    @objc private func textFieldChanged(_ textField: UITextField) -> Void {
+        if (textField === nameTextField) {
+            self.name      = textField.text!
+            self.nameValid = !textField.text!.isEmpty
+        }
+        validateForm()
     }
-    @objc private func updateDescription() -> Void {
-        self.descr            = descriptionTextField!.text!
-        self.descriptionValid = !descriptionTextField!.text!.isEmpty
-    }
-    
     
     
     private func validateForm() -> Void {
         self.doneButton.isEnabled = self.nameValid
         self.doneButton.alpha     = self.doneButton.isEnabled ? 1.0 : 0.5
         
-        nameIconView.isHidden = nameValid
+        nameIconView!.isHidden = nameValid
     }
     
     @objc private func showAlert(sender: UIGestureRecognizer) -> Void {
@@ -89,18 +83,5 @@ public class ViewDetailViewController: UIViewController, UITextFieldDelegate, Fo
             self.name  = nameTextField.text!
             self.descr = descriptionTextField.text!
         }
-    }
-    
-    //MARK - UITextField Delegates
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
-        validateForm()
-    }
-    public func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField === self.nameTextField {
-            self.nameValid = !textField.text!.isEmpty
-        } else if textField === self.descriptionTextField {
-            self.descriptionValid = !textField.text!.isEmpty
-        }
-        validateForm()
     }
 }
