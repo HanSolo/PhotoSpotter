@@ -13,15 +13,18 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
     var stateController: StateController?
     
     
-    @IBOutlet weak var cameraNameTextField : UITextField!
-    @IBOutlet weak var sensorFormatPicker  : UIPickerView!
-    @IBOutlet weak var cancelButton        : UIButton!
-    @IBOutlet weak var doneButton          : UIButton!
+    @IBOutlet weak var nameTextField      : UITextField!
+    @IBOutlet weak var sensorFormatPicker : UIPickerView!
+    @IBOutlet weak var cancelButton       : UIButton!
+    @IBOutlet weak var doneButton         : UIButton!
     
-    var cameraName  : String       = ""
-    var sensorFormat: SensorFormat = SensorFormat.FULL_FORMAT
+    var nameIconView         : UIImageView            = UIImageView(image: Constants.INFO_ICON)
+    var tapGestureRecognizer : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showAlert(sender:)))
     
-    var nameValid   : Bool         = false
+    var cameraName           : String                 = ""
+    var sensorFormat         : SensorFormat           = SensorFormat.FULL_FORMAT
+    
+    var nameValid            : Bool                   = false
     
     
     public override func viewDidLoad() {
@@ -33,21 +36,24 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
         self.sensorFormatPicker.dataSource = self
         self.sensorFormatPicker.delegate   = self
         
-        cameraNameTextField.addTarget(self, action: #selector(updateName), for: .editingChanged)
+        nameTextField.addTarget(self, action: #selector(updateName), for: .editingChanged)
+        
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        Helper.setupTextFieldWithIcon(field: nameTextField, imageView: nameIconView, gestureRecognizer: tapGestureRecognizer)
     }
     
     
     @objc private func updateName() -> Void {
-        self.cameraName = cameraNameTextField!.text!
-        self.nameValid  = !cameraNameTextField!.text!.isEmpty
+        self.cameraName = nameTextField!.text!
+        self.nameValid  = !nameTextField!.text!.isEmpty
     }
     
     
     public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "doneSegue" {
-            cameraName   = cameraNameTextField.text!
+            cameraName   = nameTextField.text!
             //sensorFormat = Constants.SENSOR_FORMATS[sensorFormatPicker.selectedRow(inComponent: 0)]
-            print("doneSegue prepared with data: \(String(describing: cameraNameTextField!.text))")
+            print("doneSegue prepared with data: \(String(describing: nameTextField!.text))")
         }
     }
     
@@ -56,8 +62,20 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
         self.doneButton.isEnabled = self.nameValid
         self.doneButton.alpha     = self.doneButton.isEnabled ? 1.0 : 0.5
         
-        self.cameraNameTextField.layer.borderColor = self.nameValid ? Constants.VALID_CLEAR : Constants.INVALID_RED
-        self.cameraNameTextField.layer.borderWidth = self.nameValid ? 0 : 1
+        nameIconView.isHidden = nameValid
+    }
+    
+    @objc private func showAlert(sender: UIGestureRecognizer) -> Void {
+        var title  : String = "Error"
+        var message: String = ""
+        if sender === tapGestureRecognizer {
+            title   = "Name"
+            message = "Please type in a name"
+        }
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default) { _ in }
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     
@@ -101,7 +119,7 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
         validateForm()
     }
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField === self.cameraNameTextField {
+        if textField === self.nameTextField {
             self.nameValid = !textField.text!.isEmpty
         }
         validateForm()

@@ -211,4 +211,13 @@ public class Helper {
         dateFormatter.dateFormat = formatString.isEmpty ? "dd.MM.yyyy HH:mm:ss" : formatString
         return dateFormatter.string(from: date)
     }
+    
+    public static func setupTextFieldWithIcon(field: UITextField, imageView: UIImageView, gestureRecognizer: UITapGestureRecognizer) -> Void {
+        field.rightViewMode                = .always
+        field.rightView                    = imageView
+        imageView.isHidden                 = true
+        imageView.tintColor                = UIColor.red
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(gestureRecognizer)
+    }
 }

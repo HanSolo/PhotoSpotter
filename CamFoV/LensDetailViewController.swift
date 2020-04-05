@@ -13,7 +13,7 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
     var stateController: StateController?
     
     
-    @IBOutlet weak var lensNameTextField       : UITextField!
+    @IBOutlet weak var nameTextField           : UITextField!
     @IBOutlet weak var minFocalLengthTextField : UITextField!
     @IBOutlet weak var maxFocalLengthTextField : UITextField!
     @IBOutlet weak var minApertureTextField    : UITextField!
@@ -22,17 +22,24 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
     @IBOutlet weak var cancelButton            : UIButton!
     @IBOutlet weak var doneButton              : UIButton!
     
-    var lensName            : String = ""
-    var minFocalLength      : Double = Constants.DEFAULT_LENS.minFocalLength
-    var maxFocalLength      : Double = Constants.DEFAULT_LENS.maxFocalLength
-    var minAperture         : Double = Constants.DEFAULT_LENS.minAperture
-    var maxAperture         : Double = Constants.DEFAULT_LENS.maxAperture
+    var nameIconView           : UIImageView = UIImageView(image: Constants.INFO_ICON)
+    var minFocalLengthIconView : UIImageView = UIImageView(image: Constants.INFO_ICON)
+    var maxFocalLengthIconView : UIImageView = UIImageView(image: Constants.INFO_ICON)
+    var minApertureIconView    : UIImageView = UIImageView(image: Constants.INFO_ICON)
+    var maxApertureIconView    : UIImageView = UIImageView(image: Constants.INFO_ICON)
+    var tapGestureRecognizer   : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showAlert(sender:)))
     
-    var nameValid           : Bool   = false
-    var minFocalLengthValid : Bool = false
-    var maxFocalLengthValid : Bool = false
-    var minApertureValid    : Bool = false
-    var maxApertureValid    : Bool = false
+    var lensName               : String = ""
+    var minFocalLength         : Double = Constants.DEFAULT_LENS.minFocalLength
+    var maxFocalLength         : Double = Constants.DEFAULT_LENS.maxFocalLength
+    var minAperture            : Double = Constants.DEFAULT_LENS.minAperture
+    var maxAperture            : Double = Constants.DEFAULT_LENS.maxAperture
+    
+    var nameValid              : Bool   = false
+    var minFocalLengthValid    : Bool = false
+    var maxFocalLengthValid    : Bool = false
+    var minApertureValid       : Bool = false
+    var maxApertureValid       : Bool = false
     
     
     public override func viewDidLoad() {
@@ -41,23 +48,30 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
         self.stateController = appDelegate.stateController
         
-        lensNameTextField.delegate       = self
+        nameTextField.delegate       = self
         minFocalLengthTextField.delegate = self
         maxFocalLengthTextField.delegate = self
         minApertureTextField.delegate    = self
         maxApertureTextField.delegate    = self
         
-        lensNameTextField.addTarget(self, action: #selector(updateName), for: .editingChanged)
+        nameTextField.addTarget(self, action: #selector(updateName), for: .editingChanged)
         minFocalLengthTextField.addTarget(self, action: #selector(updateMinFocalLength), for: .editingChanged)
         maxFocalLengthTextField.addTarget(self, action: #selector(updateMaxFocalLength), for: .editingChanged)
         minApertureTextField.addTarget(self, action: #selector(updateMinAperture), for: .editingChanged)
         maxApertureTextField.addTarget(self, action: #selector(updateMaxAperture), for: .editingChanged)
+        
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        Helper.setupTextFieldWithIcon(field: nameTextField,       imageView: nameIconView, gestureRecognizer: tapGestureRecognizer)
+        Helper.setupTextFieldWithIcon(field: minFocalLengthTextField, imageView: minFocalLengthIconView, gestureRecognizer: tapGestureRecognizer)
+        Helper.setupTextFieldWithIcon(field: maxFocalLengthTextField, imageView: maxFocalLengthIconView, gestureRecognizer: tapGestureRecognizer)
+        Helper.setupTextFieldWithIcon(field: minApertureTextField,    imageView: minApertureIconView, gestureRecognizer: tapGestureRecognizer)
+        Helper.setupTextFieldWithIcon(field: maxApertureTextField,    imageView: maxApertureIconView, gestureRecognizer: tapGestureRecognizer)
     }
     
     
     @objc private func updateName() -> Void {
-        self.lensName  = lensNameTextField!.text!
-        self.nameValid = !lensNameTextField!.text!.isEmpty
+        self.lensName  = nameTextField!.text!
+        self.nameValid = !nameTextField!.text!.isEmpty
     }
     @objc private func updateMinFocalLength() -> Void {
         self.minFocalLength      = (minFocalLengthTextField!.text! as NSString).doubleValue
@@ -77,31 +91,38 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
     }
     
     
+    
+    
     private func validateForm() -> Void {
         self.doneButton.isEnabled = self.nameValid && self.minApertureValid && self.maxFocalLengthValid && self.minApertureValid && self.maxApertureValid
         self.doneButton.alpha     = self.doneButton.isEnabled ? 1.0 : 0.5
-        
-        self.lensNameTextField.layer.borderColor = self.nameValid ? Constants.VALID_CLEAR : Constants.INVALID_RED
-        self.lensNameTextField.layer.borderWidth = self.nameValid ? 0 : 1
-        
-        self.minFocalLengthTextField.layer.borderColor = self.nameValid ? Constants.VALID_CLEAR : Constants.INVALID_RED
-        self.minFocalLengthTextField.layer.borderWidth = self.nameValid ? 0 : 1
-        
-        self.maxFocalLengthTextField.layer.borderColor = self.nameValid ? Constants.VALID_CLEAR : Constants.INVALID_RED
-        self.maxFocalLengthTextField.layer.borderWidth = self.nameValid ? 0 : 1
-        
-        self.minApertureTextField.layer.borderColor = self.nameValid ? Constants.VALID_CLEAR : Constants.INVALID_RED
-        self.minApertureTextField.layer.borderWidth = self.nameValid ? 0 : 1
-        
-        self.maxApertureTextField.layer.borderColor = self.nameValid ? Constants.VALID_CLEAR : Constants.INVALID_RED
-        self.maxApertureTextField.layer.borderWidth = self.nameValid ? 0 : 1
+    
+        nameIconView.isHidden           = self.nameValid
+        minFocalLengthIconView.isHidden = self.minFocalLengthValid
+        maxFocalLengthIconView.isHidden = self.maxFocalLengthValid
+        minApertureIconView.isHidden    = self.minApertureValid
+        maxApertureIconView.isHidden    = self.maxApertureValid
+    }
+
+    
+    @objc private func showAlert(sender: UIGestureRecognizer) -> Void {
+        var title  : String = "Error"
+        var message: String = ""
+        if sender === tapGestureRecognizer {
+            title   = "Name"
+            message = "Please type in a name"
+        }
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default) { _ in }
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     
     public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "doneSegue" {
-            lensName   = lensNameTextField.text!
-            print("doneSegue prepared with data: \(String(describing: lensNameTextField!.text))")
+            lensName   = nameTextField.text!
+            print("doneSegue prepared with data: \(String(describing: nameTextField!.text))")
         }
     }
     
@@ -125,7 +146,7 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
         validateForm()
     }
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField === self.lensNameTextField {
+        if textField === self.nameTextField {
             self.nameValid = !textField.text!.isEmpty
         } else if textField === self.minFocalLengthTextField {
             let value : Double = (textField.text! as NSString).doubleValue

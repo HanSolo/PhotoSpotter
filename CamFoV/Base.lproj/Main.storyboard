@@ -673,9 +673,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="jHw-4b-Uh4"/>
                     <connections>
-                        <outlet property="cameraNameTextField" destination="ame-au-Pia" id="wOF-te-1Vf"/>
                         <outlet property="cancelButton" destination="qpn-ru-oVB" id="vmD-4t-0HX"/>
                         <outlet property="doneButton" destination="8yg-VV-oHJ" id="K9K-wf-DVx"/>
+                        <outlet property="nameTextField" destination="ame-au-Pia" id="wOF-te-1Vf"/>
                         <outlet property="sensorFormatPicker" destination="9pm-Mv-ch8" id="hbw-94-dG1"/>
                     </connections>
                 </viewController>
@@ -1021,11 +1021,11 @@
                     <connections>
                         <outlet property="cancelButton" destination="PfV-dS-2Bs" id="b3a-QQ-hQs"/>
                         <outlet property="doneButton" destination="8tv-wO-LVv" id="3e7-y2-aNg"/>
-                        <outlet property="lensNameTextField" destination="jGW-yI-cR1" id="yUh-Tu-Ptz"/>
                         <outlet property="maxApertureTextField" destination="Ii1-Pf-SOO" id="GjP-83-bUa"/>
                         <outlet property="maxFocalLengthTextField" destination="ZEH-dj-ac0" id="eWv-mT-m0z"/>
                         <outlet property="minApertureTextField" destination="Sts-KF-nr0" id="JOW-pt-S47"/>
                         <outlet property="minFocalLengthTextField" destination="TIG-lg-GTc" id="dQR-g9-RBh"/>
+                        <outlet property="nameTextField" destination="jGW-yI-cR1" id="yUh-Tu-Ptz"/>
                     </connections>
                 </viewController>
                 <exit id="a7g-jp-tiP" userLabel="Exit" sceneMemberID="exit"/>

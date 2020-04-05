@@ -45,14 +45,10 @@ public class ViewDetailViewController: UIViewController, UITextFieldDelegate, Fo
         
         cameraTextField.text  = stateController!.view.camera.name
         lensTextField.text    = stateController!.view.lens.name
-        
-        nameTextField.rightViewMode               = .always
-        nameTextField.rightView                   = nameIconView
-        nameIconView.isHidden                     = true
-        nameIconView.tintColor                    = UIColor.red
-        nameIconView.isUserInteractionEnabled     = true
+                
         tapGestureRecognizer.numberOfTapsRequired = 1
-        nameIconView.addGestureRecognizer(tapGestureRecognizer)
+        
+        Helper.setupTextFieldWithIcon(field: nameTextField, imageView: nameIconView, gestureRecognizer: tapGestureRecognizer)
     }
     
     
@@ -70,12 +66,8 @@ public class ViewDetailViewController: UIViewController, UITextFieldDelegate, Fo
     private func validateForm() -> Void {
         self.doneButton.isEnabled = self.nameValid
         self.doneButton.alpha     = self.doneButton.isEnabled ? 1.0 : 0.5
-        if self.doneButton.isEnabled {
-            nameIconView.isHidden = true
-        } else {
-            nameIconView.isHidden = false
-            
-        }
+        
+        nameIconView.isHidden = nameValid
     }
     
     @objc private func showAlert(sender: UIGestureRecognizer) -> Void {
