@@ -21,11 +21,14 @@ public class ViewDetailViewController: UIViewController, UITextFieldDelegate, Fo
     @IBOutlet weak var cancelButton         : UIButton!
     @IBOutlet weak var doneButton           : UIButton!
     
-    var name             : String = ""
-    var descr            : String = ""
+    var nameIconView         : UIImageView = UIImageView(image: Constants.INFO_ICON)
+    var tapGestureRecognizer : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showAlert(sender:)))
     
-    var nameValid        : Bool   = false
-    var descriptionValid : Bool   = false
+    var name                 : String      = ""
+    var descr                : String      = ""
+    
+    var nameValid            : Bool        = false
+    var descriptionValid     : Bool        = false
     
     
     public override func viewDidLoad() {
@@ -40,8 +43,16 @@ public class ViewDetailViewController: UIViewController, UITextFieldDelegate, Fo
         nameTextField.addTarget(self, action: #selector(updateName), for: .editingChanged)
         descriptionTextField.addTarget(self, action: #selector(updateDescription), for: .editingChanged)
         
-        cameraTextField.text = stateController!.view.camera.name
-        lensTextField.text   = stateController!.view.lens.name
+        cameraTextField.text  = stateController!.view.camera.name
+        lensTextField.text    = stateController!.view.lens.name
+        
+        nameTextField.rightViewMode               = .always
+        nameTextField.rightView                   = nameIconView
+        nameIconView.isHidden                     = true
+        nameIconView.tintColor                    = UIColor.red
+        nameIconView.isUserInteractionEnabled     = true
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        nameIconView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     
@@ -60,12 +71,24 @@ public class ViewDetailViewController: UIViewController, UITextFieldDelegate, Fo
         self.doneButton.isEnabled = self.nameValid
         self.doneButton.alpha     = self.doneButton.isEnabled ? 1.0 : 0.5
         if self.doneButton.isEnabled {
-            self.nameTextField.layer.borderColor = Constants.VALID_CLEAR
-            self.nameTextField.layer.borderWidth  = 0
+            nameIconView.isHidden = true
         } else {
-            self.nameTextField.layer.borderColor  = Constants.INVALID_RED
-            self.nameTextField.layer.borderWidth  = 1
+            nameIconView.isHidden = false
+            
         }
+    }
+    
+    @objc private func showAlert(sender: UIGestureRecognizer) -> Void {
+        var title  : String = "Error"
+        var message: String = ""
+        if sender === tapGestureRecognizer {
+            title   = "Name"
+            message = "Please type in a name"
+        }
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default) { _ in }
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     

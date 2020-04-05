@@ -613,37 +613,36 @@
                                     <constraint firstAttribute="trailing" secondItem="4NN-zN-zCi" secondAttribute="trailing" constant="20" id="fqp-yK-yff"/>
                                 </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="199" translatesAutoresizingMaskIntoConstraints="NO" id="R6H-Qb-DIh" userLabel="CameraNameView">
-                                <rect key="frame" x="20" y="152" width="984" height="48"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="R6H-Qb-DIh" userLabel="CameraNameView">
+                                <rect key="frame" x="20" y="152" width="984" height="27.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nax-i2-rKn" userLabel="CameraNameLabel">
-                                        <rect key="frame" x="0.0" y="0.0" width="106.5" height="48"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nax-i2-rKn" userLabel="CameraNameLabel">
+                                        <rect key="frame" x="0.0" y="0.0" width="482" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ame-au-Pia" userLabel="CameraNameTextField">
-                                        <rect key="frame" x="305.5" y="0.0" width="678.5" height="48"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="name of camera" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ame-au-Pia" userLabel="CameraNameTextField">
+                                        <rect key="frame" x="502" y="-6.5" width="482" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="7J3-fd-Saz"/>
                                     <constraint firstAttribute="trailing" secondItem="ame-au-Pia" secondAttribute="trailing" id="aZO-gr-wrY"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="91" translatesAutoresizingMaskIntoConstraints="NO" id="kvw-rB-isS" userLabel="CameraTypeView">
-                                <rect key="frame" x="20" y="220" width="984" height="48"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="91" translatesAutoresizingMaskIntoConstraints="NO" id="kvw-rB-isS" userLabel="CameraTypeView">
+                                <rect key="frame" x="20" y="199.5" width="984" height="48"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sensor format" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3d-91-Ehv">
-                                        <rect key="frame" x="0.0" y="14" width="108.5" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sensor format" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3d-91-Ehv">
+                                        <rect key="frame" x="0.0" y="0.0" width="446.5" height="48"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9pm-Mv-ch8">
-                                        <rect key="frame" x="199.5" y="0.0" width="784.5" height="48"/>
+                                        <rect key="frame" x="537.5" y="0.0" width="446.5" height="48"/>
                                     </pickerView>
                                 </subviews>
                                 <constraints>
@@ -921,96 +920,81 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="Un1-bD-05E">
                                 <rect key="frame" x="20" y="152" width="984" height="257.5"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="iWA-5W-iSO" userLabel="LensNameView">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="iWA-5W-iSO" userLabel="LensNameView">
                                         <rect key="frame" x="0.0" y="0.0" width="984" height="27.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lens name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmm-zj-cdI" userLabel="LensNameLabel">
-                                                <rect key="frame" x="0.0" y="0.0" width="214" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="482" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jGW-yI-cR1" userLabel="LensNameTextField">
-                                                <rect key="frame" x="234" y="-6.5" width="750" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="750" id="VHd-Dt-KON"/>
-                                                </constraints>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="name of lens" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jGW-yI-cR1" userLabel="LensNameTextField">
+                                                <rect key="frame" x="502" y="-6.5" width="482" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="dJk-qK-Jyk" userLabel="MinFocalLengthView">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="dJk-qK-Jyk" userLabel="MinFocalLengthView">
                                         <rect key="frame" x="0.0" y="57.5" width="984" height="27.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Min focal length [mm]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xMi-FG-bhZ">
-                                                <rect key="frame" x="0.0" y="0.0" width="214" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="482" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TIG-lg-GTc" userLabel="MinFocalLengthTextField">
-                                                <rect key="frame" x="234" y="-6.5" width="750" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="750" id="LIA-HA-DBZ"/>
-                                                </constraints>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="min focal length in mm" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TIG-lg-GTc" userLabel="MinFocalLengthTextField">
+                                                <rect key="frame" x="502" y="-6.5" width="482" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="IDv-uT-q6y" userLabel="MaxFocalLengthView">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="IDv-uT-q6y" userLabel="MaxFocalLengthView">
                                         <rect key="frame" x="0.0" y="115" width="984" height="27.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max focal length [mm]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="55q-Ah-crw">
-                                                <rect key="frame" x="0.0" y="0.0" width="214" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="482" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZEH-dj-ac0" userLabel="MaxFocalLengthTextField">
-                                                <rect key="frame" x="234" y="-6.5" width="750" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="750" id="ubw-jo-K4Z"/>
-                                                </constraints>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="max focal length in mm" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZEH-dj-ac0" userLabel="MaxFocalLengthTextField">
+                                                <rect key="frame" x="502" y="-6.5" width="482" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="x8W-QF-6rn" userLabel="MinApertureView">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="x8W-QF-6rn" userLabel="MinApertureView">
                                         <rect key="frame" x="0.0" y="172.5" width="984" height="27.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Min aperture [f]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w1x-MX-UpU">
-                                                <rect key="frame" x="0.0" y="0.0" width="214" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="482" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sts-KF-nr0" userLabel="MinApertureTextField">
-                                                <rect key="frame" x="234" y="-6.5" width="750" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="750" id="wjK-jd-cEJ"/>
-                                                </constraints>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="min aperture in f-stops" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sts-KF-nr0" userLabel="MinApertureTextField">
+                                                <rect key="frame" x="502" y="-6.5" width="482" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8Pd-cB-iBU" userLabel="MaxApertureView">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8Pd-cB-iBU" userLabel="MaxApertureView">
                                         <rect key="frame" x="0.0" y="230" width="984" height="27.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max aperture [f]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXY-LP-IsE">
-                                                <rect key="frame" x="0.0" y="0.0" width="214" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="482" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ii1-Pf-SOO" userLabel="MaxApertureTextField">
-                                                <rect key="frame" x="234" y="-6.5" width="750" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="750" id="ZsQ-M9-vNq"/>
-                                                </constraints>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="max aperture in f-stops" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ii1-Pf-SOO" userLabel="MaxApertureTextField">
+                                                <rect key="frame" x="502" y="-6.5" width="482" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
@@ -1285,77 +1269,65 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="URL-AA-375">
                                 <rect key="frame" x="20" y="152" width="984" height="200"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8yF-Rh-4dp" userLabel="ViewNameView">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8yF-Rh-4dp" userLabel="ViewNameView">
                                         <rect key="frame" x="0.0" y="0.0" width="984" height="27.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htD-h7-GBS" userLabel="ViewNameLabel">
-                                                <rect key="frame" x="0.0" y="0.0" width="214" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="482" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GVq-fD-Znb" userLabel="ViewNameTextField">
-                                                <rect key="frame" x="234" y="-6.5" width="750" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="750" id="42A-1U-g3m"/>
-                                                </constraints>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="name of view" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GVq-fD-Znb" userLabel="ViewNameTextField">
+                                                <rect key="frame" x="502" y="-6.5" width="482" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ue4-C1-75D" userLabel="DescriptionView">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ue4-C1-75D" userLabel="DescriptionView">
                                         <rect key="frame" x="0.0" y="57.5" width="984" height="27.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SeZ-85-W2q" userLabel="DescriptionLabel">
-                                                <rect key="frame" x="0.0" y="0.0" width="214" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="482" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OVa-3f-mFn" userLabel="DescriptionTextField">
-                                                <rect key="frame" x="234" y="-6.5" width="750" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="750" id="z5h-gv-nOY"/>
-                                                </constraints>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OVa-3f-mFn" userLabel="DescriptionTextField">
+                                                <rect key="frame" x="502" y="-6.5" width="482" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="E0S-Ad-Bxt" userLabel="CameraView">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="E0S-Ad-Bxt" userLabel="CameraView">
                                         <rect key="frame" x="0.0" y="115" width="984" height="27.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DJA-Pk-vvp" userLabel="CameraLabel">
-                                                <rect key="frame" x="0.0" y="0.0" width="214" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="482" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nHN-rd-cqn" userLabel="CameraTextField">
-                                                <rect key="frame" x="234" y="-6.5" width="750" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="750" id="tKz-b8-0v7"/>
-                                                </constraints>
+                                                <rect key="frame" x="502" y="-6.5" width="482" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="k5f-yK-HPh" userLabel="LensView">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="k5f-yK-HPh" userLabel="LensView">
                                         <rect key="frame" x="0.0" y="172.5" width="984" height="27.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lens" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hRR-5i-2nU" userLabel="LensLabel">
-                                                <rect key="frame" x="0.0" y="0.0" width="214" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="482" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vde-Y5-blu" userLabel="LensTextField">
-                                                <rect key="frame" x="234" y="-6.5" width="750" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="750" id="ScA-eq-QFc"/>
-                                                </constraints>
+                                                <rect key="frame" x="502" y="-6.5" width="482" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
@@ -1395,10 +1367,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Tqb-kX-mOs"/>
-        <segue reference="q1Q-0p-CtR"/>
+        <segue reference="xGg-4x-7zw"/>
+        <segue reference="Gpb-NS-Hlh"/>
         <segue reference="6Gl-Tl-cdW"/>
-        <segue reference="Wzc-Ww-caD"/>
+        <segue reference="8Mg-Zc-6jN"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowtriangle.down" catalog="system" width="128" height="124"/>
