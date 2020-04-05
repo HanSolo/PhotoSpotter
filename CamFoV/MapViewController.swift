@@ -143,11 +143,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.maxApertureLabel.text          = String(format: "%.1f", Double(round(stateController!.view.lens.maxAperture * 10) / 10))
         
         let lensIndex : Int = stateController!.lenses.firstIndex(of: stateController!.view.lens) ?? 0
-        //self.lensPicker.selectedRow(inComponent: lensIndex)
-        print("lens index: \(lensIndex)")
+        self.lensPicker.selectRow(lensIndex, inComponent: 0, animated: true)
         
         let cameraIndex : Int = stateController!.cameras.firstIndex(of: stateController!.view.camera) ?? 0
-        //self.cameraPicker.selectedRow(inComponent: cameraIndex)
+        self.cameraPicker.selectRow(cameraIndex, inComponent: 0, animated: true)
                 
         let mapTypeSelectorTextAttr         = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let mapTypeSelectorTextAttrSelected = [NSAttributedString.Key.foregroundColor: UIColor.white]
