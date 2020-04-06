@@ -75,16 +75,16 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
             self.nameValid = !textField.text!.isEmpty
         } else if textField === minFocalLengthTextField {
             self.minFocalLength      = (textField.text! as NSString).doubleValue
-            self.minFocalLengthValid = minFocalLength >= Constants.DEFAULT_LENS.minFocalLength && minFocalLength < self.maxFocalLength
+            self.minFocalLengthValid = minFocalLength >= Constants.DEFAULT_LENS.minFocalLength && minFocalLength <= self.maxFocalLength
         } else if textField === maxFocalLengthTextField {
             self.maxFocalLength      = (textField.text! as NSString).doubleValue
-            self.maxFocalLengthValid = maxFocalLength <= Constants.DEFAULT_LENS.maxFocalLength && maxFocalLength > self.minFocalLength
+            self.maxFocalLengthValid = maxFocalLength <= Constants.DEFAULT_LENS.maxFocalLength && maxFocalLength >= self.minFocalLength
         } else if textField === minApertureTextField {
             self.minAperture      = (textField.text! as NSString).doubleValue
-            self.minApertureValid = minAperture >= Constants.DEFAULT_LENS.minAperture && minAperture < self.maxAperture
+            self.minApertureValid = minAperture >= Constants.DEFAULT_LENS.minAperture && minAperture <= self.maxAperture
         } else if textField === maxApertureTextField {
             self.maxAperture      = (textField.text! as NSString).doubleValue
-            self.maxApertureValid = maxAperture <= Constants.DEFAULT_LENS.maxAperture && maxAperture > self.minAperture
+            self.maxApertureValid = maxAperture <= Constants.DEFAULT_LENS.maxAperture && maxAperture >= self.minAperture
         }
         validateForm()
     }

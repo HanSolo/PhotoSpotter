@@ -47,7 +47,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var locationManager  : CLLocationManager!
     var cameraPin        : MapPin?
     var motifPin         : MapPin?
-    var mapPins          : [MapPin] = [MapPin]()
+    var mapPins          : [MapPin]         = [MapPin]()
     var triangle         : Triangle?
     var minTriangle      : Triangle?
     var maxTriangle      : Triangle?
@@ -63,19 +63,22 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var sunriseLine      : MKPolyline?
     var sunsetLine       : MKPolyline?
     var data             : FoVData?
-    var fovVisible       : Bool          = true
-    var dofVisible       : Bool          = false
-    var moonVisible      : Bool          = false
-    var sunVisible       : Bool          = false
-    var focalLength      : Double        = 50
-    var aperture         : Double        = 2.8
-    var orientation      : Orientation   = Orientation.landscape
-    let sunMoonCalc      : SunMoon       = SunMoon()
+    var fovVisible       : Bool             = true
+    var dofVisible       : Bool             = false
+    var moonVisible      : Bool             = false
+    var sunVisible       : Bool             = false
+    var focalLength      : Double           = 50
+    var aperture         : Double           = 2.8
+    var orientation      : Orientation      = Orientation.landscape
+    let sunMoonCalc      : SunMoon          = SunMoon()
     var eventAngles      : Dictionary<String, (Double, Double)>?
-    var pointsSunrise    : [MKMapPoint]  = []
-    var pointsSunset     : [MKMapPoint]  = []
-    var pointsMoonrise   : [MKMapPoint]  = []
-    var pointsMoonset    : [MKMapPoint]  = []
+    var pointsSunrise    : [MKMapPoint]     = []
+    var pointsSunset     : [MKMapPoint]     = []
+    var pointsMoonrise   : [MKMapPoint]     = []
+    var pointsMoonset    : [MKMapPoint]     = []
+    var visibleArea      : MKMapRect?
+    var heading          : CLLocationDirection?
+    var elevationPoints  : [ElevationPoint] = []
     /*
     var lenses           : [Lens]        = [
         Constants.DEFAULT_LENS,
@@ -154,6 +157,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapTypeSelector.setTitleTextAttributes(mapTypeSelectorTextAttrSelected, for: .selected)
         
         self.eventAngles                    = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
+        
+        visibleArea                         = mapView.visibleMapRect
+        
+        getElevation(camera: cameraPin!, motif: motifPin!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -362,7 +369,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-                
         if pickerView === lensPicker {
             updateLens(lens: stateController!.lenses[row])
         } else if pickerView === cameraPicker {
@@ -376,7 +382,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     // CLLocationManagerDelegate methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
         let userLocation:CLLocation = locations[0] as CLLocation
         
         // Call stopUpdatingLocation() to stop listening for location updates,
@@ -400,7 +405,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     
-    // MKMapViewDelegate methods
+    // MARK: MKMapViewDelegate methods
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if view.annotation === cameraPin {
+            print("Camera pressed")
+        } else if view.annotation === motifPin {
+            print("Motif pressed")
+        }
+    }
     func mapView(_ mapView: MKMapView, annotationView: MKAnnotationView, didChange: MKAnnotationView.DragState, fromOldState: MKAnnotationView.DragState) {
         switch (didChange) {
             case .starting:
@@ -419,7 +431,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MapPin {
             let mapPin : MapPin = annotation as! MapPin
-            //print("MapPin: \(String(describing: mapPin.title)) found")
             if mapPin.title == "Camera" || mapPin.title == "Motif" {
                 let mapPinAnnotationView : MapPinAnnotationView = MapPinAnnotationView(annotation: annotation, reuseIdentifier: mapPin.title)
                 mapPinAnnotationView.mapView = mapView
@@ -499,6 +510,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             }
         }
         return MKPolylineRenderer()
+    }
+    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+        self.visibleArea = mapView.visibleMapRect
+        self.heading     = mapView.camera.heading
     }
     
     
@@ -769,37 +784,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     
     func getElevation(camera: MapPin, motif: MapPin) -> Void {
-        getJson { (json) in
-            print("finished")
+        NetworkManager.loadElevationPoints(cameraPin: camera, motifPin: motif) { elevationPoints in
+            self.updateElevationPoints(elevationPoints: elevationPoints!)
         }
     }
     
-    func getJson(completion: @escaping (Response) ->()) {
-        var urlString = "https://api.elevationapi.com/api/Elevation/line/"
-        urlString += String(format: "%.7f", Double((cameraPin?.coordinate.latitude)!))
-        urlString += ","
-        urlString += String(format: "%.7f", Double((cameraPin?.coordinate.longitude)!))
-        urlString += ","
-        urlString += String(format: "%.7f", Double((motifPin?.coordinate.latitude)!))
-        urlString += ","
-        urlString += String(format: "%.7f", Double((motifPin?.coordinate.longitude)!))
-        urlString += "?dataSet=SRTM_GL3&reduceResolution=0"
-        
-        if let url = URL(string: urlString) {
-            URLSession.shared.dataTask(with: url) { data, res, err in
-                if let data = data {
-                    print("hey")
-                    
-                    let decoder = JSONDecoder()
-                    if let json = try? decoder.decode(Response.self, from: data) {
-                        completion(json)
-                    }
-                }
-            }.resume()
-        }
+    func updateElevationPoints(elevationPoints: [ElevationPoint]) -> Void {
+        self.elevationPoints = elevationPoints
+        print("Elevation Points updated")
     }
+    
 }
-
 
 
 public enum PinType {
@@ -891,7 +886,6 @@ class MapPinAnnotationView: MKAnnotationView {
     
     override func setDragState(_ dragState: MKAnnotationView.DragState, animated: Bool) {
         super.setDragState(dragState, animated: animated)
-
         switch dragState {
             case .starting:
                 startDragging()
@@ -978,9 +972,4 @@ class Polygon: MKPolygon {
 }
 class Line: MKPolyline {
     var id: String?
-}
-
-
-class Response: Codable {
-    
 }

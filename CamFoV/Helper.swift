@@ -230,4 +230,17 @@ public class Helper {
         
         return iconContainerView
     }
+    
+    public static func tagToString(tag: (String,Int)) -> String {
+        return String(tag.1)
+    }
+    public static func tagInBitMask(tag: (String, Int), bitmask: Int) -> Bool {
+        for t in 0..<Constants.tags.count {
+            let selected : Bool = (1 << t & bitmask) != 0
+            if selected && tag.1 == t {
+                return true
+            }
+        }
+        return false
+    }
 }

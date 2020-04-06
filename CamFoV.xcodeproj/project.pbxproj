@@ -12,6 +12,7 @@
 		4F13D831243457E400903059 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D830243457E400903059 /* Camera.swift */; };
 		4F13D83324345B7400903059 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D83224345B7400903059 /* View.swift */; };
 		4F2E8A392436F3A0007C9360 /* SunMoon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8A382436F3A0007C9360 /* SunMoon.swift */; };
+		4F5B01FA243B5C4800CDA088 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5B01F9243B5C4800CDA088 /* NetworkManager.swift */; };
 		4F5DDD362435A29900A49C20 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD352435A29900A49C20 /* StateController.swift */; };
 		4F5DDD382435A42E00A49C20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD372435A42E00A49C20 /* Constants.swift */; };
 		4F5DDD3A2435A8D500A49C20 /* FoVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD392435A8D500A49C20 /* FoVController.swift */; };
@@ -43,6 +44,7 @@
 		4F13D830243457E400903059 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		4F13D83224345B7400903059 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		4F2E8A382436F3A0007C9360 /* SunMoon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunMoon.swift; sourceTree = "<group>"; };
+		4F5B01F9243B5C4800CDA088 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4F5DDD352435A29900A49C20 /* StateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 		4F5DDD372435A42E00A49C20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4F5DDD392435A8D500A49C20 /* FoVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoVController.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				4F5DDD392435A8D500A49C20 /* FoVController.swift */,
 				4F2E8A382436F3A0007C9360 /* SunMoon.swift */,
 				4F5DDD352435A29900A49C20 /* StateController.swift */,
+				4F5B01F9243B5C4800CDA088 /* NetworkManager.swift */,
 			);
 			path = CamFoV;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				4F7D7B7D242E28D900771992 /* Lens.swift in Sources */,
 				4F7D7B73242E28D900771992 /* FoVError.swift in Sources */,
 				4F7D7B7B242E28D900771992 /* FoVData.swift in Sources */,
+				4F5B01FA243B5C4800CDA088 /* NetworkManager.swift in Sources */,
 				4F7D7B78242E28D900771992 /* Triangle.swift in Sources */,
 				4FF364F224376B0800A749A1 /* CameraDetailViewController.swift in Sources */,
 				4F7D7B77242E28D900771992 /* Helper.swift in Sources */,
