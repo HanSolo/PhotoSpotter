@@ -11,6 +11,7 @@
 		4F135D9524386FE8001B3F3F /* LensDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F135D9424386FE8001B3F3F /* LensDetailViewController.swift */; };
 		4F13D831243457E400903059 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D830243457E400903059 /* Camera.swift */; };
 		4F13D83324345B7400903059 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D83224345B7400903059 /* View.swift */; };
+		4F267F7D243B81E60091FA14 /* ElevationChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F267F7C243B81E60091FA14 /* ElevationChart.swift */; };
 		4F2E8A392436F3A0007C9360 /* SunMoon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8A382436F3A0007C9360 /* SunMoon.swift */; };
 		4F5B01FA243B5C4800CDA088 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5B01F9243B5C4800CDA088 /* NetworkManager.swift */; };
 		4F5DDD362435A29900A49C20 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD352435A29900A49C20 /* StateController.swift */; };
@@ -43,6 +44,7 @@
 		4F135D9424386FE8001B3F3F /* LensDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LensDetailViewController.swift; sourceTree = "<group>"; };
 		4F13D830243457E400903059 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		4F13D83224345B7400903059 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		4F267F7C243B81E60091FA14 /* ElevationChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevationChart.swift; sourceTree = "<group>"; };
 		4F2E8A382436F3A0007C9360 /* SunMoon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunMoon.swift; sourceTree = "<group>"; };
 		4F5B01F9243B5C4800CDA088 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4F5DDD352435A29900A49C20 /* StateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				4F2E8A382436F3A0007C9360 /* SunMoon.swift */,
 				4F5DDD352435A29900A49C20 /* StateController.swift */,
 				4F5B01F9243B5C4800CDA088 /* NetworkManager.swift */,
+				4F267F7C243B81E60091FA14 /* ElevationChart.swift */,
 			);
 			path = CamFoV;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 				4F7D7B72242E28D900771992 /* SensorFormat.swift in Sources */,
 				4F9B85AB2434CABF00289E8A /* CameraViewController.swift in Sources */,
 				4F7D7B79242E28D900771992 /* Orientation.swift in Sources */,
+				4F267F7D243B81E60091FA14 /* ElevationChart.swift in Sources */,
 				4F7D7B7E242E28D900771992 /* Trapezoid.swift in Sources */,
 				4F13D83324345B7400903059 /* View.swift in Sources */,
 				4F135D9524386FE8001B3F3F /* LensDetailViewController.swift in Sources */,

@@ -38,6 +38,7 @@ public class ViewDetailViewController: UIViewController, FoVController {
         self.stateController = appDelegate.stateController
         
         nameTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+        descriptionTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
         
         cameraTextField.text  = stateController!.view.camera.name
         lensTextField.text    = stateController!.view.lens.name
@@ -49,9 +50,11 @@ public class ViewDetailViewController: UIViewController, FoVController {
     
     
     @objc private func textFieldChanged(_ textField: UITextField) -> Void {
-        if (textField === nameTextField) {
+        if textField === nameTextField {
             self.name      = textField.text!
             self.nameValid = !textField.text!.isEmpty
+        } else if textField === descriptionTextField {
+            self.descr = textField.text!
         }
         validateForm()
     }

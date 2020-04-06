@@ -48,6 +48,7 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cameraIndex : IndexPath = IndexPath(row: (stateController!.cameras.firstIndex(of: stateController!.view.camera) ?? 0), section: 0)
         tableView.selectRow(at: cameraIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: cameraIndex)?.accessoryType = .checkmark
+        tableView.isEditing = false
     }
 
     
@@ -88,6 +89,15 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let camera = Camera(name: cameraDetailVC.name, sensorFormat: cameraDetailVC.sensorFormat)
         stateController?.addCamera(camera)
         tableView.reloadData()
+        
+        let cells = self.tableView.visibleCells as! Array<CameraCell>
+        for cell in cells {
+            cell.accessoryType = .none
+        }
+        
+        let cameraIndex : IndexPath = IndexPath(row: (stateController!.cameras.firstIndex(of: camera) ?? 0), section: 0)
+        tableView.selectRow(at: cameraIndex, animated: true, scrollPosition: .none)
+        tableView.cellForRow(at: cameraIndex)?.accessoryType = .checkmark
     }
     
     @IBAction func cancel(segue:UIStoryboardSegue) {
@@ -127,8 +137,22 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.present(alertController, animated: true, completion: nil)
         */
     }
+    
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            stateController!.removeCamera(indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.row != 0 
     }
 }
 

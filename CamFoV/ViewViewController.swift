@@ -45,6 +45,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         let viewIndex : IndexPath = IndexPath(row: (stateController!.views.firstIndex(of: stateController!.view) ?? 0), section: 0)
         tableView.selectRow(at: viewIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: viewIndex)?.accessoryType = .checkmark
+        tableView.isEditing = false
     }
     
     
@@ -77,6 +78,15 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         let view = View(name: viewDetailVC.name, description: viewDetailVC.descr, cameraPoint: stateController!.view.cameraPoint, motifPoint: stateController!.view.motifPoint, camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation)
         stateController?.addView(view)
         tableView.reloadData()
+        
+        let cells = self.tableView.visibleCells as! Array<ViewCell>
+        for cell in cells {
+            cell.accessoryType = .none
+        }
+        
+        let viewIndex : IndexPath = IndexPath(row: (stateController!.views.firstIndex(of: view) ?? 0), section: 0)
+        tableView.selectRow(at: viewIndex, animated: true, scrollPosition: .none)
+        tableView.cellForRow(at: viewIndex)?.accessoryType = .checkmark
     }
     
     @IBAction func cancel(segue:UIStoryboardSegue) {
@@ -112,6 +122,19 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            stateController!.removeView(indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.row != 0
     }
 
     // MARK: - Navigation

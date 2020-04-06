@@ -45,6 +45,7 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         let lensIndex : IndexPath = IndexPath(row: (stateController!.lenses.firstIndex(of: stateController!.view.lens) ?? 0), section: 0)
         tableView.selectRow(at: lensIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: lensIndex)?.accessoryType = .checkmark
+        tableView.isEditing = false
     }
     
     
@@ -87,6 +88,15 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         let lens = Lens(name: lensDetailVC.lensName, minFocalLength: lensDetailVC.minFocalLength, maxFocalLength: lensDetailVC.maxFocalLength, minAperture: lensDetailVC.minAperture, maxAperture: lensDetailVC.maxAperture)
         stateController?.addLens(lens)
         tableView.reloadData()
+        
+        let cells = self.tableView.visibleCells as! Array<LensCell>
+        for cell in cells {
+            cell.accessoryType = .none
+        }
+        
+        let lensIndex : IndexPath = IndexPath(row: (stateController!.lenses.firstIndex(of: lens) ?? 0), section: 0)
+        tableView.selectRow(at: lensIndex, animated: true, scrollPosition: .none)
+        tableView.cellForRow(at: lensIndex)?.accessoryType = .checkmark
     }
     
     @IBAction func cancel(segue:UIStoryboardSegue) {
@@ -123,7 +133,20 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            stateController!.removeLens(indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
 
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.row != 0
+    }
+    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
  

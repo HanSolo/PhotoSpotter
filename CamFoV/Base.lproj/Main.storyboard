@@ -39,17 +39,35 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Pob-gc-IPy">
                                                 <rect key="frame" x="10" y="0.0" width="1004" height="82"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vaj-LL-b9k" userLabel="TopControls">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vaj-LL-b9k" userLabel="TopControls">
                                                         <rect key="frame" x="0.0" y="0.0" width="1004" height="41"/>
                                                         <subviews>
-                                                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0h-18-1oo" userLabel="LensPicker">
-                                                                <rect key="frame" x="0.0" y="0.0" width="387" height="41"/>
-                                                            </pickerView>
-                                                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AsJ-pE-SXZ" userLabel="CameraPicker">
-                                                                <rect key="frame" x="397" y="0.0" width="387" height="41"/>
-                                                            </pickerView>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YnF-jc-dhj" userLabel="CameraLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="60" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lens" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GnP-8L-rec" userLabel="LenseLabel">
+                                                                <rect key="frame" x="167.5" y="0.0" width="36.5" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-Qk-HLX" userLabel="ViewsButton">
+                                                                <rect key="frame" x="311.5" y="0.0" width="25" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <state key="normal" image="mappin.circle" catalog="system">
+                                                                    <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="showViewsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tO4-wb-HiU"/>
+                                                                </connections>
+                                                            </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I8n-ya-JHH" userLabel="SunButton">
-                                                                <rect key="frame" x="794" y="0.0" width="32" height="41"/>
+                                                                <rect key="frame" x="444" y="0.0" width="26.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="sun.max" catalog="system">
@@ -61,7 +79,8 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9KS-Fw-qnA" userLabel="MoonButton">
-                                                                <rect key="frame" x="836" y="0.0" width="30" height="41"/>
+                                                                <rect key="frame" x="578" y="0.0" width="24.5" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="moon" catalog="system">
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
@@ -71,7 +90,8 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFe-Iv-Phh" userLabel="DoFButton">
-                                                                <rect key="frame" x="876" y="0.0" width="24" height="41"/>
+                                                                <rect key="frame" x="710" y="0.0" width="20" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="arrowtriangle.down" catalog="system">
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
@@ -81,7 +101,8 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIT-Ve-K0R" userLabel="OrientationButton">
-                                                                <rect key="frame" x="910" y="0.0" width="35.5" height="41"/>
+                                                                <rect key="frame" x="837.5" y="0.0" width="29.5" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="camera.rotate.fill" catalog="system">
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
@@ -91,8 +112,8 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xp3-1c-EGH" userLabel="CameraButton">
-                                                                <rect key="frame" x="955.5" y="0.0" width="48.5" height="41"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <rect key="frame" x="974.5" y="0.0" width="29.5" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="camera.fill" catalog="system">
                                                                     <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -352,14 +373,14 @@
                         <outlet property="apertureLabel" destination="rzu-Sh-PkG" id="pSv-pF-6Dl"/>
                         <outlet property="apertureSlider" destination="Crf-to-ZRf" id="9iY-on-KpT"/>
                         <outlet property="cameraButton" destination="xp3-1c-EGH" id="RKG-WR-YCE"/>
-                        <outlet property="cameraPicker" destination="AsJ-pE-SXZ" id="gcF-NU-QO5"/>
+                        <outlet property="cameraLabel" destination="YnF-jc-dhj" id="OGi-do-oDL"/>
                         <outlet property="camerasButton" destination="xUA-Eg-sBT" id="WdR-pf-7Pg"/>
                         <outlet property="distanceLabel" destination="g1m-Vc-WVH" id="nQT-DG-QlX"/>
                         <outlet property="dofButton" destination="kFe-Iv-Phh" id="BdE-6l-LkE"/>
                         <outlet property="focalLengthLabel" destination="XW8-VG-CXA" id="1o5-8C-ZiB"/>
                         <outlet property="focalLengthSlider" destination="nZ1-QP-Zsj" id="HE1-DM-Nks"/>
                         <outlet property="heightLabel" destination="UVq-V9-mwq" id="Wqo-YG-qzo"/>
-                        <outlet property="lensPicker" destination="d0h-18-1oo" id="Zza-7g-hGe"/>
+                        <outlet property="lensLabel" destination="GnP-8L-rec" id="Bw3-CP-Gkf"/>
                         <outlet property="lensesButton" destination="UzU-FK-IMU" id="Ytl-r1-DjA"/>
                         <outlet property="mapButton" destination="rio-ZN-eyu" id="BtR-ih-2gd"/>
                         <outlet property="mapTypeSelector" destination="dt3-lS-mdA" id="jjb-kd-1rX"/>
@@ -370,8 +391,9 @@
                         <outlet property="minFocalLengthLabel" destination="94S-EW-znH" id="eTv-iH-eIZ"/>
                         <outlet property="moonButton" destination="9KS-Fw-qnA" id="M5G-eZ-uik"/>
                         <outlet property="orientationButton" destination="oIT-Ve-K0R" id="jMp-v7-FTy"/>
+                        <outlet property="showViewsButton" destination="gyl-Qk-HLX" id="upb-Ml-tu1"/>
                         <outlet property="sunButton" destination="I8n-ya-JHH" id="6rF-Lh-ncv"/>
-                        <outlet property="viewsButton" destination="hH1-Gl-vEn" id="tH5-EU-X19"/>
+                        <outlet property="viewsButton" destination="gyl-Qk-HLX" id="TJk-Aq-t84"/>
                         <outlet property="widthLabel" destination="RmB-Ja-Iry" id="92x-8t-yw4"/>
                         <segue destination="r0P-5x-ec1" kind="show" identifier="mapViewToCamerasView" destinationCreationSelector="exitMapViewController:" id="6Gl-Tl-cdW"/>
                         <segue destination="jc5-Uv-5Ut" kind="show" identifier="mapViewToLensesView" id="q1Q-0p-CtR"/>
@@ -1367,15 +1389,16 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="xGg-4x-7zw"/>
-        <segue reference="Gpb-NS-Hlh"/>
+        <segue reference="Tqb-kX-mOs"/>
+        <segue reference="q1Q-0p-CtR"/>
         <segue reference="6Gl-Tl-cdW"/>
-        <segue reference="8Mg-Zc-6jN"/>
+        <segue reference="Yg0-Ub-0Bk"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowtriangle.down" catalog="system" width="128" height="124"/>
         <image name="camera.fill" catalog="system" width="128" height="96"/>
         <image name="camera.rotate.fill" catalog="system" width="128" height="96"/>
+        <image name="mappin.circle" catalog="system" width="128" height="121"/>
         <image name="moon" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="sun.max" catalog="system" width="128" height="124"/>

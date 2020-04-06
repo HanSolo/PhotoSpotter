@@ -28,6 +28,11 @@ class StateController {
     func removeLens(_ lens: Lens) {
         lenses.removeAll { $0 === lens }
     }
+    func removeLens(_ atIndex: Int) {
+        if lenses.count > atIndex {
+            lenses.remove(at: atIndex)
+        }
+    }
     
     
     // Cameras
@@ -47,6 +52,11 @@ class StateController {
     func removeCamera(_ camera: Camera) {
         cameras.removeAll { $0 === camera }
     }
+    func removeCamera(_ atIndex: Int) {
+        if cameras.count > atIndex {
+            cameras.remove(at: atIndex)
+        }
+    }
     
     
     // Views
@@ -65,6 +75,11 @@ class StateController {
     }
     func removeView(_ view: View) {
         views.removeAll { $0 === view }
+    }
+    func removeView(_ atIndex: Int) {
+        if views.count > atIndex {
+            views.remove(at: atIndex)
+        }
     }
     
     
