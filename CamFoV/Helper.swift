@@ -8,6 +8,7 @@
 
 import Foundation
 import MapKit
+import SystemConfiguration
 
 
 public class Helper {
@@ -229,6 +230,22 @@ public class Helper {
         iconContainerView.addGestureRecognizer(gestureRecognizer)
         
         return iconContainerView
+    }
+    
+    public static func setIconToLabel(label: UILabel, image: UIImage, imageColor: UIColor, size: CGSize, text: String) -> Void {
+        let fullString = NSMutableAttributedString(string: "")
+                
+        let imgAttachment = NSTextAttachment()
+        imgAttachment.image  = image.resize(to: size).withTintColor(imageColor)
+        imgAttachment.bounds = CGRect(x: 0, y: -2, width: size.width, height: size.height)
+        
+        let imgString = NSAttributedString(attachment: imgAttachment)
+    
+        fullString.append(imgString)
+        fullString.append(NSAttributedString(string: " "))
+        fullString.append(NSAttributedString(string: text))
+        
+        label.attributedText = fullString
     }
     
     public static func tagToString(tag: (String,Int)) -> String {

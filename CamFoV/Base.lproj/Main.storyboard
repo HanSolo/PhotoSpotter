@@ -135,17 +135,25 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Width" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RmB-Ja-Iry" userLabel="FoVWidthLabel">
-                                                                <rect key="frame" x="490.5" y="0.0" width="36" height="41"/>
+                                                                <rect key="frame" x="324" y="0.0" width="36" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Height" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVq-V9-mwq" userLabel="FoVHeightLabel">
-                                                                <rect key="frame" x="963.5" y="0.0" width="40.5" height="41"/>
+                                                                <rect key="frame" x="630.5" y="0.0" width="40.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="62J-Q8-5QH" userLabel="ElevationButton">
+                                                                <rect key="frame" x="942" y="0.0" width="62" height="41"/>
+                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <state key="normal" title="Elevation"/>
+                                                                <connections>
+                                                                    <action selector="elevationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NUR-iB-JpN"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
@@ -304,15 +312,25 @@
                                             <action selector="mapTypeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="IB0-cV-PO8"/>
                                         </connections>
                                     </segmentedControl>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GtQ-2N-JhX" userLabel="ElevationChart" customClass="ElevationChartView" customModule="CamFoV" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="964" width="1024" height="200"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="hrY-dB-gR5"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstItem="ga6-U4-gEU" firstAttribute="top" secondItem="6ir-dF-OFO" secondAttribute="top" id="7cp-TU-VyI"/>
                                     <constraint firstItem="aqf-A2-Z0Z" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" id="GPK-2V-Ehl"/>
+                                    <constraint firstAttribute="trailing" secondItem="GtQ-2N-JhX" secondAttribute="trailing" id="Ito-MZ-jiJ"/>
                                     <constraint firstItem="eEB-0J-bVb" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" id="JSh-YN-Avu"/>
+                                    <constraint firstItem="GtQ-2N-JhX" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" id="QRI-9X-dIg"/>
                                     <constraint firstAttribute="bottom" secondItem="aqf-A2-Z0Z" secondAttribute="bottom" id="Qyh-us-vtL"/>
                                     <constraint firstAttribute="trailing" secondItem="ga6-U4-gEU" secondAttribute="trailing" id="SUS-Yk-3cd"/>
                                     <constraint firstItem="dt3-lS-mdA" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" constant="10" id="Utv-4q-m8b"/>
+                                    <constraint firstItem="aqf-A2-Z0Z" firstAttribute="top" secondItem="GtQ-2N-JhX" secondAttribute="bottom" id="V2c-yV-y23"/>
                                     <constraint firstItem="aqf-A2-Z0Z" firstAttribute="top" secondItem="eEB-0J-bVb" secondAttribute="bottom" id="kvv-W4-PiC"/>
                                     <constraint firstItem="eEB-0J-bVb" firstAttribute="top" secondItem="ga6-U4-gEU" secondAttribute="bottom" id="lA0-eI-5jn"/>
                                     <constraint firstItem="dt3-lS-mdA" firstAttribute="top" secondItem="ga6-U4-gEU" secondAttribute="bottom" constant="10" id="qAz-qG-mJE"/>
@@ -325,6 +343,8 @@
                                 <rect key="frame" x="0.0" y="1296" width="1024" height="50"/>
                                 <items>
                                     <barButtonItem title="Map" id="rio-ZN-eyu" userLabel="MapButton">
+                                        <inset key="imageInsets" minX="0.0" minY="21" maxX="0.0" maxY="0.0"/>
+                                        <inset key="largeContentSizeImageInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="mapButtonPressed:" destination="BYZ-38-t0r" id="i5H-oC-GYy"/>
@@ -376,6 +396,8 @@
                         <outlet property="camerasButton" destination="xUA-Eg-sBT" id="WdR-pf-7Pg"/>
                         <outlet property="distanceLabel" destination="g1m-Vc-WVH" id="nQT-DG-QlX"/>
                         <outlet property="dofButton" destination="kFe-Iv-Phh" id="BdE-6l-LkE"/>
+                        <outlet property="elevationButton" destination="62J-Q8-5QH" id="Om8-8u-MYt"/>
+                        <outlet property="elevationChartView" destination="GtQ-2N-JhX" id="cXg-jp-LxC"/>
                         <outlet property="focalLengthLabel" destination="XW8-VG-CXA" id="1o5-8C-ZiB"/>
                         <outlet property="focalLengthSlider" destination="nZ1-QP-Zsj" id="HE1-DM-Nks"/>
                         <outlet property="heightLabel" destination="UVq-V9-mwq" id="Wqo-YG-qzo"/>
@@ -401,7 +423,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-472" y="180"/>
+            <point key="canvasLocation" x="-472.26562499999994" y="179.64860907759882"/>
         </scene>
         <!--CameraViewController-->
         <scene sceneID="sVy-pe-ezY">

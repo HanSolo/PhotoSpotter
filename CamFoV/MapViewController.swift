@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 import CoreGraphics
+import Network
 
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, MapPinEventObserver, FoVController {
@@ -43,9 +44,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var showViewsButton    : UIButton!
     @IBOutlet weak var cameraLabel        : UILabel!
     @IBOutlet weak var lensLabel          : UILabel!
+    @IBOutlet weak var elevationButton    : UIButton!
     
     
-    
+    let monitor          : NWPathMonitor       = NWPathMonitor()
+    var connected        : Bool                = false
     var locationManager  : CLLocationManager!
     var cameraPin        : MapPin?
     var motifPin         : MapPin?
@@ -82,7 +85,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var viewAnnotations  : [MKPointAnnotation] = []
     var visibleArea      : MKMapRect?
     var heading          : CLLocationDirection?
-    var elevationPoints  : [ElevationPoint]    = []
+    var elevationPoints  : [ElevationPoint]    = [] { didSet { drawElevationChart() } }
+    
+    @IBOutlet weak var elevationChartView: ElevationChartView!
+    
+    
+    
     /*
     var lenses           : [Lens]        = [
         Constants.DEFAULT_LENS,
@@ -108,6 +116,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         self.stateController                = appDelegate.stateController
+        
+        monitor.pathUpdateHandler = { pathUpdateHandler in
+            self.connected = pathUpdateHandler.status == .satisfied
+        }
+        let queue = DispatchQueue(label: "InternetConnectionMonitor")
+        monitor.start(queue: queue)
         
         mapView.mapType                     = MKMapType.standard
         mapView.isZoomEnabled               = true
@@ -159,8 +173,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.eventAngles                    = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
         
         visibleArea                         = mapView.visibleMapRect
-        
-        //getElevation(camera: cameraPin!, motif: motifPin!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -305,6 +317,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
+    
+    @IBAction func elevationButtonPressed(_ sender: Any) {
+        if connected {
+            if elevationChartView.isHidden {
+                getElevation(camera: cameraPin!, motif: motifPin!)
+            } else {
+                showElevationChart(show: false)
+            }
+        }
+    }
+    
+    
+    
     
     
     func createMapView() {
@@ -541,9 +566,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         do {
             let fovData = try Helper.calc(camera: cameraPoint, motif: motifPoint, focalLengthInMM: focalLength, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
-            self.distanceLabel!.text = String(format: "Distance %.1f m", fovData.distance)
-            self.widthLabel!.text    = String(format: "Field width %.1f m", fovData.fovWidth)
-            self.heightLabel!.text   = String(format: "Field height %.1f m", fovData.fovHeight)
+            //self.distanceLabel!.text = String(format: "Distance %.1f m", fovData.distance)
+            //self.widthLabel!.text    = String(format: "Field width %.1f m", fovData.fovWidth)
+            //self.heightLabel!.text   = String(format: "Field height %.1f m", fovData.fovHeight)
+            
+            Helper.setIconToLabel(label: distanceLabel!, image: UIImage(systemName: "arrow.up.left.and.arrow.down.right")!, imageColor: UIColor.lightText, size: CGSize(width: 12, height: 12), text: String(format: "Distance: %.1f m", fovData.distance))
+            Helper.setIconToLabel(label: widthLabel!, image: UIImage(named: "width.png")!, imageColor: UIColor.lightText, size: CGSize(width: 12, height: 12), text: String(format: "Field width: %.1f m", fovData.fovWidth))
+            Helper.setIconToLabel(label: heightLabel!, image: UIImage(named: "height.png")!, imageColor: UIColor.lightText, size: CGSize(width: 12, height: 12), text: String(format: "Field height: %.1f m", fovData.fovHeight))
         } catch {
             print(error)
         }
@@ -778,19 +807,25 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         return View(name: name, description: description, cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation)
     }
     
-    
-    
     func getElevation(camera: MapPin, motif: MapPin) -> Void {
         NetworkManager.loadElevationPoints(cameraPin: camera, motifPin: motif) { elevationPoints in
-            self.updateElevationPoints(elevationPoints: elevationPoints!)
+            return self.elevationPoints = elevationPoints!
         }
     }
     
-    func updateElevationPoints(elevationPoints: [ElevationPoint]) -> Void {
-        self.elevationPoints = elevationPoints
-        print("Elevation Points updated")
+    func showElevationChart(show: Bool) -> Void {
+        UIView.transition(with: self.elevationChartView, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.elevationChartView.isHidden = !show
+        })
     }
     
+    func drawElevationChart() -> Void {
+        showElevationChart(show: true)
+        elevationChartView.cameraPin       = cameraPin?.point()
+        elevationChartView.distance        = cameraPin?.point().distance(to: (motifPin?.point())!) ?? 0
+        elevationChartView.elevationPoints = self.elevationPoints
+        elevationChartView.setNeedsDisplay()        
+    }
 }
 
 
