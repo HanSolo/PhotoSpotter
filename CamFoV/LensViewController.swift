@@ -20,15 +20,20 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var viewsButton   : UIBarButtonItem!
     
     @IBOutlet weak var tableView     : UITableView!
-    @IBOutlet weak var editLensButton: UIButton!
-    @IBOutlet weak var addLensButton : UIButton!
-        
+    @IBOutlet weak var backButton    : UIBarButtonItem!
+    @IBOutlet weak var addLensButton : UIBarButtonItem!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
         self.stateController = appDelegate.stateController
+
+        if var textAttributes = navigationController?.navigationBar.titleTextAttributes {
+            textAttributes[NSAttributedString.Key.foregroundColor] = UIColor.lightText
+            navigationController?.navigationBar.titleTextAttributes = textAttributes
+        }
         
         // Register the table view cell class and its reuse id
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
@@ -37,7 +42,6 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         // (optional) include this line if you want to remove the extra empty cell divider lines
         self.tableView.tableFooterView = UIView()
 
-        
         // This view controller itself will provide the delegate methods and row data for the table view.
         tableView.delegate   = self
         tableView.dataSource = self

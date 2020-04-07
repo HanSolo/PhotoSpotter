@@ -267,7 +267,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         switch mapTypeSelector.selectedSegmentIndex {
             case 0 : mapView.mapType = MKMapType.standard
             case 1 : mapView.mapType = MKMapType.satellite
-            case 2 : mapView.mapType = MKMapType.hybrid
             default: mapView.mapType = MKMapType.standard
         }
         self.stateController!.updateMapType(mapTypeSelector.selectedSegmentIndex)
