@@ -49,13 +49,23 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lens" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GnP-8L-rec" userLabel="LenseLabel">
-                                                                <rect key="frame" x="162.5" y="0.0" width="32.5" height="41"/>
+                                                                <rect key="frame" x="146" y="0.0" width="32.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cpf-Fo-DMK" userLabel="InfoButton">
+                                                                <rect key="frame" x="270.5" y="0.0" width="25" height="41"/>
+                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <state key="normal" image="info.circle" catalog="system">
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="infoButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="D3p-Af-CWn"/>
+                                                                </connections>
+                                                            </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-Qk-HLX" userLabel="ViewsButton">
-                                                                <rect key="frame" x="304" y="0.0" width="25" height="41"/>
+                                                                <rect key="frame" x="388" y="0.0" width="25" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="mappin.circle" catalog="system">
@@ -67,7 +77,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I8n-ya-JHH" userLabel="SunButton">
-                                                                <rect key="frame" x="438" y="0.0" width="26.5" height="41"/>
+                                                                <rect key="frame" x="505" y="0.0" width="26.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="sun.max" catalog="system">
@@ -79,7 +89,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9KS-Fw-qnA" userLabel="MoonButton">
-                                                                <rect key="frame" x="573.5" y="0.0" width="24.5" height="41"/>
+                                                                <rect key="frame" x="624" y="0.0" width="24.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="moon" catalog="system">
@@ -90,7 +100,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFe-Iv-Phh" userLabel="DoFButton">
-                                                                <rect key="frame" x="707" y="0.0" width="20" height="41"/>
+                                                                <rect key="frame" x="740.5" y="0.0" width="20" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="arrowtriangle.down" catalog="system">
@@ -101,7 +111,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIT-Ve-K0R" userLabel="OrientationButton">
-                                                                <rect key="frame" x="836" y="0.0" width="29.5" height="41"/>
+                                                                <rect key="frame" x="853" y="0.0" width="29.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="camera.rotate.fill" catalog="system">
@@ -313,10 +323,10 @@
                                         </connections>
                                     </segmentedControl>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GtQ-2N-JhX" userLabel="ElevationChart" customClass="ElevationChartView" customModule="CamFoV" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="964" width="1024" height="200"/>
+                                        <rect key="frame" x="0.0" y="1164" width="1024" height="0.0"/>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="200" id="hrY-dB-gR5"/>
+                                            <constraint firstAttribute="height" id="hrY-dB-gR5"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -397,10 +407,12 @@
                         <outlet property="distanceLabel" destination="g1m-Vc-WVH" id="nQT-DG-QlX"/>
                         <outlet property="dofButton" destination="kFe-Iv-Phh" id="BdE-6l-LkE"/>
                         <outlet property="elevationButton" destination="62J-Q8-5QH" id="Om8-8u-MYt"/>
+                        <outlet property="elevationChartHeight" destination="hrY-dB-gR5" id="ILx-xR-xW0"/>
                         <outlet property="elevationChartView" destination="GtQ-2N-JhX" id="cXg-jp-LxC"/>
                         <outlet property="focalLengthLabel" destination="XW8-VG-CXA" id="1o5-8C-ZiB"/>
                         <outlet property="focalLengthSlider" destination="nZ1-QP-Zsj" id="HE1-DM-Nks"/>
                         <outlet property="heightLabel" destination="UVq-V9-mwq" id="Wqo-YG-qzo"/>
+                        <outlet property="infoButton" destination="Cpf-Fo-DMK" id="aS2-4X-XzI"/>
                         <outlet property="lensLabel" destination="GnP-8L-rec" id="Bw3-CP-Gkf"/>
                         <outlet property="lensesButton" destination="UzU-FK-IMU" id="Ytl-r1-DjA"/>
                         <outlet property="mapButton" destination="rio-ZN-eyu" id="BtR-ih-2gd"/>
@@ -452,19 +464,19 @@
                                 <rect key="frame" x="0.0" y="50" width="1024" height="1246"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TIv-ey-g5L" userLabel="ToolsView">
-                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="32"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="36"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="WjI-uE-o66">
-                                                <rect key="frame" x="20" y="0.0" width="984" height="32"/>
+                                                <rect key="frame" x="20" y="0.0" width="984" height="36"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cameras" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbd-1R-P4e" userLabel="CameraLabel">
-                                                        <rect key="frame" x="0.0" y="8" width="78" height="24"/>
+                                                        <rect key="frame" x="0.0" y="12" width="78" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HzJ-Sl-xYq" userLabel="AddCameraButton">
-                                                        <rect key="frame" x="962.5" y="11" width="21.5" height="20"/>
+                                                        <rect key="frame" x="962.5" y="15" width="21.5" height="20"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
@@ -481,7 +493,7 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="3sI-sM-CgP"/>
+                                            <constraint firstAttribute="height" constant="36" id="3sI-sM-CgP"/>
                                             <constraint firstItem="WjI-uE-o66" firstAttribute="leading" secondItem="TIv-ey-g5L" secondAttribute="leading" constant="20" id="Ebw-nO-wWA"/>
                                             <constraint firstItem="WjI-uE-o66" firstAttribute="top" secondItem="TIv-ey-g5L" secondAttribute="top" id="EqP-9R-7yk"/>
                                             <constraint firstAttribute="trailing" secondItem="WjI-uE-o66" secondAttribute="trailing" constant="20" id="QOR-ox-cq5"/>
@@ -489,7 +501,7 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aPu-Xv-FEd" userLabel="CameraTableView">
-                                        <rect key="frame" x="0.0" y="32" width="1024" height="1214"/>
+                                        <rect key="frame" x="0.0" y="36" width="1024" height="1210"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </tableView>
                                 </subviews>
@@ -597,13 +609,13 @@
                                 </items>
                             </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ptn-g1-tWC" userLabel="ToolsView">
-                                <rect key="frame" x="0.0" y="50" width="1024" height="32"/>
+                                <rect key="frame" x="0.0" y="50" width="1024" height="36"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="4NN-zN-zCi">
-                                        <rect key="frame" x="20" y="0.0" width="984" height="32"/>
+                                        <rect key="frame" x="20" y="0.0" width="984" height="36"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qpn-ru-oVB" userLabel="CancelButton">
-                                                <rect key="frame" x="0.0" y="2" width="48" height="30"/>
+                                                <rect key="frame" x="0.0" y="6" width="48" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <state key="normal" title="Cancel">
                                                     <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -615,13 +627,13 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Camera" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFY-Yt-p4c" userLabel="AddCameraLabel">
-                                                <rect key="frame" x="443.5" y="3.5" width="108.5" height="24"/>
+                                                <rect key="frame" x="443.5" y="7.5" width="108.5" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" alpha="0.5" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8yg-VV-oHJ" userLabel="DoneButton">
-                                                <rect key="frame" x="947" y="2" width="37" height="30"/>
+                                                <rect key="frame" x="947" y="6" width="37" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
@@ -639,7 +651,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="0PX-Hd-24z"/>
+                                    <constraint firstAttribute="height" constant="36" id="0PX-Hd-24z"/>
                                     <constraint firstItem="4NN-zN-zCi" firstAttribute="top" secondItem="ptn-g1-tWC" secondAttribute="top" id="5WW-Xe-kXO"/>
                                     <constraint firstItem="4NN-zN-zCi" firstAttribute="leading" secondItem="ptn-g1-tWC" secondAttribute="leading" constant="20" id="9lK-0r-zDi"/>
                                     <constraint firstAttribute="bottom" secondItem="4NN-zN-zCi" secondAttribute="bottom" id="Zie-JA-VQY"/>
@@ -647,7 +659,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="R6H-Qb-DIh" userLabel="CameraNameView">
-                                <rect key="frame" x="20" y="102" width="984" height="26"/>
+                                <rect key="frame" x="20" y="106" width="984" height="26"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nax-i2-rKn" userLabel="CameraNameLabel">
                                         <rect key="frame" x="0.0" y="0.0" width="482" height="18"/>
@@ -666,7 +678,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="91" translatesAutoresizingMaskIntoConstraints="NO" id="kvw-rB-isS" userLabel="CameraTypeView">
-                                <rect key="frame" x="20" y="148" width="984" height="96"/>
+                                <rect key="frame" x="20" y="152" width="984" height="96"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sensor format" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3d-91-Ehv">
                                         <rect key="frame" x="0.0" y="0.0" width="446.5" height="96"/>
@@ -744,19 +756,19 @@
                                 <rect key="frame" x="0.0" y="50" width="1024" height="1246"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Q5-rG-QqX" userLabel="ToolsView">
-                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="32"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="36"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="Igg-gL-avp">
-                                                <rect key="frame" x="20" y="0.0" width="984" height="32"/>
+                                                <rect key="frame" x="20" y="0.0" width="984" height="36"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lenses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4B-c3-CUk" userLabel="LensLabel">
-                                                        <rect key="frame" x="0.0" y="8" width="62.5" height="24"/>
+                                                        <rect key="frame" x="0.0" y="12" width="62.5" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="frm-EY-Hfq" userLabel="AddLensButton">
-                                                        <rect key="frame" x="962.5" y="11" width="21.5" height="20"/>
+                                                        <rect key="frame" x="962.5" y="15" width="21.5" height="20"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
@@ -776,12 +788,12 @@
                                             <constraint firstAttribute="bottom" secondItem="Igg-gL-avp" secondAttribute="bottom" id="5X3-6O-Jmv"/>
                                             <constraint firstItem="Igg-gL-avp" firstAttribute="leading" secondItem="2Q5-rG-QqX" secondAttribute="leading" constant="20" id="LpM-bh-uVi"/>
                                             <constraint firstItem="Igg-gL-avp" firstAttribute="top" secondItem="2Q5-rG-QqX" secondAttribute="top" id="Mby-gH-6FP"/>
-                                            <constraint firstAttribute="height" constant="32" id="Xhb-y9-VAx"/>
+                                            <constraint firstAttribute="height" constant="36" id="Xhb-y9-VAx"/>
                                             <constraint firstAttribute="trailing" secondItem="Igg-gL-avp" secondAttribute="trailing" constant="20" id="hAM-dp-J1H"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rTE-xB-yBm" userLabel="LensTableView">
-                                        <rect key="frame" x="0.0" y="32" width="1024" height="1214"/>
+                                        <rect key="frame" x="0.0" y="36" width="1024" height="1210"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </tableView>
                                 </subviews>
@@ -892,10 +904,10 @@
                                 </items>
                             </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ExV-ag-0o7" userLabel="ToolsView">
-                                <rect key="frame" x="0.0" y="50" width="1024" height="32"/>
+                                <rect key="frame" x="0.0" y="50" width="1024" height="36"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="t5g-IW-I9G">
-                                        <rect key="frame" x="20" y="2" width="984" height="30"/>
+                                        <rect key="frame" x="20" y="6" width="984" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PfV-dS-2Bs" userLabel="CancelButton">
                                                 <rect key="frame" x="0.0" y="0.0" width="48" height="30"/>
@@ -934,14 +946,14 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="2tU-WL-hiI"/>
+                                    <constraint firstAttribute="height" constant="36" id="2tU-WL-hiI"/>
                                     <constraint firstAttribute="bottom" secondItem="t5g-IW-I9G" secondAttribute="bottom" id="SNt-j6-BGz"/>
                                     <constraint firstItem="t5g-IW-I9G" firstAttribute="leading" secondItem="ExV-ag-0o7" secondAttribute="leading" constant="20" id="qWV-B4-qJO"/>
                                     <constraint firstAttribute="trailing" secondItem="t5g-IW-I9G" secondAttribute="trailing" constant="20" id="yKn-ib-Iuq"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="Un1-bD-05E">
-                                <rect key="frame" x="20" y="102" width="984" height="257.5"/>
+                                <rect key="frame" x="20" y="106" width="984" height="257.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="iWA-5W-iSO" userLabel="LensNameView">
                                         <rect key="frame" x="0.0" y="0.0" width="984" height="27.5"/>
@@ -1083,19 +1095,19 @@
                                 <rect key="frame" x="0.0" y="50" width="1024" height="1246"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fka-5F-yN6" userLabel="ToolsView">
-                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="32"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="36"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="IhS-kF-E1w">
-                                                <rect key="frame" x="20" y="0.0" width="984" height="32"/>
+                                                <rect key="frame" x="20" y="0.0" width="984" height="36"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Views" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gbx-Qu-hNx" userLabel="LensLabel">
-                                                        <rect key="frame" x="0.0" y="8" width="52.5" height="24"/>
+                                                        <rect key="frame" x="0.0" y="12" width="52.5" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1O-kc-Aro" userLabel="AddViewButton">
-                                                        <rect key="frame" x="962.5" y="11" width="21.5" height="20"/>
+                                                        <rect key="frame" x="962.5" y="12" width="21.5" height="20"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
@@ -1113,14 +1125,14 @@
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="IhS-kF-E1w" secondAttribute="trailing" constant="20" id="7fU-sk-rLq"/>
-                                            <constraint firstAttribute="height" constant="32" id="88T-a8-Dl5"/>
+                                            <constraint firstAttribute="height" constant="36" id="88T-a8-Dl5"/>
                                             <constraint firstItem="IhS-kF-E1w" firstAttribute="top" secondItem="Fka-5F-yN6" secondAttribute="top" id="YfW-ZM-WdZ"/>
                                             <constraint firstItem="IhS-kF-E1w" firstAttribute="leading" secondItem="Fka-5F-yN6" secondAttribute="leading" constant="20" id="gx5-QG-qKO"/>
                                             <constraint firstAttribute="bottom" secondItem="IhS-kF-E1w" secondAttribute="bottom" id="k1U-da-7u7"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n34-ih-Ers" userLabel="ViewTableView">
-                                        <rect key="frame" x="0.0" y="32" width="1024" height="1214"/>
+                                        <rect key="frame" x="0.0" y="36" width="1024" height="1210"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </tableView>
                                 </subviews>
@@ -1231,10 +1243,10 @@
                                 </items>
                             </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1bS-K1-7iZ" userLabel="ToolsView">
-                                <rect key="frame" x="0.0" y="50" width="1024" height="32"/>
+                                <rect key="frame" x="0.0" y="50" width="1024" height="36"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="M68-qL-bXS">
-                                        <rect key="frame" x="20" y="2" width="984" height="30"/>
+                                        <rect key="frame" x="20" y="6" width="984" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vRF-Ms-D37" userLabel="CancelButton">
                                                 <rect key="frame" x="0.0" y="0.0" width="48" height="30"/>
@@ -1274,13 +1286,13 @@
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="M68-qL-bXS" firstAttribute="leading" secondItem="1bS-K1-7iZ" secondAttribute="leading" constant="20" id="7Zf-vK-ipy"/>
-                                    <constraint firstAttribute="height" constant="32" id="UsT-af-RBj"/>
+                                    <constraint firstAttribute="height" constant="36" id="UsT-af-RBj"/>
                                     <constraint firstAttribute="trailing" secondItem="M68-qL-bXS" secondAttribute="trailing" constant="20" id="Xcl-kY-vV1"/>
                                     <constraint firstAttribute="bottom" secondItem="M68-qL-bXS" secondAttribute="bottom" id="xV1-kD-PUS"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="URL-AA-375">
-                                <rect key="frame" x="20" y="102" width="984" height="194"/>
+                                <rect key="frame" x="20" y="106" width="984" height="194"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8yF-Rh-4dp" userLabel="ViewNameView">
                                         <rect key="frame" x="0.0" y="0.0" width="984" height="26"/>
@@ -1380,15 +1392,16 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Tqb-kX-mOs"/>
-        <segue reference="q1Q-0p-CtR"/>
-        <segue reference="6Gl-Tl-cdW"/>
+        <segue reference="hyq-cO-83h"/>
+        <segue reference="v21-rP-BLs"/>
+        <segue reference="dje-rX-Wew"/>
         <segue reference="Wzc-Ww-caD"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowtriangle.down" catalog="system" width="128" height="124"/>
         <image name="camera.fill" catalog="system" width="128" height="96"/>
         <image name="camera.rotate.fill" catalog="system" width="128" height="96"/>
+        <image name="info.circle" catalog="system" width="128" height="121"/>
         <image name="mappin.circle" catalog="system" width="128" height="121"/>
         <image name="moon" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>

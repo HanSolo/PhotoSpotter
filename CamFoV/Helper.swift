@@ -232,7 +232,7 @@ public class Helper {
         return iconContainerView
     }
     
-    public static func setIconToLabel(label: UILabel, image: UIImage, imageColor: UIColor, size: CGSize, text: String) -> Void {
+    public static func setIconToLabel(label: UILabel, image: UIImage, imageColor: UIColor, size: CGSize, text: String, value: String) -> Void {
         let fullString = NSMutableAttributedString(string: "")
                 
         let imgAttachment = NSTextAttachment()
@@ -241,9 +241,12 @@ public class Helper {
         
         let imgString = NSAttributedString(attachment: imgAttachment)
     
+        let textAttributes = [NSAttributedString.Key.foregroundColor: Constants.YELLOW]
+        
         fullString.append(imgString)
         fullString.append(NSAttributedString(string: " "))
-        fullString.append(NSAttributedString(string: text))
+        fullString.append(NSAttributedString(string: text, attributes: textAttributes))
+        fullString.append(NSAttributedString(string: value))
         
         label.attributedText = fullString
     }

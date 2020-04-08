@@ -17,34 +17,37 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var stateController : StateController?
     
     // Toolbar items
-    @IBOutlet weak var mapButton          : UIBarButtonItem!
-    @IBOutlet weak var camerasButton      : UIBarButtonItem!
-    @IBOutlet weak var lensesButton       : UIBarButtonItem!
-    @IBOutlet weak var viewsButton        : UIBarButtonItem!
+    @IBOutlet weak var mapButton           : UIBarButtonItem!
+    @IBOutlet weak var camerasButton       : UIBarButtonItem!
+    @IBOutlet weak var lensesButton        : UIBarButtonItem!
+    @IBOutlet weak var viewsButton         : UIBarButtonItem!
     
     // View items
-    @IBOutlet weak var mapView            : MKMapView!
-    @IBOutlet weak var focalLengthSlider  : UISlider!
-    @IBOutlet weak var focalLengthLabel   : UILabel!
-    @IBOutlet weak var minFocalLengthLabel: UILabel!
-    @IBOutlet weak var maxFocalLengthLabel: UILabel!
-    @IBOutlet weak var apertureSlider     : UISlider!
-    @IBOutlet weak var apertureLabel      : UILabel!
-    @IBOutlet weak var minApertureLabel   : UILabel!
-    @IBOutlet weak var maxApertureLabel   : UILabel!
-    @IBOutlet weak var dofButton          : UIButton!
-    @IBOutlet weak var cameraButton       : UIButton!
-    @IBOutlet weak var orientationButton  : UIButton!
-    @IBOutlet weak var mapTypeSelector    : UISegmentedControl!
-    @IBOutlet weak var distanceLabel      : UILabel!
-    @IBOutlet weak var widthLabel         : UILabel!
-    @IBOutlet weak var heightLabel        : UILabel!
-    @IBOutlet weak var moonButton         : UIButton!
-    @IBOutlet weak var sunButton          : UIButton!
-    @IBOutlet weak var showViewsButton    : UIButton!
-    @IBOutlet weak var cameraLabel        : UILabel!
-    @IBOutlet weak var lensLabel          : UILabel!
-    @IBOutlet weak var elevationButton    : UIButton!
+    @IBOutlet weak var mapView             : MKMapView!
+    @IBOutlet weak var focalLengthSlider   : UISlider!
+    @IBOutlet weak var focalLengthLabel    : UILabel!
+    @IBOutlet weak var minFocalLengthLabel : UILabel!
+    @IBOutlet weak var maxFocalLengthLabel : UILabel!
+    @IBOutlet weak var apertureSlider      : UISlider!
+    @IBOutlet weak var apertureLabel       : UILabel!
+    @IBOutlet weak var minApertureLabel    : UILabel!
+    @IBOutlet weak var maxApertureLabel    : UILabel!
+    @IBOutlet weak var dofButton           : UIButton!
+    @IBOutlet weak var cameraButton        : UIButton!
+    @IBOutlet weak var orientationButton   : UIButton!
+    @IBOutlet weak var mapTypeSelector     : UISegmentedControl!
+    @IBOutlet weak var distanceLabel       : UILabel!
+    @IBOutlet weak var widthLabel          : UILabel!
+    @IBOutlet weak var heightLabel         : UILabel!
+    @IBOutlet weak var moonButton          : UIButton!
+    @IBOutlet weak var sunButton           : UIButton!
+    @IBOutlet weak var showViewsButton     : UIButton!
+    @IBOutlet weak var cameraLabel         : UILabel!
+    @IBOutlet weak var lensLabel           : UILabel!
+    @IBOutlet weak var elevationButton     : UIButton!
+    @IBOutlet weak var infoButton          : UIButton!
+    
+    @IBOutlet weak var elevationChartHeight: NSLayoutConstraint!
     
     
     let monitor          : NWPathMonitor       = NWPathMonitor()
@@ -73,6 +76,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var moonVisible      : Bool                = false
     var sunVisible       : Bool                = false
     var viewsVisible     : Bool                = false
+    var infoVisible      : Bool                = false
     var focalLength      : Double              = 50
     var aperture         : Double              = 2.8
     var orientation      : Orientation         = Orientation.landscape
@@ -157,7 +161,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.apertureLabel.text             = String(format: "f %.1f", Double(round(self.apertureSlider!.value * 10) / 10))
         self.minApertureLabel.text          = String(format: "%.1f", Double(round(stateController!.view.lens.minAperture * 10) / 10))
         self.maxApertureLabel.text          = String(format: "%.1f", Double(round(stateController!.view.lens.maxAperture * 10) / 10))
-
+        
+        switch stateController!.view.orientation {
+            case .landscape:
+                self.orientationButton.transform = CGAffineTransform.identity
+                break
+            case .portrait:
+                self.orientationButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2.0)
+                break
+        }
         
         let cameraIndex : Int = stateController!.cameras.firstIndex(of: stateController!.view.camera) ?? 0
         self.cameraLabel.text = stateController!.cameras[cameraIndex].name
@@ -235,7 +247,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 self.orientationButton.transform = CGAffineTransform.identity
                 break
             case .portrait:
-                self.orientationButton.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2.0)
+                self.orientationButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2.0)
                 break
         }
         
@@ -244,7 +256,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
         updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
-    
     
     @IBAction func dofChanged(_ sender: Any) {
         if self.dofVisible {
@@ -307,6 +318,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
+    
     @IBAction func showViewsButtonPressed(_ sender: Any) {
         if self.viewsVisible {
             self.viewsVisible = false
@@ -316,6 +328,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             showViewsButton.setImage(UIImage(systemName: "mappin.circle.fill"), for: UIControl.State.normal)
         }
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
+    }
+    
+    @IBAction func infoButtonPressed(_ sender: Any) {
+        if self.infoVisible {
+            self.infoVisible = false
+            infoButton.setImage(UIImage(systemName: "info.circle"), for: UIControl.State.normal)
+        } else {
+            self.infoVisible = true
+            infoButton.setImage(UIImage(systemName: "info.circle.fill"), for: UIControl.State.normal)
+        }
+        // Show info view here
     }
     
     @IBAction func elevationButtonPressed(_ sender: Any) {
@@ -566,13 +589,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         do {
             let fovData = try Helper.calc(camera: cameraPoint, motif: motifPoint, focalLengthInMM: focalLength, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
-            //self.distanceLabel!.text = String(format: "Distance %.1f m", fovData.distance)
-            //self.widthLabel!.text    = String(format: "Field width %.1f m", fovData.fovWidth)
-            //self.heightLabel!.text   = String(format: "Field height %.1f m", fovData.fovHeight)
-            
-            Helper.setIconToLabel(label: distanceLabel!, image: UIImage(systemName: "arrow.up.left.and.arrow.down.right")!, imageColor: UIColor.lightText, size: CGSize(width: 12, height: 12), text: String(format: "Distance: %.1f m", fovData.distance))
-            Helper.setIconToLabel(label: widthLabel!, image: UIImage(named: "width.png")!, imageColor: UIColor.lightText, size: CGSize(width: 12, height: 12), text: String(format: "Field width: %.1f m", fovData.fovWidth))
-            Helper.setIconToLabel(label: heightLabel!, image: UIImage(named: "height.png")!, imageColor: UIColor.lightText, size: CGSize(width: 12, height: 12), text: String(format: "Field height: %.1f m", fovData.fovHeight))
+            Helper.setIconToLabel(label: distanceLabel!, image: UIImage(systemName: "arrow.up.left.and.arrow.down.right")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Distance: ", value: String(format: "%.1f m", fovData.distance))
+            Helper.setIconToLabel(label: widthLabel!, image: UIImage(named: "width.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Field width: ", value: String(format: "%.1f m", fovData.fovWidth))
+            Helper.setIconToLabel(label: heightLabel!, image: UIImage(named: "height.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Field height: ", value: String(format: "%.1f m", fovData.fovHeight))
         } catch {
             print(error)
         }
@@ -814,9 +833,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func showElevationChart(show: Bool) -> Void {
-        UIView.transition(with: self.elevationChartView, duration: 0.5, options: .transitionCrossDissolve, animations: {
-            self.elevationChartView.isHidden = !show
-        })
+        if (show) {
+            self.elevationChartView.isHidden = false
+            UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseInOut, .transitionCrossDissolve], animations: {
+                self.elevationChartHeight.constant = 200
+                self.view.layoutIfNeeded()
+            }, completion: { finished in
+            })
+        } else {
+            UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseInOut, .transitionCrossDissolve], animations: {
+                self.elevationChartHeight.constant = 0
+                self.view.layoutIfNeeded()
+            }, completion: { finished in
+                self.elevationChartView.isHidden = true
+            })
+        }
     }
     
     func drawElevationChart() -> Void {
