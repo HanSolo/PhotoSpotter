@@ -189,6 +189,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapTypeSelector.setTitleTextAttributes(mapTypeSelectorTextAttr, for: .normal)
         mapTypeSelector.setTitleTextAttributes(mapTypeSelectorTextAttrSelected, for: .selected)
         
+        let compassButton = MKCompassButton(mapView: mapView)
+        compassButton.translatesAutoresizingMaskIntoConstraints = false
+        compassButton.compassVisibility = .visible
+        mapView.addSubview(compassButton)
+        let constraints = [
+            compassButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 80),
+            compassButton.leftAnchor.constraint(equalTo: mapView.leftAnchor, constant: 20)
+        ]
+        NSLayoutConstraint.activate(constraints)
+        
+        
         self.eventAngles                    = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
         
         visibleArea                         = mapView.visibleMapRect
