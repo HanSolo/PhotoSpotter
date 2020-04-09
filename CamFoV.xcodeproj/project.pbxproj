@@ -13,6 +13,7 @@
 		4F13D831243457E400903059 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D830243457E400903059 /* Camera.swift */; };
 		4F13D83324345B7400903059 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D83224345B7400903059 /* View.swift */; };
 		4F2E8A392436F3A0007C9360 /* SunMoon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8A382436F3A0007C9360 /* SunMoon.swift */; };
+		4F2FB2F7243EE58D00A5B37F /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FB2F6243EE58D00A5B37F /* InfoView.swift */; };
 		4F5B01FA243B5C4800CDA088 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5B01F9243B5C4800CDA088 /* NetworkManager.swift */; };
 		4F5DDD362435A29900A49C20 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD352435A29900A49C20 /* StateController.swift */; };
 		4F5DDD382435A42E00A49C20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD372435A42E00A49C20 /* Constants.swift */; };
@@ -47,6 +48,7 @@
 		4F13D830243457E400903059 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		4F13D83224345B7400903059 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		4F2E8A382436F3A0007C9360 /* SunMoon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunMoon.swift; sourceTree = "<group>"; };
+		4F2FB2F6243EE58D00A5B37F /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		4F5B01F9243B5C4800CDA088 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4F5DDD352435A29900A49C20 /* StateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 		4F5DDD372435A42E00A49C20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				4F5DDD352435A29900A49C20 /* StateController.swift */,
 				4F5B01F9243B5C4800CDA088 /* NetworkManager.swift */,
 				4F0134A6243CD0CB0023A572 /* ElevationChartView.swift */,
+				4F2FB2F6243EE58D00A5B37F /* InfoView.swift */,
 			);
 			path = CamFoV;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				4F9B85AB2434CABF00289E8A /* CameraViewController.swift in Sources */,
 				4F7D7B79242E28D900771992 /* Orientation.swift in Sources */,
 				4F7D7B7E242E28D900771992 /* Trapezoid.swift in Sources */,
+				4F2FB2F7243EE58D00A5B37F /* InfoView.swift in Sources */,
 				4F13D83324345B7400903059 /* View.swift in Sources */,
 				4F135D9524386FE8001B3F3F /* LensDetailViewController.swift in Sources */,
 				4F5DDD362435A29900A49C20 /* StateController.swift in Sources */,

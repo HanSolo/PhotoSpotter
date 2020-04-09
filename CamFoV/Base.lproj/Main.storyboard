@@ -37,10 +37,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="82"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Pob-gc-IPy">
-                                                <rect key="frame" x="10" y="0.0" width="1004" height="82"/>
+                                                <rect key="frame" x="20" y="0.0" width="984" height="82"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vaj-LL-b9k" userLabel="TopControls">
-                                                        <rect key="frame" x="0.0" y="0.0" width="1004" height="41"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="984" height="41"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YnF-jc-dhj" userLabel="CameraLabel">
                                                                 <rect key="frame" x="0.0" y="0.0" width="53.5" height="41"/>
@@ -49,13 +49,13 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lens" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GnP-8L-rec" userLabel="LenseLabel">
-                                                                <rect key="frame" x="146" y="0.0" width="32.5" height="41"/>
+                                                                <rect key="frame" x="143.5" y="0.0" width="32.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cpf-Fo-DMK" userLabel="InfoButton">
-                                                                <rect key="frame" x="270.5" y="0.0" width="25" height="41"/>
+                                                                <rect key="frame" x="265.5" y="0.0" width="25" height="41"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="info.circle" catalog="system">
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
@@ -65,7 +65,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-Qk-HLX" userLabel="ViewsButton">
-                                                                <rect key="frame" x="388" y="0.0" width="25" height="41"/>
+                                                                <rect key="frame" x="380.5" y="0.0" width="25" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="mappin.circle" catalog="system">
@@ -77,7 +77,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I8n-ya-JHH" userLabel="SunButton">
-                                                                <rect key="frame" x="505" y="0.0" width="26.5" height="41"/>
+                                                                <rect key="frame" x="495" y="0.0" width="26.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="sun.max" catalog="system">
@@ -89,7 +89,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9KS-Fw-qnA" userLabel="MoonButton">
-                                                                <rect key="frame" x="624" y="0.0" width="24.5" height="41"/>
+                                                                <rect key="frame" x="611.5" y="0.0" width="24.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="moon" catalog="system">
@@ -100,7 +100,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFe-Iv-Phh" userLabel="DoFButton">
-                                                                <rect key="frame" x="740.5" y="0.0" width="20" height="41"/>
+                                                                <rect key="frame" x="725.5" y="0.0" width="20" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="arrowtriangle.down" catalog="system">
@@ -111,7 +111,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIT-Ve-K0R" userLabel="OrientationButton">
-                                                                <rect key="frame" x="853" y="0.0" width="29.5" height="41"/>
+                                                                <rect key="frame" x="835.5" y="0.0" width="29.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="camera.rotate.fill" catalog="system">
@@ -122,7 +122,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xp3-1c-EGH" userLabel="CameraButton">
-                                                                <rect key="frame" x="974.5" y="0.0" width="29.5" height="41"/>
+                                                                <rect key="frame" x="954.5" y="0.0" width="29.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="camera.fill" catalog="system">
@@ -136,7 +136,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Lc7-b6-13R" userLabel="FoVInfo">
-                                                        <rect key="frame" x="0.0" y="41" width="1004" height="41"/>
+                                                        <rect key="frame" x="0.0" y="41" width="984" height="41"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1m-Vc-WVH" userLabel="DistanceLabel">
                                                                 <rect key="frame" x="0.0" y="0.0" width="53" height="41"/>
@@ -145,19 +145,19 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Width" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RmB-Ja-Iry" userLabel="FoVWidthLabel">
-                                                                <rect key="frame" x="324" y="0.0" width="36" height="41"/>
+                                                                <rect key="frame" x="317" y="0.0" width="36" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Height" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVq-V9-mwq" userLabel="FoVHeightLabel">
-                                                                <rect key="frame" x="630.5" y="0.0" width="40.5" height="41"/>
+                                                                <rect key="frame" x="617.5" y="0.0" width="40.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="62J-Q8-5QH" userLabel="ElevationButton">
-                                                                <rect key="frame" x="942" y="0.0" width="62" height="41"/>
+                                                                <rect key="frame" x="922" y="0.0" width="62" height="41"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" title="Elevation"/>
                                                                 <connections>
@@ -179,9 +179,9 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="Pob-gc-IPy" secondAttribute="trailing" constant="10" id="CzV-wn-VsJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="Pob-gc-IPy" secondAttribute="trailing" constant="20" id="CzV-wn-VsJ"/>
                                             <constraint firstAttribute="bottom" secondItem="Pob-gc-IPy" secondAttribute="bottom" id="H3E-4M-xel"/>
-                                            <constraint firstItem="Pob-gc-IPy" firstAttribute="leading" secondItem="ga6-U4-gEU" secondAttribute="leading" constant="10" id="XfM-97-OXC"/>
+                                            <constraint firstItem="Pob-gc-IPy" firstAttribute="leading" secondItem="ga6-U4-gEU" secondAttribute="leading" constant="20" id="XfM-97-OXC"/>
                                             <constraint firstAttribute="height" constant="82" id="bcp-Qe-act"/>
                                             <constraint firstItem="Pob-gc-IPy" firstAttribute="top" secondItem="ga6-U4-gEU" secondAttribute="top" id="hbV-up-Qz0"/>
                                         </constraints>
@@ -308,7 +308,7 @@
                                         <rect key="frame" x="0.0" y="82" width="1024" height="1082"/>
                                     </mapView>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dt3-lS-mdA">
-                                        <rect key="frame" x="10" y="92" width="91" height="41"/>
+                                        <rect key="frame" x="20" y="102" width="91" height="41"/>
                                         <color key="backgroundColor" red="0.27450980392156865" green="0.27450980392156865" blue="0.27450980392156865" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="z9f-l8-NS9"/>
@@ -329,22 +329,50 @@
                                             <constraint firstAttribute="height" id="hrY-dB-gR5"/>
                                         </constraints>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P8R-Ia-68G">
+                                        <rect key="frame" x="964" y="102" width="40" height="40"/>
+                                        <color key="backgroundColor" red="0.27450980390000002" green="0.27450980390000002" blue="0.27450980390000002" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="euA-X2-vZg"/>
+                                            <constraint firstAttribute="height" constant="40" id="zTO-9u-HeQ"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                                        <state key="normal" image="location.fill" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="locateMeButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TDI-Cu-baE"/>
+                                        </connections>
+                                    </button>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Es-az-Q0P" userLabel="InfoView" customClass="InfoView" customModule="CamFoV" customModuleProvider="target">
+                                        <rect key="frame" x="261" y="82" width="553" height="1"/>
+                                        <color key="backgroundColor" white="0.33333333329999998" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="zmV-a0-XS1"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
+                                    <constraint firstItem="3Es-az-Q0P" firstAttribute="leading" secondItem="dt3-lS-mdA" secondAttribute="trailing" constant="150" id="4lO-Y2-kRY"/>
                                     <constraint firstItem="ga6-U4-gEU" firstAttribute="top" secondItem="6ir-dF-OFO" secondAttribute="top" id="7cp-TU-VyI"/>
                                     <constraint firstItem="aqf-A2-Z0Z" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" id="GPK-2V-Ehl"/>
                                     <constraint firstAttribute="trailing" secondItem="GtQ-2N-JhX" secondAttribute="trailing" id="Ito-MZ-jiJ"/>
+                                    <constraint firstItem="P8R-Ia-68G" firstAttribute="leading" secondItem="3Es-az-Q0P" secondAttribute="trailing" constant="150" id="JGy-Dv-DPg"/>
                                     <constraint firstItem="eEB-0J-bVb" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" id="JSh-YN-Avu"/>
                                     <constraint firstItem="GtQ-2N-JhX" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" id="QRI-9X-dIg"/>
                                     <constraint firstAttribute="bottom" secondItem="aqf-A2-Z0Z" secondAttribute="bottom" id="Qyh-us-vtL"/>
                                     <constraint firstAttribute="trailing" secondItem="ga6-U4-gEU" secondAttribute="trailing" id="SUS-Yk-3cd"/>
-                                    <constraint firstItem="dt3-lS-mdA" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" constant="10" id="Utv-4q-m8b"/>
+                                    <constraint firstItem="dt3-lS-mdA" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" constant="20" id="Utv-4q-m8b"/>
                                     <constraint firstItem="aqf-A2-Z0Z" firstAttribute="top" secondItem="GtQ-2N-JhX" secondAttribute="bottom" id="V2c-yV-y23"/>
+                                    <constraint firstItem="P8R-Ia-68G" firstAttribute="top" secondItem="ga6-U4-gEU" secondAttribute="bottom" constant="20" id="ck2-PE-L2x"/>
+                                    <constraint firstAttribute="trailing" secondItem="P8R-Ia-68G" secondAttribute="trailing" constant="20" id="des-wY-XtL"/>
                                     <constraint firstItem="aqf-A2-Z0Z" firstAttribute="top" secondItem="eEB-0J-bVb" secondAttribute="bottom" id="kvv-W4-PiC"/>
                                     <constraint firstItem="eEB-0J-bVb" firstAttribute="top" secondItem="ga6-U4-gEU" secondAttribute="bottom" id="lA0-eI-5jn"/>
-                                    <constraint firstItem="dt3-lS-mdA" firstAttribute="top" secondItem="ga6-U4-gEU" secondAttribute="bottom" constant="10" id="qAz-qG-mJE"/>
+                                    <constraint firstItem="dt3-lS-mdA" firstAttribute="top" secondItem="ga6-U4-gEU" secondAttribute="bottom" constant="20" id="qAz-qG-mJE"/>
                                     <constraint firstAttribute="trailing" secondItem="aqf-A2-Z0Z" secondAttribute="trailing" id="s2c-bN-oDk"/>
+                                    <constraint firstItem="3Es-az-Q0P" firstAttribute="top" secondItem="ga6-U4-gEU" secondAttribute="bottom" id="w4f-YH-i1Y"/>
                                     <constraint firstAttribute="trailing" secondItem="eEB-0J-bVb" secondAttribute="trailing" id="wLZ-dg-nVd"/>
                                     <constraint firstItem="ga6-U4-gEU" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" id="zuE-Un-gX2"/>
                                 </constraints>
@@ -413,8 +441,11 @@
                         <outlet property="focalLengthSlider" destination="nZ1-QP-Zsj" id="HE1-DM-Nks"/>
                         <outlet property="heightLabel" destination="UVq-V9-mwq" id="Wqo-YG-qzo"/>
                         <outlet property="infoButton" destination="Cpf-Fo-DMK" id="aS2-4X-XzI"/>
+                        <outlet property="infoView" destination="3Es-az-Q0P" id="FYf-0U-VYa"/>
+                        <outlet property="infoViewHeight" destination="zmV-a0-XS1" id="9aR-JY-aEH"/>
                         <outlet property="lensLabel" destination="GnP-8L-rec" id="Bw3-CP-Gkf"/>
                         <outlet property="lensesButton" destination="UzU-FK-IMU" id="Ytl-r1-DjA"/>
+                        <outlet property="locateMeButton" destination="P8R-Ia-68G" id="JVf-Cn-N5B"/>
                         <outlet property="mapButton" destination="rio-ZN-eyu" id="BtR-ih-2gd"/>
                         <outlet property="mapTypeSelector" destination="dt3-lS-mdA" id="jjb-kd-1rX"/>
                         <outlet property="mapView" destination="eEB-0J-bVb" id="FkA-ix-mSb"/>
@@ -1107,7 +1138,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1O-kc-Aro" userLabel="AddViewButton">
-                                                        <rect key="frame" x="962.5" y="12" width="21.5" height="20"/>
+                                                        <rect key="frame" x="962.5" y="15" width="21.5" height="20"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
@@ -1392,9 +1423,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hyq-cO-83h"/>
-        <segue reference="v21-rP-BLs"/>
-        <segue reference="dje-rX-Wew"/>
+        <segue reference="Tqb-kX-mOs"/>
+        <segue reference="q1Q-0p-CtR"/>
+        <segue reference="6Gl-Tl-cdW"/>
         <segue reference="Wzc-Ww-caD"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -1402,6 +1433,7 @@
         <image name="camera.fill" catalog="system" width="128" height="96"/>
         <image name="camera.rotate.fill" catalog="system" width="128" height="96"/>
         <image name="info.circle" catalog="system" width="128" height="121"/>
+        <image name="location.fill" catalog="system" width="128" height="115"/>
         <image name="mappin.circle" catalog="system" width="128" height="121"/>
         <image name="moon" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>

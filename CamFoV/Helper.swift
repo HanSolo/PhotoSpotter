@@ -82,7 +82,7 @@ public class Helper {
         return FoVData(camera: camera, motif: motif, focalLength: focalLengthInMM, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation, infinite: infinite, hyperFocal: hyperFocal, nearLimit: nearLimit, farLimit: farLimit, frontPercent: frontPercent, behindPercent: behindPercent, total: total, diagonalAngle: diagonalAngle, diagonalLength: diagonalLength, fovWidth: fovWidth, fovWidthAngle: fovWidthAngle, fovHeight: fovHeight, fovHeightAngle: fovHeightAngle, radius: radius)
     }
     
-    public static func updateTriangle(camera: MKMapPoint, motif: MKMapPoint, focalLengthInMM: Double, aperture: Double, sensorFormat: SensorFormat, orientation: Orientation, triangle: Triangle) -> Void {
+    public static func updateTriangle(camera: MKMapPoint, motif: MKMapPoint, focalLengthInMM: Double, aperture: Double, sensorFormat: SensorFormat, orientation: Orientation, triangle: Triangle) {
         do {
             let data: FoVData = try calc(camera: camera, motif: motif, focalLengthInMM: focalLengthInMM, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
             let trianglePoints: [MKMapPoint] = calcTrianglePoints(data: data)
@@ -102,7 +102,7 @@ public class Helper {
         return [p1, p2, p3]
     }
     
-    public static func updateTrapezoid(camera: MKMapPoint, motif: MKMapPoint, focalLengthInMM: Double, aperture: Double, sensorFormat: SensorFormat, orientation: Orientation, trapezoid: Trapezoid) -> Void {
+    public static func updateTrapezoid(camera: MKMapPoint, motif: MKMapPoint, focalLengthInMM: Double, aperture: Double, sensorFormat: SensorFormat, orientation: Orientation, trapezoid: Trapezoid) {
         do {
             let data: FoVData = try calc(camera: camera, motif: motif, focalLengthInMM: focalLengthInMM, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
             let trapezoidPoints: [MKMapPoint] = calcTrapezoidPoints(data: data)

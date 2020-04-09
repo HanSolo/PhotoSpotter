@@ -118,6 +118,9 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell                   = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! LensCell
         let lens : Lens            = stateController!.lenses[indexPath.item]
         cell.textLabel?.text       = lens.name
+        if lens.isPrime {
+            cell.textLabel?.textColor = Constants.YELLOW
+        }
         cell.detailTextLabel?.text = "[\(lens.description())]"
         return cell
     }

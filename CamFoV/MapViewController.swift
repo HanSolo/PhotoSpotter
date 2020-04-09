@@ -46,13 +46,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var lensLabel           : UILabel!
     @IBOutlet weak var elevationButton     : UIButton!
     @IBOutlet weak var infoButton          : UIButton!
+    @IBOutlet weak var locateMeButton      : UIButton!
     
     @IBOutlet weak var elevationChartHeight: NSLayoutConstraint!
+    @IBOutlet weak var infoViewHeight      : NSLayoutConstraint!
+    
     
     
     let monitor          : NWPathMonitor       = NWPathMonitor()
     var connected        : Bool                = false
     var locationManager  : CLLocationManager!
+    var fovData          : FoVData?
     var cameraPin        : MapPin?
     var motifPin         : MapPin?
     var mapPins          : [MapPin]            = [MapPin]()
@@ -92,6 +96,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var elevationPoints  : [ElevationPoint]    = [] { didSet { drawElevationChart() } }
     
     @IBOutlet weak var elevationChartView: ElevationChartView!
+    @IBOutlet weak var infoView          : InfoView!
     
     
     
@@ -127,12 +132,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let queue = DispatchQueue(label: "InternetConnectionMonitor")
         monitor.start(queue: queue)
         
-        mapView.mapType                     = MKMapType.standard
-        mapView.isZoomEnabled               = true
-        mapView.isScrollEnabled             = true
-        mapView.showsScale                  = true
-        mapView.showsCompass                = true
-        mapView.showsUserLocation           = true
+        self.locateMeButton.layer.cornerRadius = 5
+        
+        self.mapView.mapType                = MKMapType.standard
+        self.mapView.isZoomEnabled          = true
+        self.mapView.isScrollEnabled        = true
+        self.mapView.showsScale             = true
+        self.mapView.showsCompass           = true
+        self.mapView.showsUserLocation      = true
         
         self.triangle                       = Triangle()
         self.minTriangle                    = Triangle()
@@ -195,7 +202,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        getCurrentLocation()
     }
     
     
@@ -338,7 +344,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             self.infoVisible = true
             infoButton.setImage(UIImage(systemName: "info.circle.fill"), for: UIControl.State.normal)
         }
-        // Show info view here
+        showInfoView(show: self.infoVisible)
+    }
+    
+    @IBAction func locateMeButtonPressed(_ sender: Any) {
+        gotoCurrentLocation()
     }
     
     @IBAction func elevationButtonPressed(_ sender: Any) {
@@ -350,8 +360,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             }
         }
     }
-    
-    
     
     
     
@@ -375,7 +383,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
-    func getCurrentLocation() {
+    func gotoCurrentLocation() {
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -383,7 +391,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         if CLLocationManager.locationServicesEnabled() {
             //locationManager.startUpdatingHeading()
-            //locationManager.startUpdatingLocation()
+            locationManager.startUpdatingLocation()
         }
     }
     
@@ -422,6 +430,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     func mapView(_ mapView: MKMapView, annotationView: MKAnnotationView, didChange: MKAnnotationView.DragState, fromOldState: MKAnnotationView.DragState) {
+        print("dragState changed to \(didChange)")
         switch (didChange) {
             case .starting:
                 break;
@@ -586,12 +595,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let distance : CLLocationDistance = cameraPoint.distance(to: motifPoint)
         if distance < 0.01 || distance > 9999 { return }
         
-        
+                
         do {
-            let fovData = try Helper.calc(camera: cameraPoint, motif: motifPoint, focalLengthInMM: focalLength, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
-            Helper.setIconToLabel(label: distanceLabel!, image: UIImage(systemName: "arrow.up.left.and.arrow.down.right")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Distance: ", value: String(format: "%.1f m", fovData.distance))
-            Helper.setIconToLabel(label: widthLabel!, image: UIImage(named: "width.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Field width: ", value: String(format: "%.1f m", fovData.fovWidth))
-            Helper.setIconToLabel(label: heightLabel!, image: UIImage(named: "height.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Field height: ", value: String(format: "%.1f m", fovData.fovHeight))
+            self.fovData = try Helper.calc(camera: cameraPoint, motif: motifPoint, focalLengthInMM: focalLength, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
+            Helper.setIconToLabel(label: distanceLabel!, image: UIImage(systemName: "arrow.up.left.and.arrow.down.right")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Distance: ", value: String(format: "%.1f m", fovData?.distance ?? 0))
+            Helper.setIconToLabel(label: widthLabel!, image: UIImage(named: "width.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Field width: ", value: String(format: "%.1f m", fovData?.fovWidth ?? 0))
+            Helper.setIconToLabel(label: heightLabel!, image: UIImage(named: "height.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Field height: ", value: String(format: "%.1f m", fovData?.fovHeight ?? 0))
         } catch {
             print(error)
         }
@@ -857,6 +866,26 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         elevationChartView.elevationPoints = self.elevationPoints
         elevationChartView.setNeedsDisplay()        
     }
+
+    func showInfoView(show: Bool) -> Void {
+        if (show) {
+            self.infoView.fovData = self.fovData
+            self.infoView.isHidden = false
+            self.infoView.setNeedsDisplay()
+            UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseInOut, .transitionCrossDissolve], animations: {
+                self.infoViewHeight.constant = 200
+                self.view.layoutIfNeeded()
+            }, completion: { finished in
+            })
+        } else {
+            UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseInOut, .transitionCrossDissolve], animations: {
+                self.infoViewHeight.constant = 0
+                self.view.layoutIfNeeded()
+            }, completion: { finished in
+                self.infoView.isHidden = true
+            })
+        }
+    }
 }
 
 
@@ -875,7 +904,7 @@ public class MapPin: NSObject, MKAnnotation {
             case PinType.motif : return "motifpin.png"
         }
     }
-    public var title: String? {
+    public var title    : String? {
         switch pinType {
             case PinType.camera: return "Camera"
             case PinType.motif : return "Motif"
@@ -897,7 +926,6 @@ public class MapPin: NSObject, MKAnnotation {
         return MKMapPoint(coordinate)
     }
 }
-
 
 class MapPinAnnotationView: MKAnnotationView {
     var observers : [MapPinEventObserver] = []
@@ -936,16 +964,19 @@ class MapPinAnnotationView: MKAnnotationView {
         return mapPin!
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        setSelected(true, animated: true) // Needed to be able to directly drag annotation, needs to be selected first
+        super.touchesBegan(touches, with: event)
+    }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if dragState == MKAnnotationView.DragState.dragging {
-            if mapView != nil {
-                let anchorPoint: CGPoint                = CGPoint(x: self.center.x, y: self.center.y - self.centerOffset.y)
-                let coordinate : CLLocationCoordinate2D = mapView!.convert(anchorPoint, toCoordinateFrom: mapView)
-                fireMapPinEvent(evt: MapPinEvent(src: mapPin!, coordinate: coordinate))
-                setDragState(MKAnnotationView.DragState.dragging, animated: false)
-            }
+        if mapView != nil {
+            let anchorPoint: CGPoint                = CGPoint(x: self.center.x, y: self.center.y - self.centerOffset.y)
+            let coordinate : CLLocationCoordinate2D = mapView!.convert(anchorPoint, toCoordinateFrom: mapView)
+            fireMapPinEvent(evt: MapPinEvent(src: mapPin!, coordinate: coordinate))
+            setDragState(MKAnnotationView.DragState.dragging, animated: false)
         }
     }
+    
     
     override func setDragState(_ dragState: MKAnnotationView.DragState, animated: Bool) {
         super.setDragState(dragState, animated: animated)
@@ -960,6 +991,7 @@ class MapPinAnnotationView: MKAnnotationView {
             fatalError("Unknown drag state")
         }
     }
+    
     
     func startDragging() {
         setDragState(MKAnnotationView.DragState.dragging, animated: false)
@@ -1011,7 +1043,6 @@ class MapPinAnnotationView: MKAnnotationView {
     }
 }
 
-
 class MapPinEvent {
     var src       : MapPin
     var coordinate: CLLocationCoordinate2D
@@ -1027,7 +1058,6 @@ class MapPinEvent {
 protocol MapPinEventObserver : class {
     func onMapPinEvent(evt: MapPinEvent)
 }
-
 
 
 class Polygon: MKPolygon {
