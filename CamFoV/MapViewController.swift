@@ -189,9 +189,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapTypeSelector.setTitleTextAttributes(mapTypeSelectorTextAttr, for: .normal)
         mapTypeSelector.setTitleTextAttributes(mapTypeSelectorTextAttrSelected, for: .selected)
         
+        
+        mapView.showsCompass = false
+        
         let compassButton = MKCompassButton(mapView: mapView)
         compassButton.translatesAutoresizingMaskIntoConstraints = false
-        compassButton.compassVisibility = .visible
+        compassButton.compassVisibility = .adaptive
         mapView.addSubview(compassButton)
         let constraints = [
             compassButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 80),

@@ -447,8 +447,8 @@
                         <outlet property="lensesButton" destination="UzU-FK-IMU" id="Ytl-r1-DjA"/>
                         <outlet property="locateMeButton" destination="P8R-Ia-68G" id="JVf-Cn-N5B"/>
                         <outlet property="mapButton" destination="rio-ZN-eyu" id="BtR-ih-2gd"/>
-                        <outlet property="mapTypeSelector" destination="dt3-lS-mdA" id="jjb-kd-1rX"/>
-                        <outlet property="mapView" destination="eEB-0J-bVb" id="FkA-ix-mSb"/>
+                        <outlet property="mapTypeSelector" destination="dt3-lS-mdA" id="W55-HH-jEF"/>
+                        <outlet property="mapView" destination="eEB-0J-bVb" id="XzT-VV-CX0"/>
                         <outlet property="maxApertureLabel" destination="tSc-J2-ANQ" id="TUi-R4-Z53"/>
                         <outlet property="maxFocalLengthLabel" destination="yrb-FZ-o2Y" id="vMH-kL-dmt"/>
                         <outlet property="minApertureLabel" destination="VpR-RU-dec" id="8t5-12-jFk"/>
