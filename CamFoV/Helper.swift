@@ -232,7 +232,13 @@ public class Helper {
         return iconContainerView
     }
     
-    public static func setIconToLabel(label: UILabel, image: UIImage, imageColor: UIColor, size: CGSize, text: String, value: String) -> Void {
+    public static func setInfoLabel(label: UILabel, image: UIImage, imageColor: UIColor, size: CGSize, text: String, value1: Double, decimals1: Int, unit1: String, value2: Double? = nil, decimals2: Int? = nil, unit2: String? = nil) -> Void {
+        let value1Formatter = NumberFormatter()
+        value1Formatter.minimumFractionDigits = decimals1
+        value1Formatter.usesGroupingSeparator = true
+        value1Formatter.groupingSeparator     = " "
+        value1Formatter.groupingSize          = 3
+        
         let fullString = NSMutableAttributedString(string: "")
                 
         let imgAttachment = NSTextAttachment()
@@ -246,8 +252,23 @@ public class Helper {
         fullString.append(imgString)
         fullString.append(NSAttributedString(string: " "))
         fullString.append(NSAttributedString(string: text, attributes: textAttributes))
-        fullString.append(NSAttributedString(string: value))
+        fullString.append(NSAttributedString(string: value1Formatter.string(from: NSNumber(value: value1))! + unit1))
         
+        if let value2 = value2 {
+            if let decimals2 = decimals2 {
+                let value2Formatter = NumberFormatter()
+                value2Formatter.minimumFractionDigits = decimals2
+                value2Formatter.usesGroupingSeparator = true
+                value2Formatter.groupingSeparator     = " "
+                value2Formatter.groupingSize          = 3
+                if let unit2 = unit2 {
+                    fullString.append(NSAttributedString(string: " [" + value2Formatter.string(from: NSNumber(value: value2))! + unit2 + "]"))
+                } else {
+                    fullString.append(NSAttributedString(string: " [" + value2Formatter.string(from: NSNumber(value: value2))! + "]"))
+                }
+            }
+        }
+                
         label.attributedText = fullString
     }
     
@@ -262,5 +283,16 @@ public class Helper {
             }
         }
         return false
+    }
+    
+    public static func setNavBarTitle(navBar: UINavigationBar) -> Void {
+        navBar.topItem?.title = Constants.APP_TITLE
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor          = UIColor.darkGray
+        appearance.titleTextAttributes      = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        navBar.standardAppearance           = appearance
     }
 }

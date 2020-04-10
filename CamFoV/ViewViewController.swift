@@ -23,10 +23,14 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView     : UITableView!
     @IBOutlet weak var editViewButton: UIButton!
     @IBOutlet weak var addViewButton : UIButton!
+        
+    @IBOutlet weak var navBar: UINavigationBar!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Helper.setNavBarTitle(navBar: navBar)
 
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
         self.stateController = appDelegate.stateController

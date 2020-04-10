@@ -114,6 +114,7 @@
 				4F7D7B55242E270F00771992 /* Main.storyboard */,
 				4F7D7B6D242E28D900771992 /* FoVData.swift */,
 				4F7D7B65242E28D900771992 /* FoVError.swift */,
+				4F5DDD372435A42E00A49C20 /* Constants.swift */,
 				4F7D7B69242E28D900771992 /* Helper.swift */,
 				4F7D7B6F242E28D900771992 /* Lens.swift */,
 				4F7D7B63242E28D900771992 /* Lenses.swift */,
@@ -134,7 +135,6 @@
 				4F135D9424386FE8001B3F3F /* LensDetailViewController.swift */,
 				4F79B0D92439A50400F61CF4 /* ViewViewController.swift */,
 				4F79B0DB2439A80500F61CF4 /* ViewDetailViewController.swift */,
-				4F5DDD372435A42E00A49C20 /* Constants.swift */,
 				4F5DDD392435A8D500A49C20 /* FoVController.swift */,
 				4F2E8A382436F3A0007C9360 /* SunMoon.swift */,
 				4F5DDD352435A29900A49C20 /* StateController.swift */,
@@ -406,7 +406,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.CamFoV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -424,7 +424,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.CamFoV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

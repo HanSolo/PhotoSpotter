@@ -23,9 +23,13 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var backButton    : UIBarButtonItem!
     @IBOutlet weak var addLensButton : UIBarButtonItem!
     
+    @IBOutlet weak var navBar: UINavigationBar!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Helper.setNavBarTitle(navBar: navBar)
 
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
         self.stateController = appDelegate.stateController
@@ -121,7 +125,7 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         if lens.isPrime {
             cell.textLabel?.textColor = Constants.YELLOW
         }
-        cell.detailTextLabel?.text = "[\(lens.description())]"
+        cell.detailTextLabel?.text = lens.description()
         return cell
     }
     

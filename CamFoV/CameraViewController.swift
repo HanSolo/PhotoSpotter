@@ -26,10 +26,14 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var editCameraButton : UIButton!
     @IBOutlet weak var addCameraButton  : UIButton!
         
+    @IBOutlet weak var navBar: UINavigationBar!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        Helper.setNavBarTitle(navBar: navBar)
+        
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
         self.stateController = appDelegate.stateController
         
@@ -115,7 +119,7 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell                   = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! CameraCell
         let camera : Camera        = stateController!.cameras[indexPath.item]
         cell.textLabel?.text       = camera.name
-        cell.detailTextLabel?.text = "[\(camera.sensorFormat.description)]"
+        cell.detailTextLabel?.text = camera.sensorFormat.description
         return cell
     }
     

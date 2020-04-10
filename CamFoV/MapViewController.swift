@@ -51,49 +51,52 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var elevationChartHeight: NSLayoutConstraint!
     @IBOutlet weak var infoViewHeight      : NSLayoutConstraint!
     
+    @IBOutlet weak var navBar              : UINavigationBar!
     
     
-    let monitor          : NWPathMonitor       = NWPathMonitor()
-    var connected        : Bool                = false
-    var locationManager  : CLLocationManager!
-    var fovData          : FoVData?
-    var cameraPin        : MapPin?
-    var motifPin         : MapPin?
-    var mapPins          : [MapPin]            = [MapPin]()
-    var triangle         : Triangle?
-    var minTriangle      : Triangle?
-    var maxTriangle      : Triangle?
-    var trapezoid        : Trapezoid?
-    var fovTriangle      : MKPolygon?
-    var minFovTriangle   : MKPolygon?
-    var maxFovTriangle   : MKPolygon?
-    var fovTriangleFrame : MKPolygon?
-    var fovCenterLine    : MKPolyline?
-    var dofTrapezoid     : MKPolygon?
-    var moonriseLine     : MKPolyline?
-    var moonsetLine      : MKPolyline?
-    var sunriseLine      : MKPolyline?
-    var sunsetLine       : MKPolyline?
-    var data             : FoVData?
-    var fovVisible       : Bool                = true
-    var dofVisible       : Bool                = false
-    var moonVisible      : Bool                = false
-    var sunVisible       : Bool                = false
-    var viewsVisible     : Bool                = false
-    var infoVisible      : Bool                = false
-    var focalLength      : Double              = 50
-    var aperture         : Double              = 2.8
-    var orientation      : Orientation         = Orientation.landscape
-    let sunMoonCalc      : SunMoon             = SunMoon()
-    var eventAngles      : Dictionary<String, (Double, Double)>?
-    var pointsSunrise    : [MKMapPoint]        = []
-    var pointsSunset     : [MKMapPoint]        = []
-    var pointsMoonrise   : [MKMapPoint]        = []
-    var pointsMoonset    : [MKMapPoint]        = []
-    var viewAnnotations  : [MKPointAnnotation] = []
-    var visibleArea      : MKMapRect?
-    var heading          : CLLocationDirection?
-    var elevationPoints  : [ElevationPoint]    = [] { didSet { drawElevationChart() } }
+    let monitor               : NWPathMonitor       = NWPathMonitor()
+    var connected             : Bool                = false
+    var locationManager       : CLLocationManager!
+    var fovData               : FoVData?
+    var cameraPin             : MapPin?
+    var motifPin              : MapPin?
+    var mapPins               : [MapPin]            = [MapPin]()
+    var triangle              : Triangle?
+    var minTriangle           : Triangle?
+    var maxTriangle           : Triangle?
+    var trapezoid             : Trapezoid?
+    var fovTriangle           : MKPolygon?
+    var minFovTriangle        : MKPolygon?
+    var maxFovTriangle        : MKPolygon?
+    var fovTriangleFrame      : MKPolygon?
+    var fovCenterLine         : MKPolyline?
+    var dofTrapezoid          : MKPolygon?
+    var moonriseLine          : MKPolyline?
+    var moonsetLine           : MKPolyline?
+    var sunriseLine           : MKPolyline?
+    var sunsetLine            : MKPolyline?
+    var data                  : FoVData?
+    var fovVisible            : Bool                = true
+    var dofVisible            : Bool                = false
+    var moonVisible           : Bool                = false
+    var sunVisible            : Bool                = false
+    var viewsVisible          : Bool                = false
+    var elevationChartVisible : Bool                = false;
+    var infoVisible           : Bool                = false
+    var focalLength           : Double              = 50
+    var aperture              : Double              = 2.8
+    var orientation           : Orientation         = Orientation.landscape
+    let sunMoonCalc           : SunMoon             = SunMoon()
+    var eventAngles           : Dictionary<String, (Double, Double)>?
+    var pointsSunrise         : [MKMapPoint]        = []
+    var pointsSunset          : [MKMapPoint]        = []
+    var pointsMoonrise        : [MKMapPoint]        = []
+    var pointsMoonset         : [MKMapPoint]        = []
+    var viewAnnotations       : [MKPointAnnotation] = []
+    var visibleArea           : MKMapRect?
+    var heading               : CLLocationDirection?
+    var elevationPoints       : [ElevationPoint]    = [] { didSet { drawElevationChart() } }
+
     
     @IBOutlet weak var elevationChartView: ElevationChartView!
     @IBOutlet weak var infoView          : InfoView!
@@ -123,11 +126,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Helper.setNavBarTitle(navBar: navBar)
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         self.stateController                = appDelegate.stateController
         
         monitor.pathUpdateHandler = { pathUpdateHandler in
             self.connected = pathUpdateHandler.status == .satisfied
+            DispatchQueue.main.async { 
+               self.elevationButton.isEnabled = self.connected
+            }
         }
         let queue = DispatchQueue(label: "InternetConnectionMonitor")
         monitor.start(queue: queue)
@@ -191,17 +199,26 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         
         mapView.showsCompass = false
-        
         let compassButton = MKCompassButton(mapView: mapView)
         compassButton.translatesAutoresizingMaskIntoConstraints = false
         compassButton.compassVisibility = .adaptive
         mapView.addSubview(compassButton)
-        let constraints = [
+        let compassButtonConstraints  : [NSLayoutConstraint] = [
             compassButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 80),
             compassButton.leftAnchor.constraint(equalTo: mapView.leftAnchor, constant: 20)
         ]
-        NSLayoutConstraint.activate(constraints)
+        NSLayoutConstraint.activate(compassButtonConstraints)
         
+        mapView.showsScale = false
+        let scaleView = MKScaleView(mapView: mapView)
+        scaleView.translatesAutoresizingMaskIntoConstraints = false
+        scaleView.scaleVisibility = .adaptive
+        mapView.addSubview(scaleView)
+        let scaleViewConstraints : [NSLayoutConstraint] = [
+            scaleView.leftAnchor.constraint(equalTo: mapView.leftAnchor, constant: 20),
+            scaleView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 20)
+        ]
+        NSLayoutConstraint.activate(scaleViewConstraints)
         
         self.eventAngles                    = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
         
@@ -353,10 +370,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBAction func infoButtonPressed(_ sender: Any) {
         if self.infoVisible {
             self.infoVisible = false
-            infoButton.setImage(UIImage(systemName: "info.circle"), for: UIControl.State.normal)
+            self.infoButton.setImage(UIImage(systemName: "info.circle"), for: UIControl.State.normal)
         } else {
             self.infoVisible = true
-            infoButton.setImage(UIImage(systemName: "info.circle.fill"), for: UIControl.State.normal)
+            self.infoButton.setImage(UIImage(systemName: "info.circle.fill"), for: UIControl.State.normal)
         }
         showInfoView(show: self.infoVisible)
     }
@@ -367,14 +384,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     @IBAction func elevationButtonPressed(_ sender: Any) {
         if connected {
-            if elevationChartView.isHidden {
-                getElevation(camera: cameraPin!, motif: motifPin!)
-            } else {
+            if self.elevationChartVisible {
+                self.elevationChartVisible = false
+                self.elevationButton.setImage(UIImage(systemName: "arrow.up.and.down.circle"), for: UIControl.State.normal)
                 showElevationChart(show: false)
+            } else {
+                self.elevationChartVisible = true
+                self.elevationButton.setImage(UIImage(systemName: "arrow.up.and.down.circle.fill"), for: UIControl.State.normal)
+                getElevation(camera: cameraPin!, motif: motifPin!)
             }
         }
     }
-    
     
     
     func createMapView() {
@@ -609,12 +629,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let distance : CLLocationDistance = cameraPoint.distance(to: motifPoint)
         if distance < 0.01 || distance > 9999 { return }
         
-                
         do {
-            self.fovData = try Helper.calc(camera: cameraPoint, motif: motifPoint, focalLengthInMM: focalLength, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
-            Helper.setIconToLabel(label: distanceLabel!, image: UIImage(systemName: "arrow.up.left.and.arrow.down.right")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Distance: ", value: String(format: "%.1f m", fovData?.distance ?? 0))
-            Helper.setIconToLabel(label: widthLabel!, image: UIImage(named: "width.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Field width: ", value: String(format: "%.1f m", fovData?.fovWidth ?? 0))
-            Helper.setIconToLabel(label: heightLabel!, image: UIImage(named: "height.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Field height: ", value: String(format: "%.1f m", fovData?.fovHeight ?? 0))
+        self.fovData = try Helper.calc(camera: cameraPoint, motif: motifPoint, focalLengthInMM: focalLength, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
+            Helper.setInfoLabel(label: distanceLabel!, image: UIImage(systemName: "arrow.up.left.and.arrow.down.right")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Distance: ", value1: fovData?.distance ?? 0, decimals1: 1, unit1: Constants.UNIT_LENGTH)
+            Helper.setInfoLabel(label: widthLabel!, image: UIImage(named: "width.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Field width: ", value1: fovData?.fovWidth ?? 0, decimals1: 1, unit1: Constants.UNIT_LENGTH, value2: Helper.toDegrees(radians: fovData?.fovWidthAngle ?? 0), decimals2: 1, unit2: Constants.UNIT_ANGLE)
+            Helper.setInfoLabel(label: heightLabel!, image: UIImage(named: "height.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Field height: ", value1: fovData?.fovHeight ?? 0, decimals1: 1, unit1: Constants.UNIT_LENGTH, value2: Helper.toDegrees(radians: fovData?.fovHeightAngle ?? 0), decimals2: 1, unit2: Constants.UNIT_ANGLE)
         } catch {
             print(error)
         }

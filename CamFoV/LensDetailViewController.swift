@@ -22,6 +22,8 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
     @IBOutlet weak var cancelButton            : UIButton!
     @IBOutlet weak var doneButton              : UIButton!
     
+    @IBOutlet weak var navBar: UINavigationBar!
+    
     var nameIconView           : UIView?
     var minFocalLengthIconView : UIView?
     var maxFocalLengthIconView : UIView?
@@ -44,6 +46,8 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Helper.setNavBarTitle(navBar: navBar)
         
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
         self.stateController = appDelegate.stateController

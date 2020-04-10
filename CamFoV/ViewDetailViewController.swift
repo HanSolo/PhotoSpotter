@@ -21,6 +21,9 @@ public class ViewDetailViewController: UIViewController, FoVController {
     @IBOutlet weak var cancelButton         : UIButton!
     @IBOutlet weak var doneButton           : UIButton!
     
+    @IBOutlet weak var navBar: UINavigationBar!
+    
+    
     var nameIconView         : UIView?
     var tapGestureRecognizer : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showAlert(sender:)))
     
@@ -33,6 +36,8 @@ public class ViewDetailViewController: UIViewController, FoVController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Helper.setNavBarTitle(navBar: navBar)
         
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
         self.stateController = appDelegate.stateController

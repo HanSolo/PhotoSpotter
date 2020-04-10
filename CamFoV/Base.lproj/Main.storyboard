@@ -27,7 +27,7 @@
                                     <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="CamFoV" id="MAW-bR-kSY"/>
+                                    <navigationItem title="Photo Spotter" id="MAW-bR-kSY"/>
                                 </items>
                             </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ir-dF-OFO" userLabel="MainView">
@@ -42,33 +42,61 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vaj-LL-b9k" userLabel="TopControls">
                                                         <rect key="frame" x="0.0" y="0.0" width="984" height="41"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YnF-jc-dhj" userLabel="CameraLabel">
-                                                                <rect key="frame" x="0.0" y="0.0" width="53.5" height="41"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lens" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GnP-8L-rec" userLabel="LenseLabel">
-                                                                <rect key="frame" x="143.5" y="0.0" width="32.5" height="41"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="qjA-Xy-mP7">
+                                                                <rect key="frame" x="0.0" y="0.0" width="200" height="41"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YnF-jc-dhj" userLabel="CameraLabel">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="200" height="18"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lens" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GnP-8L-rec" userLabel="LenseLabel">
+                                                                        <rect key="frame" x="0.0" y="23" width="200" height="18"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="v1Z-ly-VxU"/>
+                                                                </constraints>
+                                                            </stackView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cpf-Fo-DMK" userLabel="InfoButton">
-                                                                <rect key="frame" x="265.5" y="0.0" width="25" height="41"/>
+                                                                <rect key="frame" x="252.5" y="0.0" width="44" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <state key="normal" image="info.circle" catalog="system">
+                                                                <inset key="titleEdgeInsets" minX="-23" minY="0.0" maxX="0.0" maxY="-30"/>
+                                                                <inset key="imageEdgeInsets" minX="10" minY="-10" maxX="0.0" maxY="0.0"/>
+                                                                <state key="normal" title="Info" image="info.circle" catalog="system">
+                                                                    <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                                 </state>
                                                                 <connections>
                                                                     <action selector="infoButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="D3p-Af-CWn"/>
                                                                 </connections>
                                                             </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-Qk-HLX" userLabel="ViewsButton">
-                                                                <rect key="frame" x="380.5" y="0.0" width="25" height="41"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ouh-Jp-2aV" userLabel="elevationButton">
+                                                                <rect key="frame" x="349.5" y="0.0" width="69" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <state key="normal" image="mappin.circle" catalog="system">
+                                                                <inset key="titleEdgeInsets" minX="-24" minY="0.0" maxX="0.0" maxY="-30"/>
+                                                                <inset key="imageEdgeInsets" minX="21" minY="-10" maxX="0.0" maxY="0.0"/>
+                                                                <state key="normal" title="Elevation" image="arrow.up.and.down.circle" catalog="system">
+                                                                    <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="elevationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KHc-47-ifu"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-Qk-HLX" userLabel="ViewsButton">
+                                                                <rect key="frame" x="471" y="0.0" width="54" height="41"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <inset key="titleEdgeInsets" minX="-27" minY="0.0" maxX="0.0" maxY="-30"/>
+                                                                <inset key="imageEdgeInsets" minX="13" minY="-10" maxX="0.0" maxY="0.0"/>
+                                                                <state key="normal" title="Views" image="mappin.circle" catalog="system">
                                                                     <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                                 </state>
@@ -77,10 +105,12 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I8n-ya-JHH" userLabel="SunButton">
-                                                                <rect key="frame" x="495" y="0.0" width="26.5" height="41"/>
+                                                                <rect key="frame" x="577.5" y="0.0" width="45.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <state key="normal" image="sun.max" catalog="system">
+                                                                <inset key="titleEdgeInsets" minX="-26" minY="0.0" maxX="0.0" maxY="-30"/>
+                                                                <inset key="imageEdgeInsets" minX="9" minY="-10" maxX="0.0" maxY="0.0"/>
+                                                                <state key="normal" title="Sun" image="sun.max" catalog="system">
                                                                     <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                                 </state>
@@ -89,10 +119,13 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9KS-Fw-qnA" userLabel="MoonButton">
-                                                                <rect key="frame" x="611.5" y="0.0" width="24.5" height="41"/>
+                                                                <rect key="frame" x="675.5" y="0.0" width="51.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <state key="normal" image="moon" catalog="system">
+                                                                <inset key="titleEdgeInsets" minX="-27" minY="0.0" maxX="0.0" maxY="-30"/>
+                                                                <inset key="imageEdgeInsets" minX="13" minY="-10" maxX="0.0" maxY="0.0"/>
+                                                                <state key="normal" title="Moon" image="moon" catalog="system">
+                                                                    <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                                 </state>
                                                                 <connections>
@@ -100,10 +133,13 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFe-Iv-Phh" userLabel="DoFButton">
-                                                                <rect key="frame" x="725.5" y="0.0" width="20" height="41"/>
+                                                                <rect key="frame" x="780" y="0.0" width="40" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <state key="normal" image="arrowtriangle.down" catalog="system">
+                                                                <inset key="titleEdgeInsets" minX="-20" minY="0.0" maxX="0.0" maxY="-30"/>
+                                                                <inset key="imageEdgeInsets" minX="9" minY="-10" maxX="0.0" maxY="0.0"/>
+                                                                <state key="normal" title="DoF" image="arrowtriangle.down" catalog="system">
+                                                                    <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                                 </state>
                                                                 <connections>
@@ -111,7 +147,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIT-Ve-K0R" userLabel="OrientationButton">
-                                                                <rect key="frame" x="835.5" y="0.0" width="29.5" height="41"/>
+                                                                <rect key="frame" x="872.5" y="0.0" width="29.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" image="camera.rotate.fill" catalog="system">
@@ -134,36 +170,33 @@
                                                                 </connections>
                                                             </button>
                                                         </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="qjA-Xy-mP7" firstAttribute="leading" secondItem="Vaj-LL-b9k" secondAttribute="leading" id="Odr-Ob-AY4"/>
+                                                            <constraint firstItem="qjA-Xy-mP7" firstAttribute="top" secondItem="Vaj-LL-b9k" secondAttribute="top" id="RJu-gy-1of"/>
+                                                            <constraint firstAttribute="bottom" secondItem="qjA-Xy-mP7" secondAttribute="bottom" id="XXK-dW-6nj"/>
+                                                        </constraints>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Lc7-b6-13R" userLabel="FoVInfo">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="Lc7-b6-13R" userLabel="FoVInfo">
                                                         <rect key="frame" x="0.0" y="41" width="984" height="41"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1m-Vc-WVH" userLabel="DistanceLabel">
-                                                                <rect key="frame" x="0.0" y="0.0" width="53" height="41"/>
+                                                                <rect key="frame" x="0.0" y="25" width="53" height="16"/>
                                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Width" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RmB-Ja-Iry" userLabel="FoVWidthLabel">
-                                                                <rect key="frame" x="317" y="0.0" width="36" height="41"/>
+                                                                <rect key="frame" x="480.5" y="25" width="36" height="16"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Height" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVq-V9-mwq" userLabel="FoVHeightLabel">
-                                                                <rect key="frame" x="617.5" y="0.0" width="40.5" height="41"/>
+                                                                <rect key="frame" x="943.5" y="25" width="40.5" height="16"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="62J-Q8-5QH" userLabel="ElevationButton">
-                                                                <rect key="frame" x="922" y="0.0" width="62" height="41"/>
-                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <state key="normal" title="Elevation"/>
-                                                                <connections>
-                                                                    <action selector="elevationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NUR-iB-JpN"/>
-                                                                </connections>
-                                                            </button>
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
@@ -324,7 +357,7 @@
                                     </segmentedControl>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GtQ-2N-JhX" userLabel="ElevationChart" customClass="ElevationChartView" customModule="CamFoV" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="1164" width="1024" height="0.0"/>
-                                        <color key="backgroundColor" white="0.33333333333333331" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="hrY-dB-gR5"/>
                                         </constraints>
@@ -347,7 +380,7 @@
                                     </button>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Es-az-Q0P" userLabel="InfoView" customClass="InfoView" customModule="CamFoV" customModuleProvider="target">
                                         <rect key="frame" x="261" y="82" width="553" height="1"/>
-                                        <color key="backgroundColor" white="0.33333333329999998" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="zmV-a0-XS1"/>
                                         </constraints>
@@ -434,7 +467,7 @@
                         <outlet property="camerasButton" destination="xUA-Eg-sBT" id="WdR-pf-7Pg"/>
                         <outlet property="distanceLabel" destination="g1m-Vc-WVH" id="nQT-DG-QlX"/>
                         <outlet property="dofButton" destination="kFe-Iv-Phh" id="BdE-6l-LkE"/>
-                        <outlet property="elevationButton" destination="62J-Q8-5QH" id="Om8-8u-MYt"/>
+                        <outlet property="elevationButton" destination="Ouh-Jp-2aV" id="M24-XH-h8E"/>
                         <outlet property="elevationChartHeight" destination="hrY-dB-gR5" id="ILx-xR-xW0"/>
                         <outlet property="elevationChartView" destination="GtQ-2N-JhX" id="cXg-jp-LxC"/>
                         <outlet property="focalLengthLabel" destination="XW8-VG-CXA" id="1o5-8C-ZiB"/>
@@ -454,6 +487,7 @@
                         <outlet property="minApertureLabel" destination="VpR-RU-dec" id="8t5-12-jFk"/>
                         <outlet property="minFocalLengthLabel" destination="94S-EW-znH" id="eTv-iH-eIZ"/>
                         <outlet property="moonButton" destination="9KS-Fw-qnA" id="M5G-eZ-uik"/>
+                        <outlet property="navBar" destination="YLE-9w-5zA" id="vx4-m4-4LK"/>
                         <outlet property="orientationButton" destination="oIT-Ve-K0R" id="jMp-v7-FTy"/>
                         <outlet property="showViewsButton" destination="gyl-Qk-HLX" id="upb-Ml-tu1"/>
                         <outlet property="sunButton" destination="I8n-ya-JHH" id="6rF-Lh-ncv"/>
@@ -612,6 +646,7 @@
                         <outlet property="camerasButton" destination="WHb-eT-ZFP" id="G7l-XD-Vfx"/>
                         <outlet property="lensesButton" destination="zRr-qX-d3W" id="4WE-B2-4tr"/>
                         <outlet property="mapButton" destination="rhp-eT-sbI" id="Mm7-Nd-AoC"/>
+                        <outlet property="navBar" destination="QN9-0I-M3X" id="EAJ-Gv-pS3"/>
                         <outlet property="tableView" destination="aPu-Xv-FEd" id="eM7-RC-XYy"/>
                         <outlet property="viewsButton" destination="igL-Oe-WgJ" id="7Q7-v9-hxN"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="camerasViewToMapView" destinationCreationSelector="exitCamerasViewController:" id="8Mg-Zc-6jN"/>
@@ -752,6 +787,7 @@
                         <outlet property="cancelButton" destination="qpn-ru-oVB" id="vmD-4t-0HX"/>
                         <outlet property="doneButton" destination="8yg-VV-oHJ" id="K9K-wf-DVx"/>
                         <outlet property="nameTextField" destination="ame-au-Pia" id="wOF-te-1Vf"/>
+                        <outlet property="navBar" destination="n7h-DN-lqW" id="QjD-fT-AD1"/>
                         <outlet property="sensorFormatPicker" destination="9pm-Mv-ch8" id="hbw-94-dG1"/>
                     </connections>
                 </viewController>
@@ -907,6 +943,7 @@
                         <outlet property="camerasButton" destination="hzI-pW-CD7" id="Vcg-tf-xbD"/>
                         <outlet property="lensesButton" destination="idh-yb-BdL" id="4i5-e4-ws6"/>
                         <outlet property="mapButton" destination="CXV-eb-nSj" id="JWY-DW-LCj"/>
+                        <outlet property="navBar" destination="4mQ-Nd-XCn" id="njf-WF-c54"/>
                         <outlet property="tableView" destination="rTE-xB-yBm" id="BMk-v4-msp"/>
                         <outlet property="viewsButton" destination="Rzq-xO-SJL" id="1v9-yH-a2f"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="lensesViewToMapView" id="Yg0-Ub-0Bk"/>
@@ -1092,6 +1129,7 @@
                         <outlet property="minApertureTextField" destination="Sts-KF-nr0" id="JOW-pt-S47"/>
                         <outlet property="minFocalLengthTextField" destination="TIG-lg-GTc" id="dQR-g9-RBh"/>
                         <outlet property="nameTextField" destination="jGW-yI-cR1" id="yUh-Tu-Ptz"/>
+                        <outlet property="navBar" destination="a2e-ek-jOC" id="Ix4-Xm-rff"/>
                     </connections>
                 </viewController>
                 <exit id="a7g-jp-tiP" userLabel="Exit" sceneMemberID="exit"/>
@@ -1246,6 +1284,7 @@
                         <outlet property="camerasButton" destination="NVt-Ce-PBQ" id="1mA-Sq-3vF"/>
                         <outlet property="lensesButton" destination="sFq-T1-7Fo" id="RwO-8J-PRg"/>
                         <outlet property="mapButton" destination="3zj-hc-Yok" id="T0Y-mD-3MH"/>
+                        <outlet property="navBar" destination="hlu-vr-GCU" id="dPL-Tg-f7g"/>
                         <outlet property="tableView" destination="n34-ih-Ers" id="6U0-X6-ggQ"/>
                         <outlet property="viewsButton" destination="9r7-fs-59W" id="7rN-M9-VIP"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="viewsViewToMapView" id="Wzc-Ww-caD"/>
@@ -1414,6 +1453,7 @@
                         <outlet property="doneButton" destination="SAO-h2-2Is" id="Jbq-Gv-nrw"/>
                         <outlet property="lensTextField" destination="Vde-Y5-blu" id="LGr-fH-p3t"/>
                         <outlet property="nameTextField" destination="GVq-fD-Znb" id="fM1-h5-3RA"/>
+                        <outlet property="navBar" destination="GBm-hp-8kJ" id="444-ac-bwT"/>
                     </connections>
                 </viewController>
                 <exit id="9K2-fx-6Yh" userLabel="Exit" sceneMemberID="exit"/>
@@ -1423,12 +1463,13 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Tqb-kX-mOs"/>
-        <segue reference="q1Q-0p-CtR"/>
-        <segue reference="6Gl-Tl-cdW"/>
-        <segue reference="Wzc-Ww-caD"/>
+        <segue reference="hyq-cO-83h"/>
+        <segue reference="v21-rP-BLs"/>
+        <segue reference="heU-sJ-624"/>
+        <segue reference="Yg0-Ub-0Bk"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="arrow.up.and.down.circle" catalog="system" width="128" height="121"/>
         <image name="arrowtriangle.down" catalog="system" width="128" height="124"/>
         <image name="camera.fill" catalog="system" width="128" height="96"/>
         <image name="camera.rotate.fill" catalog="system" width="128" height="96"/>

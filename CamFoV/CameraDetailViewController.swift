@@ -18,6 +18,8 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
     @IBOutlet weak var cancelButton       : UIButton!
     @IBOutlet weak var doneButton         : UIButton!
     
+    @IBOutlet weak var navBar             : UINavigationBar!
+    
     var nameIconView         : UIView?
     var tapGestureRecognizer : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showAlert(sender:)))
     
@@ -29,6 +31,8 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Helper.setNavBarTitle(navBar: navBar)
         
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
         self.stateController = appDelegate.stateController
@@ -104,9 +108,7 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
         var pickerLabel = view as? UILabel;
         if (pickerLabel == nil){
             pickerLabel                  = UILabel()
-            pickerLabel?.font            = UIFont(name: "System", size: 17)
-            //pickerLabel?.textColor       = UIColor.systemTeal
-            //pickerLabel?.backgroundColor = UIColor.clear
+            pickerLabel?.font            = UIFont(name: "System", size: 17)            
             pickerLabel?.textAlignment   = NSTextAlignment.center
         }
         

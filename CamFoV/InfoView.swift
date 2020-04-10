@@ -20,7 +20,6 @@ public class InfoView: UIView {
         let offsetLeft             : Double          = 20
         let offsetLeftSecondColumn : Double          = 250
         let lineSpacing            : Double          = 28
-        let unit                   : String          = " m"
         let numberFormatter        : NumberFormatter = NumberFormatter()
         numberFormatter.minimumFractionDigits = 2
         numberFormatter.usesGroupingSeparator = true
@@ -53,32 +52,32 @@ public class InfoView: UIView {
             
             let hyperfocalText = NSAttributedString(string: "Hyperfocal", attributes: textAttributes)
             hyperfocalText.draw(at: CGPoint(x: offsetLeft, y: offsetTop))
-            let hyperfocalValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.hyperFocal))! + unit, attributes: valueAttributes)
+            let hyperfocalValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.hyperFocal))! + Constants.UNIT_LENGTH, attributes: valueAttributes)
             hyperfocalValueText.draw(at: CGPoint(x: offsetLeftSecondColumn - Double(hyperfocalValueText.size().width), y: offsetTop))
             
             let nearLimitText = NSAttributedString(string: "Near limit", attributes: textAttributes)
             nearLimitText.draw(at: CGPoint(x: offsetLeft, y: offsetTop + lineSpacing))
-            let nearLimitValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.nearLimit))! + unit, attributes: valueAttributes)
+            let nearLimitValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.nearLimit))! + Constants.UNIT_LENGTH, attributes: valueAttributes)
             nearLimitValueText.draw(at: CGPoint(x: offsetLeftSecondColumn - Double(nearLimitValueText.size().width), y: offsetTop + lineSpacing))
             
             let farLimitText = NSAttributedString(string: "Far limit", attributes: textAttributes)
             farLimitText.draw(at: CGPoint(x: offsetLeft, y: offsetTop + 2 * lineSpacing))
-            let farLimitValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.farLimit))! + unit, attributes: valueAttributes)
+            let farLimitValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.farLimit))! + Constants.UNIT_LENGTH, attributes: valueAttributes)
             farLimitValueText.draw(at: CGPoint(x: offsetLeftSecondColumn - Double(farLimitValueText.size().width), y: offsetTop + 2 * lineSpacing))
             
             let inFrontText = NSAttributedString(string: "In front", attributes: textAttributes)
             inFrontText.draw(at: CGPoint(x: offsetLeft, y: offsetTop + 3 * lineSpacing))
-            let inFrontValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.dofInFront))! + unit, attributes: valueAttributes)
+            let inFrontValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.dofInFront))! + Constants.UNIT_LENGTH, attributes: valueAttributes)
             inFrontValueText.draw(at: CGPoint(x: offsetLeftSecondColumn - Double(inFrontValueText.size().width), y: offsetTop + 3 * lineSpacing))
             
             let behindText = NSAttributedString(string: "Behind", attributes: textAttributes)
             behindText.draw(at: CGPoint(x: offsetLeft, y: offsetTop + 4 * lineSpacing))
-            let behindValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.dofBehind))! + unit, attributes: valueAttributes)
+            let behindValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.dofBehind))! + Constants.UNIT_LENGTH, attributes: valueAttributes)
             behindValueText.draw(at: CGPoint(x: offsetLeftSecondColumn - Double(behindValueText.size().width), y: offsetTop + 4 * lineSpacing))
             
             let totalText = NSAttributedString(string: "Total", attributes: textAttributes)
             totalText.draw(at: CGPoint(x: offsetLeft, y: offsetTop + 5 * lineSpacing))
-            let totalValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.total))! + unit, attributes: valueAttributes)
+            let totalValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.total))! + Constants.UNIT_LENGTH, attributes: valueAttributes)
             totalValueText.draw(at: CGPoint(x: offsetLeftSecondColumn - Double(totalValueText.size().width), y: offsetTop + 5 * lineSpacing))
         } else {
             
