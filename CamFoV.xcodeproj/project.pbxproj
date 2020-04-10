@@ -75,6 +75,7 @@
 		4F9164A7243C980F0039C697 /* UIImage+resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+resize.swift"; sourceTree = "<group>"; };
 		4F9B85A624346EDD00289E8A /* ViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewData.swift; sourceTree = "<group>"; };
 		4F9B85AA2434CABF00289E8A /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		4FA94021244052EF009430D7 /* CamFoV.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CamFoV.entitlements; sourceTree = "<group>"; };
 		4FF364F124376B0800A749A1 /* CameraDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,6 +109,7 @@
 		4F7D7B4E242E270F00771992 /* CamFoV */ = {
 			isa = PBXGroup;
 			children = (
+				4FA94021244052EF009430D7 /* CamFoV.entitlements */,
 				4F894B5D242FB61E00B27FCC /* Extensions */,
 				4F7D7B4F242E270F00771992 /* AppDelegate.swift */,
 				4F7D7B51242E270F00771992 /* SceneDelegate.swift */,
@@ -335,6 +337,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -388,6 +391,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -396,6 +400,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CamFoV/CamFoV.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L4A7549EHC;
 				INFOPLIST_FILE = CamFoV/Info.plist;
@@ -404,7 +409,8 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.CamFoV;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CamFoV;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -414,6 +420,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CamFoV/CamFoV.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L4A7549EHC;
 				INFOPLIST_FILE = CamFoV/Info.plist;
@@ -422,7 +429,8 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.CamFoV;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CamFoV;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
