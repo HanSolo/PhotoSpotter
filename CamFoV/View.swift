@@ -20,9 +20,10 @@ public class View: Equatable {
     var focalLength : Double
     var aperture    : Double
     var orientation : Orientation
+    var mapRect     : MKMapRect
     
     
-    init(name: String, description: String, cameraPoint: MKMapPoint, motifPoint: MKMapPoint, camera: Camera, lens: Lens, focalLength: Double, aperture: Double, orientation: Orientation) {
+    init(name: String, description: String, cameraPoint: MKMapPoint, motifPoint: MKMapPoint, camera: Camera, lens: Lens, focalLength: Double, aperture: Double, orientation: Orientation, mapRect: MKMapRect) {
         self.name        = name
         self.description = description
         self.cameraPoint = cameraPoint
@@ -32,6 +33,7 @@ public class View: Equatable {
         self.focalLength = focalLength
         self.aperture    = aperture
         self.orientation = orientation
+        self.mapRect     = mapRect
     }
     
     init(dictionary: Dictionary<String, String>, cameras: [Camera], lenses: [Lens]) throws {        
@@ -53,6 +55,12 @@ public class View: Equatable {
         self.focalLength = Double(viewData.focalLength!)!
         self.aperture    = Double(viewData.aperture!)!
         self.orientation = Orientation(rawValue: viewData.orientation!)!
+        
+        let origin    : MKMapPoint = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees((viewData.originLat! as NSString).doubleValue), longitude: CLLocationDegrees((viewData.originLon! as NSString).doubleValue)))
+        let mapWidth  : Double     = (viewData.mapWidth! as NSString).doubleValue
+        let mapHeight : Double     = (viewData.mapHeight! as NSString).doubleValue
+        let size      : MKMapSize  = MKMapSize(width: mapWidth, height: mapHeight)
+        self.mapRect = MKMapRect(origin: origin, size: size)
     }
     
     public static func ==(lhs: View, rhs: View) -> Bool {
@@ -78,7 +86,11 @@ public class View: Equatable {
         jsonString += ","
         jsonString += "\"focalLength\":\"\(focalLength)\","
         jsonString += "\"aperture\":\"\(aperture)\","
-        jsonString += "\"orientation\":\"\(orientation.name.uppercased())\""
+        jsonString += "\"orientation\":\"\(orientation.name.uppercased())\","
+        jsonString += "\"originLat\":\"\(mapRect.origin.coordinate.latitude)\","
+        jsonString += "\"originLon\":\"\(mapRect.origin.coordinate.longitude)\","
+        jsonString += "\"mapWidth\":\"\(mapRect.size.width)\","
+        jsonString += "\"mapHeight\":\"\(mapRect.size.height)\""
         jsonString += "}"
         return jsonString
     }
@@ -100,7 +112,11 @@ public class View: Equatable {
         jsonString += "\"maxAperture\":\"\(lens.maxAperture)\","
         jsonString += "\"focalLength\":\"\(focalLength)\","
         jsonString += "\"aperture\":\"\(aperture)\","
-        jsonString += "\"orientation\":\"\(orientation)\""
+        jsonString += "\"orientation\":\"\(orientation)\","
+        jsonString += "\"originLat\":\"\(mapRect.origin.coordinate.latitude)\","
+        jsonString += "\"originLon\":\"\(mapRect.origin.coordinate.longitude)\","
+        jsonString += "\"mapWidth\":\"\(mapRect.size.width)\","
+        jsonString += "\"mapHeight\":\"\(mapRect.size.height)\""
         jsonString += "}"
         return jsonString
     }

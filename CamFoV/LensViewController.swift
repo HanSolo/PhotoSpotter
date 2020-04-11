@@ -60,11 +60,6 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: Event handling
     @IBAction func mapButtonPressed(_ sender: Any) {
         stateController!.store()
-        /*
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mapVC      = storyboard.instantiateViewController(identifier: "MapViewController")
-        show(mapVC, sender: self)
-        */
         performSegue(withIdentifier: "lensesViewToMapView", sender: self)
     }
     @IBAction func camerasButtonPressed(_ sender: Any) {
@@ -105,6 +100,8 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         let lensIndex : IndexPath = IndexPath(row: (stateController!.lenses.firstIndex(of: lens) ?? 0), section: 0)
         tableView.selectRow(at: lensIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: lensIndex)?.accessoryType = .checkmark
+        
+        stateController!.view.lens = lens
     }
     
     @IBAction func cancel(segue:UIStoryboardSegue) {

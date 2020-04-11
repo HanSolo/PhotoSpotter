@@ -103,33 +103,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     
     
-    /*
-    var lenses           : [Lens]        = [
-        Constants.DEFAULT_LENS,
-        Lens(name: "Tamron SP 15-30mm f2.8", minFocalLength: 15, maxFocalLength: 30, minAperture: 2.8, maxAperture: 22),
-        Lens(name: "Tamron SP 24-70mm f2.8", minFocalLength: 24, maxFocalLength: 70, minAperture: 2.8, maxAperture: 22),
-        Lens(name: "Tamron SP 35mm f1.8", focalLength: 35, minAperture: 1.8, maxAperture: 22),
-        Lens(name: "Tamron SP 90mm f2.8 Macro", focalLength: 90, minAperture: 2.8, maxAperture: 32),
-        Lens(name: "Sigma 14mm f1.8 ART", focalLength: 14, minAperture: 1.8, maxAperture: 22),
-        Lens(name: "Sigma 105mm f1.4 ART", focalLength: 105, minAperture: 1.4, maxAperture: 22),
-        Lens(name: "Tokina 50mm f1.4 Opera", focalLength: 50, minAperture: 1.4, maxAperture: 22),
-        Lens(name: "Nikon 85mm f1.8", focalLength: 85, minAperture: 1.8, maxAperture: 22),
-        Lens(name: "Nikon 24-70mm f2.8", minFocalLength: 24, maxFocalLength: 70, minAperture: 2.8, maxAperture: 22),
-        Lens(name: "Nikon 70-200mm f2.8", minFocalLength: 70, maxFocalLength: 200, minAperture: 2.8, maxAperture: 22),
-        Lens(name: "Nikon 200-500mm f5.6", minFocalLength: 200, maxFocalLength: 500, minAperture: 5.6, maxAperture: 22),
-        Lens(name: "Irix 11mm f4", focalLength: 11, minAperture: 4, maxAperture: 22),
-        Lens(name: "MAK 1000", focalLength: 1000, minAperture: 10, maxAperture: 10)
-    ]
-    */
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         Helper.setNavBarTitle(navBar: navBar)
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        self.stateController                = appDelegate.stateController
+        self.stateController = appDelegate.stateController
         
         monitor.pathUpdateHandler = { pathUpdateHandler in
             self.connected = pathUpdateHandler.status == .satisfied
@@ -220,9 +200,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         ]
         NSLayoutConstraint.activate(scaleViewConstraints)
         
-        self.eventAngles                    = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
-        
-        visibleArea                         = mapView.visibleMapRect
+        self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
+                
+        visibleArea = stateController!.view.mapRect
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -405,11 +385,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             default: mapView.mapType = MKMapType.standard
         }
         mapTypeSelector.selectedSegmentIndex = stateController!.mapType
-        
-        let span   = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-        let region = MKCoordinateRegion(center: cameraPin!.coordinate, span: span)
-        
-        mapView.setRegion(region, animated: true)
+                
+        mapView.visibleMapRect = visibleArea!
+                
         mapView.register(MapPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         
         updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
@@ -456,28 +434,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     
     // MARK: MKMapViewDelegate methods
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if view.annotation === cameraPin {
-            print("Camera pressed")
-        } else if view.annotation === motifPin {
-            print("Motif pressed")
-        }
-    }
     func mapView(_ mapView: MKMapView, annotationView: MKAnnotationView, didChange: MKAnnotationView.DragState, fromOldState: MKAnnotationView.DragState) {
-        print("dragState changed to \(didChange)")
         switch (didChange) {
             case .starting:
                 break;
             case .dragging:
                 break;
             case .ending, .canceling:
-                if annotationView === self.cameraPin {
-                    //stateController!.view.cameraPoint = self.cameraPin!.point()
-                    print("CameraPoint stored to stateController")
-                } else if annotationView === self.motifPin {
-                    //stateController!.view.motifPoint = self.motifPin!.point()
-                    print("MotifPoint stored to stateController")
-                }
                 self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
                 updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
                 updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
@@ -566,7 +529,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 let polylineView         = MKPolylineRenderer(overlay: overlay)
                 polylineView.strokeColor = UIColor.init(displayP3Red: 0.9, green: 0.9, blue:  0.0, alpha: 1.0)
                 polylineView.lineWidth   = 1.5
-                print("sunrise should be visible")
                 return polylineView
             } else if overlay.id == "sunset" && sunVisible {
                 let polylineView         = MKPolylineRenderer(overlay: overlay)
@@ -582,6 +544,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
         self.visibleArea = mapView.visibleMapRect
         self.heading     = mapView.camera.heading
+        stateController!.view.mapRect = mapView.visibleMapRect        
     }
     
     
@@ -865,7 +828,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func createView(name: String, description: String) -> View {
-        return View(name: name, description: description, cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation)
+        return View(name: name, description: description, cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation, mapRect: stateController!.view.mapRect)
     }
     
     func getElevation(camera: MapPin, motif: MapPin) -> Void {
@@ -959,6 +922,7 @@ public class MapPin: NSObject, MKAnnotation {
         return MKMapPoint(coordinate)
     }
 }
+
 
 class MapPinAnnotationView: MKAnnotationView {
     var observers : [MapPinEventObserver] = []
@@ -1075,6 +1039,7 @@ class MapPinAnnotationView: MKAnnotationView {
         observers.forEach { observer in observer.onMapPinEvent(evt: evt) }
     }
 }
+
 
 class MapPinEvent {
     var src       : MapPin

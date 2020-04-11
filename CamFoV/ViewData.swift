@@ -26,6 +26,10 @@ public struct ViewData: Codable {
     let focalLength   : String?
     let aperture      : String?
     let orientation   : String?
+    let originLat     : String?
+    let originLon     : String?
+    let mapWidth      : String?
+    let mapHeight     : String?
     
     
     init(dictionary: Dictionary<String, String>) throws {

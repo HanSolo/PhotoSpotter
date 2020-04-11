@@ -102,6 +102,8 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cameraIndex : IndexPath = IndexPath(row: (stateController!.cameras.firstIndex(of: camera) ?? 0), section: 0)
         tableView.selectRow(at: cameraIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: cameraIndex)?.accessoryType = .checkmark
+        
+        stateController?.view.camera = camera
     }
     
     @IBAction func cancel(segue:UIStoryboardSegue) {
