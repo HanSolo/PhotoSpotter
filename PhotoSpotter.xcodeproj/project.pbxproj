@@ -55,7 +55,7 @@
 		4F5DDD392435A8D500A49C20 /* FoVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoVController.swift; sourceTree = "<group>"; };
 		4F79B0D92439A50400F61CF4 /* ViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewViewController.swift; sourceTree = "<group>"; };
 		4F79B0DB2439A80500F61CF4 /* ViewDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDetailViewController.swift; sourceTree = "<group>"; };
-		4F7D7B4C242E270F00771992 /* CamFoV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CamFoV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F7D7B4C242E270F00771992 /* PhotoSpotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSpotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F7D7B4F242E270F00771992 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F7D7B51242E270F00771992 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4F7D7B53242E270F00771992 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 		4F7D7B4D242E270F00771992 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4F7D7B4C242E270F00771992 /* CamFoV.app */,
+				4F7D7B4C242E270F00771992 /* PhotoSpotter.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,9 +158,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4F7D7B4B242E270F00771992 /* CamFoV */ = {
+		4F7D7B4B242E270F00771992 /* PhotoSpotter */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4F7D7B60242E271000771992 /* Build configuration list for PBXNativeTarget "CamFoV" */;
+			buildConfigurationList = 4F7D7B60242E271000771992 /* Build configuration list for PBXNativeTarget "PhotoSpotter" */;
 			buildPhases = (
 				4F7D7B48242E270F00771992 /* Sources */,
 				4F7D7B49242E270F00771992 /* Frameworks */,
@@ -170,9 +170,9 @@
 			);
 			dependencies = (
 			);
-			name = CamFoV;
+			name = PhotoSpotter;
 			productName = CamFoV;
-			productReference = 4F7D7B4C242E270F00771992 /* CamFoV.app */;
+			productReference = 4F7D7B4C242E270F00771992 /* PhotoSpotter.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -190,7 +190,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4F7D7B47242E270F00771992 /* Build configuration list for PBXProject "CamFoV" */;
+			buildConfigurationList = 4F7D7B47242E270F00771992 /* Build configuration list for PBXProject "PhotoSpotter" */;
 			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -203,7 +203,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4F7D7B4B242E270F00771992 /* CamFoV */,
+				4F7D7B4B242E270F00771992 /* PhotoSpotter */,
 			);
 		};
 /* End PBXProject section */
@@ -408,8 +408,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.CamFoV;
-				PRODUCT_NAME = CamFoV;
+				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.PhotoSpotter;
+				PRODUCT_NAME = PhotoSpotter;
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -428,8 +428,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.CamFoV;
-				PRODUCT_NAME = CamFoV;
+				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.PhotoSpotter;
+				PRODUCT_NAME = PhotoSpotter;
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -439,7 +439,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4F7D7B47242E270F00771992 /* Build configuration list for PBXProject "CamFoV" */ = {
+		4F7D7B47242E270F00771992 /* Build configuration list for PBXProject "PhotoSpotter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4F7D7B5E242E271000771992 /* Debug */,
@@ -448,7 +448,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4F7D7B60242E271000771992 /* Build configuration list for PBXNativeTarget "CamFoV" */ = {
+		4F7D7B60242E271000771992 /* Build configuration list for PBXNativeTarget "PhotoSpotter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4F7D7B61242E271000771992 /* Debug */,
