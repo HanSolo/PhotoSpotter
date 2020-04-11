@@ -55,7 +55,7 @@
 		4F5DDD392435A8D500A49C20 /* FoVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoVController.swift; sourceTree = "<group>"; };
 		4F79B0D92439A50400F61CF4 /* ViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewViewController.swift; sourceTree = "<group>"; };
 		4F79B0DB2439A80500F61CF4 /* ViewDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDetailViewController.swift; sourceTree = "<group>"; };
-		4F7D7B4C242E270F00771992 /* PhotoSpotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSpotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F7D7B4C242E270F00771992 /* Photo Spotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Photo Spotter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F7D7B4F242E270F00771992 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F7D7B51242E270F00771992 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4F7D7B53242E270F00771992 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 		4F7D7B4D242E270F00771992 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4F7D7B4C242E270F00771992 /* PhotoSpotter.app */,
+				4F7D7B4C242E270F00771992 /* Photo Spotter.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,6 +113,7 @@
 				4F894B5D242FB61E00B27FCC /* Extensions */,
 				4F7D7B4F242E270F00771992 /* AppDelegate.swift */,
 				4F7D7B51242E270F00771992 /* SceneDelegate.swift */,
+				4F7D7B5A242E271000771992 /* LaunchScreen.storyboard */,
 				4F7D7B55242E270F00771992 /* Main.storyboard */,
 				4F7D7B6D242E28D900771992 /* FoVData.swift */,
 				4F7D7B65242E28D900771992 /* FoVError.swift */,
@@ -125,7 +126,6 @@
 				4F7D7B70242E28D900771992 /* Trapezoid.swift */,
 				4F7D7B6A242E28D900771992 /* Triangle.swift */,
 				4F7D7B58242E271000771992 /* Assets.xcassets */,
-				4F7D7B5A242E271000771992 /* LaunchScreen.storyboard */,
 				4F7D7B5D242E271000771992 /* Info.plist */,
 				4F13D830243457E400903059 /* Camera.swift */,
 				4F13D83224345B7400903059 /* View.swift */,
@@ -172,7 +172,7 @@
 			);
 			name = PhotoSpotter;
 			productName = CamFoV;
-			productReference = 4F7D7B4C242E270F00771992 /* PhotoSpotter.app */;
+			productReference = 4F7D7B4C242E270F00771992 /* Photo Spotter.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -409,7 +409,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.PhotoSpotter;
-				PRODUCT_NAME = PhotoSpotter;
+				PRODUCT_NAME = "Photo Spotter";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -429,7 +429,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.PhotoSpotter;
-				PRODUCT_NAME = PhotoSpotter;
+				PRODUCT_NAME = "Photo Spotter";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
