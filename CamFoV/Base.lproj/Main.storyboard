@@ -917,7 +917,23 @@
                                     <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem id="ZGr-Us-mm8"/>
+                                    <navigationItem id="ZGr-Us-mm8">
+                                        <nil key="title"/>
+                                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="FtG-AT-iav">
+                                            <rect key="frame" x="307.5" y="8.5" width="409" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="All Lenses"/>
+                                                <segment title="Prime Lenses"/>
+                                                <segment title="Zoom Lenses"/>
+                                            </segments>
+                                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="selectedSegmentTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <connections>
+                                                <action selector="didSelectLens:" destination="jc5-Uv-5Ut" eventType="valueChanged" id="aD3-su-EZX"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>
@@ -942,6 +958,7 @@
                     <connections>
                         <outlet property="addLensButton" destination="frm-EY-Hfq" id="gyL-t8-Jli"/>
                         <outlet property="camerasButton" destination="hzI-pW-CD7" id="Vcg-tf-xbD"/>
+                        <outlet property="lensSelector" destination="FtG-AT-iav" id="3Rd-1z-MmI"/>
                         <outlet property="lensesButton" destination="idh-yb-BdL" id="4i5-e4-ws6"/>
                         <outlet property="mapButton" destination="CXV-eb-nSj" id="JWY-DW-LCj"/>
                         <outlet property="navBar" destination="4mQ-Nd-XCn" id="njf-WF-c54"/>
@@ -1464,10 +1481,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Tqb-kX-mOs"/>
+        <segue reference="hyq-cO-83h"/>
         <segue reference="q1Q-0p-CtR"/>
-        <segue reference="6Gl-Tl-cdW"/>
-        <segue reference="8Mg-Zc-6jN"/>
+        <segue reference="heU-sJ-624"/>
+        <segue reference="Yg0-Ub-0Bk"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.up.and.down.circle" catalog="system" width="128" height="121"/>

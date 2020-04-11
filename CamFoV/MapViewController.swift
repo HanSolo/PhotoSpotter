@@ -216,7 +216,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     
-    // MARK: Event Handlers
+    // MARK: Navigation Event Handlers
     @IBAction func mapButtonPressed(_ sender: Any) {
     }
     @IBAction func camerasButtonPressed(_ sender: Any) {
@@ -237,13 +237,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         performSegue(withIdentifier: "mapViewToViewsView", sender: self)
     }
     
+    // MARK: Event Handlers
     @IBAction func focalLengthChanged(_ sender: Any) {
-        self.focalLengthLabel.text = String(format: "%.0f mm", Double(round(focalLengthSlider!.value)))
-        stateController!.view.focalLength = Double(round(focalLengthSlider!.value))
+        self.focalLengthLabel.text             = String(format: "%.0f mm", Double(round(focalLengthSlider!.value)))
+        self.stateController!.view.focalLength = Double(round(focalLengthSlider!.value))
         
         updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
+        updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
     @IBAction func apertureChanged(_ sender: Any) {
@@ -394,12 +396,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             // Add zoom controls to mapview
             mapView.showsZoomControls = true
         #else
-            mapView.showsZoomControls = false
+            
         #endif
         
         updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
+        updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
     func gotoCurrentLocation() {
@@ -415,7 +418,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
         
-    // CLLocationManagerDelegate methods
+    // MARK: CLLocationManagerDelegate methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation:CLLocation = locations[0] as CLLocation
         
@@ -672,11 +675,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             mapView.removeAnnotations(viewAnnotations)
         }
         viewAnnotations.removeAll()
-        
-        if let fovTriangleFrame = self.fovTriangleFrame {
-            mapView.removeOverlay(fovTriangleFrame)
-        }
-        self.fovTriangleFrame = nil
         
         if let minFovTriangle = self.minFovTriangle {
             mapView.removeOverlay(minFovTriangle)

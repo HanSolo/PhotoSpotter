@@ -23,7 +23,10 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var backButton    : UIBarButtonItem!
     @IBOutlet weak var addLensButton : UIBarButtonItem!
     
-    @IBOutlet weak var navBar: UINavigationBar!
+    @IBOutlet weak var navBar        : UINavigationBar!
+    @IBOutlet weak var lensSelector  : UISegmentedControl!
+    
+    var lensSelection : [Lens]?
     
     
     override func viewDidLoad() {
@@ -39,6 +42,8 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
             navigationController?.navigationBar.titleTextAttributes = textAttributes
         }
         
+        lensSelection = stateController!.lenses
+        
         // Register the table view cell class and its reuse id
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         self.tableView.register(LensCell.self, forCellReuseIdentifier: cellReuseIdentifier)
@@ -50,10 +55,16 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate   = self
         tableView.dataSource = self
         
-        let lensIndex : IndexPath = IndexPath(row: (stateController!.lenses.firstIndex(of: stateController!.view.lens) ?? 0), section: 0)
+        let lensSelectorTextAttr         = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let lensSelectorTextAttrSelected = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        lensSelector.setTitleTextAttributes(lensSelectorTextAttr, for: .normal)
+        lensSelector.setTitleTextAttributes(lensSelectorTextAttrSelected, for: .selected)
+        
+        let lensIndex : IndexPath = IndexPath(row: (lensSelection!.firstIndex(of: stateController!.view.lens) ?? 0), section: 0)
         tableView.selectRow(at: lensIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: lensIndex)?.accessoryType = .checkmark
         tableView.isEditing = false
+        tableView.remembersLastFocusedIndexPath = false
     }
     
     
@@ -90,6 +101,8 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         let lensDetailVC = segue.source as! LensDetailViewController
         let lens = Lens(name: lensDetailVC.lensName, minFocalLength: lensDetailVC.minFocalLength, maxFocalLength: lensDetailVC.maxFocalLength, minAperture: lensDetailVC.minAperture, maxAperture: lensDetailVC.maxAperture)
         stateController?.addLens(lens)
+        lensSelection = stateController!.lenses
+        lensSelector.selectedSegmentIndex = 0
         tableView.reloadData()
         
         let cells = self.tableView.visibleCells as! Array<LensCell>
@@ -97,7 +110,7 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.accessoryType = .none
         }
         
-        let lensIndex : IndexPath = IndexPath(row: (stateController!.lenses.firstIndex(of: lens) ?? 0), section: 0)
+        let lensIndex : IndexPath = IndexPath(row: (lensSelection!.firstIndex(of: lens) ?? 0), section: 0)
         tableView.selectRow(at: lensIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: lensIndex)?.accessoryType = .checkmark
         
@@ -108,21 +121,52 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
        
     }
     
+    @IBAction func didSelectLens(_ sender: Any) {
+        if let index = self.tableView.indexPathForSelectedRow {
+            self.tableView.deselectRow(at: index, animated: true)
+        }
+        switch lensSelector.selectedSegmentIndex {
+            case 0 :  // All lenses
+                lensSelection = stateController!.lenses
+                break;
+            case 1 : // Prime lenses
+                if stateController!.lenses.filter({ $0.isPrime }).count > 0 {
+                    lensSelection = stateController!.lenses.filter { $0.isPrime }
+                }
+                break;
+            case 2 :  // Zoom lenses
+                if stateController!.lenses.filter({ !$0.isPrime }).count > 0 {
+                    lensSelection = stateController!.lenses.filter { !$0.isPrime }
+                }
+                break;
+            default:
+                lensSelection = stateController!.lenses
+                break;
+        }
+        tableView.reloadData()
+    }
+    
+    
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stateController!.lenses.count
+        return lensSelection!.count
     }
 
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell                   = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! LensCell
-        let lens : Lens            = stateController!.lenses[indexPath.item]
+        print(indexPath.item)
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! LensCell
+        let lens : Lens            = lensSelection![indexPath.item]
         cell.textLabel?.text       = lens.name
         if lens.isPrime {
             cell.textLabel?.textColor = Constants.YELLOW
+        } else {
+            cell.textLabel?.textColor = UIColor.black
         }
         cell.detailTextLabel?.text = lens.description()
+        
         return cell
     }
     
@@ -133,9 +177,10 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let lens = stateController!.lenses[indexPath.item]
-        stateController!.view.lens = lens
-        
+        let lens = lensSelection![indexPath.item]
+        stateController!.view.lens                              = lens
+        stateController!.view.focalLength                       = lens.minFocalLength
+        stateController!.view.aperture                          = lens.minFocalLength
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -144,8 +189,10 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            stateController!.removeLens(indexPath.row)
+            let lens : Lens = lensSelection![indexPath.row]
+            stateController?.removeLens(lens)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
