@@ -919,7 +919,7 @@
                                 <items>
                                     <navigationItem id="ZGr-Us-mm8">
                                         <nil key="title"/>
-                                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="FtG-AT-iav">
+                                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="FtG-AT-iav">
                                             <rect key="frame" x="307.5" y="8.5" width="409" height="33"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>
@@ -1448,12 +1448,153 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="awi-Gb-jyi" userLabel="Equipment Stack View">
+                                <rect key="frame" x="20" y="380" width="248" height="374.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Equipment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OqB-Ci-eZo" userLabel="EquipmentLabel">
+                                        <rect key="frame" x="0.0" y="0.0" width="86" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="150" translatesAutoresizingMaskIntoConstraints="NO" id="5Wh-ik-7kq">
+                                        <rect key="frame" x="0.0" y="48.5" width="248" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tripod" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O3h-kL-2bg" userLabel="TripodLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="49" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lyH-8b-MDc" userLabel="TripodSwitch">
+                                                <rect key="frame" x="199" y="0.0" width="51" height="31"/>
+                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <action selector="tripodSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="96s-o9-24A"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="143" translatesAutoresizingMaskIntoConstraints="NO" id="4Ah-bf-WSg">
+                                        <rect key="frame" x="0.0" y="107.5" width="248" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gimbal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DpG-NF-0DK" userLabel="GimbelLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="56" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YWe-CC-uz4" userLabel="GimbalSwitch">
+                                                <rect key="frame" x="199" y="0.0" width="51" height="31"/>
+                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <action selector="gimbalSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="cdP-2A-ttZ"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="124" translatesAutoresizingMaskIntoConstraints="NO" id="GFO-o9-5QN">
+                                        <rect key="frame" x="0.0" y="166.5" width="248" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CPL Filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZR-JD-SHS" userLabel="CPLFilterLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="75" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kYh-gy-Tta" userLabel="CPLFilterSwitch">
+                                                <rect key="frame" x="199" y="0.0" width="51" height="31"/>
+                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <action selector="cplFilterSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="zyo-Fo-RWa"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="128" translatesAutoresizingMaskIntoConstraints="NO" id="qxc-Kq-aKe">
+                                        <rect key="frame" x="0.0" y="225.5" width="248" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ND Filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hwb-sX-i6E" userLabel="NDFilterLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="71" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="v2P-wz-awp" userLabel="NDFilterSwitch">
+                                                <rect key="frame" x="199" y="0.0" width="51" height="31"/>
+                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <action selector="ndFilterSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="Gyh-M0-aux"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="135" translatesAutoresizingMaskIntoConstraints="NO" id="8Q7-WZ-C9D">
+                                        <rect key="frame" x="0.0" y="284.5" width="248" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IR Filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zrY-ee-aTx" userLabel="IRFilterLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="64" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="WKb-O3-FtC" userLabel="IRFilterSwitch">
+                                                <rect key="frame" x="199" y="0.0" width="51" height="31"/>
+                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <action selector="irFilterSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="jK8-Kv-H7W"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="151" translatesAutoresizingMaskIntoConstraints="NO" id="vWc-iT-Lu7">
+                                        <rect key="frame" x="0.0" y="343.5" width="248" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flash" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wz4-rJ-cHJ" userLabel="FlashLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="48" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="p2J-nd-Yyj" userLabel="FlashSwitch">
+                                                <rect key="frame" x="199" y="0.0" width="51" height="31"/>
+                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <action selector="flashSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="G40-Dz-Abv"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="qxc-Kq-aKe" secondAttribute="trailing" id="5Z1-nb-NXb"/>
+                                    <constraint firstAttribute="trailing" secondItem="4Ah-bf-WSg" secondAttribute="trailing" id="DLW-Jb-yN5"/>
+                                    <constraint firstItem="5Wh-ik-7kq" firstAttribute="leading" secondItem="awi-Gb-jyi" secondAttribute="leading" id="F5O-ba-mQY"/>
+                                    <constraint firstItem="8Q7-WZ-C9D" firstAttribute="leading" secondItem="awi-Gb-jyi" secondAttribute="leading" id="G8I-7y-RCe"/>
+                                    <constraint firstItem="4Ah-bf-WSg" firstAttribute="leading" secondItem="awi-Gb-jyi" secondAttribute="leading" id="GZy-kD-p3U"/>
+                                    <constraint firstAttribute="trailing" secondItem="GFO-o9-5QN" secondAttribute="trailing" id="J0O-aq-vgU"/>
+                                    <constraint firstItem="vWc-iT-Lu7" firstAttribute="leading" secondItem="awi-Gb-jyi" secondAttribute="leading" id="Pjd-E8-TyD"/>
+                                    <constraint firstAttribute="trailing" secondItem="8Q7-WZ-C9D" secondAttribute="trailing" id="TYv-xf-5O3"/>
+                                    <constraint firstAttribute="trailing" secondItem="vWc-iT-Lu7" secondAttribute="trailing" id="aYR-8z-SF0"/>
+                                    <constraint firstItem="qxc-Kq-aKe" firstAttribute="leading" secondItem="awi-Gb-jyi" secondAttribute="leading" id="o0g-YP-jem"/>
+                                    <constraint firstItem="GFO-o9-5QN" firstAttribute="leading" secondItem="awi-Gb-jyi" secondAttribute="leading" id="oyB-f9-JWJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="5Wh-ik-7kq" secondAttribute="trailing" id="rrk-xc-qfs"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="awi-Gb-jyi" firstAttribute="top" secondItem="URL-AA-375" secondAttribute="bottom" constant="80" id="BqG-4d-tUH"/>
                             <constraint firstItem="1bS-K1-7iZ" firstAttribute="leading" secondItem="26K-Yu-eUn" secondAttribute="leading" id="CYN-lf-g9f"/>
                             <constraint firstItem="GBm-hp-8kJ" firstAttribute="leading" secondItem="26K-Yu-eUn" secondAttribute="leading" id="DUm-OW-fE0"/>
                             <constraint firstItem="GBm-hp-8kJ" firstAttribute="top" secondItem="26K-Yu-eUn" secondAttribute="top" id="JV0-rS-Wl3"/>
+                            <constraint firstItem="awi-Gb-jyi" firstAttribute="leading" secondItem="26K-Yu-eUn" secondAttribute="leading" constant="20" id="R8q-wK-qIT"/>
                             <constraint firstItem="URL-AA-375" firstAttribute="top" secondItem="1bS-K1-7iZ" secondAttribute="bottom" constant="20" id="WeY-Wf-VoC"/>
                             <constraint firstItem="1bS-K1-7iZ" firstAttribute="top" secondItem="GBm-hp-8kJ" secondAttribute="bottom" id="fJf-XT-En5"/>
                             <constraint firstItem="1bS-K1-7iZ" firstAttribute="trailing" secondItem="26K-Yu-eUn" secondAttribute="trailing" id="isM-Qv-1fM"/>
@@ -1467,24 +1608,30 @@
                     <connections>
                         <outlet property="cameraTextField" destination="nHN-rd-cqn" id="sj0-zj-4zI"/>
                         <outlet property="cancelButton" destination="vRF-Ms-D37" id="RUX-aD-GPt"/>
+                        <outlet property="cplFilterSwitch" destination="kYh-gy-Tta" id="VsN-iV-FHo"/>
                         <outlet property="descriptionTextField" destination="OVa-3f-mFn" id="wDv-yU-GbA"/>
                         <outlet property="doneButton" destination="SAO-h2-2Is" id="Jbq-Gv-nrw"/>
+                        <outlet property="flashSwitch" destination="p2J-nd-Yyj" id="kor-AP-b8w"/>
+                        <outlet property="gimbalSwitch" destination="YWe-CC-uz4" id="7r9-qS-4d4"/>
+                        <outlet property="irFilterSwitch" destination="WKb-O3-FtC" id="E6F-iY-kZa"/>
                         <outlet property="lensTextField" destination="Vde-Y5-blu" id="LGr-fH-p3t"/>
                         <outlet property="nameTextField" destination="GVq-fD-Znb" id="fM1-h5-3RA"/>
                         <outlet property="navBar" destination="GBm-hp-8kJ" id="444-ac-bwT"/>
+                        <outlet property="ndFilterSwitch" destination="v2P-wz-awp" id="dKT-ak-ZVz"/>
+                        <outlet property="tripodSwitch" destination="lyH-8b-MDc" id="Q6D-gh-Ihx"/>
                     </connections>
                 </viewController>
                 <exit id="9K2-fx-6Yh" userLabel="Exit" sceneMemberID="exit"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Ho-96-tSk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1160" y="912"/>
+            <point key="canvasLocation" x="1159.5703125" y="911.85944363103943"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="hyq-cO-83h"/>
-        <segue reference="q1Q-0p-CtR"/>
-        <segue reference="heU-sJ-624"/>
-        <segue reference="Yg0-Ub-0Bk"/>
+        <segue reference="v21-rP-BLs"/>
+        <segue reference="dje-rX-Wew"/>
+        <segue reference="Wzc-Ww-caD"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.up.and.down.circle" catalog="system" width="128" height="121"/>

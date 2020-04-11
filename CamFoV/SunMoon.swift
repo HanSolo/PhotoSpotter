@@ -35,14 +35,14 @@ struct SunMoon {
     */
     
     var times = [
-        [     6.0,   Constants.GOLDEN_HOUR_END,    Constants.GOLDEN_HOUR        ],
-        [    -0.3,   Constants.SUNRISE_END,        Constants.SUNSET_START       ],
-        [    -0.833, Constants.SUNRISE,            Constants.SUNSET             ],
-        [    -4.0,   Constants.BLUE_HOUR_DAWN_END, Constants.BLUE_HOUR_DUSK     ],
-        [    -6.0,   Constants.DAWN,               Constants.DUSK               ],
-        [    -8.0,   Constants.BLUE_HOUR_DAWN,     Constants.BLUE_HOUR_DUSK_END ],
-        [   -12.0,   Constants.NAUTICAL_DAWN,      Constants.NAUTICAL_DUSK      ],
-        [   -18.0,   Constants.NIGHT_END,          Constants.NIGHT              ]
+        [     6.0,   Constants.EPD_GOLDEN_HOUR_END,    Constants.EPD_GOLDEN_HOUR        ],
+        [    -0.3,   Constants.EPD_SUNRISE_END,        Constants.EPD_SUNSET_START       ],
+        [    -0.833, Constants.EPD_SUNRISE,            Constants.EPD_SUNSET             ],
+        [    -4.0,   Constants.EPD_BLUE_HOUR_DAWN_END, Constants.EPD_BLUE_HOUR_DUSK     ],
+        [    -6.0,   Constants.EPD_DAWN,               Constants.EPD_DUSK               ],
+        [    -8.0,   Constants.EPD_BLUE_HOUR_DAWN,     Constants.EPD_BLUE_HOUR_DUSK_END ],
+        [   -12.0,   Constants.EPD_NAUTICAL_DAWN,      Constants.EPD_NAUTICAL_DUSK      ],
+        [   -18.0,   Constants.EPD_NIGHT_END,          Constants.EPD_NIGHT              ]
     ]
     
 
@@ -89,8 +89,8 @@ struct SunMoon {
         let M :Double = solarMeanAnomaly(d: d)
         let L :Double = eclipticLongitude(M: M)
         return [
-            Constants.DEC: declination(l: L, b: 0),
-            Constants.RA : rightAscension(l: L, b: 0)
+            Constants.EPD_DEC: declination(l: L, b: 0),
+            Constants.EPD_RA : rightAscension(l: L, b: 0)
         ]
     }
     
@@ -101,10 +101,10 @@ struct SunMoon {
         let d   = toDays(date: date)
         
         let c = sunCoords(d: d)
-        let H = siderealTime(d: d, lw: lw) - c[Constants.RA]!
+        let H = siderealTime(d: d, lw: lw) - c[Constants.EPD_RA]!
         return [
-            Constants.AZIMUTH : azimuth(H: H, phi: phi, dec: c[Constants.DEC]!),
-            Constants.ALTITUDE: altitude(H: H, phi: phi, dec: c[Constants.DEC]!)
+            Constants.EPD_AZIMUTH : azimuth(H: H, phi: phi, dec: c[Constants.EPD_DEC]!),
+            Constants.EPD_ALTITUDE: altitude(H: H, phi: phi, dec: c[Constants.EPD_DEC]!)
             ]
     }
     
@@ -141,8 +141,8 @@ struct SunMoon {
         
         
         var result :Dictionary<String, Date> = [
-            Constants.SOLAR_NOON: fromJulianDate(jd: Jnoon),
-            Constants.NADIR    : fromJulianDate(jd: (Jnoon - 0.5))
+            Constants.EPD_SOLAR_NOON: fromJulianDate(jd: Jnoon),
+            Constants.EPD_NADIR    : fromJulianDate(jd: (Jnoon - 0.5))
         ]
     
         for i in 0..<times.count {
@@ -170,17 +170,17 @@ struct SunMoon {
         let d   = toDays(date: date)
     
         let c   = moonCoords(d: d)
-        let H   = siderealTime(d: d, lw: lw) - c[Constants.RA]!
-        var h   = altitude(H: H, phi: phi, dec: c[Constants.DEC]!)
+        let H   = siderealTime(d: d, lw: lw) - c[Constants.EPD_RA]!
+        var h   = altitude(H: H, phi: phi, dec: c[Constants.EPD_DEC]!)
         // formula 14.1 of "Astronomical Algorithms" 2nd edition by Jean Meeus (Willmann-Bell, Richmond) 1998.
-        let pa  = atan2(sin(H), tan(phi) * cos(c[Constants.DEC]!) - sin(c[Constants.DEC]!) * cos(H))
+        let pa  = atan2(sin(H), tan(phi) * cos(c[Constants.EPD_DEC]!) - sin(c[Constants.EPD_DEC]!) * cos(H))
     
         h = h + astroRefraction(height: h) // altitude correction for refraction
     
         return [
-            Constants.AZIMUTH         : azimuth(H: H, phi: phi, dec: c[Constants.DEC]!),
-            Constants.ALTITUDE        : h,
-            "distance"        : c[Constants.DIST]!,
+            Constants.EPD_AZIMUTH         : azimuth(H: H, phi: phi, dec: c[Constants.EPD_DEC]!),
+            Constants.EPD_ALTITUDE        : h,
+            "distance"        : c[Constants.EPD_DIST]!,
             "parallacticAngle": pa
         ]
     }
@@ -196,9 +196,9 @@ struct SunMoon {
         let dt :Double = 385001 - 20905 * cos(M)  // distance to the moon in km
     
         return [
-            Constants.RA  : rightAscension(l: l, b: b),
-            Constants.DEC : declination(l: l, b: b),
-            Constants.DIST: dt
+            Constants.EPD_RA  : rightAscension(l: l, b: b),
+            Constants.EPD_DEC : declination(l: l, b: b),
+            Constants.EPD_DIST: dt
         ]
     }
     
@@ -212,15 +212,15 @@ struct SunMoon {
         
         let sdist = 149598000.0 // distance from Earth to Sun in km
         
-        let phi   = acos(sin(s[Constants.DEC]!) * sin(m[Constants.DEC]!) + cos(s[Constants.DEC]!) * cos(m[Constants.DEC]!) * cos(s[Constants.RA]! - m[Constants.RA]!))
-        let inc   = atan2(sdist * sin(phi), m[Constants.DIST]! - sdist * cos(phi))
-        let angle = atan2(cos(s[Constants.DEC]!) * sin(s[Constants.RA]! - m[Constants.RA]!), sin(s[Constants.DEC]!) * cos(m[Constants.DEC]!) -
-        cos(s[Constants.DEC]!) * sin(m[Constants.DEC]!) * cos(s[Constants.RA]! - m[Constants.RA]!))
+        let phi   = acos(sin(s[Constants.EPD_DEC]!) * sin(m[Constants.EPD_DEC]!) + cos(s[Constants.EPD_DEC]!) * cos(m[Constants.EPD_DEC]!) * cos(s[Constants.EPD_RA]! - m[Constants.EPD_RA]!))
+        let inc   = atan2(sdist * sin(phi), m[Constants.EPD_DIST]! - sdist * cos(phi))
+        let angle = atan2(cos(s[Constants.EPD_DEC]!) * sin(s[Constants.EPD_RA]! - m[Constants.EPD_RA]!), sin(s[Constants.EPD_DEC]!) * cos(m[Constants.EPD_DEC]!) -
+        cos(s[Constants.EPD_DEC]!) * sin(m[Constants.EPD_DEC]!) * cos(s[Constants.EPD_RA]! - m[Constants.EPD_RA]!))
         
         return [
-            Constants.FRACTION: (1 + cos(inc)) / 2,
-            Constants.PHASE   : 0.5 + 0.5 * inc * (angle < 0 ? -1 : 1) / .pi,
-            Constants.ANGLE   : angle
+            Constants.EPD_FRACTION: (1 + cos(inc)) / 2,
+            Constants.EPD_PHASE   : 0.5 + 0.5 * inc * (angle < 0 ? -1 : 1) / .pi,
+            Constants.EPD_ANGLE   : angle
         ]
     }
     
@@ -242,7 +242,7 @@ struct SunMoon {
         t = calendar.date(from: dateComponents)!
         
         let hc    = 0.133 * rad
-        var h0    :Double = getMoonPosition(date: t, lat: lat, lon: lon)[Constants.ALTITUDE]! - hc
+        var h0    :Double = getMoonPosition(date: t, lat: lat, lon: lon)[Constants.EPD_ALTITUDE]! - hc
         var h1    :Double = 0.0
         var h2    :Double = 0.0
         var rise  :Double = -1.0
@@ -259,8 +259,8 @@ struct SunMoon {
     
         // go in 2-hour chunks, each time seeing if a 3-point quadratic curve crosses zero (which means rise or set)
         for i in stride(from: 1, through: 24, by: 2) {
-            h1 = getMoonPosition(date: hoursLater(date: t, h: i), lat: lat, lon: lon)[Constants.ALTITUDE]! - hc
-            h2 = getMoonPosition(date: hoursLater(date: t, h: i + 1), lat: lat, lon: lon)[Constants.ALTITUDE]! - hc
+            h1 = getMoonPosition(date: hoursLater(date: t, h: i), lat: lat, lon: lon)[Constants.EPD_ALTITUDE]! - hc
+            h2 = getMoonPosition(date: hoursLater(date: t, h: i + 1), lat: lat, lon: lon)[Constants.EPD_ALTITUDE]! - hc
         
             a = (h0 + h2) / 2 - h1
             b = (h2 - h0) / 2
@@ -294,13 +294,13 @@ struct SunMoon {
         }
         var result :Dictionary<String, Date> = [:]
         
-        if rise >= 0.0 { result[Constants.RISE] = hoursLater(date: t, h: rise) }
+        if rise >= 0.0 { result[Constants.EPD_RISE] = hoursLater(date: t, h: rise) }
         if set  >= 0.0 {
             if set < rise { t = t.addingTimeInterval(86500.0) }
-            result[Constants.SET]  = hoursLater(date: t, h: set)
+            result[Constants.EPD_SET]  = hoursLater(date: t, h: set)
         }
     
-        if rise == -1.0 && set == -1.0 { result[ye > 0 ? Constants.ALWAYS_UP : Constants.ALWAYS_DOWN] = Date() }
+        if rise == -1.0 && set == -1.0 { result[ye > 0 ? Constants.EPD_ALWAYS_UP : Constants.EPD_ALWAYS_DOWN] = Date() }
     
         return result
     }
@@ -311,20 +311,20 @@ struct SunMoon {
         return getEvents(times: times)
     }
     func getEvents(times :Dictionary<String,Date>) -> Dictionary<String,String> {
-        let blueHourMorningString   :String = "\(Helper.dateToString(fromDate: times[Constants.BLUE_HOUR_DAWN]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.BLUE_HOUR_DAWN_END]!, formatString: Constants.DATE_FORMAT))"
-        let goldenHourMorningString :String = "\(Helper.dateToString(fromDate: times[Constants.BLUE_HOUR_DAWN_END]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.GOLDEN_HOUR_END]!, formatString: Constants.DATE_FORMAT))"
-        let sunriseString           :String = Helper.dateToString(fromDate: times[Constants.SUNRISE]!, formatString: Constants.DATE_FORMAT)
-        let goldenHourEveningString :String = "\(Helper.dateToString(fromDate: times[Constants.GOLDEN_HOUR]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.BLUE_HOUR_DUSK]!, formatString: Constants.DATE_FORMAT))"
-        let sunsetString            :String = Helper.dateToString(fromDate: times[Constants.SUNSET]!, formatString: Constants.DATE_FORMAT)
-        let blueHourEveningString   :String = "\(Helper.dateToString(fromDate: times[Constants.BLUE_HOUR_DUSK]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.BLUE_HOUR_DUSK_END]!, formatString: Constants.DATE_FORMAT))"
+        let blueHourMorningString   :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DAWN]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DAWN_END]!, formatString: Constants.DATE_FORMAT))"
+        let goldenHourMorningString :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DAWN_END]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_GOLDEN_HOUR_END]!, formatString: Constants.DATE_FORMAT))"
+        let sunriseString           :String = Helper.dateToString(fromDate: times[Constants.EPD_SUNRISE]!, formatString: Constants.DATE_FORMAT)
+        let goldenHourEveningString :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_GOLDEN_HOUR]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DUSK]!, formatString: Constants.DATE_FORMAT))"
+        let sunsetString            :String = Helper.dateToString(fromDate: times[Constants.EPD_SUNSET]!, formatString: Constants.DATE_FORMAT)
+        let blueHourEveningString   :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DUSK]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DUSK_END]!, formatString: Constants.DATE_FORMAT))"
         
         let eventNames :Dictionary<String,String> = [
-            Constants.BLUE_HOUR_MORNING   : blueHourMorningString,
-            Constants.GOLDEN_HOUR_MORNING : goldenHourMorningString,
-            Constants.SUNRISE           : sunriseString,
-            Constants.GOLDEN_HOUR_EVENING : goldenHourEveningString,
-            Constants.SUNSET            : sunsetString,
-            Constants.BLUE_HOUR_EVENING   : blueHourEveningString
+            Constants.EPD_BLUE_HOUR_MORNING   : blueHourMorningString,
+            Constants.EPD_GOLDEN_HOUR_MORNING : goldenHourMorningString,
+            Constants.EPD_SUNRISE           : sunriseString,
+            Constants.EPD_GOLDEN_HOUR_EVENING : goldenHourEveningString,
+            Constants.EPD_SUNSET            : sunsetString,
+            Constants.EPD_BLUE_HOUR_EVENING   : blueHourEveningString
         ]
         
         return eventNames
@@ -335,20 +335,20 @@ struct SunMoon {
         return getEventsWithNames(times: times)
     }
     func getEventsWithNames(times :Dictionary<String,Date>) -> Dictionary<String, [String]> {
-        let blueHourMorningString   :String = "\(Helper.dateToString(fromDate: times[Constants.BLUE_HOUR_DAWN]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.BLUE_HOUR_DAWN_END]!, formatString: Constants.DATE_FORMAT))"
-        let goldenHourMorningString :String = "\(Helper.dateToString(fromDate: times[Constants.BLUE_HOUR_DAWN_END]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.GOLDEN_HOUR_END]!, formatString: Constants.DATE_FORMAT))"
-        let sunriseString           :String = Helper.dateToString(fromDate: times[Constants.SUNRISE]!, formatString: Constants.DATE_FORMAT)
-        let goldenHourEveningString :String = "\(Helper.dateToString(fromDate: times[Constants.GOLDEN_HOUR]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.BLUE_HOUR_DUSK]!, formatString: Constants.DATE_FORMAT))"
-        let sunsetString            :String = Helper.dateToString(fromDate: times[Constants.SUNSET]!, formatString: Constants.DATE_FORMAT)
-        let blueHourEveningString   :String = "\(Helper.dateToString(fromDate: times[Constants.BLUE_HOUR_DUSK]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.BLUE_HOUR_DUSK_END]!, formatString: Constants.DATE_FORMAT))"
+        let blueHourMorningString   :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DAWN]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DAWN_END]!, formatString: Constants.DATE_FORMAT))"
+        let goldenHourMorningString :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DAWN_END]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_GOLDEN_HOUR_END]!, formatString: Constants.DATE_FORMAT))"
+        let sunriseString           :String = Helper.dateToString(fromDate: times[Constants.EPD_SUNRISE]!, formatString: Constants.DATE_FORMAT)
+        let goldenHourEveningString :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_GOLDEN_HOUR]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DUSK]!, formatString: Constants.DATE_FORMAT))"
+        let sunsetString            :String = Helper.dateToString(fromDate: times[Constants.EPD_SUNSET]!, formatString: Constants.DATE_FORMAT)
+        let blueHourEveningString   :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DUSK]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DUSK_END]!, formatString: Constants.DATE_FORMAT))"
         
         let events :Dictionary<String, [String]> = [
-            Constants.BLUE_HOUR_MORNING  : [ "Blue Hour",   blueHourMorningString   ],
-            Constants.GOLDEN_HOUR_MORNING: [ "Golden Hour", goldenHourMorningString ],
-            Constants.SUNRISE            : [ "Sunrise",     sunriseString           ],
-            Constants.GOLDEN_HOUR_EVENING: [ "Golden Hour", goldenHourEveningString ],
-            Constants.SUNSET             : [ "Sunset",      sunsetString            ],
-            Constants.BLUE_HOUR_EVENING  : [ "Blue Hour",   blueHourEveningString   ]
+            Constants.EPD_BLUE_HOUR_MORNING  : [ "Blue Hour",   blueHourMorningString   ],
+            Constants.EPD_GOLDEN_HOUR_MORNING: [ "Golden Hour", goldenHourMorningString ],
+            Constants.EPD_SUNRISE            : [ "Sunrise",     sunriseString           ],
+            Constants.EPD_GOLDEN_HOUR_EVENING: [ "Golden Hour", goldenHourEveningString ],
+            Constants.EPD_SUNSET             : [ "Sunset",      sunsetString            ],
+            Constants.EPD_BLUE_HOUR_EVENING  : [ "Blue Hour",   blueHourEveningString   ]
         ]
         return events
     }
@@ -358,68 +358,68 @@ struct SunMoon {
         let moonTimes :Dictionary<String,Date> = getMoonTimes(date: date, lat: lat, lon: lon)
         
         // Get dates for each event
-        let blueHourMorningBegin   :Date = times[Constants.BLUE_HOUR_DAWN]!
-        let blueHourMorningEnd     :Date = times[Constants.BLUE_HOUR_DAWN_END]!
+        let blueHourMorningBegin   :Date = times[Constants.EPD_BLUE_HOUR_DAWN]!
+        let blueHourMorningEnd     :Date = times[Constants.EPD_BLUE_HOUR_DAWN_END]!
         
-        let sunrise                :Date = times[Constants.SUNRISE]!
+        let sunrise                :Date = times[Constants.EPD_SUNRISE]!
         
-        let goldenHourMorningBegin :Date = times[Constants.BLUE_HOUR_DAWN_END]!
-        let goldenHourMorningEnd   :Date = times[Constants.GOLDEN_HOUR_END]!
+        let goldenHourMorningBegin :Date = times[Constants.EPD_BLUE_HOUR_DAWN_END]!
+        let goldenHourMorningEnd   :Date = times[Constants.EPD_GOLDEN_HOUR_END]!
         
-        let goldenHourEveningBegin :Date = times[Constants.GOLDEN_HOUR]!
-        let goldenHourEveningEnd   :Date = times[Constants.BLUE_HOUR_DUSK]!
+        let goldenHourEveningBegin :Date = times[Constants.EPD_GOLDEN_HOUR]!
+        let goldenHourEveningEnd   :Date = times[Constants.EPD_BLUE_HOUR_DUSK]!
         
-        let sunset                 :Date = times[Constants.SUNSET]!
+        let sunset                 :Date = times[Constants.EPD_SUNSET]!
         
-        let blueHourEveningBegin   :Date = times[Constants.BLUE_HOUR_DUSK]!
-        let blueHourEveningEnd     :Date = times[Constants.BLUE_HOUR_DUSK_END]!
+        let blueHourEveningBegin   :Date = times[Constants.EPD_BLUE_HOUR_DUSK]!
+        let blueHourEveningEnd     :Date = times[Constants.EPD_BLUE_HOUR_DUSK_END]!
         
-        let moonrise               :Date = moonTimes[Constants.RISE] ?? date
-        let moonset                :Date = moonTimes[Constants.SET] ?? date
+        let moonrise               :Date = moonTimes[Constants.EPD_RISE] ?? date
+        let moonset                :Date = moonTimes[Constants.EPD_SET] ?? date
         
         
         // Get begin and end angle for each event
         let sunPosition  :Dictionary<String, Double> = getPosition(date: date, lat: lat, lon: lon)
         let moonPosition :Dictionary<String, Double> = getMoonPosition(date: date, lat: lat, lon: lon)
         
-        let currentSunAngle             :Double = sunPosition[Constants.AZIMUTH]!
-        let currentSunAltitude          :Double = sunPosition[Constants.ALTITUDE]!
+        let currentSunAngle             :Double = sunPosition[Constants.EPD_AZIMUTH]!
+        let currentSunAltitude          :Double = sunPosition[Constants.EPD_ALTITUDE]!
         
-        let currentMoonAngle            :Double = moonPosition[Constants.AZIMUTH]!
-        let currentMoonAltitude         :Double = moonPosition[Constants.ALTITUDE]!
+        let currentMoonAngle            :Double = moonPosition[Constants.EPD_AZIMUTH]!
+        let currentMoonAltitude         :Double = moonPosition[Constants.EPD_ALTITUDE]!
         
-        let blueHourMorningBeginAngle   :Double = getPosition(date: blueHourMorningBegin, lat: lat, lon: lon)[Constants.AZIMUTH]!
-        let blueHourMorningEndAngle     :Double = getPosition(date: blueHourMorningEnd, lat: lat, lon: lon)[Constants.AZIMUTH]!
+        let blueHourMorningBeginAngle   :Double = getPosition(date: blueHourMorningBegin, lat: lat, lon: lon)[Constants.EPD_AZIMUTH]!
+        let blueHourMorningEndAngle     :Double = getPosition(date: blueHourMorningEnd, lat: lat, lon: lon)[Constants.EPD_AZIMUTH]!
         
-        let sunriseAngle                :Double = getPosition(date: sunrise, lat: lat, lon: lon)[Constants.AZIMUTH]!
+        let sunriseAngle                :Double = getPosition(date: sunrise, lat: lat, lon: lon)[Constants.EPD_AZIMUTH]!
         
-        let goldenHourMorningBeginAngle :Double = getPosition(date: goldenHourMorningBegin, lat: lat, lon: lon)[Constants.AZIMUTH]!
-        let goldenHourMorningEndAngle   :Double = getPosition(date: goldenHourMorningEnd, lat: lat, lon: lon)[Constants.AZIMUTH]!
+        let goldenHourMorningBeginAngle :Double = getPosition(date: goldenHourMorningBegin, lat: lat, lon: lon)[Constants.EPD_AZIMUTH]!
+        let goldenHourMorningEndAngle   :Double = getPosition(date: goldenHourMorningEnd, lat: lat, lon: lon)[Constants.EPD_AZIMUTH]!
         
-        let goldenHourEveningBeginAngle :Double = getPosition(date: goldenHourEveningBegin, lat: lat, lon: lon)[Constants.AZIMUTH]!
-        let goldenHourEveningEndAngle   :Double = getPosition(date: goldenHourEveningEnd, lat: lat, lon: lon)[Constants.AZIMUTH]!
+        let goldenHourEveningBeginAngle :Double = getPosition(date: goldenHourEveningBegin, lat: lat, lon: lon)[Constants.EPD_AZIMUTH]!
+        let goldenHourEveningEndAngle   :Double = getPosition(date: goldenHourEveningEnd, lat: lat, lon: lon)[Constants.EPD_AZIMUTH]!
         
-        let sunsetAngle                 :Double = getPosition(date: sunset, lat: lat, lon: lon)[Constants.AZIMUTH]!
+        let sunsetAngle                 :Double = getPosition(date: sunset, lat: lat, lon: lon)[Constants.EPD_AZIMUTH]!
         
-        let blueHourEveningBeginAngle   :Double = getPosition(date: blueHourEveningBegin, lat: lat, lon: lon)[Constants.AZIMUTH]!
-        let blueHourEveningEndAngle     :Double = getPosition(date: blueHourEveningEnd, lat: lat, lon: lon)[Constants.AZIMUTH]!
+        let blueHourEveningBeginAngle   :Double = getPosition(date: blueHourEveningBegin, lat: lat, lon: lon)[Constants.EPD_AZIMUTH]!
+        let blueHourEveningEndAngle     :Double = getPosition(date: blueHourEveningEnd, lat: lat, lon: lon)[Constants.EPD_AZIMUTH]!
        
-        let moonriseAngle               :Double = (moonrise == date) ? -1.0 : getMoonPosition(date: moonrise, lat: lat, lon: lon)[Constants.AZIMUTH]!
+        let moonriseAngle               :Double = (moonrise == date) ? -1.0 : getMoonPosition(date: moonrise, lat: lat, lon: lon)[Constants.EPD_AZIMUTH]!
         
-        let moonsetAngle                :Double = (moonset == date) ? -1.0 : getMoonPosition(date: moonset, lat: lat, lon: lon)[Constants.AZIMUTH]!
+        let moonsetAngle                :Double = (moonset == date) ? -1.0 : getMoonPosition(date: moonset, lat: lat, lon: lon)[Constants.EPD_AZIMUTH]!
         
         
         let eventAngles :Dictionary<String, (Double, Double)> = [
-            Constants.SUN                 : ( currentSunAngle, currentSunAltitude ),
-            Constants.MOON                : ( currentMoonAngle, currentMoonAltitude ),
-            Constants.BLUE_HOUR_MORNING   : ( blueHourMorningBeginAngle, blueHourMorningEndAngle ),
-            Constants.GOLDEN_HOUR_MORNING : ( goldenHourMorningBeginAngle, goldenHourMorningEndAngle ),
-            Constants.SUNRISE             : ( sunriseAngle, sunriseAngle ),
-            Constants.GOLDEN_HOUR_EVENING : ( goldenHourEveningBeginAngle, goldenHourEveningEndAngle ),
-            Constants.SUNSET              : ( sunsetAngle, sunsetAngle ),
-            Constants.BLUE_HOUR_EVENING   : ( blueHourEveningBeginAngle, blueHourEveningEndAngle ),
-            Constants.MOONRISE            : ( moonriseAngle, moonriseAngle ),
-            Constants.MOONSET             : ( moonsetAngle, moonsetAngle )
+            Constants.EPD_SUN                 : ( currentSunAngle, currentSunAltitude ),
+            Constants.EPD_MOON                : ( currentMoonAngle, currentMoonAltitude ),
+            Constants.EPD_BLUE_HOUR_MORNING   : ( blueHourMorningBeginAngle, blueHourMorningEndAngle ),
+            Constants.EPD_GOLDEN_HOUR_MORNING : ( goldenHourMorningBeginAngle, goldenHourMorningEndAngle ),
+            Constants.EPD_SUNRISE             : ( sunriseAngle, sunriseAngle ),
+            Constants.EPD_GOLDEN_HOUR_EVENING : ( goldenHourEveningBeginAngle, goldenHourEveningEndAngle ),
+            Constants.EPD_SUNSET              : ( sunsetAngle, sunsetAngle ),
+            Constants.EPD_BLUE_HOUR_EVENING   : ( blueHourEveningBeginAngle, blueHourEveningEndAngle ),
+            Constants.EPD_MOONRISE            : ( moonriseAngle, moonriseAngle ),
+            Constants.EPD_MOONSET             : ( moonsetAngle, moonsetAngle )
         ]
         return eventAngles
     }

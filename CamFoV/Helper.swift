@@ -276,13 +276,10 @@ public class Helper {
         return String(tag.1)
     }
     public static func tagInBitMask(tag: (String, Int), bitmask: Int) -> Bool {
-        for t in 0..<Constants.tags.count {
-            let selected : Bool = (1 << t & bitmask) != 0
-            if selected && tag.1 == t {
-                return true
-            }
-        }
-        return false
+        return (bitmask & tag.1) != 0
+    }
+    public static func equipmentInBitMask(equipment: (String, Int), bitmask: Int) -> Bool {
+        return (bitmask & equipment.1) != 0
     }
     
     public static func setNavBarTitle(navBar: UINavigationBar) -> Void {

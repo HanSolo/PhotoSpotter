@@ -21,17 +21,24 @@ public class ViewDetailViewController: UIViewController, FoVController {
     @IBOutlet weak var cancelButton         : UIButton!
     @IBOutlet weak var doneButton           : UIButton!
     
-    @IBOutlet weak var navBar: UINavigationBar!
-    
-    
+    @IBOutlet weak var navBar               : UINavigationBar!
+    @IBOutlet weak var tripodSwitch         : UISwitch!
+    @IBOutlet weak var gimbalSwitch         : UISwitch!
+    @IBOutlet weak var cplFilterSwitch      : UISwitch!
+    @IBOutlet weak var ndFilterSwitch       : UISwitch!
+    @IBOutlet weak var irFilterSwitch       : UISwitch!
+    @IBOutlet weak var flashSwitch          : UISwitch!
+
     var nameIconView         : UIView?
     var tapGestureRecognizer : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showAlert(sender:)))
     
     var name                 : String      = ""
     var descr                : String      = ""
+    var equipment            : Int         = 0
     
     var nameValid            : Bool        = false
     var descriptionValid     : Bool        = false
+    
     
     
     public override func viewDidLoad() {
@@ -42,15 +49,15 @@ public class ViewDetailViewController: UIViewController, FoVController {
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
         self.stateController = appDelegate.stateController
         
-        nameTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
-        descriptionTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+        self.nameTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+        self.descriptionTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
         
-        cameraTextField.text  = stateController!.view.camera.name
-        lensTextField.text    = stateController!.view.lens.name
+        self.cameraTextField.text  = stateController!.view.camera.name
+        self.lensTextField.text    = stateController!.view.lens.name
         
-        tapGestureRecognizer.numberOfTapsRequired = 1
+        self.tapGestureRecognizer.numberOfTapsRequired = 1
         
-        nameIconView = Helper.setupTextFieldWithAlertIcon(field: nameTextField, gestureRecognizer: tapGestureRecognizer)
+        self.nameIconView = Helper.setupTextFieldWithAlertIcon(field: nameTextField, gestureRecognizer: tapGestureRecognizer)
     }
     
     
@@ -64,12 +71,64 @@ public class ViewDetailViewController: UIViewController, FoVController {
         validateForm()
     }
     
+    @IBAction func tripodSwitchChanged(_ sender: Any) {
+        setEquipment()
+    }
+    @IBAction func gimbalSwitchChanged(_ sender: Any) {
+        setEquipment()
+    }
+    @IBAction func cplFilterSwitchChanged(_ sender: Any) {
+        setEquipment()
+    }
+    @IBAction func ndFilterSwitchChanged(_ sender: Any) {
+        setEquipment()
+    }
+    @IBAction func irFilterSwitchChanged(_ sender: Any) {
+        setEquipment()
+    }
+    @IBAction func flashSwitchChanged(_ sender: Any) {
+        setEquipment()
+    }
+    
     
     private func validateForm() -> Void {
         self.doneButton.isEnabled = self.nameValid
         self.doneButton.alpha     = self.doneButton.isEnabled ? 1.0 : 0.5
         
         nameIconView!.isHidden = nameValid
+    }
+    
+    private func setEquipment() -> Void {
+        self.equipment = 0
+        if self.tripodSwitch.isOn {
+            self.equipment = self.equipment | Constants.EQP_TRIPOD.1
+        }
+        if self.gimbalSwitch.isOn {
+            self.equipment = self.equipment | Constants.EQP_GIMBAL.1
+        }
+        if self.cplFilterSwitch.isOn {
+            self.equipment = self.equipment | Constants.EQP_CPL_FILTER.1
+        }
+        if self.ndFilterSwitch.isOn {
+            self.equipment = self.equipment | Constants.EQP_ND_FILTER.1
+        }
+        if self.irFilterSwitch.isOn {
+            self.equipment = self.equipment | Constants.EQP_IR_FILTER.1
+        }
+        if self.flashSwitch.isOn {
+            self.equipment = self.equipment | Constants.EQP_FLASH.1
+        }
+        
+        
+        var text : String = " ["
+        text += Helper.equipmentInBitMask(equipment: Constants.EQP_TRIPOD,     bitmask: equipment) ?         Constants.EQP_TRIPOD.0 : ""
+        text += Helper.equipmentInBitMask(equipment: Constants.EQP_GIMBAL,     bitmask: equipment) ? (", " + Constants.EQP_GIMBAL.0) : ""
+        text += Helper.equipmentInBitMask(equipment: Constants.EQP_CPL_FILTER, bitmask: equipment) ? (", " + Constants.EQP_CPL_FILTER.0) : ""
+        text += Helper.equipmentInBitMask(equipment: Constants.EQP_ND_FILTER,  bitmask: equipment) ? (", " + Constants.EQP_ND_FILTER.0) : ""
+        text += Helper.equipmentInBitMask(equipment: Constants.EQP_IR_FILTER,  bitmask: equipment) ? (", " + Constants.EQP_IR_FILTER.0) : ""
+        text += Helper.equipmentInBitMask(equipment: Constants.EQP_FLASH,      bitmask: equipment) ? (", " + Constants.EQP_FLASH.0) : ""
+        text += "]"
+        print("\(self.equipment) => \(text)")
     }
     
     @objc private func showAlert(sender: UIGestureRecognizer) -> Void {
@@ -90,6 +149,7 @@ public class ViewDetailViewController: UIViewController, FoVController {
         if segue.identifier == "doneSegue" {
             self.name  = nameTextField.text!
             self.descr = descriptionTextField.text!
+            setEquipment()
         }
     }
 }

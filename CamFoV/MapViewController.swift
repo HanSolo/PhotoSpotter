@@ -740,16 +740,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let startAngle : Double     = Helper.toDegrees(radians: angles.0) + 180.0
             let point      : MKMapPoint = Helper.getPointByAngleAndDistance(point: cameraPoint, distanceInMeters: distance, angleDeg: startAngle)
             switch event {
-                case Constants.SUNRISE:
+                case Constants.EPD_SUNRISE:
                     pointsSunrise.append(point)
                     break
-                case Constants.SUNSET:
+                case Constants.EPD_SUNSET:
                     pointsSunset.append(point)
                     break
-                case Constants.MOONRISE:
+                case Constants.EPD_MOONRISE:
                     pointsMoonrise.append(point)
                     break
-                case Constants.MOONSET:
+                case Constants.EPD_MOONSET:
                     pointsMoonset.append(point)
                     break
                 default:

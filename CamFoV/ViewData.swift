@@ -30,6 +30,8 @@ public struct ViewData: Codable {
     let originLon     : String?
     let mapWidth      : String?
     let mapHeight     : String?
+    let tags          : String?
+    let equipment     : String?
     
     
     init(dictionary: Dictionary<String, String>) throws {

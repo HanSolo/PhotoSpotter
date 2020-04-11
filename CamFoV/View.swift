@@ -21,9 +21,11 @@ public class View: Equatable {
     var aperture    : Double
     var orientation : Orientation
     var mapRect     : MKMapRect
+    var tags        : Int
+    var equipment   : Int
     
     
-    init(name: String, description: String, cameraPoint: MKMapPoint, motifPoint: MKMapPoint, camera: Camera, lens: Lens, focalLength: Double, aperture: Double, orientation: Orientation, mapRect: MKMapRect) {
+    init(name: String, description: String, cameraPoint: MKMapPoint, motifPoint: MKMapPoint, camera: Camera, lens: Lens, focalLength: Double, aperture: Double, orientation: Orientation, mapRect: MKMapRect, tags: Int? = 0, equipment: Int? = 0) {
         self.name        = name
         self.description = description
         self.cameraPoint = cameraPoint
@@ -34,6 +36,8 @@ public class View: Equatable {
         self.aperture    = aperture
         self.orientation = orientation
         self.mapRect     = mapRect
+        self.tags        = tags ?? 0
+        self.equipment   = equipment ?? 0
     }
     
     init(dictionary: Dictionary<String, String>, cameras: [Camera], lenses: [Lens]) throws {        
@@ -61,6 +65,9 @@ public class View: Equatable {
         let mapHeight : Double     = (viewData.mapHeight! as NSString).doubleValue
         let size      : MKMapSize  = MKMapSize(width: mapWidth, height: mapHeight)
         self.mapRect = MKMapRect(origin: origin, size: size)
+        
+        self.tags      = Int(viewData.tags ?? "0") ?? 0
+        self.equipment = Int(viewData.equipment ?? "0") ?? 0
     }
     
     public static func ==(lhs: View, rhs: View) -> Bool {
@@ -90,7 +97,9 @@ public class View: Equatable {
         jsonString += "\"originLat\":\"\(mapRect.origin.coordinate.latitude)\","
         jsonString += "\"originLon\":\"\(mapRect.origin.coordinate.longitude)\","
         jsonString += "\"mapWidth\":\"\(mapRect.size.width)\","
-        jsonString += "\"mapHeight\":\"\(mapRect.size.height)\""
+        jsonString += "\"mapHeight\":\"\(mapRect.size.height)\","
+        jsonString += "\"tags\":\"\(tags)\","
+        jsonString += "\"equipment\":\"\(equipment)\""
         jsonString += "}"
         return jsonString
     }
@@ -116,7 +125,9 @@ public class View: Equatable {
         jsonString += "\"originLat\":\"\(mapRect.origin.coordinate.latitude)\","
         jsonString += "\"originLon\":\"\(mapRect.origin.coordinate.longitude)\","
         jsonString += "\"mapWidth\":\"\(mapRect.size.width)\","
-        jsonString += "\"mapHeight\":\"\(mapRect.size.height)\""
+        jsonString += "\"mapHeight\":\"\(mapRect.size.height)\","
+        jsonString += "\"tags\":\"\(tags)\","
+        jsonString += "\"equipment\":\"\(equipment)\""
         jsonString += "}"
         return jsonString
     }

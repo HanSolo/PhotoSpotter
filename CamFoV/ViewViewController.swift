@@ -79,7 +79,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func done(segue:UIStoryboardSegue) {
         let viewDetailVC = segue.source as! ViewDetailViewController
-        let view = View(name: viewDetailVC.name, description: viewDetailVC.descr, cameraPoint: stateController!.view.cameraPoint, motifPoint: stateController!.view.motifPoint, camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation, mapRect: stateController!.view.mapRect)
+        let view = View(name: viewDetailVC.name, description: viewDetailVC.descr, cameraPoint: stateController!.view.cameraPoint, motifPoint: stateController!.view.motifPoint, camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation, mapRect: stateController!.view.mapRect, equipment: viewDetailVC.equipment)
         stateController?.addView(view)
         tableView.reloadData()
         
@@ -110,7 +110,22 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell                   = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ViewCell
         let view : View            = stateController!.views[indexPath.item]
         cell.textLabel?.text       = view.name
-        cell.detailTextLabel?.text = view.description
+        
+        var equipment : String = " ["
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_TRIPOD,     bitmask: view.equipment) ?         Constants.EQP_TRIPOD.0      : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_GIMBAL,     bitmask: view.equipment) ? (", " + Constants.EQP_GIMBAL.0)     : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_CPL_FILTER, bitmask: view.equipment) ? (", " + Constants.EQP_CPL_FILTER.0) : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_ND_FILTER,  bitmask: view.equipment) ? (", " + Constants.EQP_ND_FILTER.0)  : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_IR_FILTER,  bitmask: view.equipment) ? (", " + Constants.EQP_IR_FILTER.0)  : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_FLASH,      bitmask: view.equipment) ? (", " + Constants.EQP_FLASH.0)      : ""
+        equipment += "]"
+        
+        if equipment.count > 2 {
+            cell.detailTextLabel?.text = view.description + equipment
+        } else {
+            cell.detailTextLabel?.text = view.description
+        }
+        
         return cell
     }
     
