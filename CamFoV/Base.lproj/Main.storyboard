@@ -569,6 +569,7 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aPu-Xv-FEd" userLabel="CameraTableView">
                                         <rect key="frame" x="0.0" y="36" width="1024" height="1210"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -863,6 +864,7 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rTE-xB-yBm" userLabel="LensTableView">
                                         <rect key="frame" x="0.0" y="36" width="1024" height="1210"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -1221,6 +1223,7 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n34-ih-Ers" userLabel="ViewTableView">
                                         <rect key="frame" x="0.0" y="36" width="1024" height="1210"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -1448,8 +1451,8 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="awi-Gb-jyi" userLabel="Equipment Stack View">
-                                <rect key="frame" x="20" y="380" width="248" height="374.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="awi-Gb-jyi" userLabel="Equipment Stack View">
+                                <rect key="frame" x="20" y="380" width="248" height="326.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Equipment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OqB-Ci-eZo" userLabel="EquipmentLabel">
                                         <rect key="frame" x="0.0" y="0.0" width="86" height="20.5"/>
@@ -1458,7 +1461,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="150" translatesAutoresizingMaskIntoConstraints="NO" id="5Wh-ik-7kq">
-                                        <rect key="frame" x="0.0" y="48.5" width="248" height="31"/>
+                                        <rect key="frame" x="0.0" y="40.5" width="248" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tripod" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O3h-kL-2bg" userLabel="TripodLabel">
                                                 <rect key="frame" x="0.0" y="0.0" width="49" height="31"/>
@@ -1477,7 +1480,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="143" translatesAutoresizingMaskIntoConstraints="NO" id="4Ah-bf-WSg">
-                                        <rect key="frame" x="0.0" y="107.5" width="248" height="31"/>
+                                        <rect key="frame" x="0.0" y="91.5" width="248" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gimbal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DpG-NF-0DK" userLabel="GimbelLabel">
                                                 <rect key="frame" x="0.0" y="0.0" width="56" height="31"/>
@@ -1496,7 +1499,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="124" translatesAutoresizingMaskIntoConstraints="NO" id="GFO-o9-5QN">
-                                        <rect key="frame" x="0.0" y="166.5" width="248" height="31"/>
+                                        <rect key="frame" x="0.0" y="142.5" width="248" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CPL Filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZR-JD-SHS" userLabel="CPLFilterLabel">
                                                 <rect key="frame" x="0.0" y="0.0" width="75" height="20.5"/>
@@ -1515,7 +1518,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="128" translatesAutoresizingMaskIntoConstraints="NO" id="qxc-Kq-aKe">
-                                        <rect key="frame" x="0.0" y="225.5" width="248" height="31"/>
+                                        <rect key="frame" x="0.0" y="193.5" width="248" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ND Filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hwb-sX-i6E" userLabel="NDFilterLabel">
                                                 <rect key="frame" x="0.0" y="0.0" width="71" height="31"/>
@@ -1534,7 +1537,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="135" translatesAutoresizingMaskIntoConstraints="NO" id="8Q7-WZ-C9D">
-                                        <rect key="frame" x="0.0" y="284.5" width="248" height="31"/>
+                                        <rect key="frame" x="0.0" y="244.5" width="248" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IR Filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zrY-ee-aTx" userLabel="IRFilterLabel">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="31"/>
@@ -1553,7 +1556,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="151" translatesAutoresizingMaskIntoConstraints="NO" id="vWc-iT-Lu7">
-                                        <rect key="frame" x="0.0" y="343.5" width="248" height="31"/>
+                                        <rect key="frame" x="0.0" y="295.5" width="248" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flash" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wz4-rJ-cHJ" userLabel="FlashLabel">
                                                 <rect key="frame" x="0.0" y="0.0" width="48" height="31"/>
@@ -1587,6 +1590,392 @@
                                     <constraint firstAttribute="trailing" secondItem="5Wh-ik-7kq" secondAttribute="trailing" id="rrk-xc-qfs"/>
                                 </constraints>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="O91-hW-8IM" userLabel="Tags Stack View">
+                                <rect key="frame" x="517.5" y="380" width="486.5" height="530.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcM-t8-fpc" userLabel="TagsLabel">
+                                        <rect key="frame" x="0.0" y="0.0" width="38" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="120" translatesAutoresizingMaskIntoConstraints="NO" id="hYp-Oj-kys">
+                                        <rect key="frame" x="0.0" y="40.5" width="486.5" height="490"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="h2M-lR-KYK" userLabel="TagsLeftView">
+                                                <rect key="frame" x="0.0" y="0.0" width="170" height="490"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="79" translatesAutoresizingMaskIntoConstraints="NO" id="yc1-QV-N5w">
+                                                        <rect key="frame" x="0.0" y="0.0" width="170" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Night" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o9k-ZY-GRu" userLabel="NightLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="42" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1xi-Cy-1FA" userLabel="NightSwitch">
+                                                                <rect key="frame" x="121" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="nightSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="SHI-4c-Jk3"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="G5I-5u-xpq">
+                                                        <rect key="frame" x="0.0" y="51" width="170" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Astro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WDo-dM-8QK" userLabel="AstroLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="41" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="M7D-Em-517" userLabel="AstroSwitch">
+                                                                <rect key="frame" x="121" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="astroSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="Iw8-nw-ETI"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="72" translatesAutoresizingMaskIntoConstraints="NO" id="Cvw-5l-T7R">
+                                                        <rect key="frame" x="0.0" y="102" width="170" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Macro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qi-ah-XXY" userLabel="MacroLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="49" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="u0P-bT-kGX" userLabel="MacroSwitch">
+                                                                <rect key="frame" x="121" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="macroSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="trg-ga-1n8"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="97" translatesAutoresizingMaskIntoConstraints="NO" id="chH-Yi-4zm">
+                                                        <rect key="frame" x="0.0" y="153" width="170" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Poi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0I6-YG-zSI" userLabel="PoiLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="24" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="461-oI-niU" userLabel="PoiSwitch">
+                                                                <rect key="frame" x="121" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="poiSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="HKe-3Y-uxZ"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="61" translatesAutoresizingMaskIntoConstraints="NO" id="v2Z-fj-5Sk">
+                                                        <rect key="frame" x="0.0" y="204" width="170" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Infrared" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZZ-6S-yjH" userLabel="InfraredLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="60" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CwU-sp-iL3" userLabel="InfraredSwitch">
+                                                                <rect key="frame" x="121" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="infraredSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="s8z-cY-yZG"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="57n-bC-oGc">
+                                                        <rect key="frame" x="0.0" y="255" width="170" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Long Exposure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kWR-PD-j42" userLabel="LongExposureLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="114" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8dw-rc-SS4" userLabel="LongExposureSwitch">
+                                                                <rect key="frame" x="121" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="longExposureSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="Jrb-L5-4hg"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="45" translatesAutoresizingMaskIntoConstraints="NO" id="FjY-wj-cnz">
+                                                        <rect key="frame" x="0.0" y="306" width="170" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cityscape" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Clj-se-jhZ" userLabel="CityScapeLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="76" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oBF-Co-Ltg" userLabel="CityScapeSwitch">
+                                                                <rect key="frame" x="121" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="cityscapeSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="yfH-pA-ua9"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="37" translatesAutoresizingMaskIntoConstraints="NO" id="KvD-3s-YqT">
+                                                        <rect key="frame" x="0.0" y="357" width="170" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Landscape" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5t-NO-ofB" userLabel="LandscapeLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="84" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nzl-ft-2hR" userLabel="LandscapeSwitch">
+                                                                <rect key="frame" x="121" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="landscapeSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="7Qy-x2-Yph"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="74" translatesAutoresizingMaskIntoConstraints="NO" id="bk7-M3-rWB">
+                                                        <rect key="frame" x="0.0" y="408" width="170" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Street" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ucB-Qd-Qzj" userLabel="StreetLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="47" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Q7o-lM-TuF" userLabel="StreetSwitch">
+                                                                <rect key="frame" x="121" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="streetSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="BiC-Ta-tb4"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="70" translatesAutoresizingMaskIntoConstraints="NO" id="eCu-Fa-Krj">
+                                                        <rect key="frame" x="0.0" y="459" width="170" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bridge" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9bQ-oH-v0k" userLabel="BridgeLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Z96-OP-cE1" userLabel="BridgeSwitch">
+                                                                <rect key="frame" x="121" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="bridgeSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="RaJ-bz-OJM"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="f4r-AJ-Gld" userLabel="TagsRightView">
+                                                <rect key="frame" x="290" y="0.0" width="196.5" height="490"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="79" translatesAutoresizingMaskIntoConstraints="NO" id="PQP-Fd-UDX">
+                                                        <rect key="frame" x="0.0" y="0.0" width="196.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lake" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QhN-1f-XWh" userLabel="LakeLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="68.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Rmg-zS-Vjt" userLabel="LakeSwitch">
+                                                                <rect key="frame" x="147.5" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="lakeSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="YT7-cy-Jel"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="FNG-o5-O8l">
+                                                        <rect key="frame" x="0.0" y="51" width="196.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ship" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dHW-fY-e8i" userLabel="ShipLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="67.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rdS-le-9yq" userLabel="ShipSwitch">
+                                                                <rect key="frame" x="147.5" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="shipSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="MWQ-bh-yLB"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="72" translatesAutoresizingMaskIntoConstraints="NO" id="Wbl-dl-meX">
+                                                        <rect key="frame" x="0.0" y="102" width="196.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Car" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AiA-C1-4bA" userLabel="CarLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="75.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Kgg-bj-SRz" userLabel="CarSwitch">
+                                                                <rect key="frame" x="147.5" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="carSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="JgB-tS-5zp"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="97" translatesAutoresizingMaskIntoConstraints="NO" id="8yU-nt-9Wj">
+                                                        <rect key="frame" x="0.0" y="153" width="196.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flower" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Y1-q8-kXY" userLabel="FlowerLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="50.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="52a-kg-Jed" userLabel="FlowerSwitch">
+                                                                <rect key="frame" x="147.5" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="flowerSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="WKH-xn-S3C"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="61" translatesAutoresizingMaskIntoConstraints="NO" id="GXp-DO-1py">
+                                                        <rect key="frame" x="0.0" y="204" width="196.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tree" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aMt-D0-Oy6" userLabel="TreeLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="86.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="yC6-QW-ioe" userLabel="TreeSwitch">
+                                                                <rect key="frame" x="147.5" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="treeSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="nUU-IF-Yyu"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="aRR-IX-443">
+                                                        <rect key="frame" x="0.0" y="255" width="196.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Building" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7MN-3Z-hI6" userLabel="BuildingLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="140.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Kbz-1L-JfC" userLabel="BuildingSwitch">
+                                                                <rect key="frame" x="147.5" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="buildingSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="if2-8C-Y53"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="45" translatesAutoresizingMaskIntoConstraints="NO" id="VN8-lb-PI5">
+                                                        <rect key="frame" x="0.0" y="306" width="196.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beach" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YUd-Fi-HaE" userLabel="BeachLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="102.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="B8K-Hv-mLS" userLabel="BeachSwitch">
+                                                                <rect key="frame" x="147.5" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="beachSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="sfN-j9-07W"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="37" translatesAutoresizingMaskIntoConstraints="NO" id="edY-D4-4b1">
+                                                        <rect key="frame" x="0.0" y="357" width="196.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunrise" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZMU-bg-9h8" userLabel="SunriseLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="110.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XCX-Mb-Xjy" userLabel="SunriseSwitch">
+                                                                <rect key="frame" x="147.5" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="sunriseSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="ceC-cM-074"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="74" translatesAutoresizingMaskIntoConstraints="NO" id="1Up-Bj-Y9h">
+                                                        <rect key="frame" x="0.0" y="408" width="196.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunset" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHF-Wr-eBa" userLabel="SunsetLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="73.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dA1-gX-FOg" userLabel="SunsetSwitch">
+                                                                <rect key="frame" x="147.5" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="sunsetSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="b7y-wp-Ozg"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="70" translatesAutoresizingMaskIntoConstraints="NO" id="LsA-nk-AsK">
+                                                        <rect key="frame" x="0.0" y="459" width="196.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTy-Br-ai4" userLabel="MoonLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="77.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tCw-VL-2qD" userLabel="MoonSwitch">
+                                                                <rect key="frame" x="147.5" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="moonSwitchChanged:" destination="pfM-O1-aVk" eventType="valueChanged" id="cyr-RO-YdH"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -1600,24 +1989,46 @@
                             <constraint firstItem="1bS-K1-7iZ" firstAttribute="trailing" secondItem="26K-Yu-eUn" secondAttribute="trailing" id="isM-Qv-1fM"/>
                             <constraint firstItem="26K-Yu-eUn" firstAttribute="trailing" secondItem="URL-AA-375" secondAttribute="trailing" constant="20" id="jig-FQ-Ki8"/>
                             <constraint firstItem="26K-Yu-eUn" firstAttribute="trailing" secondItem="GBm-hp-8kJ" secondAttribute="trailing" id="rBB-eb-lAB"/>
+                            <constraint firstItem="O91-hW-8IM" firstAttribute="top" secondItem="URL-AA-375" secondAttribute="bottom" constant="80" id="thH-sG-fdc"/>
                             <constraint firstItem="URL-AA-375" firstAttribute="leading" secondItem="26K-Yu-eUn" secondAttribute="leading" constant="20" id="whm-qb-9mC"/>
+                            <constraint firstItem="26K-Yu-eUn" firstAttribute="trailing" secondItem="O91-hW-8IM" secondAttribute="trailing" constant="20" id="x4b-K9-rDD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="26K-Yu-eUn"/>
                     </view>
                     <navigationItem key="navigationItem" id="LZN-MX-iMK"/>
                     <connections>
+                        <outlet property="astroSwitch" destination="M7D-Em-517" id="msB-yH-yr9"/>
+                        <outlet property="beachSwitch" destination="B8K-Hv-mLS" id="2Rz-aK-dBJ"/>
+                        <outlet property="bridgeSwitch" destination="Z96-OP-cE1" id="OJq-Kb-pv5"/>
+                        <outlet property="buildingSwitch" destination="Kbz-1L-JfC" id="Uqv-1J-7Ms"/>
                         <outlet property="cameraTextField" destination="nHN-rd-cqn" id="sj0-zj-4zI"/>
                         <outlet property="cancelButton" destination="vRF-Ms-D37" id="RUX-aD-GPt"/>
+                        <outlet property="carSwitch" destination="Kgg-bj-SRz" id="Vb8-F2-zfm"/>
+                        <outlet property="cityscapeSwitch" destination="oBF-Co-Ltg" id="1EH-bP-Rg4"/>
                         <outlet property="cplFilterSwitch" destination="kYh-gy-Tta" id="VsN-iV-FHo"/>
                         <outlet property="descriptionTextField" destination="OVa-3f-mFn" id="wDv-yU-GbA"/>
                         <outlet property="doneButton" destination="SAO-h2-2Is" id="Jbq-Gv-nrw"/>
                         <outlet property="flashSwitch" destination="p2J-nd-Yyj" id="kor-AP-b8w"/>
+                        <outlet property="flowerSwitch" destination="52a-kg-Jed" id="DbZ-dw-BEo"/>
                         <outlet property="gimbalSwitch" destination="YWe-CC-uz4" id="7r9-qS-4d4"/>
+                        <outlet property="infraredSwitch" destination="CwU-sp-iL3" id="FG3-Qb-IZa"/>
                         <outlet property="irFilterSwitch" destination="WKb-O3-FtC" id="E6F-iY-kZa"/>
+                        <outlet property="lakeSwitch" destination="Rmg-zS-Vjt" id="rnl-hB-448"/>
+                        <outlet property="landscapeSwitch" destination="nzl-ft-2hR" id="hBO-op-e42"/>
                         <outlet property="lensTextField" destination="Vde-Y5-blu" id="LGr-fH-p3t"/>
+                        <outlet property="longExposureSwitch" destination="8dw-rc-SS4" id="E0p-n1-Wsq"/>
+                        <outlet property="macroSwitch" destination="u0P-bT-kGX" id="foU-BL-gPm"/>
+                        <outlet property="moonSwitch" destination="tCw-VL-2qD" id="aNz-cr-I06"/>
                         <outlet property="nameTextField" destination="GVq-fD-Znb" id="fM1-h5-3RA"/>
                         <outlet property="navBar" destination="GBm-hp-8kJ" id="444-ac-bwT"/>
                         <outlet property="ndFilterSwitch" destination="v2P-wz-awp" id="dKT-ak-ZVz"/>
+                        <outlet property="nightSwitch" destination="1xi-Cy-1FA" id="1Og-B7-GI2"/>
+                        <outlet property="poiSwitch" destination="461-oI-niU" id="3WC-v1-Ksg"/>
+                        <outlet property="shipSwitch" destination="rdS-le-9yq" id="xlc-W5-BC7"/>
+                        <outlet property="streetSwitch" destination="Q7o-lM-TuF" id="aXb-W8-gHy"/>
+                        <outlet property="sunriseSwitch" destination="XCX-Mb-Xjy" id="gEk-Np-cEO"/>
+                        <outlet property="sunsetSwitch" destination="dA1-gX-FOg" id="zAW-hn-VhV"/>
+                        <outlet property="treeSwitch" destination="yC6-QW-ioe" id="tVi-Ie-TbK"/>
                         <outlet property="tripodSwitch" destination="lyH-8b-MDc" id="Q6D-gh-Ihx"/>
                     </connections>
                 </viewController>
@@ -1628,7 +2039,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hyq-cO-83h"/>
+        <segue reference="xGg-4x-7zw"/>
         <segue reference="v21-rP-BLs"/>
         <segue reference="dje-rX-Wew"/>
         <segue reference="Wzc-Ww-caD"/>

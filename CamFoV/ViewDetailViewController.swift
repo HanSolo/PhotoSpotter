@@ -22,19 +22,44 @@ public class ViewDetailViewController: UIViewController, FoVController {
     @IBOutlet weak var doneButton           : UIButton!
     
     @IBOutlet weak var navBar               : UINavigationBar!
+    // Equipment
     @IBOutlet weak var tripodSwitch         : UISwitch!
     @IBOutlet weak var gimbalSwitch         : UISwitch!
     @IBOutlet weak var cplFilterSwitch      : UISwitch!
     @IBOutlet weak var ndFilterSwitch       : UISwitch!
     @IBOutlet weak var irFilterSwitch       : UISwitch!
     @IBOutlet weak var flashSwitch          : UISwitch!
-
+    // Tags
+    @IBOutlet weak var nightSwitch          : UISwitch!
+    @IBOutlet weak var astroSwitch          : UISwitch!
+    @IBOutlet weak var macroSwitch          : UISwitch!
+    @IBOutlet weak var poiSwitch            : UISwitch!
+    @IBOutlet weak var infraredSwitch       : UISwitch!
+    @IBOutlet weak var longExposureSwitch   : UISwitch!
+    @IBOutlet weak var cityscapeSwitch      : UISwitch!
+    @IBOutlet weak var landscapeSwitch      : UISwitch!
+    @IBOutlet weak var streetSwitch         : UISwitch!
+    @IBOutlet weak var bridgeSwitch         : UISwitch!
+    @IBOutlet weak var lakeSwitch           : UISwitch!
+    @IBOutlet weak var shipSwitch           : UISwitch!
+    @IBOutlet weak var carSwitch            : UISwitch!
+    @IBOutlet weak var flowerSwitch         : UISwitch!
+    @IBOutlet weak var treeSwitch           : UISwitch!
+    @IBOutlet weak var buildingSwitch       : UISwitch!
+    @IBOutlet weak var beachSwitch          : UISwitch!
+    @IBOutlet weak var sunriseSwitch        : UISwitch!
+    @IBOutlet weak var sunsetSwitch         : UISwitch!
+    @IBOutlet weak var moonSwitch           : UISwitch!
+    
+    
+    
     var nameIconView         : UIView?
     var tapGestureRecognizer : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showAlert(sender:)))
     
     var name                 : String      = ""
     var descr                : String      = ""
     var equipment            : Int         = 0
+    var tags                 : Int         = 0
     
     var nameValid            : Bool        = false
     var descriptionValid     : Bool        = false
@@ -71,6 +96,7 @@ public class ViewDetailViewController: UIViewController, FoVController {
         validateForm()
     }
     
+    //MARK: Equipment switch handlers
     @IBAction func tripodSwitchChanged(_ sender: Any) {
         setEquipment()
     }
@@ -89,6 +115,69 @@ public class ViewDetailViewController: UIViewController, FoVController {
     @IBAction func flashSwitchChanged(_ sender: Any) {
         setEquipment()
     }
+    // Mark: Tags switch handlers
+    @IBAction func nightSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func astroSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func macroSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func poiSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func infraredSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func longExposureSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func cityscapeSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func landscapeSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func streetSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func bridgeSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func lakeSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func shipSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func carSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func flowerSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func treeSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func buildingSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func beachSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func sunriseSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func sunsetSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    @IBAction func moonSwitchChanged(_ sender: Any) {
+        setTags()
+    }
+    
+    
     
     
     private func validateForm() -> Void {
@@ -118,17 +207,70 @@ public class ViewDetailViewController: UIViewController, FoVController {
         if self.flashSwitch.isOn {
             self.equipment = self.equipment | Constants.EQP_FLASH.1
         }
-        
-        
-        var text : String = " ["
-        text += Helper.equipmentInBitMask(equipment: Constants.EQP_TRIPOD,     bitmask: equipment) ?         Constants.EQP_TRIPOD.0 : ""
-        text += Helper.equipmentInBitMask(equipment: Constants.EQP_GIMBAL,     bitmask: equipment) ? (", " + Constants.EQP_GIMBAL.0) : ""
-        text += Helper.equipmentInBitMask(equipment: Constants.EQP_CPL_FILTER, bitmask: equipment) ? (", " + Constants.EQP_CPL_FILTER.0) : ""
-        text += Helper.equipmentInBitMask(equipment: Constants.EQP_ND_FILTER,  bitmask: equipment) ? (", " + Constants.EQP_ND_FILTER.0) : ""
-        text += Helper.equipmentInBitMask(equipment: Constants.EQP_IR_FILTER,  bitmask: equipment) ? (", " + Constants.EQP_IR_FILTER.0) : ""
-        text += Helper.equipmentInBitMask(equipment: Constants.EQP_FLASH,      bitmask: equipment) ? (", " + Constants.EQP_FLASH.0) : ""
-        text += "]"
-        print("\(self.equipment) => \(text)")
+    }
+    
+    private func setTags() -> Void {
+        self.tags = 0
+        if self.nightSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_NIGHT.1
+        }
+        if self.astroSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_ASTRO.1
+        }
+        if self.macroSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_MACRO.1
+        }
+        if self.poiSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_POI.1
+        }
+        if self.infraredSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_INFRARED.1
+        }
+        if self.longExposureSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_LONG_EXPOSURE.1
+        }
+        if self.cityscapeSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_CITYSCAPE.1
+        }
+        if self.landscapeSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_LANDSCAPE.1
+        }
+        if self.streetSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_STREET.1
+        }
+        if self.bridgeSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_BRIDGE.1
+        }
+        if self.lakeSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_LAKE.1
+        }
+        if self.shipSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_SHIP.1
+        }
+        if self.carSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_CAR.1
+        }
+        if self.flowerSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_FLOWER.1
+        }
+        if self.treeSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_TREE.1
+        }
+        if self.buildingSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_BUILDING.1
+        }
+        if self.beachSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_BEACH.1
+        }
+        if self.sunriseSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_SUNRISE.1
+        }
+        if self.sunsetSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_SUNSET.1
+        }
+        if self.moonSwitch.isOn {
+            self.tags = self.tags | Constants.TAG_MOON.1
+        }
     }
     
     @objc private func showAlert(sender: UIGestureRecognizer) -> Void {
@@ -150,6 +292,7 @@ public class ViewDetailViewController: UIViewController, FoVController {
             self.name  = nameTextField.text!
             self.descr = descriptionTextField.text!
             setEquipment()
+            setTags()
         }
     }
 }

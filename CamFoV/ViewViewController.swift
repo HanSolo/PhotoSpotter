@@ -79,7 +79,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func done(segue:UIStoryboardSegue) {
         let viewDetailVC = segue.source as! ViewDetailViewController
-        let view = View(name: viewDetailVC.name, description: viewDetailVC.descr, cameraPoint: stateController!.view.cameraPoint, motifPoint: stateController!.view.motifPoint, camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation, mapRect: stateController!.view.mapRect, equipment: viewDetailVC.equipment)
+        let view = View(name: viewDetailVC.name, description: viewDetailVC.descr, cameraPoint: stateController!.view.cameraPoint, motifPoint: stateController!.view.motifPoint, camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation, mapRect: stateController!.view.mapRect, tags: viewDetailVC.tags, equipment: viewDetailVC.equipment)
         stateController?.addView(view)
         tableView.reloadData()
         
@@ -125,7 +125,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             cell.detailTextLabel?.text = view.description
         }
-        
+                
         return cell
     }
     
@@ -169,6 +169,7 @@ class ViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         self.tintColor = UIColor.systemTeal
+        
     }
     
     required init?(coder: NSCoder) {
