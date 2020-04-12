@@ -107,8 +107,10 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell                   = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ViewCell
-        let view : View            = stateController!.views[indexPath.item]
+        let cell                            = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ViewCell
+        let view : View                     = stateController!.views[indexPath.item]
+        cell.detailTextLabel!.numberOfLines = 0
+        
         cell.textLabel?.text       = view.name
         
         var equipment : String = " ["
@@ -124,6 +126,36 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.detailTextLabel?.text = view.description + equipment
         } else {
             cell.detailTextLabel?.text = view.description
+        }
+        
+        var tags : String = ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_NIGHT,         bitmask: view.tags) ?        Constants.TAG_NIGHT.0          : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_ASTRO,         bitmask: view.tags) ? (" " + Constants.TAG_ASTRO.0)         : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_MACRO,         bitmask: view.tags) ? (" " + Constants.TAG_MACRO.0)         : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_POI,           bitmask: view.tags) ? (" " + Constants.TAG_POI.0)           : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_INFRARED,      bitmask: view.tags) ? (" " + Constants.TAG_INFRARED.0)      : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_LONG_EXPOSURE, bitmask: view.tags) ? (" " + Constants.TAG_LONG_EXPOSURE.0) : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_CITYSCAPE,     bitmask: view.tags) ? (" " + Constants.TAG_CITYSCAPE.0)     : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_LANDSCAPE,     bitmask: view.tags) ? (" " + Constants.TAG_LANDSCAPE.0)     : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_STREET,        bitmask: view.tags) ? (" " + Constants.TAG_STREET.0)        : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_BRIDGE,        bitmask: view.tags) ? (" " + Constants.TAG_BRIDGE.0)        : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_LAKE,          bitmask: view.tags) ? (" " + Constants.TAG_LAKE.0)          : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_SHIP,          bitmask: view.tags) ? (" " + Constants.TAG_SHIP.0)          : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_CAR,           bitmask: view.tags) ? (" " + Constants.TAG_CAR.0)           : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_FLOWER,        bitmask: view.tags) ? (" " + Constants.TAG_FLOWER.0)        : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_TREE,          bitmask: view.tags) ? (" " + Constants.TAG_TREE.0)          : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_BUILDING,      bitmask: view.tags) ? (" " + Constants.TAG_BUILDING.0)      : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_BEACH,         bitmask: view.tags) ? (" " + Constants.TAG_BEACH.0)         : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_SUNRISE,       bitmask: view.tags) ? (" " + Constants.TAG_SUNRISE.0)       : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_SUNSET,        bitmask: view.tags) ? (" " + Constants.TAG_SUNSET.0)        : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_MOON,          bitmask: view.tags) ? (" " + Constants.TAG_MOON.0)          : ""
+        
+        if tags.count > 2 {
+            if equipment.count > 2 {
+                cell.detailTextLabel?.text! += ("\n" + tags)
+            } else {
+                cell.detailTextLabel?.text! += tags
+            }
         }
                 
         return cell
@@ -171,7 +203,6 @@ class ViewCell: UITableViewCell {
         self.tintColor = UIColor.systemTeal
         
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
