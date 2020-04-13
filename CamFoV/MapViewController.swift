@@ -35,6 +35,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var dofButton           : UIButton!
     @IBOutlet weak var cameraButton        : UIButton!
     @IBOutlet weak var orientationButton   : UIButton!
+    @IBOutlet weak var orientationLabel    : UILabel!
     @IBOutlet weak var mapTypeSelector     : UISegmentedControl!
     @IBOutlet weak var distanceLabel       : UILabel!
     @IBOutlet weak var widthLabel          : UILabel!
@@ -160,9 +161,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         switch stateController!.view.orientation {
             case .landscape:
                 self.orientationButton.transform = CGAffineTransform.identity
+                //self.orientationLabel.text!      = "Landscape"
                 break
             case .portrait:
                 self.orientationButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2.0)
+                //self.orientationLabel.text!      = "Portrait"
                 break
         }
         
@@ -263,10 +266,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         stateController!.view.orientation = Orientation.landscape == stateController!.view.orientation ? Orientation.portrait : Orientation.landscape
         switch stateController!.view.orientation {
             case .landscape:
-                self.orientationButton.transform = CGAffineTransform.identity                
+                self.orientationButton.transform = CGAffineTransform.identity
+                //self.orientationLabel.text!      = "Landscape"
                 break
             case .portrait:
                 self.orientationButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2.0)
+                //self.orientationLabel.text!      = "Portrait"
                 break
         }
         
