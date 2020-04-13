@@ -155,11 +155,9 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print(indexPath.item)
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! LensCell
-        let lens : Lens            = lensSelection![indexPath.item]
-        cell.textLabel?.text       = lens.name
+        let lens : Lens      = lensSelection![indexPath.item]
+        cell.textLabel?.text = lens.name
         if lens.isPrime {
             cell.textLabel?.textColor = Constants.YELLOW
         } else {

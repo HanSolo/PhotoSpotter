@@ -92,7 +92,9 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.selectRow(at: viewIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: viewIndex)?.accessoryType = .checkmark
         
-        stateController?.setView(view)
+        stateController!.storeViews()
+        
+        stateController!.setView(view)
     }
     
     @IBAction func cancel(segue:UIStoryboardSegue) {

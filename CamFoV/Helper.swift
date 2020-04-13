@@ -292,4 +292,114 @@ public class Helper {
         
         navBar.standardAppearance           = appearance
     }
+    
+    
+    
+    
+    public static func getDocumentsFolder() -> URL? {
+        var containerUrl: URL? {
+            return FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents")
+        }
+        return containerUrl
+    }
+    
+    public static func saveViewsToDocuments(views: [View]) -> Void {
+        // Create json string from views
+        var jsonTxt : String = "[\n"
+        for view in views {            
+            jsonTxt += view.toFlatJsonString()
+            jsonTxt += ",\n"
+        }
+        jsonTxt.removeLast(2)
+        jsonTxt += "\n]"
+        
+        let containerUrl: URL? = getDocumentsFolder()
+        
+        // check for container existence
+        if let url = containerUrl, !FileManager.default.fileExists(atPath: url.path, isDirectory: nil) {
+            do {
+                try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        // Store json file to documents
+        let jsonUrl = containerUrl?.appendingPathComponent(Constants.JSON_FILE_NAME).appendingPathExtension(Constants.JSON_FILE_EXTENSION)
+        
+        if FileManager.default.fileExists(atPath: jsonUrl!.path) {
+            do {
+                try FileManager.default.removeItem(atPath: jsonUrl!.path)
+            } catch {
+                print(error)
+            }
+        }
+        
+        if let jsonUrl = jsonUrl {
+            do {
+                try jsonTxt.write(to: jsonUrl, atomically: true, encoding: .utf8)
+                _ = try String(contentsOf: jsonUrl)
+                //print("Saved to \(jsonUrl): \n \(input)")
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    public static func loadViewsFromDocuments() -> [View] {
+        var views :[View] = []
+        
+        let containerUrl: URL? = getDocumentsFolder()
+        
+        // check for container existence
+        if let url = containerUrl, !FileManager.default.fileExists(atPath: url.path, isDirectory: nil) {
+            do {
+                try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        let jsonUrl = containerUrl?.appendingPathComponent(Constants.JSON_FILE_NAME).appendingPathExtension(Constants.JSON_FILE_EXTENSION)
+        if let jsonUrl = jsonUrl {
+            if FileManager.default.fileExists(atPath: jsonUrl.path) {
+                do {
+                    let jsonTxt = try String(contentsOf: jsonUrl)
+                    if let jsonData = jsonTxt.data(using: .utf8) {
+                        let viewDataArray :[ViewData] = try! JSONDecoder().decode([ViewData].self, from: jsonData)
+                        for viewData in viewDataArray {
+                            views.append(View(viewData: viewData))
+                        }
+                    } else {
+                        views.append(Constants.DEFAULT_VIEW)
+                    }
+                    
+                    
+                    
+                    /*
+                    guard let jsonData = jsonTxt.data(using: .utf8) else {
+                        views.append(Constants.DEFAULT_VIEW)
+                        return views
+                    }
+                    let viewDataArray :[ViewData] = try! JSONDecoder().decode([ViewData].self, from: jsonData)
+                    
+                    for viewData in viewDataArray {
+                        views.append(View(viewData: viewData))
+                    }
+                    */
+                    
+                } catch {
+                    print(error.localizedDescription)
+                    views.append(Constants.DEFAULT_VIEW)
+                }
+            } else {
+                print("File not found")
+                views.append(Constants.DEFAULT_VIEW)
+            }
+        }
+        
+        return views
+    }
 }

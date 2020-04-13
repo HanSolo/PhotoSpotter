@@ -70,6 +70,37 @@ public class View: Equatable {
         self.equipment = Int(viewData.equipment ?? "0") ?? 0
     }
     
+    init(viewData: ViewData) {
+        self.name          = viewData.name!
+        self.description   = viewData.description!
+        self.cameraPoint   = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees((viewData.cameraLat! as NSString).doubleValue), longitude: CLLocationDegrees((viewData.cameraLon! as NSString).doubleValue)))
+        self.motifPoint    = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees((viewData.motifLat! as NSString).doubleValue), longitude: CLLocationDegrees((viewData.motifLon! as NSString).doubleValue)))
+        
+        let cameraName     = viewData.cameraName ?? Constants.DEFAULT_CAMERA.name
+        let sensorFormat   = Constants.SENSOR_FORMATS.first(where: { $0.name == viewData.sensorName })
+        self.camera        = Camera(name: cameraName, sensorFormat: sensorFormat ?? Constants.DEFAULT_CAMERA.sensorFormat)
+        
+        let lensName       = viewData.lensName ?? Constants.DEFAULT_LENS.name
+        let minFocalLength = Double(viewData.minFocalLength!) ?? Constants.DEFAULT_LENS.minFocalLength
+        let maxFocalLength = Double(viewData.maxFocalLength!) ?? Constants.DEFAULT_LENS.maxFocalLength
+        let minAperture    = Double(viewData.minAperture!) ?? Constants.DEFAULT_LENS.minAperture
+        let maxAperture    = Double(viewData.maxAperture!) ?? Constants.DEFAULT_LENS.maxAperture
+        self.lens          = Lens(name: lensName, minFocalLength: minFocalLength, maxFocalLength: maxFocalLength, minAperture: minAperture, maxAperture: maxAperture)
+            
+        self.focalLength   = Double(viewData.focalLength!)!
+        self.aperture      = Double(viewData.aperture!)!
+        self.orientation   = Orientation(rawValue: viewData.orientation!)!
+        
+        let origin    : MKMapPoint = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees((viewData.originLat! as NSString).doubleValue), longitude: CLLocationDegrees((viewData.originLon! as NSString).doubleValue)))
+        let mapWidth  : Double     = (viewData.mapWidth! as NSString).doubleValue
+        let mapHeight : Double     = (viewData.mapHeight! as NSString).doubleValue
+        let size      : MKMapSize  = MKMapSize(width: mapWidth, height: mapHeight)
+        self.mapRect = MKMapRect(origin: origin, size: size)
+        
+        self.tags      = Int(viewData.tags ?? "0") ?? 0
+        self.equipment = Int(viewData.equipment ?? "0") ?? 0
+    }
+    
     public static func ==(lhs: View, rhs: View) -> Bool {
         return lhs.name == rhs.name &&
                lhs.description == rhs.description &&

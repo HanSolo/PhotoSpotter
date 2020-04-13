@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MapKit
 
 public struct ViewData: Codable {
     let name          : String?

@@ -122,8 +122,7 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
     
     public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "doneSegue" {
-            lensName   = nameTextField.text!
-            //print("doneSegue prepared with data: \(String(describing: nameTextField!.text))")
+            lensName = nameTextField.text!
         }
     }
     

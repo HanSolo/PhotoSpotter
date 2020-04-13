@@ -263,7 +263,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         stateController!.view.orientation = Orientation.landscape == stateController!.view.orientation ? Orientation.portrait : Orientation.landscape
         switch stateController!.view.orientation {
             case .landscape:
-                self.orientationButton.transform = CGAffineTransform.identity
+                self.orientationButton.transform = CGAffineTransform.identity                
                 break
             case .portrait:
                 self.orientationButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2.0)

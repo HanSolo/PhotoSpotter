@@ -26,7 +26,6 @@
 		4F7D7B57242E270F00771992 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7D7B55242E270F00771992 /* Main.storyboard */; };
 		4F7D7B59242E271000771992 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F7D7B58242E271000771992 /* Assets.xcassets */; };
 		4F7D7B5C242E271000771992 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7D7B5A242E271000771992 /* LaunchScreen.storyboard */; };
-		4F7D7B71242E28D900771992 /* Lenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B63242E28D900771992 /* Lenses.swift */; };
 		4F7D7B72242E28D900771992 /* SensorFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B64242E28D900771992 /* SensorFormat.swift */; };
 		4F7D7B73242E28D900771992 /* FoVError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B65242E28D900771992 /* FoVError.swift */; };
 		4F7D7B77242E28D900771992 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B69242E28D900771992 /* Helper.swift */; };
@@ -38,6 +37,7 @@
 		4F9164A8243C980F0039C697 /* UIImage+resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9164A7243C980F0039C697 /* UIImage+resize.swift */; };
 		4F9B85A724346EDD00289E8A /* ViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9B85A624346EDD00289E8A /* ViewData.swift */; };
 		4F9B85AB2434CABF00289E8A /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9B85AA2434CABF00289E8A /* CameraViewController.swift */; };
+		4FC19F9B244450B1006A8FAF /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC19F9A244450B1006A8FAF /* CloudKit.framework */; };
 		4FF364F224376B0800A749A1 /* CameraDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF364F124376B0800A749A1 /* CameraDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,7 +63,6 @@
 		4F7D7B58242E271000771992 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F7D7B5B242E271000771992 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4F7D7B5D242E271000771992 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4F7D7B63242E28D900771992 /* Lenses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lenses.swift; sourceTree = "<group>"; };
 		4F7D7B64242E28D900771992 /* SensorFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorFormat.swift; sourceTree = "<group>"; };
 		4F7D7B65242E28D900771992 /* FoVError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoVError.swift; sourceTree = "<group>"; };
 		4F7D7B69242E28D900771992 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
@@ -76,6 +75,8 @@
 		4F9B85A624346EDD00289E8A /* ViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewData.swift; sourceTree = "<group>"; };
 		4F9B85AA2434CABF00289E8A /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		4FA94021244052EF009430D7 /* CamFoV.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CamFoV.entitlements; sourceTree = "<group>"; };
+		4FC19F9824444B5C006A8FAF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
+		4FC19F9A244450B1006A8FAF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		4FF364F124376B0800A749A1 /* CameraDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FC19F9B244450B1006A8FAF /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +97,7 @@
 			children = (
 				4F7D7B4E242E270F00771992 /* CamFoV */,
 				4F7D7B4D242E270F00771992 /* Products */,
+				4FC19F9724444B5C006A8FAF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -119,8 +122,6 @@
 				4F5DDD372435A42E00A49C20 /* Constants.swift */,
 				4F7D7B65242E28D900771992 /* FoVError.swift */,
 				4F7D7B69242E28D900771992 /* Helper.swift */,
-				4F7D7B6F242E28D900771992 /* Lens.swift */,
-				4F7D7B63242E28D900771992 /* Lenses.swift */,
 				4F7D7B6B242E28D900771992 /* Orientation.swift */,
 				4F7D7B64242E28D900771992 /* SensorFormat.swift */,
 				4F7D7B70242E28D900771992 /* Trapezoid.swift */,
@@ -128,6 +129,7 @@
 				4F7D7B58242E271000771992 /* Assets.xcassets */,
 				4F7D7B5D242E271000771992 /* Info.plist */,
 				4F13D830243457E400903059 /* Camera.swift */,
+				4F7D7B6F242E28D900771992 /* Lens.swift */,
 				4F13D83224345B7400903059 /* View.swift */,
 				4F9B85A624346EDD00289E8A /* ViewData.swift */,
 				4F7D7B53242E270F00771992 /* MapViewController.swift */,
@@ -153,6 +155,15 @@
 				4F9164A7243C980F0039C697 /* UIImage+resize.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4FC19F9724444B5C006A8FAF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4FC19F9A244450B1006A8FAF /* CloudKit.framework */,
+				4FC19F9824444B5C006A8FAF /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,7 +239,6 @@
 			files = (
 				4F7D7B54242E270F00771992 /* MapViewController.swift in Sources */,
 				4F9164A8243C980F0039C697 /* UIImage+resize.swift in Sources */,
-				4F7D7B71242E28D900771992 /* Lenses.swift in Sources */,
 				4F135D93243857C4001B3F3F /* LensViewController.swift in Sources */,
 				4F79B0DC2439A80500F61CF4 /* ViewDetailViewController.swift in Sources */,
 				4F7D7B72242E28D900771992 /* SensorFormat.swift in Sources */,
@@ -401,6 +411,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CamFoV/CamFoV.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L4A7549EHC;
 				INFOPLIST_FILE = CamFoV/Info.plist;
@@ -409,10 +421,14 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.PhotoSpotter;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = maccatalyst.eu.hansolo.PhotoSpotter;
 				PRODUCT_NAME = "Photo Spotter";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -421,6 +437,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CamFoV/CamFoV.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L4A7549EHC;
 				INFOPLIST_FILE = CamFoV/Info.plist;
@@ -428,11 +446,16 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.PhotoSpotter;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = maccatalyst.eu.hansolo.PhotoSpotter;
 				PRODUCT_NAME = "Photo Spotter";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};

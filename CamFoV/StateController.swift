@@ -97,6 +97,11 @@ class StateController {
     }
     
     
+    // Store views to documents
+    func storeViews() -> Void {
+        Helper.saveViewsToDocuments(views: views)
+    }
+    
     
     // Store to UserDefaults
     func store() {
@@ -108,6 +113,9 @@ class StateController {
             let lensesData = try NSKeyedArchiver.archivedData(withRootObject: self.lenses, requiringSecureCoding: false)
             defaults.set(lensesData, forKey: "lenses")
             
+            print("Cameras and Lenses stored to defaults")
+            
+            /*
             var viewDict : [Dictionary<String,String>] = []
             for view in views {
                 let dictionary : Dictionary<String,String> = Helper.viewToDictionary(view: view)
@@ -117,6 +125,7 @@ class StateController {
             defaults.set(viewsData, forKey: "views")
             
             print("Cameras, Lenses and views stored to defaults")
+            */
         } catch {
             print("Error saving cameras and lenses: \(error)")
         }
@@ -128,7 +137,7 @@ class StateController {
         defaults.set(self.mapType, forKey: "mapType")
         print("MapType stored to defaults")
         
-        // Store mapview zoom or region
+        Helper.saveViewsToDocuments(views: views)
     }
     
     // Retrieve from UserDefaults
@@ -154,6 +163,7 @@ class StateController {
                 fatalError("load cameras - Can't encode data: \(error)")
             }
         }
+        /*
         if let viewsData = UserDefaults.standard.data(forKey: "views") {
             do {
                 guard let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(viewsData) as? [Dictionary<String,String>] else {
@@ -169,6 +179,7 @@ class StateController {
                 fatalError("load views - Can't encode data: \(error)")
             }
         }
+        */
         if defaults.dictionary(forKey: "view") != nil {
         let dictionary : Dictionary<String,String> = defaults.dictionary(forKey: "view")! as! Dictionary<String,String>
             setView(Helper.dictionaryToView(dictionary: dictionary, cameras: self.cameras, lenses: self.lenses))
@@ -180,5 +191,7 @@ class StateController {
         } else {
             print("No mapType found in UserDefaults")
         }
+        
+        setViews(Helper.loadViewsFromDocuments())
     }
 }
