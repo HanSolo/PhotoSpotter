@@ -340,7 +340,6 @@ public class Helper {
             do {
                 try jsonTxt.write(to: jsonUrl, atomically: true, encoding: .utf8)
                 _ = try String(contentsOf: jsonUrl)
-                //print("Saved to \(jsonUrl): \n \(input)")
             } catch {
                 print(error.localizedDescription)
             }
@@ -375,21 +374,6 @@ public class Helper {
                     } else {
                         views.append(Constants.DEFAULT_VIEW)
                     }
-                    
-                    
-                    
-                    /*
-                    guard let jsonData = jsonTxt.data(using: .utf8) else {
-                        views.append(Constants.DEFAULT_VIEW)
-                        return views
-                    }
-                    let viewDataArray :[ViewData] = try! JSONDecoder().decode([ViewData].self, from: jsonData)
-                    
-                    for viewData in viewDataArray {
-                        views.append(View(viewData: viewData))
-                    }
-                    */
-                    
                 } catch {
                     print(error.localizedDescription)
                     views.append(Constants.DEFAULT_VIEW)

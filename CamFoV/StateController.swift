@@ -136,8 +136,6 @@ class StateController {
         
         defaults.set(self.mapType, forKey: "mapType")
         print("MapType stored to defaults")
-        
-        Helper.saveViewsToDocuments(views: views)
     }
     
     // Retrieve from UserDefaults
@@ -191,7 +189,24 @@ class StateController {
         } else {
             print("No mapType found in UserDefaults")
         }
+        let iCloudViews : [View] = Helper.loadViewsFromDocuments()
         
-        setViews(Helper.loadViewsFromDocuments())
+        for view in iCloudViews {
+            // check lens against lenses
+            let lens      = view.lens
+            let lensFound = self.lenses.filter { $0.name == lens.name }
+            if lensFound.isEmpty {
+                self.lenses.append(lens)
+            }
+            
+            // check camera against cameras
+            let camera      = view.camera
+            let cameraFound = self.cameras.filter { $0.name == camera.name }
+            if cameraFound.isEmpty {
+                self.cameras.append(camera)
+            }
+        }
+        
+        setViews(iCloudViews)
     }
 }

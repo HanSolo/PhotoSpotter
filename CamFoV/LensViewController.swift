@@ -147,7 +147,20 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
+    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        guard let key = presses.first?.key else { return }
+        switch key.keyCode {
+            case .keyboardDeleteOrBackspace:
+                if let indexPath = tableView.indexPathForSelectedRow {
+                    stateController!.removeView(indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }
+        default:
+            super.pressesBegan(presses, with: event)
+        }
+    }
     
+    // MARK: Tableview delegate and datasource methods
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return lensSelection!.count
@@ -187,10 +200,8 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let lens : Lens = lensSelection![indexPath.row]
-            stateController?.removeLens(lens)
+            stateController?.removeLens(indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
