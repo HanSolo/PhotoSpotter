@@ -112,16 +112,21 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        guard let key = presses.first?.key else { return }
-        switch key.keyCode {
-            case .keyboardDeleteOrBackspace:
-                if let indexPath = tableView.indexPathForSelectedRow {
-                    stateController!.removeView(indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                }
-        default:
+        #if targetEnvironment(macCatalyst)
+            guard let key = presses.first?.key else { return }
+            switch key.keyCode {
+                case .keyboardDeleteOrBackspace:
+                    if let indexPath = tableView.indexPathForSelectedRow {
+                        stateController!.removeView(indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .fade)
+                        stateController!.storeViews()
+                    }
+            default:
+                super.pressesBegan(presses, with: event)
+            }
+        #else
             super.pressesBegan(presses, with: event)
-        }
+        #endif
     }
     
     // MARK: Tableview delegate and datasource methods

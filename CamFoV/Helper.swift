@@ -77,8 +77,7 @@ public class Helper {
         let fovWidthAngle : Double = 2 * asin(halfFovWidth / sqrt((distance * distance) + (halfFovWidth * halfFovWidth)))
         let fovHeightAngle: Double = 2 * asin(halfFovHeight / sqrt((distance * distance) + (halfFovHeight * halfFovHeight)))
         let radius        : Double = sqrt((halfFovWidth * halfFovWidth) + (distance * distance))
-
-       
+                
         return FoVData(camera: camera, motif: motif, focalLength: focalLengthInMM, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation, infinite: infinite, hyperFocal: hyperFocal, nearLimit: nearLimit, farLimit: farLimit, frontPercent: frontPercent, behindPercent: behindPercent, total: total, diagonalAngle: diagonalAngle, diagonalLength: diagonalLength, fovWidth: fovWidth, fovWidthAngle: fovWidthAngle, fovHeight: fovHeight, fovHeightAngle: fovHeightAngle, radius: radius)
     }
     
@@ -294,12 +293,20 @@ public class Helper {
     }
     
     
-    
-    
     public static func getDocumentsFolder() -> URL? {
         var containerUrl: URL? {
             return FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents")
         }
+        
+        do {
+            let fileURLs = try FileManager.default.contentsOfDirectory(at: containerUrl!, includingPropertiesForKeys: nil)
+            for file in fileURLs {
+                print("File: \(file.absoluteString)")
+            }
+        } catch {
+            print("Error while enumerating files \(containerUrl!.path): \(error.localizedDescription)")
+        }
+        
         return containerUrl
     }
     
@@ -330,7 +337,8 @@ public class Helper {
         
         if FileManager.default.fileExists(atPath: jsonUrl!.path) {
             do {
-                try FileManager.default.removeItem(atPath: jsonUrl!.path)
+                //try FileManager.default.removeItem(atPath: jsonUrl!.path)
+                try FileManager.default.removeItem(at: jsonUrl!)
             } catch {
                 print(error)
             }
@@ -340,6 +348,7 @@ public class Helper {
             do {
                 try jsonTxt.write(to: jsonUrl, atomically: true, encoding: .utf8)
                 _ = try String(contentsOf: jsonUrl)
+                print("Stored views to iCloud documents (\(jsonUrl.path))")
             } catch {
                 print(error.localizedDescription)
             }
@@ -363,6 +372,7 @@ public class Helper {
         
         let jsonUrl = containerUrl?.appendingPathComponent(Constants.JSON_FILE_NAME).appendingPathExtension(Constants.JSON_FILE_EXTENSION)
         if let jsonUrl = jsonUrl {
+            print("json file: \(jsonUrl.path)")
             if FileManager.default.fileExists(atPath: jsonUrl.path) {
                 do {
                     let jsonTxt = try String(contentsOf: jsonUrl)
@@ -371,6 +381,7 @@ public class Helper {
                         for viewData in viewDataArray {
                             views.append(View(viewData: viewData))
                         }
+                        print("Loaded views from iCloud documents (\(jsonUrl.path))")
                     } else {
                         views.append(Constants.DEFAULT_VIEW)
                     }

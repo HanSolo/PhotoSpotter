@@ -115,6 +115,8 @@ class StateController {
             
             print("Cameras and Lenses stored to defaults")
             
+            defaults.set(true, forKey: "useCloud")
+            
             /*
             var viewDict : [Dictionary<String,String>] = []
             for view in views {
@@ -189,7 +191,9 @@ class StateController {
         } else {
             print("No mapType found in UserDefaults")
         }
+        
         let iCloudViews : [View] = Helper.loadViewsFromDocuments()
+        print("Views found on iCloud:")
         
         for view in iCloudViews {
             // check lens against lenses
@@ -205,6 +209,8 @@ class StateController {
             if cameraFound.isEmpty {
                 self.cameras.append(camera)
             }
+            
+            print("View: \(view.name)")
         }
         
         setViews(iCloudViews)

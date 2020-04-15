@@ -13,7 +13,9 @@
 		<string>CloudDocuments</string>
 	</array>
 	<key>com.apple.developer.ubiquity-container-identifiers</key>
-	<array/>
+	<array>
+		<string>iCloud.eu.hansolo.PhotoSpotter</string>
+	</array>
 	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
 	<string>$(TeamIdentifierPrefix)PhotoSpotter</string>
 	<key>com.apple.security.app-sandbox</key>

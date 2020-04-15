@@ -12,6 +12,7 @@
 		4F135D9524386FE8001B3F3F /* LensDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F135D9424386FE8001B3F3F /* LensDetailViewController.swift */; };
 		4F13D831243457E400903059 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D830243457E400903059 /* Camera.swift */; };
 		4F13D83324345B7400903059 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D83224345B7400903059 /* View.swift */; };
+		4F22A07424458B22000DBF9E /* UIButton+imagealign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F22A07324458B22000DBF9E /* UIButton+imagealign.swift */; };
 		4F2E8A392436F3A0007C9360 /* SunMoon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8A382436F3A0007C9360 /* SunMoon.swift */; };
 		4F2FB2F7243EE58D00A5B37F /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FB2F6243EE58D00A5B37F /* InfoView.swift */; };
 		4F5B01FA243B5C4800CDA088 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5B01F9243B5C4800CDA088 /* NetworkManager.swift */; };
@@ -38,6 +39,7 @@
 		4F9B85A724346EDD00289E8A /* ViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9B85A624346EDD00289E8A /* ViewData.swift */; };
 		4F9B85AB2434CABF00289E8A /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9B85AA2434CABF00289E8A /* CameraViewController.swift */; };
 		4FC19F9B244450B1006A8FAF /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC19F9A244450B1006A8FAF /* CloudKit.framework */; };
+		4FDF9E59244617AF00395923 /* CloudDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDF9E58244617AF00395923 /* CloudDataManager.swift */; };
 		4FF364F224376B0800A749A1 /* CameraDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF364F124376B0800A749A1 /* CameraDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +49,7 @@
 		4F135D9424386FE8001B3F3F /* LensDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LensDetailViewController.swift; sourceTree = "<group>"; };
 		4F13D830243457E400903059 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		4F13D83224345B7400903059 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		4F22A07324458B22000DBF9E /* UIButton+imagealign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+imagealign.swift"; sourceTree = "<group>"; };
 		4F2E8A382436F3A0007C9360 /* SunMoon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunMoon.swift; sourceTree = "<group>"; };
 		4F2FB2F6243EE58D00A5B37F /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		4F5B01F9243B5C4800CDA088 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -55,7 +58,7 @@
 		4F5DDD392435A8D500A49C20 /* FoVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoVController.swift; sourceTree = "<group>"; };
 		4F79B0D92439A50400F61CF4 /* ViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewViewController.swift; sourceTree = "<group>"; };
 		4F79B0DB2439A80500F61CF4 /* ViewDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDetailViewController.swift; sourceTree = "<group>"; };
-		4F7D7B4C242E270F00771992 /* Photo Spotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Photo Spotter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F7D7B4C242E270F00771992 /* CamFoV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CamFoV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F7D7B4F242E270F00771992 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F7D7B51242E270F00771992 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4F7D7B53242E270F00771992 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +80,7 @@
 		4FA94021244052EF009430D7 /* CamFoV.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CamFoV.entitlements; sourceTree = "<group>"; };
 		4FC19F9824444B5C006A8FAF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		4FC19F9A244450B1006A8FAF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		4FDF9E58244617AF00395923 /* CloudDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDataManager.swift; sourceTree = "<group>"; };
 		4FF364F124376B0800A749A1 /* CameraDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,7 +108,7 @@
 		4F7D7B4D242E270F00771992 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4F7D7B4C242E270F00771992 /* Photo Spotter.app */,
+				4F7D7B4C242E270F00771992 /* CamFoV.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -145,6 +149,7 @@
 				4F5B01F9243B5C4800CDA088 /* NetworkManager.swift */,
 				4F0134A6243CD0CB0023A572 /* ElevationChartView.swift */,
 				4F2FB2F6243EE58D00A5B37F /* InfoView.swift */,
+				4FDF9E58244617AF00395923 /* CloudDataManager.swift */,
 			);
 			path = CamFoV;
 			sourceTree = "<group>";
@@ -153,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				4F9164A7243C980F0039C697 /* UIImage+resize.swift */,
+				4F22A07324458B22000DBF9E /* UIButton+imagealign.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -183,7 +189,7 @@
 			);
 			name = PhotoSpotter;
 			productName = CamFoV;
-			productReference = 4F7D7B4C242E270F00771992 /* Photo Spotter.app */;
+			productReference = 4F7D7B4C242E270F00771992 /* CamFoV.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -201,7 +207,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4F7D7B47242E270F00771992 /* Build configuration list for PBXProject "PhotoSpotter" */;
+			buildConfigurationList = 4F7D7B47242E270F00771992 /* Build configuration list for PBXProject "CamFoV" */;
 			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -249,6 +255,7 @@
 				4F13D83324345B7400903059 /* View.swift in Sources */,
 				4F135D9524386FE8001B3F3F /* LensDetailViewController.swift in Sources */,
 				4F5DDD362435A29900A49C20 /* StateController.swift in Sources */,
+				4F22A07424458B22000DBF9E /* UIButton+imagealign.swift in Sources */,
 				4F7D7B50242E270F00771992 /* AppDelegate.swift in Sources */,
 				4F13D831243457E400903059 /* Camera.swift in Sources */,
 				4F7D7B7D242E28D900771992 /* Lens.swift in Sources */,
@@ -261,6 +268,7 @@
 				4F9B85A724346EDD00289E8A /* ViewData.swift in Sources */,
 				4F7D7B52242E270F00771992 /* SceneDelegate.swift in Sources */,
 				4F5DDD382435A42E00A49C20 /* Constants.swift in Sources */,
+				4FDF9E59244617AF00395923 /* CloudDataManager.swift in Sources */,
 				4F79B0DA2439A50400F61CF4 /* ViewViewController.swift in Sources */,
 				4F5DDD3A2435A8D500A49C20 /* FoVController.swift in Sources */,
 				4F2E8A392436F3A0007C9360 /* SunMoon.swift in Sources */,
@@ -420,14 +428,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.PhotoSpotter;
+				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.CamFoV;
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = maccatalyst.eu.hansolo.PhotoSpotter;
-				PRODUCT_NAME = "Photo Spotter";
+				PRODUCT_NAME = CamFoV;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -447,14 +455,14 @@
 					"@executable_path/Frameworks",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.PhotoSpotter;
+				PRODUCT_BUNDLE_IDENTIFIER = eu.hansolo.CamFoV;
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = maccatalyst.eu.hansolo.PhotoSpotter;
-				PRODUCT_NAME = "Photo Spotter";
+				PRODUCT_NAME = CamFoV;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -462,7 +470,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4F7D7B47242E270F00771992 /* Build configuration list for PBXProject "PhotoSpotter" */ = {
+		4F7D7B47242E270F00771992 /* Build configuration list for PBXProject "CamFoV" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4F7D7B5E242E271000771992 /* Debug */,

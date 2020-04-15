@@ -103,16 +103,21 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        guard let key = presses.first?.key else { return }
-        switch key.keyCode {
-            case .keyboardDeleteOrBackspace:
-                if let indexPath = tableView.indexPathForSelectedRow {
-                    stateController!.removeView(indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                }
-        default:
+        #if targetEnvironment(macCatalyst)
+            guard let key = presses.first?.key else { return }
+            switch key.keyCode {
+                case .keyboardDeleteOrBackspace:
+                    if let indexPath = tableView.indexPathForSelectedRow {
+                        stateController!.removeView(indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .fade)
+                        stateController!.storeViews()
+                    }
+            default:
+                super.pressesBegan(presses, with: event)
+            }
+        #else
             super.pressesBegan(presses, with: event)
-        }
+        #endif
     }
     
     // MARK: Tableview delegate and datasource methods
@@ -197,6 +202,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         if editingStyle == .delete {
             stateController!.removeView(indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            stateController!.storeViews()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }

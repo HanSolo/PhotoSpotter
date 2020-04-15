@@ -97,6 +97,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var visibleArea           : MKMapRect?
     var heading               : CLLocationDirection?
     var elevationPoints       : [ElevationPoint]    = [] { didSet { drawElevationChart() } }
+    
+    var cameraBodyButton      : UIButton?
 
     
     @IBOutlet weak var elevationChartView: ElevationChartView!
@@ -206,6 +208,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
                 
         visibleArea = stateController!.view.mapRect
+        
+        /*
+        cameraBodyButton = UIButton(type: .system)
+        cameraBodyButton!.setImage(UIImage(named: "cameraBodySelected.png"), for: .normal)
+        cameraBodyButton!.setTitle("Cameras", for: .normal)
+        cameraBodyButton!.sizeToFit()
+        cameraBodyButton!.tintColor = UIColor.lightText
+        cameraBodyButton!.alignTextUnderImage(spacing: 2)
+        camerasButton.customView = cameraBodyButton!
+        */
     }
     
     override func viewWillAppear(_ animated: Bool) {
