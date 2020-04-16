@@ -282,6 +282,21 @@ class StateController {
                             equipment     : viewCD.value(forKey: "equipment") as! Int32)
             views.append(view)
         }
+        for view in views {
+            // check lens against lenses
+            let lens      = view.lens
+            let lensFound = self.lenses.filter { $0.name == lens.name }
+            if lensFound.isEmpty {
+                self.lenses.append(lens)
+            }
+            
+            // check camera against cameras
+            let camera      = view.camera
+            let cameraFound = self.cameras.filter { $0.name == camera.name }
+            if cameraFound.isEmpty {
+                self.cameras.append(camera)
+            }
+        }
     }
     
     
