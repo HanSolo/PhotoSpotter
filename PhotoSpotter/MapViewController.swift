@@ -11,6 +11,8 @@ import MapKit
 import CoreLocation
 import CoreGraphics
 import Network
+import CoreData
+import CloudKit
 
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, MapPinEventObserver, FoVController {
@@ -222,7 +224,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-            
+        
+        // Access iCloud container
+        //let containerIdentifier = "iCloud.eu.hansolo.PhotoSpotter"
+        //let container           = CKContainer(identifier: containerIdentifier)
+        
+        // Update views from iCloud
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            stateController!.loadViewsFromCD(appDelegate: appDelegate)
+        }
+                
         createMapView()
     }
     
@@ -622,8 +633,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         do {
         self.fovData = try Helper.calc(camera: cameraPoint, motif: motifPoint, focalLengthInMM: focalLength, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
             Helper.setInfoLabel(label: distanceLabel!, image: UIImage(systemName: "arrow.up.left.and.arrow.down.right")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Distance: ", value1: fovData?.distance ?? 0, decimals1: 1, unit1: Constants.UNIT_LENGTH)
-            Helper.setInfoLabel(label: widthLabel!, image: UIImage(named: "width.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Field width: ", value1: fovData?.fovWidth ?? 0, decimals1: 1, unit1: Constants.UNIT_LENGTH, value2: Helper.toDegrees(radians: fovData?.fovWidthAngle ?? 0), decimals2: 1, unit2: Constants.UNIT_ANGLE)
-            Helper.setInfoLabel(label: heightLabel!, image: UIImage(named: "height.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Field height: ", value1: fovData?.fovHeight ?? 0, decimals1: 1, unit1: Constants.UNIT_LENGTH, value2: Helper.toDegrees(radians: fovData?.fovHeightAngle ?? 0), decimals2: 1, unit2: Constants.UNIT_ANGLE)
+            Helper.setInfoLabel(label: widthLabel!, image: UIImage(named: "width.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Width: ", value1: fovData?.fovWidth ?? 0, decimals1: 1, unit1: Constants.UNIT_LENGTH, value2: Helper.toDegrees(radians: fovData?.fovWidthAngle ?? 0), decimals2: 1, unit2: Constants.UNIT_ANGLE)
+            Helper.setInfoLabel(label: heightLabel!, image: UIImage(named: "height.png")!, imageColor: Constants.YELLOW, size: CGSize(width: 12, height: 12), text: "Height: ", value1: fovData?.fovHeight ?? 0, decimals1: 1, unit1: Constants.UNIT_LENGTH, value2: Helper.toDegrees(radians: fovData?.fovHeightAngle ?? 0), decimals2: 1, unit2: Constants.UNIT_ANGLE)
         } catch {
             print(error)
         }
@@ -854,7 +865,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func getElevation(camera: MapPin, motif: MapPin) -> Void {
-        NetworkManager.loadElevationPoints(cameraPin: camera, motifPin: motif) { elevationPoints in
+        RestManager.loadElevationPoints(cameraPin: camera, motifPin: motif) { elevationPoints in
             return self.elevationPoints = elevationPoints!
         }
     }

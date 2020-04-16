@@ -9,7 +9,7 @@
 import Foundation
 
 
-class NetworkManager {
+class RestManager {
     public static func loadElevationPoints(cameraPin: MapPin, motifPin: MapPin, withCompletion completion: @escaping ([ElevationPoint]?) -> Void) {
         var urlString = "https://api.elevationapi.com/api/Elevation/line/"
                urlString += String(format: "%.7f", Double((cameraPin.coordinate.latitude)))

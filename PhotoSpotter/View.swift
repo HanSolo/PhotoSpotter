@@ -21,11 +21,11 @@ public class View: Equatable {
     var aperture    : Double
     var orientation : Orientation
     var mapRect     : MKMapRect
-    var tags        : Int
-    var equipment   : Int
+    var tags        : Int32
+    var equipment   : Int32
     
     
-    init(name: String, description: String, cameraPoint: MKMapPoint, motifPoint: MKMapPoint, camera: Camera, lens: Lens, focalLength: Double, aperture: Double, orientation: Orientation, mapRect: MKMapRect, tags: Int? = 0, equipment: Int? = 0) {
+    init(name: String, description: String, cameraPoint: MKMapPoint, motifPoint: MKMapPoint, camera: Camera, lens: Lens, focalLength: Double, aperture: Double, orientation: Orientation, mapRect: MKMapRect, tags: Int32? = 0, equipment: Int32? = 0) {
         self.name        = name
         self.description = description
         self.cameraPoint = cameraPoint
@@ -66,8 +66,8 @@ public class View: Equatable {
         let size      : MKMapSize  = MKMapSize(width: mapWidth, height: mapHeight)
         self.mapRect = MKMapRect(origin: origin, size: size)
         
-        self.tags      = Int(viewData.tags ?? "0") ?? 0
-        self.equipment = Int(viewData.equipment ?? "0") ?? 0
+        self.tags      = Int32(viewData.tags ?? "0") ?? 0
+        self.equipment = Int32(viewData.equipment ?? "0") ?? 0
     }
     
     init(viewData: ViewData) {
@@ -97,8 +97,30 @@ public class View: Equatable {
         let size      : MKMapSize  = MKMapSize(width: mapWidth, height: mapHeight)
         self.mapRect = MKMapRect(origin: origin, size: size)
         
-        self.tags      = Int(viewData.tags ?? "0") ?? 0
-        self.equipment = Int(viewData.equipment ?? "0") ?? 0
+        self.tags      = Int32(viewData.tags ?? "0") ?? 0
+        self.equipment = Int32(viewData.equipment ?? "0") ?? 0
+    }
+    
+    init(name: String, description: String, cameraLat: Double, cameraLon: Double, motifLat: Double, motifLon: Double, cameraName: String, sensorName: String,
+    lensName: String, minFocalLength: Double, maxFocalLength: Double, minAperture: Double, maxAperture: Double,
+    focalLength: Double, aperture: Double, orientation: String, originLat: Double, originLon: Double, mapWidth: Double, mapHeight: Double, tags: Int32, equipment: Int32) {
+        self.name          = name
+        self.description   = description
+        self.cameraPoint   = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees(cameraLat), longitude: CLLocationDegrees(cameraLon)))
+        self.motifPoint    = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees(motifLat), longitude: CLLocationDegrees(motifLon)))
+        let sensorFormat   = Constants.SENSOR_FORMATS.first(where: { $0.name == sensorName })
+        self.camera        = Camera(name: cameraName, sensorFormat: sensorFormat ?? Constants.DEFAULT_CAMERA.sensorFormat)
+        self.lens          = Lens(name: lensName, minFocalLength: minFocalLength, maxFocalLength: maxFocalLength, minAperture: minAperture, maxAperture: maxAperture)
+        self.focalLength   = focalLength
+        self.aperture      = aperture
+        self.orientation   = Orientation(rawValue: orientation)!
+        let origin         = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees(originLat), longitude: CLLocationDegrees(originLon)))
+        let mapWidth       = mapWidth
+        let mapHeight      = mapHeight
+        let size           = MKMapSize(width: mapWidth, height: mapHeight)
+        self.mapRect       = MKMapRect(origin: origin, size: size)
+        self.tags          = tags
+        self.equipment     = equipment
     }
     
     public static func ==(lhs: View, rhs: View) -> Bool {

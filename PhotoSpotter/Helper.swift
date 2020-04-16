@@ -271,13 +271,13 @@ public class Helper {
         label.attributedText = fullString
     }
     
-    public static func tagToString(tag: (String,Int)) -> String {
+    public static func tagToString(tag: (String,Int32)) -> String {
         return String(tag.1)
     }
-    public static func tagInBitMask(tag: (String, Int), bitmask: Int) -> Bool {
+    public static func tagInBitMask(tag: (String, Int32), bitmask: Int32) -> Bool {
         return (bitmask & tag.1) != 0
     }
-    public static func equipmentInBitMask(equipment: (String, Int), bitmask: Int) -> Bool {
+    public static func equipmentInBitMask(equipment: (String, Int32), bitmask: Int32) -> Bool {
         return (bitmask & equipment.1) != 0
     }
     
@@ -293,6 +293,7 @@ public class Helper {
     }
     
     
+    // MARK: iCloud Documents related
     public static func getDocumentsFolder() -> URL? {
         var containerUrl: URL? {
             return FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents")

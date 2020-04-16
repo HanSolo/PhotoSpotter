@@ -176,8 +176,18 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    /*
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return indexPath.row != 0 
+    }
+    */
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if stateController!.cameras[indexPath.row].name == Constants.DEFAULT_CAMERA.name {
+            return UITableViewCell.EditingStyle.none
+        } else {
+            return UITableViewCell.EditingStyle.delete
+        }
     }
 }
 

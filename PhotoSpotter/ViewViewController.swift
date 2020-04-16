@@ -92,7 +92,10 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.selectRow(at: viewIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: viewIndex)?.accessoryType = .checkmark
         
-        stateController!.storeViews()
+        //stateController!.storeViews()
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            stateController!.storeViewsToCD(appDelegate: appDelegate)
+        }
         
         stateController!.setView(view)
     }
@@ -200,16 +203,30 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            let view : View = stateController!.views[indexPath.row]
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                stateController!.removeViewFromCD(appDelegate: appDelegate, view: view)
+            }
             stateController!.removeView(indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            stateController!.storeViews()
+            //stateController!.storeViews()            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
     
+    /*
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return indexPath.row != 0
+    }
+    */
+ 
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if stateController!.views[indexPath.row].name == Constants.DEFAULT_VIEW.name {
+            return UITableViewCell.EditingStyle.none
+        } else {
+            return UITableViewCell.EditingStyle.delete
+        }
     }
 
     // MARK: - Navigation

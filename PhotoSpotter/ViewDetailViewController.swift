@@ -58,8 +58,8 @@ public class ViewDetailViewController: UIViewController, FoVController {
     
     var name                 : String      = ""
     var descr                : String      = ""
-    var equipment            : Int         = 0
-    var tags                 : Int         = 0
+    var equipment            : Int32       = 0
+    var tags                 : Int32       = 0
     
     var nameValid            : Bool        = false
     var descriptionValid     : Bool        = false
@@ -246,7 +246,7 @@ public class ViewDetailViewController: UIViewController, FoVController {
         }
         if self.shipSwitch.isOn {
             self.tags = self.tags | Constants.TAG_SHIP.1
-        }
+        }        
         if self.carSwitch.isOn {
             self.tags = self.tags | Constants.TAG_CAR.1
         }
