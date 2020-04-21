@@ -134,4 +134,10 @@ public class Constants {
     public static let EQP_ND_FILTER  : (String, Int32) = ("ND Filter",  1 << 3) //  8
     public static let EQP_IR_FILTER  : (String, Int32) = ("IR Filter",  1 << 4) // 16
     public static let EQP_FLASH      : (String, Int32) = ("Flash",      1 << 5) // 32
+    
+    
+    // CoreData entities
+    public static let LENS_CD   : String = "LensCD"
+    public static let CAMERA_CD : String = "CameraCD"
+    public static let VIEW_CD   : String = "ViewCD"
 }

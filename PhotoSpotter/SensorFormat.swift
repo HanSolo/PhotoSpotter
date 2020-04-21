@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum SensorFormat: String {
+public enum SensorFormat: String, Equatable {
     case MEDIUM_FORMAT
     case FULL_FORMAT
     case APS_H
@@ -72,5 +72,13 @@ public enum SensorFormat: String {
         text += "\"crop\":\"\(cropFactor)\""
         text += "}"
         return text
+    }
+    
+    
+    public static func ==(lhs: SensorFormat, rhs: SensorFormat) -> Bool {
+        return lhs.name == rhs.name &&
+               lhs.width == rhs.width &&
+               lhs.height == rhs.height &&
+               lhs.cropFactor == rhs.cropFactor
     }
 }

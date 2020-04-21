@@ -207,7 +207,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
             if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                 stateController!.removeViewFromCD(appDelegate: appDelegate, view: view)
             }
-            stateController!.removeView(indexPath.row)
+            stateController!.removeView(view)
             tableView.deleteRows(at: [indexPath], with: .fade)
             //stateController!.storeViews()            
         } else if editingStyle == .insert {

@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CameraCD" representedClassName="CameraCD" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="sensorFormat" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="LensCD" representedClassName="LensCD" syncable="YES" codeGenerationType="class">
+        <attribute name="maxAperture" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="maxFocalLength" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="minAperture" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="minFocalLength" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="ViewCD" representedClassName="ViewCD" syncable="YES" codeGenerationType="class">
         <attribute name="aperture" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="cameraLat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -26,5 +37,7 @@
     </entity>
     <elements>
         <element name="ViewCD" positionX="-63" positionY="-18" width="128" height="373"/>
+        <element name="CameraCD" positionX="-63" positionY="135" width="128" height="73"/>
+        <element name="LensCD" positionX="-54" positionY="144" width="128" height="118"/>
     </elements>
 </model>

@@ -15,6 +15,7 @@
 		4F22A07424458B22000DBF9E /* UIButton+imagealign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F22A07324458B22000DBF9E /* UIButton+imagealign.swift */; };
 		4F2E8A392436F3A0007C9360 /* SunMoon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8A382436F3A0007C9360 /* SunMoon.swift */; };
 		4F2FB2F7243EE58D00A5B37F /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FB2F6243EE58D00A5B37F /* InfoView.swift */; };
+		4F323001244EB16000E6E834 /* Array+difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F323000244EB16000E6E834 /* Array+difference.swift */; };
 		4F375E0D2448194900CF5534 /* PhotoSpotter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F375E0B2448194900CF5534 /* PhotoSpotter.xcdatamodeld */; };
 		4F457A222446DDF500C3D770 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC19F9A244450B1006A8FAF /* CloudKit.framework */; };
 		4F5B01FA243B5C4800CDA088 /* RestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5B01F9243B5C4800CDA088 /* RestManager.swift */; };
@@ -40,6 +41,8 @@
 		4F9164A8243C980F0039C697 /* UIImage+resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9164A7243C980F0039C697 /* UIImage+resize.swift */; };
 		4F9B85A724346EDD00289E8A /* ViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9B85A624346EDD00289E8A /* ViewData.swift */; };
 		4F9B85AB2434CABF00289E8A /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9B85AA2434CABF00289E8A /* CameraViewController.swift */; };
+		4FAF22EA244D680E007D0BE6 /* CameraData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAF22E9244D680E007D0BE6 /* CameraData.swift */; };
+		4FAF22EC244D6886007D0BE6 /* LensData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAF22EB244D6886007D0BE6 /* LensData.swift */; };
 		4FDF9E59244617AF00395923 /* CloudDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDF9E58244617AF00395923 /* CloudDataManager.swift */; };
 		4FF364F224376B0800A749A1 /* CameraDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF364F124376B0800A749A1 /* CameraDetailViewController.swift */; };
 /* End PBXBuildFile section */
@@ -53,6 +56,7 @@
 		4F22A07324458B22000DBF9E /* UIButton+imagealign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+imagealign.swift"; sourceTree = "<group>"; };
 		4F2E8A382436F3A0007C9360 /* SunMoon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunMoon.swift; sourceTree = "<group>"; };
 		4F2FB2F6243EE58D00A5B37F /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		4F323000244EB16000E6E834 /* Array+difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+difference.swift"; sourceTree = "<group>"; };
 		4F375E0C2448194900CF5534 /* PhotoSpotter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoSpotter.xcdatamodel; sourceTree = "<group>"; };
 		4F5B01F9243B5C4800CDA088 /* RestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestManager.swift; sourceTree = "<group>"; };
 		4F5DDD352435A29900A49C20 /* StateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
@@ -80,6 +84,8 @@
 		4F9B85A624346EDD00289E8A /* ViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewData.swift; sourceTree = "<group>"; };
 		4F9B85AA2434CABF00289E8A /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		4FA94021244052EF009430D7 /* PhotoSpotter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PhotoSpotter.entitlements; sourceTree = "<group>"; };
+		4FAF22E9244D680E007D0BE6 /* CameraData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraData.swift; sourceTree = "<group>"; };
+		4FAF22EB244D6886007D0BE6 /* LensData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LensData.swift; sourceTree = "<group>"; };
 		4FC19F9824444B5C006A8FAF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		4FC19F9A244450B1006A8FAF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		4FDF9E58244617AF00395923 /* CloudDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDataManager.swift; sourceTree = "<group>"; };
@@ -135,7 +141,9 @@
 				4F7D7B58242E271000771992 /* Assets.xcassets */,
 				4F7D7B5D242E271000771992 /* Info.plist */,
 				4F13D830243457E400903059 /* Camera.swift */,
+				4FAF22E9244D680E007D0BE6 /* CameraData.swift */,
 				4F7D7B6F242E28D900771992 /* Lens.swift */,
+				4FAF22EB244D6886007D0BE6 /* LensData.swift */,
 				4F13D83224345B7400903059 /* View.swift */,
 				4F9B85A624346EDD00289E8A /* ViewData.swift */,
 				4F7D7B53242E270F00771992 /* MapViewController.swift */,
@@ -162,6 +170,7 @@
 			children = (
 				4F9164A7243C980F0039C697 /* UIImage+resize.swift */,
 				4F22A07324458B22000DBF9E /* UIButton+imagealign.swift */,
+				4F323000244EB16000E6E834 /* Array+difference.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -260,6 +269,7 @@
 				4F5DDD362435A29900A49C20 /* StateController.swift in Sources */,
 				4F22A07424458B22000DBF9E /* UIButton+imagealign.swift in Sources */,
 				4F7D7B50242E270F00771992 /* AppDelegate.swift in Sources */,
+				4FAF22EA244D680E007D0BE6 /* CameraData.swift in Sources */,
 				4F13D831243457E400903059 /* Camera.swift in Sources */,
 				4F7D7B7D242E28D900771992 /* Lens.swift in Sources */,
 				4F7D7B73242E28D900771992 /* FoVError.swift in Sources */,
@@ -267,6 +277,8 @@
 				4F375E0D2448194900CF5534 /* PhotoSpotter.xcdatamodeld in Sources */,
 				4F5B01FA243B5C4800CDA088 /* RestManager.swift in Sources */,
 				4F7D7B78242E28D900771992 /* Triangle.swift in Sources */,
+				4F323001244EB16000E6E834 /* Array+difference.swift in Sources */,
+				4FAF22EC244D6886007D0BE6 /* LensData.swift in Sources */,
 				4FF364F224376B0800A749A1 /* CameraDetailViewController.swift in Sources */,
 				4F7D7B77242E28D900771992 /* Helper.swift in Sources */,
 				4F9B85A724346EDD00289E8A /* ViewData.swift in Sources */,
@@ -439,7 +451,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -466,7 +478,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

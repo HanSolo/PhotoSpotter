@@ -27,12 +27,19 @@ class StateController {
         self.lenses = lenses
     }
     func removeLens(_ lens: Lens) {
-        lenses.removeAll { $0 === lens }
-    }
-    func removeLens(_ atIndex: Int) {
-        if lenses.count > atIndex {
-            lenses.remove(at: atIndex)
-        }
+        /*
+        lenses.removeAll { $0.name == lens.name &&
+                           $0.minFocalLength == lens.minFocalLength &&
+                           $0.maxFocalLength == lens.maxFocalLength &&
+                           $0.minAperture == lens.minAperture &&
+                           $0.maxAperture == lens.maxAperture }
+        */
+        let lensesToRemove : [Lens] = lenses.filter({ $0.name           == lens.name &&
+                                                      $0.minFocalLength == lens.minFocalLength &&
+                                                      $0.maxFocalLength == lens.maxFocalLength &&
+                                                      $0.minAperture    == lens.minAperture &&
+                                                      $0.maxAperture    == lens.maxAperture})
+        lenses.removeAll(where: { lensesToRemove.contains($0) })
     }
     
     
@@ -51,13 +58,43 @@ class StateController {
         self.cameras = cameras
     }
     func removeCamera(_ camera: Camera) {
-        cameras.removeAll { $0 === camera }
+        //cameras.removeAll { $0 === camera }
+        let camerasToRemove : [Camera] = cameras.filter({ $0.name         == camera.name &&
+                                                          $0.sensorFormat == camera.sensorFormat })
+        cameras.removeAll(where: { camerasToRemove.contains($0) })        
     }
-    func removeCamera(_ atIndex: Int) {
-        if cameras.count > atIndex {
-            cameras.remove(at: atIndex)
+    
+    
+    // Views
+    private(set) var views : [View] = [
+        Constants.DEFAULT_VIEW
+    ]
+    func addView(_ view: View) {
+        if views.contains(where: { $0.name == view.name }) {
+            return
+        } else {
+            views.append(view)
         }
     }
+    func setViews(_ views: [View]) {
+        self.views = views
+    }
+    func removeView(_ view: View) {
+        //views.removeAll { $0 === view }
+        let viewsToRemove : [View] = views.filter({ $0.name        == view.name &&
+                                                    $0.description == view.description &&
+                                                    $0.focalLength == view.focalLength &&
+                                                    $0.aperture    == view.aperture })
+        views.removeAll(where: { viewsToRemove.contains($0) })
+    }
+    
+    
+    // Current view
+    private(set) var view : View = Constants.DEFAULT_VIEW
+    func setView(_ view: View) {
+        self.view = view
+    }
+    
     
     
     // Views CoreData
@@ -65,7 +102,7 @@ class StateController {
     
     func loadViewsFromCD(appDelegate: AppDelegate) -> Void {
         let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: "ViewCD")
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
         
         do {
             viewsCD = try managedContext.fetch(fetchRequest)
@@ -73,12 +110,12 @@ class StateController {
             print("Could not fetch views from CoreData. \(error), \(error.userInfo)")
         }
         
-        updateViewsFromCD()
+        mergeViews(appDelegate: appDelegate)
     }
     func storeViewsToCD(appDelegate: AppDelegate) -> Void {
         let managedContext = appDelegate.persistentContainer.viewContext
-        let entity         = NSEntityDescription.entity(forEntityName: "ViewCD", in: managedContext)!
-        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: "ViewCD")
+        let entity         = NSEntityDescription.entity(forEntityName: Constants.VIEW_CD, in: managedContext)!
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
         
         for view in views {
             let predicate = NSPredicate(format: "%K == %@", "name", view.name)
@@ -149,8 +186,8 @@ class StateController {
     
     func addViewToCD(appDelegate: AppDelegate, view: View) -> Void {
         let managedContext = appDelegate.persistentContainer.viewContext
-        let entity         = NSEntityDescription.entity(forEntityName: "ViewCD", in: managedContext)!
-        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: "ViewCD")
+        let entity         = NSEntityDescription.entity(forEntityName: Constants.VIEW_CD, in: managedContext)!
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
         let predicate = NSPredicate(format: "%K == %@", "name", view.name)
         fetchRequest.predicate = predicate
         do {
@@ -194,7 +231,7 @@ class StateController {
     
     func updateViewInCD(appDelegate: AppDelegate, view: View) -> Void {
         let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: "ViewCD")
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
         let predicate      = NSPredicate(format: "%K == %@", "name", view.name)
         fetchRequest.predicate = predicate
         do {
@@ -239,7 +276,7 @@ class StateController {
         if view.name == Constants.DEFAULT_VIEW.name { return }
         
         let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: "ViewCD")
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
         let predicate      = NSPredicate(format: "%K == %@", "name", view.name)
         fetchRequest.predicate = predicate
         do {
@@ -255,8 +292,8 @@ class StateController {
         }
     }
     
-    func updateViewsFromCD() -> Void {
-        views.removeAll()
+    func mergeViews(appDelegate: AppDelegate) -> Void {
+        var viewsInCoreData : [View] = []
         for viewCD in viewsCD {
             let view = View(name          : viewCD.value(forKey: "name") as! String,
                             description   : viewCD.value(forKey: "desc") as! String,
@@ -280,55 +317,324 @@ class StateController {
                             mapHeight     : viewCD.value(forKey: "mapHeight") as! Double,
                             tags          : viewCD.value(forKey: "tags") as! Int32,
                             equipment     : viewCD.value(forKey: "equipment") as! Int32)
-            views.append(view)
+            viewsInCoreData.append(view)
         }
+        let diff = viewsInCoreData.diff(from: views)
+        for view in diff {
+            addView(view)
+            addViewToCD(appDelegate: appDelegate, view: view)
+        }
+        
+        
         for view in views {
             // check lens against lenses
             let lens      = view.lens
             let lensFound = self.lenses.filter { $0.name == lens.name }
             if lensFound.isEmpty {
                 self.lenses.append(lens)
+                addLens(lens)
             }
             
             // check camera against cameras
             let camera      = view.camera
             let cameraFound = self.cameras.filter { $0.name == camera.name }
             if cameraFound.isEmpty {
-                self.cameras.append(camera)
+                addCamera(camera)
             }
         }
     }
     
     
-    // Views
-    private(set) var views : [View] = [
-        Constants.DEFAULT_VIEW
-    ]
-    func addView(_ view: View) {
-        if views.contains(where: { $0.name == view.name }) {
-            return
-        } else {
-            views.append(view)
+    // Cameras CoreData
+    var camerasCD : [NSManagedObject] = []
+    
+    func loadCamerasFromCD(appDelegate: AppDelegate) -> Void {
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.CAMERA_CD)
+        
+        do {
+            camerasCD = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch cameras from CoreData. \(error), \(error.userInfo)")
+        }
+        
+        mergeCameras(appDelegate: appDelegate)
+    }
+    func storeCamerasToCD(appDelegate: AppDelegate) -> Void {
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity         = NSEntityDescription.entity(forEntityName: Constants.CAMERA_CD, in: managedContext)!
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.CAMERA_CD)
+        
+        for camera in cameras {
+            let predicate = NSPredicate(format: "%K == %@", "name", camera.name)
+            fetchRequest.predicate = predicate
+            do {
+                let fetchResult = try managedContext.fetch(fetchRequest).first
+                if fetchResult != nil {
+                    // Update
+                    let cameraCD = fetchResult!
+                    cameraCD.setValue(camera.sensorFormat.rawValue, forKeyPath: "sensorFormat")
+                } else {
+                    // Insert
+                    let cameraCD = NSManagedObject(entity: entity, insertInto: managedContext)
+                    cameraCD.setValue(camera.name, forKeyPath: "name")
+                    cameraCD.setValue(camera.sensorFormat.rawValue, forKeyPath: "sensorFormat")
+                }
+            } catch let error as NSError {
+                print("Error fetching camera from CoreData. \(error), \(error.userInfo)")
+            }
+        }
+                
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not store cameras to CoreData. \(error), \(error.userInfo)")
         }
     }
-    func setViews(_ views: [View]) {
-        self.views = views
+    
+    func addCameraToCD(appDelegate: AppDelegate, camera: Camera) -> Void {
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity         = NSEntityDescription.entity(forEntityName: Constants.CAMERA_CD, in: managedContext)!
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.CAMERA_CD)
+        let predicate = NSPredicate(format: "%K == %@", "name", camera.name)
+        fetchRequest.predicate = predicate
+        do {
+            let fetchResult = try managedContext.fetch(fetchRequest).first
+            if fetchResult != nil {
+                return
+            } else {
+                let cameraCD         = NSManagedObject(entity: entity, insertInto: managedContext)
+                cameraCD.setValue(camera.name, forKeyPath: "name")
+                cameraCD.setValue(camera.sensorFormat.rawValue, forKeyPath: "sensorFormat")
+            }
+        } catch let error as NSError {
+            print("Error fetching camera from CoreData. \(error), \(error.userInfo)")
+        }
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not store camera to CoreData. \(error), \(error.userInfo)")
+        }
     }
-    func removeView(_ view: View) {
-        views.removeAll { $0 === view }
+    
+    func updateCameraInCD(appDelegate: AppDelegate, camera: Camera) -> Void {
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.CAMERA_CD)
+        let predicate      = NSPredicate(format: "%K == %@", "name", camera.name)
+        fetchRequest.predicate = predicate
+        do {
+            let fetchResult = try managedContext.fetch(fetchRequest).first
+            if fetchResult != nil {
+                let cameraCD = fetchResult!
+                cameraCD.setValue(camera.sensorFormat.rawValue, forKeyPath: "sensorFormat")
+            } else {
+                return
+            }
+        } catch let error as NSError {
+            print("Error fetching camera from CoreData. \(error), \(error.userInfo)")
+        }
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not store camera to CoreData. \(error), \(error.userInfo)")
+        }
     }
-    func removeView(_ atIndex: Int) {
-        if views.count > atIndex {
-            views.remove(at: atIndex)
+    
+    func removeCameraFromCD(appDelegate: AppDelegate, camera: Camera) -> Void {
+        if camera.name == Constants.DEFAULT_CAMERA.name { return }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.CAMERA_CD)
+        let predicate      = NSPredicate(format: "%K == %@", "name", camera.name)
+        fetchRequest.predicate = predicate
+        do {
+            let fetchResult = try managedContext.fetch(fetchRequest).first
+            if fetchResult != nil {
+                managedContext.delete(fetchResult!)
+                try managedContext.save()
+            } else {
+                return
+            }
+        } catch let error as NSError {
+            print("Error fetching camera from CoreData. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func mergeCameras(appDelegate: AppDelegate) -> Void {
+        var camerasInCoreData : [Camera] = []
+        for cameraCD in camerasCD {
+            let name         : String       = cameraCD.value(forKey: "name") as! String
+            let sensorName   : String       = cameraCD.value(forKey: "sensorFormat") as! String
+            let sensorFormat : SensorFormat = Constants.SENSOR_FORMATS.filter { $0.name == sensorName }.first ?? SensorFormat.FULL_FORMAT
+            let camera = Camera(name : name,sensorFormat : sensorFormat)
+            camerasInCoreData.append(camera)
+        }
+        /*
+        let difference = camerasInCoreData.difference(from: cameras)
+        for change in difference {
+            switch change {
+                case let .remove(offset, oldElement, _):
+                    print("remove:", offset, oldElement)
+                    removeCamera(oldElement)
+                case let .insert(offset, newElement, _):
+                    print("insert:", offset, newElement)
+                    addCamera(newElement)
+            }
+        }
+        */
+        
+        let diff = camerasInCoreData.diff(from: cameras)
+        for camera in diff {
+            addCamera(camera)
+            addCameraToCD(appDelegate: appDelegate, camera: camera)
         }
     }
     
     
-    // Current view
-    private(set) var view : View = Constants.DEFAULT_VIEW
-    func setView(_ view: View) {
-        self.view = view
+    // Lenses CoreData
+    var lensesCD : [NSManagedObject] = []
+    
+    func loadLensesFromCD(appDelegate: AppDelegate) -> Void {
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.LENS_CD)
+        
+        do {
+            lensesCD = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch lenses from CoreData. \(error), \(error.userInfo)")
+        }
+        
+        mergeLenses(appDelegate: appDelegate)
     }
+    func storeLensesToCD(appDelegate: AppDelegate) -> Void {
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity         = NSEntityDescription.entity(forEntityName: Constants.LENS_CD, in: managedContext)!
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.LENS_CD)
+        
+        for lens in lenses {
+            let predicate = NSPredicate(format: "%K == %@", "name", lens.name)
+            fetchRequest.predicate = predicate
+            do {
+                let fetchResult = try managedContext.fetch(fetchRequest).first
+                if fetchResult != nil {
+                    // Update
+                    let lensCD = fetchResult!
+                    lensCD.setValue(lens.minFocalLength, forKeyPath: "minFocalLength")
+                    lensCD.setValue(lens.maxFocalLength, forKeyPath: "maxFocalLength")
+                    lensCD.setValue(lens.minAperture,    forKeyPath: "minAperture")
+                    lensCD.setValue(lens.maxAperture,    forKeyPath: "maxAperture")
+                } else {
+                    // Insert
+                    let lensCD = NSManagedObject(entity: entity, insertInto: managedContext)
+                    lensCD.setValue(lens.name,           forKeyPath: "name")
+                    lensCD.setValue(lens.minFocalLength, forKeyPath: "minFocalLength")
+                    lensCD.setValue(lens.maxFocalLength, forKeyPath: "maxFocalLength")
+                    lensCD.setValue(lens.minAperture,    forKeyPath: "minAperture")
+                    lensCD.setValue(lens.maxAperture,    forKeyPath: "maxAperture")
+                }
+            } catch let error as NSError {
+                print("Error fetching lens from CoreData. \(error), \(error.userInfo)")
+            }
+        }
+                
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not store lens to CoreData. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func addLensToCD(appDelegate: AppDelegate, lens: Lens) -> Void {
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity         = NSEntityDescription.entity(forEntityName: Constants.LENS_CD, in: managedContext)!
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.LENS_CD)
+        let predicate = NSPredicate(format: "%K == %@", "name", lens.name)
+        fetchRequest.predicate = predicate
+        do {
+            let fetchResult = try managedContext.fetch(fetchRequest).first
+            if fetchResult != nil {
+                return
+            } else {
+                let lensCD         = NSManagedObject(entity: entity, insertInto: managedContext)
+                lensCD.setValue(lens.name,           forKeyPath: "name")
+                lensCD.setValue(lens.minFocalLength, forKeyPath: "minFocalLength")
+                lensCD.setValue(lens.maxFocalLength, forKeyPath: "maxFocalLength")
+                lensCD.setValue(lens.minAperture,    forKeyPath: "minAperture")
+                lensCD.setValue(lens.maxAperture,    forKeyPath: "maxAperture")
+            }
+        } catch let error as NSError {
+            print("Error fetching lens from CoreData. \(error), \(error.userInfo)")
+        }
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not store lens to CoreData. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func updateLensInCD(appDelegate: AppDelegate, lens: Lens) -> Void {
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.LENS_CD)
+        let predicate      = NSPredicate(format: "%K == %@", "name", lens.name)
+        fetchRequest.predicate = predicate
+        do {
+            let fetchResult = try managedContext.fetch(fetchRequest).first
+            if fetchResult != nil {
+                let lensCD = fetchResult!
+                lensCD.setValue(lens.minFocalLength, forKeyPath: "minFocalLength")
+                lensCD.setValue(lens.maxFocalLength, forKeyPath: "maxFocalLength")
+                lensCD.setValue(lens.minAperture,    forKeyPath: "minAperture")
+                lensCD.setValue(lens.maxAperture,    forKeyPath: "maxAperture")
+            } else {
+                return
+            }
+        } catch let error as NSError {
+            print("Error fetching lens from CoreData. \(error), \(error.userInfo)")
+        }
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not store lens to CoreData. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func removeLensFromCD(appDelegate: AppDelegate, lens: Lens) -> Void {
+        if lens.name == Constants.DEFAULT_LENS.name { return }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.LENS_CD)
+        let predicate      = NSPredicate(format: "%K == %@", "name", lens.name)
+        fetchRequest.predicate = predicate
+        do {
+            let fetchResult = try managedContext.fetch(fetchRequest).first
+            if fetchResult != nil {
+                managedContext.delete(fetchResult!)
+                try managedContext.save()
+            } else {
+                return
+            }
+        } catch let error as NSError {
+            print("Error fetching lens from CoreData. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func mergeLenses(appDelegate: AppDelegate) -> Void {
+        var lensesInCoreData : [Lens] = []
+        for lensCD in lensesCD {
+            let lens = Lens(name          : lensCD.value(forKey: "name")           as! String,
+                            minFocalLength: lensCD.value(forKey: "minFocalLength") as! Double,
+                            maxFocalLength: lensCD.value(forKey: "maxFocalLength") as! Double,
+                            minAperture   : lensCD.value(forKey: "minAperture")    as! Double,
+                            maxAperture   : lensCD.value(forKey: "minAperture")    as! Double)
+            lensesInCoreData.append(lens)
+        }
+        let diff = lensesInCoreData.diff(from: lenses)
+        for lens in diff {
+            addLens(lens)
+            addLensToCD(appDelegate: appDelegate, lens: lens)
+        }
+    }
+    
     
     
     // MapView Type

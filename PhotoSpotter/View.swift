@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 
 
-public class View: Equatable {
+public class View: Equatable, Hashable {
     var name        : String
     var description : String
     var cameraPoint : MKMapPoint
@@ -183,5 +183,12 @@ public class View: Equatable {
         jsonString += "\"equipment\":\"\(equipment)\""
         jsonString += "}"
         return jsonString
+    }
+    
+    
+    // Make sure the class conforms to hashable protocol
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(description)
     }
 }

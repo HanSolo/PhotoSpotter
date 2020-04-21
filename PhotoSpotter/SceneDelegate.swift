@@ -61,6 +61,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             appDelegate.saveContext()
+            self.stateController.storeCamerasToCD(appDelegate: appDelegate)
+            self.stateController.storeLensesToCD(appDelegate: appDelegate)
             self.stateController.storeViewsToCD(appDelegate: appDelegate)
         }
         

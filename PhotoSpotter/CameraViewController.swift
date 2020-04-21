@@ -92,6 +92,10 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cameraDetailVC = segue.source as! CameraDetailViewController
         let camera = Camera(name: cameraDetailVC.name, sensorFormat: cameraDetailVC.sensorFormat)
         stateController?.addCamera(camera)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            stateController!.addCameraToCD(appDelegate: appDelegate, camera: camera)
+        }
+        
         tableView.reloadData()
         
         let cells = self.tableView.visibleCells as! Array<CameraCell>
@@ -169,8 +173,30 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            stateController!.removeCamera(indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let alert = UIAlertController(title: "Attention", message: "Views using this camera will be deleted too.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+                // Ok
+                let appDelegate  = UIApplication.shared.delegate as? AppDelegate ?? nil
+                let selectedCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+                let camera       = self.stateController?.cameras.filter({ $0.name == selectedCell.textLabel?.text }).first
+                
+                if let filteredViews = self.stateController?.views.filter({ $0.camera.name == camera!.name }) {
+                    for view in filteredViews {
+                        self.stateController?.removeView(view)
+                        if nil != appDelegate {
+                            self.stateController?.removeViewFromCD(appDelegate: appDelegate!, view: view)
+                        }
+                    }
+                }
+                self.stateController?.removeCameraFromCD(appDelegate: appDelegate!, camera: camera!)
+                
+                self.stateController!.removeCamera(camera!)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+                // Cancel
+            }))
+            present(alert, animated: true, completion: nil)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
