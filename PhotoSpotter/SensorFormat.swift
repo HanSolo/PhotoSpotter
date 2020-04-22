@@ -34,7 +34,7 @@ public enum SensorFormat: String, Equatable {
     var width: Double {
         switch self {
             case .MEDIUM_FORMAT    : return 53.7
-            case .FULL_FORMAT      : return 36
+            case .FULL_FORMAT      : return 36.0
             case .APS_H            : return 27.9
             case .APS_C            : return 23.6
             case .APS_C_CANON      : return 22.2

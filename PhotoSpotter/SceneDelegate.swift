@@ -22,15 +22,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let viewContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         viewContext.automaticallyMergesChangesFromParent = true
         
-        // Retrieve stored state from iCloud
-        self.stateController.retrieve()
-        
         let rootViewController = self.window?.rootViewController
         if var mapViewController = rootViewController as? FoVController {
             mapViewController.stateController = self.stateController
         }        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.stateController = stateController
+        
+        // Retrieve data from UserDefaults and CoreData
+        self.stateController.retrieve(appDelegate: appDelegate)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -61,12 +61,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             appDelegate.saveContext()
-            self.stateController.storeCamerasToCD(appDelegate: appDelegate)
-            self.stateController.storeLensesToCD(appDelegate: appDelegate)
-            self.stateController.storeViewsToCD(appDelegate: appDelegate)
+            self.stateController.store(appDelegate: appDelegate)
+        } else {
+            self.stateController.storeToUserDefaults()
         }
-        
-        self.stateController.store()
     }
 }
 

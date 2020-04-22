@@ -208,7 +208,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     @IBAction func camerasButtonPressed(_ sender: Any) {
         stateController!.setView(createView(name: "current", description: ""))
-        stateController!.store()
+        //stateController!.storeToUserDefaults()
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let cameraVC = storyboard.instantiateViewController(identifier: "CameraViewController")
@@ -216,11 +216,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     @IBAction func lensesButtonPressed(_ sender: Any) {
         stateController!.setView(createView(name: "current", description: ""))
-        stateController!.store()
+        //stateController!.storeToUserDefaults()
         performSegue(withIdentifier: "mapViewToLensesView", sender: self)
     }
     @IBAction func viewsButtonPressed(_ sender: Any) {
-        stateController!.store()
+        //stateController!.storeToUserDefaults()
         performSegue(withIdentifier: "mapViewToViewsView", sender: self)
     }
     

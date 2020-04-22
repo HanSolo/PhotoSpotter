@@ -41,6 +41,10 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         // (optional) include this line if you want to remove the extra empty cell divider lines
         self.tableView.tableFooterView = UIView()
+        
+        for indexPath in self.tableView.indexPathsForSelectedRows ?? [] {
+            self.tableView.deselectRow(at: indexPath, animated: false)
+        }
 
         // This view controller itself will provide the delegate methods and row data for the table view.
         tableView.delegate   = self
@@ -55,15 +59,12 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: Event handling
     @IBAction func mapButtonPressed(_ sender: Any) {
-        stateController!.store()
         performSegue(withIdentifier: "viewsViewToMapView", sender: self)
     }
     @IBAction func camerasButtonPressed(_ sender: Any) {
-        stateController!.store()
         performSegue(withIdentifier: "viewsViewToCamerasView", sender: self)
     }
     @IBAction func lensesButtonPressed(_ sender: Any) {
-        stateController!.store()
         performSegue(withIdentifier: "viewsViewToLensesView", sender: self)
     }
     @IBAction func viewsButtonPressed(_ sender: Any) {
@@ -80,7 +81,11 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func done(segue:UIStoryboardSegue) {
         let viewDetailVC = segue.source as! ViewDetailViewController
         let view = View(name: viewDetailVC.name, description: viewDetailVC.descr, cameraPoint: stateController!.view.cameraPoint, motifPoint: stateController!.view.motifPoint, camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation, mapRect: stateController!.view.mapRect, tags: viewDetailVC.tags, equipment: viewDetailVC.equipment)
-        stateController?.addView(view)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            stateController!.addView(view)
+            stateController!.addViewToCD(appDelegate: appDelegate, view: view)
+        }
+        
         tableView.reloadData()
         
         let cells = self.tableView.visibleCells as! Array<ViewCell>
@@ -92,7 +97,6 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.selectRow(at: viewIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: viewIndex)?.accessoryType = .checkmark
         
-        //stateController!.storeViews()
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             stateController!.storeViewsToCD(appDelegate: appDelegate)
         }
@@ -111,9 +115,14 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
             switch key.keyCode {
                 case .keyboardDeleteOrBackspace:
                     if let indexPath = tableView.indexPathForSelectedRow {
-                        stateController!.removeView(indexPath.row)
-                        tableView.deleteRows(at: [indexPath], with: .fade)
-                        stateController!.storeViews()
+                        let selectedCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+                        if let view = self.stateController!.views.filter({ $0.name == selectedCell.textLabel?.text }).first {
+                            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                                stateController!.removeView(view)
+                                stateController!.removeViewFromCD(appDelegate: appDelegate, view: view)
+                            }
+                            tableView.reloadData()
+                        }
                     }
             default:
                 super.pressesBegan(presses, with: event)
@@ -203,13 +212,14 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let view : View = stateController!.views[indexPath.row]
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                stateController!.removeViewFromCD(appDelegate: appDelegate, view: view)
+            let selectedCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+            if let view = self.stateController!.views.filter({ $0.name == selectedCell.textLabel?.text }).first {
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    stateController!.removeView(view)
+                    stateController!.removeViewFromCD(appDelegate: appDelegate, view: view)
+                }
+                tableView.reloadData()
             }
-            stateController!.removeView(view)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            //stateController!.storeViews()            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }

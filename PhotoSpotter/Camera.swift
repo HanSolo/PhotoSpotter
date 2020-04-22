@@ -29,6 +29,16 @@ public class Camera: NSObject, NSCoding {
     }
     
     
+    func description() -> String {
+        var description = name
+        description += " \(sensorFormat.name)"
+        description += " \(String(format: "%.1f", sensorFormat.width))"
+        description += " mm \(String(format: "%.1f", sensorFormat.height))"
+        description += " mm \(String(format: "%.2f", sensorFormat.cropFactor))"
+        return description
+    }
+    
+    
     func toJsonString() -> String {
         var jsonString : String = "{"
         jsonString += "\"name\":\"\(name)\","        

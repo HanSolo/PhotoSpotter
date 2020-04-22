@@ -51,6 +51,10 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         // (optional) include this line if you want to remove the extra empty cell divider lines
         self.tableView.tableFooterView = UIView()
 
+        for indexPath in self.tableView.indexPathsForSelectedRows ?? [] {
+            self.tableView.deselectRow(at: indexPath, animated: false)
+        }
+        
         // This view controller itself will provide the delegate methods and row data for the table view.
         tableView.delegate   = self
         tableView.dataSource = self
@@ -69,23 +73,15 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     // MARK: Event handling
-    @IBAction func mapButtonPressed(_ sender: Any) {
-        stateController!.store()
+    @IBAction func mapButtonPressed(_ sender: Any) {        
         performSegue(withIdentifier: "lensesViewToMapView", sender: self)
     }
     @IBAction func camerasButtonPressed(_ sender: Any) {
-        stateController!.store()
-        /*
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let cameraVC   = storyboard.instantiateViewController(identifier: "CameraViewController")
-        show(cameraVC, sender: self)
-        */
         performSegue(withIdentifier: "lensesViewToCamerasView", sender: self)
     }
     @IBAction func lensesButtonPressed(_ sender: Any) {
     }
     @IBAction func viewsButtonPressed(_ sender: Any) {
-        stateController!.store()
         performSegue(withIdentifier: "lensesViewToViewsView", sender: self)
     }
     
@@ -100,8 +96,8 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func done(segue:UIStoryboardSegue) {
         let lensDetailVC = segue.source as! LensDetailViewController
         let lens = Lens(name: lensDetailVC.lensName, minFocalLength: lensDetailVC.minFocalLength, maxFocalLength: lensDetailVC.maxFocalLength, minAperture: lensDetailVC.minAperture, maxAperture: lensDetailVC.maxAperture)
-        stateController?.addLens(lens)
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            stateController!.addLens(lens)
             stateController!.addLensToCD(appDelegate: appDelegate, lens: lens)
         }
         
@@ -157,9 +153,21 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
             switch key.keyCode {
                 case .keyboardDeleteOrBackspace:
                     if let indexPath = tableView.indexPathForSelectedRow {
-                        stateController!.removeView(indexPath.row)
-                        tableView.deleteRows(at: [indexPath], with: .fade)
-                        stateController!.storeViews()
+                        let appDelegate  = UIApplication.shared.delegate as? AppDelegate ?? nil
+                        let selectedCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+                        if let lens = self.stateController!.lenses.filter({ $0.name == selectedCell.textLabel?.text }).first {
+                            if let filteredViews = self.stateController?.views.filter({ $0.lens.name == lens.name }) {
+                                for view in filteredViews {
+                                    if nil != appDelegate {
+                                        self.stateController!.removeView(view)
+                                        self.stateController!.removeViewFromCD(appDelegate: appDelegate!, view: view)
+                                    }
+                                }
+                            }
+                            self.stateController!.removeLens(lens)
+                            self.stateController!.removeLensFromCD(appDelegate: appDelegate!, lens: lens)
+                        }
+                        tableView.reloadData()
                     }
             default:
                 super.pressesBegan(presses, with: event)
@@ -209,30 +217,31 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let alert = UIAlertController(title: "Attention", message: "Views using this lens will be deleted too.", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-                // Ok
+            let alertController = UIAlertController(title: "Warning", message: "Views using this lens will be deleted too.", preferredStyle: .alert)
+            let deleteAction    = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
+                //self.tableView.deleteRows(at: [indexPath], with: .fade)
                 let appDelegate  = UIApplication.shared.delegate as? AppDelegate ?? nil
                 let selectedCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
-                let lens         = self.stateController?.lenses.filter({ $0.name == selectedCell.textLabel?.text }).first
-                
-                if let filteredViews = self.stateController?.views.filter({ $0.lens.name == lens!.name }) {
-                    for view in filteredViews {
-                        self.stateController?.removeView(view)
-                        if nil != appDelegate {
-                            self.stateController?.removeViewFromCD(appDelegate: appDelegate!, view: view)
+                if let lens = self.stateController!.lenses.filter({ $0.name == selectedCell.textLabel?.text }).first {
+                    if let filteredViews = self.stateController?.views.filter({ $0.lens.name == lens.name }) {
+                        for view in filteredViews {
+                            if nil != appDelegate {
+                                self.stateController!.removeView(view)
+                                self.stateController!.removeViewFromCD(appDelegate: appDelegate!, view: view)
+                            }
                         }
                     }
+                    self.stateController!.removeLens(lens)
+                    self.stateController!.removeLensFromCD(appDelegate: appDelegate!, lens: lens)
                 }
-                self.stateController?.removeLensFromCD(appDelegate: appDelegate!, lens: lens!)
-                
-                self.stateController?.removeLens(lens!)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-                //Cancel
-            }))
-            present(alert, animated: true, completion: nil)
+                tableView.reloadData()
+            })
+            alertController.addAction(deleteAction)
+
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            alertController.addAction(cancelAction)
+
+            present(alertController, animated: true, completion: nil)            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
