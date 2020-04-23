@@ -35,7 +35,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var minApertureLabel    : UILabel!
     @IBOutlet weak var maxApertureLabel    : UILabel!
     @IBOutlet weak var dofButton           : UIButton!
-    @IBOutlet weak var cameraButton        : UIButton!
+    @IBOutlet weak var placeButton         : UIButton!
     @IBOutlet weak var orientationButton   : UIButton!
     @IBOutlet weak var orientationLabel    : UILabel!
     @IBOutlet weak var mapTypeSelector     : UISegmentedControl!
@@ -266,13 +266,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
         
-    @IBAction func cameraButtonPressed(_ sender: Any) {
+    @IBAction func placeButtonPressed(_ sender: Any) {
         let dX = motifPin!.point().x - cameraPin!.point().x
         let dY = motifPin!.point().y - cameraPin!.point().y
-        mapView.removeAnnotations(mapPins)
-        self.cameraPin!.coordinate = mapView.centerCoordinate
-        self.motifPin!.coordinate  = MKMapPoint(x: self.cameraPin!.point().x + dX, y: self.cameraPin!.point().y + dY).coordinate
-        mapView.addAnnotations(mapPins)
+        
+        self.cameraPin = MapPin(pinType: PinType.camera, coordinate: mapView.centerCoordinate)
+        self.motifPin  = MapPin(pinType: PinType.motif, coordinate : MKMapPoint(x: self.cameraPin!.point().x + dX, y: self.cameraPin!.point().y + dY).coordinate)
+        
+        self.mapView.removeAnnotations(self.mapPins)
+        self.mapPins.removeAll()
+        self.mapPins.append(self.cameraPin!)
+        self.mapPins.append(self.motifPin!)
+        self.mapView.addAnnotations(mapPins)
         
         self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
         
@@ -282,6 +287,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
+        updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
     @IBAction func mapTypeChanged(_ sender: Any) {
@@ -400,22 +406,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     // MARK: CLLocationManagerDelegate methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation:CLLocation = locations[0] as CLLocation
-        
-        // Call stopUpdatingLocation() to stop listening for location updates,
-        // other wise this function will be called every time when user location changes.
         manager.stopUpdatingLocation()
         
         let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-        
         mapView.setRegion(region, animated: true)
-        
-        /* Drop a pin at user's Current Location
-        let myAnnotation: MKPointAnnotation = MKPointAnnotation()
-        myAnnotation.coordinate = CLLocationCoordinate2DMake(userLocation.coordinate.latitude, userLocation.coordinate.longitude);
-        myAnnotation.title = "Current location"
-        mapView.addAnnotation(myAnnotation)
-        */
     }
     private func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print("Error \(error)")

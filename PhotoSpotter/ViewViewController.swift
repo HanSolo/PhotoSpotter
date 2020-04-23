@@ -153,7 +153,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         let view : View                     = viewSelection![indexPath.item]
         cell.detailTextLabel!.numberOfLines = 0
         
-        cell.textLabel?.text       = view.name
+        cell.textLabel?.text = view.name
         
         var equipment : String = " ["
         equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_TRIPOD,     bitmask: view.equipment) ?         Constants.EQP_TRIPOD.0      : ""
@@ -164,7 +164,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_FLASH,      bitmask: view.equipment) ? (", " + Constants.EQP_FLASH.0)      : ""
         equipment += "]"
         
-        if equipment.count > 2 {
+        if equipment.count > 3 {
             cell.detailTextLabel?.text = view.description + equipment
         } else {
             cell.detailTextLabel?.text = view.description
@@ -192,7 +192,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         tags += Helper.tagInBitMask(tag: Constants.TAG_SUNSET,        bitmask: view.tags) ? (" " + Constants.TAG_SUNSET.0)        : ""
         tags += Helper.tagInBitMask(tag: Constants.TAG_MOON,          bitmask: view.tags) ? (" " + Constants.TAG_MOON.0)          : ""
         
-        if tags.count > 2 {
+        if tags.count > 0 {
             if equipment.count > 2 {
                 cell.detailTextLabel?.text! += ("\n" + tags)
             } else {

@@ -227,7 +227,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="4Qy-EU-B1t">
                                                         <rect key="frame" x="667.5" y="1.5" width="29.5" height="36.5"/>
                                                         <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xp3-1c-EGH" userLabel="CameraButton">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xp3-1c-EGH" userLabel="PlaceButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="29.5" height="22.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -236,10 +236,10 @@
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="cameraButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mPj-he-TZ7"/>
+                                                                    <action selector="placeButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mPj-he-TZ7"/>
                                                                 </connections>
                                                             </button>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rnq-je-lQP" userLabel="PositionLabel">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rnq-je-lQP" userLabel="PlaceLabel">
                                                                 <rect key="frame" x="0.0" y="24.5" width="29.5" height="12"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="textColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -525,7 +525,6 @@
                     <connections>
                         <outlet property="apertureLabel" destination="rzu-Sh-PkG" id="pSv-pF-6Dl"/>
                         <outlet property="apertureSlider" destination="Crf-to-ZRf" id="9iY-on-KpT"/>
-                        <outlet property="cameraButton" destination="xp3-1c-EGH" id="RKG-WR-YCE"/>
                         <outlet property="cameraLabel" destination="YnF-jc-dhj" id="OGi-do-oDL"/>
                         <outlet property="camerasButton" destination="xUA-Eg-sBT" id="WdR-pf-7Pg"/>
                         <outlet property="distanceLabel" destination="g1m-Vc-WVH" id="nQT-DG-QlX"/>
@@ -553,6 +552,7 @@
                         <outlet property="navBar" destination="YLE-9w-5zA" id="vx4-m4-4LK"/>
                         <outlet property="orientationButton" destination="oIT-Ve-K0R" id="jMp-v7-FTy"/>
                         <outlet property="orientationLabel" destination="7lK-US-IIb" id="hKE-cc-amE"/>
+                        <outlet property="placeButton" destination="xp3-1c-EGH" id="RKG-WR-YCE"/>
                         <outlet property="showViewsButton" destination="gyl-Qk-HLX" id="upb-Ml-tu1"/>
                         <outlet property="sunButton" destination="I8n-ya-JHH" id="6rF-Lh-ncv"/>
                         <outlet property="viewsButton" destination="gyl-Qk-HLX" id="TJk-Aq-t84"/>
@@ -2102,9 +2102,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hyq-cO-83h"/>
+        <segue reference="Tqb-kX-mOs"/>
         <segue reference="q1Q-0p-CtR"/>
-        <segue reference="heU-sJ-624"/>
+        <segue reference="6Gl-Tl-cdW"/>
         <segue reference="Yg0-Ub-0Bk"/>
     </inferredMetricsTieBreakers>
     <resources>
