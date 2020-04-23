@@ -42,7 +42,8 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
             navigationController?.navigationBar.titleTextAttributes = textAttributes
         }
         
-        lensSelection = stateController!.lenses
+        let hideDefaultLens : Bool = stateController!.lenses.count > 1
+        lensSelection = hideDefaultLens ? stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name } : stateController!.lenses
         
         // Register the table view cell class and its reuse id
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
@@ -101,7 +102,8 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
             stateController!.addLensToCD(appDelegate: appDelegate, lens: lens)
         }
         
-        lensSelection = stateController!.lenses
+        let hideDefaultLens : Bool = stateController!.lenses.count > 1
+        lensSelection = hideDefaultLens ? stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name } : stateController!.lenses
         lensSelector.selectedSegmentIndex = 0
         tableView.reloadData()
         
@@ -125,22 +127,40 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let index = self.tableView.indexPathForSelectedRow {
             self.tableView.deselectRow(at: index, animated: true)
         }
+        let hideDefaultLens : Bool = stateController!.lenses.count > 1
+        
         switch lensSelector.selectedSegmentIndex {
             case 0 :  // All lenses
-                lensSelection = stateController!.lenses
+                if hideDefaultLens {
+                    lensSelection = stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name }
+                } else {
+                    lensSelection = stateController!.lenses
+                }
                 break;
             case 1 : // Prime lenses
                 if stateController!.lenses.filter({ $0.isPrime }).count > 0 {
                     lensSelection = stateController!.lenses.filter { $0.isPrime }
+                } else {
+                    lensSelection = []
                 }
                 break;
             case 2 :  // Zoom lenses
                 if stateController!.lenses.filter({ !$0.isPrime }).count > 0 {
-                    lensSelection = stateController!.lenses.filter { !$0.isPrime }
+                    if hideDefaultLens {
+                        lensSelection = stateController!.lenses.filter { !$0.isPrime && $0.name != Constants.DEFAULT_LENS.name }
+                    } else {
+                        lensSelection = stateController!.lenses.filter { !$0.isPrime }
+                    }
+                } else {
+                    lensSelection = []
                 }
                 break;
             default:
-                lensSelection = stateController!.lenses
+                if hideDefaultLens {
+                    lensSelection = stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name }
+                } else {
+                    lensSelection = stateController!.lenses
+                }
                 break;
         }
         tableView.reloadData()
@@ -167,6 +187,8 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
                             self.stateController!.removeLens(lens)
                             self.stateController!.removeLensFromCD(appDelegate: appDelegate!, lens: lens)
                         }
+                        let hideDefaultLens : Bool = stateController!.lenses.count > 1
+                        lensSelection = hideDefaultLens ? stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name } : stateController!.lenses
                         tableView.reloadData()
                     }
             default:
@@ -234,6 +256,8 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.stateController!.removeLens(lens)
                     self.stateController!.removeLensFromCD(appDelegate: appDelegate!, lens: lens)
                 }
+                let hideDefaultLens : Bool = self.stateController!.lenses.count > 1
+                self.lensSelection = hideDefaultLens ? self.stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name } : self.stateController!.lenses
                 tableView.reloadData()
             })
             alertController.addAction(deleteAction)
@@ -254,7 +278,8 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
    */
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if stateController!.lenses[indexPath.row].name == Constants.DEFAULT_LENS.name {
+        //if stateController!.lenses[indexPath.row].name == Constants.DEFAULT_LENS.name {
+        if lensSelection![indexPath.row].name == Constants.DEFAULT_LENS.name {
             return UITableViewCell.EditingStyle.none
         } else {
             return UITableViewCell.EditingStyle.delete

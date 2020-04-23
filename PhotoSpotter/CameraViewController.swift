@@ -28,6 +28,8 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     @IBOutlet weak var navBar: UINavigationBar!
     
+    var cameraSelection : [Camera]?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +38,9 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
         self.stateController = appDelegate.stateController
+        
+        let hideDefaultCamera : Bool = stateController!.cameras.count > 1
+        cameraSelection = hideDefaultCamera ? stateController!.cameras.filter { $0.name != Constants.DEFAULT_CAMERA.name } : stateController!.cameras
         
         // Register the table view cell class and its reuse id
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
@@ -52,7 +57,7 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate   = self
         tableView.dataSource = self
                 
-        let cameraIndex : IndexPath = IndexPath(row: (stateController!.cameras.firstIndex(of: stateController!.view.camera) ?? 0), section: 0)
+        let cameraIndex : IndexPath = IndexPath(row: (cameraSelection!.firstIndex(of: stateController!.view.camera) ?? 0), section: 0)
         tableView.selectRow(at: cameraIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: cameraIndex)?.accessoryType = .checkmark
         tableView.isEditing = false
@@ -90,6 +95,9 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
             stateController!.addCameraToCD(appDelegate: appDelegate, camera: camera)
         }
         
+        let hideDefaultCamera : Bool = stateController!.cameras.count > 1
+        cameraSelection = hideDefaultCamera ? stateController!.cameras.filter { $0.name != Constants.DEFAULT_CAMERA.name } : stateController!.cameras
+        
         tableView.reloadData()
         
         let cells = self.tableView.visibleCells as! Array<CameraCell>
@@ -97,7 +105,7 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.accessoryType = .none
         }
         
-        let cameraIndex : IndexPath = IndexPath(row: (stateController!.cameras.firstIndex(of: camera) ?? 0), section: 0)
+        let cameraIndex : IndexPath = IndexPath(row: (cameraSelection!.firstIndex(of: camera) ?? 0), section: 0)
         tableView.selectRow(at: cameraIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: cameraIndex)?.accessoryType = .checkmark
         
@@ -129,6 +137,8 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
                             self.stateController!.removeCamera(camera)
                             self.stateController!.removeCameraFromCD(appDelegate: appDelegate!, camera: camera)
                         }
+                        let hideDefaultCamera : Bool = stateController!.cameras.count > 1
+                        cameraSelection = hideDefaultCamera ? stateController!.cameras.filter { $0.name != Constants.DEFAULT_CAMERA.name } : stateController!.cameras
                         tableView.reloadData()
                     }                    
             default:
@@ -142,13 +152,13 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: Tableview delegate and datasource methods
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stateController!.cameras.count
+        return cameraSelection!.count
     }
 
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell                   = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! CameraCell
-        let camera : Camera        = stateController!.cameras[indexPath.item]
+        let camera : Camera        = cameraSelection![indexPath.item]
         cell.textLabel?.text       = camera.name
         cell.detailTextLabel?.text = camera.sensorFormat.description
         return cell
@@ -161,16 +171,9 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let camera = stateController!.cameras[indexPath.item]
+        let camera = cameraSelection![indexPath.item]
         stateController!.view.camera = camera
-        
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        /*
-        let alertController = UIAlertController(title: camera.name, message: " is in da house!", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Ok", style: .default) { _ in }
-        alertController.addAction(action)
-        self.present(alertController, animated: true, completion: nil)
-        */
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -183,7 +186,7 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let deleteAction    = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
                 //self.tableView.deleteRows(at: [indexPath], with: .fade)
                 let appDelegate  = UIApplication.shared.delegate as? AppDelegate ?? nil
-                let selectedCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+                let selectedCell = tableView.cellForRow(at: indexPath)! as! CameraCell
                 if let camera = self.stateController!.cameras.filter({ $0.name == selectedCell.textLabel?.text }).first {
                     if let filteredViews = self.stateController?.views.filter({ $0.camera.name == camera.name }) {
                         for view in filteredViews {
@@ -196,6 +199,8 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.stateController!.removeCamera(camera)
                     self.stateController!.removeCameraFromCD(appDelegate: appDelegate!, camera: camera)
                 }
+                let hideDefaultCamera : Bool = self.stateController!.cameras.count > 1
+                self.cameraSelection = hideDefaultCamera ? self.stateController!.cameras.filter { $0.name != Constants.DEFAULT_CAMERA.name } : self.stateController!.cameras
                 tableView.reloadData()
             })
             alertController.addAction(deleteAction)
@@ -216,7 +221,7 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
     */
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if stateController!.cameras[indexPath.row].name == Constants.DEFAULT_CAMERA.name {
+        if cameraSelection![indexPath.row].name == Constants.DEFAULT_CAMERA.name {
             return UITableViewCell.EditingStyle.none
         } else {
             return UITableViewCell.EditingStyle.delete

@@ -26,6 +26,8 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     @IBOutlet weak var navBar: UINavigationBar!
     
+    var viewSelection : [View]?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,9 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
         self.stateController = appDelegate.stateController
+        
+        let hideDefaultView : Bool = stateController!.views.count > 1
+        viewSelection = hideDefaultView ? stateController!.views.filter { $0.name != Constants.DEFAULT_VIEW.name } : stateController!.views
         
         // Register the table view cell class and its reuse id
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
@@ -50,7 +55,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate   = self
         tableView.dataSource = self
         
-        let viewIndex : IndexPath = IndexPath(row: (stateController!.views.firstIndex(of: stateController!.view) ?? 0), section: 0)
+        let viewIndex : IndexPath = IndexPath(row: (viewSelection!.firstIndex(of: stateController!.view) ?? 0), section: 0)
         tableView.selectRow(at: viewIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: viewIndex)?.accessoryType = .checkmark
         tableView.isEditing = false
@@ -86,6 +91,8 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
             stateController!.addViewToCD(appDelegate: appDelegate, view: view)
         }
         
+        let hideDefaultView : Bool = stateController!.views.count > 1
+        viewSelection = hideDefaultView ? stateController!.views.filter { $0.name != Constants.DEFAULT_VIEW.name } : stateController!.views
         tableView.reloadData()
         
         let cells = self.tableView.visibleCells as! Array<ViewCell>
@@ -93,7 +100,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.accessoryType = .none
         }
         
-        let viewIndex : IndexPath = IndexPath(row: (stateController!.views.firstIndex(of: view) ?? 0), section: 0)
+        let viewIndex : IndexPath = IndexPath(row: (viewSelection!.firstIndex(of: view) ?? 0), section: 0)
         tableView.selectRow(at: viewIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: viewIndex)?.accessoryType = .checkmark
         
@@ -121,6 +128,8 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
                                 stateController!.removeView(view)
                                 stateController!.removeViewFromCD(appDelegate: appDelegate, view: view)
                             }
+                            let hideDefaultView : Bool = self.stateController!.views.count > 1
+                            self.viewSelection = hideDefaultView ? self.stateController!.views.filter { $0.name != Constants.DEFAULT_VIEW.name } : self.stateController!.views
                             tableView.reloadData()
                         }
                     }
@@ -135,13 +144,13 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: Tableview delegate and datasource methods
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stateController!.views.count
+        return viewSelection!.count
     }
 
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell                            = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ViewCell
-        let view : View                     = stateController!.views[indexPath.item]
+        let view : View                     = viewSelection![indexPath.item]
         cell.detailTextLabel!.numberOfLines = 0
         
         cell.textLabel?.text       = view.name
@@ -201,7 +210,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let view = stateController!.views[indexPath.item]
+        let view = viewSelection![indexPath.item]
         stateController!.setView(view)
         
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
@@ -218,6 +227,8 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
                     stateController!.removeView(view)
                     stateController!.removeViewFromCD(appDelegate: appDelegate, view: view)
                 }
+                let hideDefaultView : Bool = stateController!.views.count > 1
+                viewSelection = hideDefaultView ? stateController!.views.filter { $0.name != Constants.DEFAULT_VIEW.name } : stateController!.views
                 tableView.reloadData()
             }
         } else if editingStyle == .insert {
@@ -232,7 +243,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     */
  
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if stateController!.views[indexPath.row].name == Constants.DEFAULT_VIEW.name {
+        if viewSelection![indexPath.row].name == Constants.DEFAULT_VIEW.name {
             return UITableViewCell.EditingStyle.none
         } else {
             return UITableViewCell.EditingStyle.delete
