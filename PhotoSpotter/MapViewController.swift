@@ -168,16 +168,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         ]
         NSLayoutConstraint.activate(scaleViewConstraints)
         
-        /*
-        cameraBodyButton = UIButton(type: .system)
-        cameraBodyButton!.setImage(UIImage(named: "cameraBodySelected.png"), for: .normal)
-        cameraBodyButton!.setTitle("Cameras", for: .normal)
-        cameraBodyButton!.sizeToFit()
-        cameraBodyButton!.tintColor = UIColor.lightText
-        cameraBodyButton!.alignTextUnderImage(spacing: 2)
-        camerasButton.customView = cameraBodyButton!
-        */
-        
         setView(view: stateController!.view)
     }
     
@@ -463,6 +453,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             if annotationView == nil {
                 annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 annotationView!.canShowCallout = true
+                annotationView!.isUserInteractionEnabled = true
+                let viewButton : UIButton = UIButton(type: .infoLight)
+                let icon       : UIImage  = UIImage(systemName: "viewfinder.circle")!
+                viewButton.setImage(icon, for: .normal)
+                viewButton.tintColor = UIColor.systemTeal
+                annotationView!.rightCalloutAccessoryView = viewButton
             } else {
                 annotationView!.annotation = annotation
             }
@@ -545,11 +541,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.heading     = mapView.camera.heading
         stateController!.view.mapRect = mapView.visibleMapRect        
     }
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        tapGesture.numberOfTapsRequired    = 1
-        tapGesture.numberOfTouchesRequired = 1
-        view.addGestureRecognizer(tapGesture)
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {}
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if control == view.rightCalloutAccessoryView {
+            if let annotationView = view as? MKPinAnnotationView {
+                if let view = stateController!.views.filter({ $0.name == annotationView.annotation?.title }).first {
+                    setView(view: view)
+                }
+            }
+        }
     }
 
     @objc private func handleTap(sender: UITapGestureRecognizer) {
@@ -575,29 +575,38 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     // Set a view
     func setView(view: View) -> Void {
+        stateController!.setView(view)
+        
         self.cameraPin = MapPin(pinType: PinType.camera, coordinate: view.cameraPoint.coordinate)
         self.motifPin  = MapPin(pinType: PinType.motif, coordinate : view.motifPoint.coordinate)
         
+        let lens        : Lens        = view.lens
+        let camera      : Camera      = view.camera
+        let focalLength : Double      = view.focalLength
+        let aperture    : Double      = view.aperture
+        let orientation : Orientation = view.orientation
+        
+        self.mapView.removeAnnotations(self.mapPins)
         self.mapPins.removeAll()
         self.mapPins.append(self.cameraPin!)
         self.mapPins.append(self.motifPin!)
         self.mapView.addAnnotations(mapPins)
         
-        self.focalLengthSlider.minimumValue = Float(view.lens.minFocalLength)
-        self.focalLengthSlider.maximumValue = Float(view.lens.maxFocalLength)
-        self.focalLengthSlider.value        = Float(view.focalLength)
-        self.focalLengthLabel.text          = String(format: "%.0f mm", Double(round(view.focalLength)))
-        self.minFocalLengthLabel.text       = String(format: "%.0f", Double(round(view.lens.minFocalLength)))
-        self.maxFocalLengthLabel.text       = String(format: "%.0f", Double(round(view.lens.maxFocalLength)))
+        self.focalLengthSlider.minimumValue = Float(lens.minFocalLength)
+        self.focalLengthSlider.maximumValue = Float(lens.maxFocalLength)
+        self.focalLengthSlider.value        = Float(focalLength)
+        self.focalLengthLabel.text          = String(format: "%.0f mm", Double(round(focalLength)))
+        self.minFocalLengthLabel.text       = String(format: "%.0f", Double(round(lens.minFocalLength)))
+        self.maxFocalLengthLabel.text       = String(format: "%.0f", Double(round(lens.maxFocalLength)))
         
-        self.apertureSlider.minimumValue    = Float(view.lens.minAperture)
-        self.apertureSlider.maximumValue    = Float(view.lens.maxAperture)
-        self.apertureSlider.value           = Float(view.aperture)
-        self.apertureLabel.text             = String(format: "f %.1f", Double(round(view.aperture * 10) / 10))
-        self.minApertureLabel.text          = String(format: "%.1f", Double(round(view.lens.minAperture * 10) / 10))
-        self.maxApertureLabel.text          = String(format: "%.1f", Double(round(view.lens.maxAperture * 10) / 10))
+        self.apertureSlider.minimumValue    = Float(lens.minAperture)
+        self.apertureSlider.maximumValue    = Float(lens.maxAperture)
+        self.apertureSlider.value           = Float(aperture)
+        self.apertureLabel.text             = String(format: "f %.1f", Double(round(aperture * 10) / 10))
+        self.minApertureLabel.text          = String(format: "%.1f", Double(round(lens.minAperture * 10) / 10))
+        self.maxApertureLabel.text          = String(format: "%.1f", Double(round(lens.maxAperture * 10) / 10))
         
-        switch view.orientation {
+        switch orientation {
             case .landscape:
                 self.orientationButton.transform = CGAffineTransform.identity
                 //self.orientationLabel.text!      = "Landscape"
@@ -608,15 +617,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 break
         }
         
-        self.cameraLabel.text = view.camera.name
-        self.lensLabel.text   = view.lens.name
-                                
-        self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
-                
-        visibleArea      = view.mapRect
+        self.cameraLabel.text = camera.name
+        self.lensLabel.text   = lens.name
+        self.eventAngles      = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
+        self.visibleArea      = view.mapRect
         
-        updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
-        updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
+        updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: focalLength, aperture: aperture, sensorFormat: camera.sensorFormat, orientation: orientation)
+        updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: focalLength, aperture: aperture, sensorFormat: camera.sensorFormat, orientation: orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
         updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
