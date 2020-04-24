@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class ViewDetailViewController: UIViewController, FoVController {
+public class ViewDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FoVController {
     var stateController: StateController?
     
     
@@ -50,8 +50,10 @@ public class ViewDetailViewController: UIViewController, FoVController {
     @IBOutlet weak var sunriseSwitch        : UISwitch!
     @IBOutlet weak var sunsetSwitch         : UISwitch!
     @IBOutlet weak var moonSwitch           : UISwitch!
+    @IBOutlet weak var tableView            : UITableView!
     
     
+    let cellReuseIdentifier = "ItemCell"
     
     var nameIconView         : UIView?
     var tapGestureRecognizer : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showAlert(sender:)))
@@ -59,7 +61,17 @@ public class ViewDetailViewController: UIViewController, FoVController {
     var name                 : String      = ""
     var descr                : String      = ""
     var equipment            : Int32       = 0
+    var times                : Int32       = 0
     var tags                 : Int32       = 0
+    var equipmentItems       : [String]    = [Constants.EQP_TRIPOD.0, Constants.EQP_GIMBAL.0, Constants.EQP_CPL_FILTER.0, Constants.EQP_ND_FILTER.0, Constants.EQP_IR_FILTER.0, Constants.EQP_FLASH.0, Constants.EQP_REMOTE.0]
+    var timesItems           : [String]    = [Constants.TMS_ALL_YEAR.0, Constants.TMS_SPRING.0, Constants.TMS_SUMMER.0, Constants.TMS_AUTUMN.0, Constants.TMS_WINTER.0,
+                                              Constants.TMS_JANUARY.0, Constants.TMS_FEBRUARY.0, Constants.TMS_MARCH.0, Constants.TMS_APRIL.0, Constants.TMS_MAY.0, Constants.TMS_JUNE.0,
+                                              Constants.TMS_JULY.0, Constants.TMS_AUGUST.0, Constants.TMS_SEPTEMBER.0, Constants.TMS_OCTOBER.0, Constants.TMS_NOVEMBER.0, Constants.TMS_DECEMBER.0]
+    var tagsItems            : [String]    = [Constants.TAG_NIGHT.0, Constants.TAG_ASTRO.0, Constants.TAG_MACRO.0, Constants.TAG_POI.0, Constants.TAG_INFRARED.0, Constants.TAG_LONG_EXPOSURE.0,
+                                              Constants.TAG_CITYSCAPE.0, Constants.TAG_LANDSCAPE.0, Constants.TAG_STREET.0, Constants.TAG_BRIDGE.0, Constants.TAG_LAKE.0, Constants.TAG_SHIP.0,
+                                              Constants.TAG_CAR.0, Constants.TAG_FLOWER.0, Constants.TAG_TREE.0, Constants.TAG_BUILDING.0, Constants.TAG_BEACH.0, Constants.TAG_SUNRISE.0,
+                                              Constants.TAG_SUNSET.0, Constants.TAG_MOON.0]
+    var items                : [String]?
     
     var nameValid            : Bool        = false
     var descriptionValid     : Bool        = false
@@ -68,6 +80,8 @@ public class ViewDetailViewController: UIViewController, FoVController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.items = equipmentItems + timesItems + tagsItems
         
         Helper.setNavBarTitle(navBar: navBar)
         
@@ -83,6 +97,21 @@ public class ViewDetailViewController: UIViewController, FoVController {
         self.tapGestureRecognizer.numberOfTapsRequired = 1
         
         self.nameIconView = Helper.setupTextFieldWithAlertIcon(field: nameTextField, gestureRecognizer: tapGestureRecognizer)
+        
+        // Register the table view cell class and its reuse id
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        self.tableView.register(ItemCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        
+        // (optional) include this line if you want to remove the extra empty cell divider lines
+        self.tableView.tableFooterView = UIView()
+
+        for indexPath in self.tableView.indexPathsForSelectedRows ?? [] {
+            self.tableView.deselectRow(at: indexPath, animated: false)
+        }
+        
+        // This view controller itself will provide the delegate methods and row data for the table view.
+        tableView.delegate   = self
+        tableView.dataSource = self
     }
     
     
@@ -96,88 +125,6 @@ public class ViewDetailViewController: UIViewController, FoVController {
         validateForm()
     }
     
-    //MARK: Equipment switch handlers
-    @IBAction func tripodSwitchChanged(_ sender: Any) {
-        setEquipment()
-    }
-    @IBAction func gimbalSwitchChanged(_ sender: Any) {
-        setEquipment()
-    }
-    @IBAction func cplFilterSwitchChanged(_ sender: Any) {
-        setEquipment()
-    }
-    @IBAction func ndFilterSwitchChanged(_ sender: Any) {
-        setEquipment()
-    }
-    @IBAction func irFilterSwitchChanged(_ sender: Any) {
-        setEquipment()
-    }
-    @IBAction func flashSwitchChanged(_ sender: Any) {
-        setEquipment()
-    }
-    // Mark: Tags switch handlers
-    @IBAction func nightSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func astroSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func macroSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func poiSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func infraredSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func longExposureSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func cityscapeSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func landscapeSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func streetSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func bridgeSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func lakeSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func shipSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func carSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func flowerSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func treeSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func buildingSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func beachSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func sunriseSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func sunsetSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    @IBAction func moonSwitchChanged(_ sender: Any) {
-        setTags()
-    }
-    
-    
     
     
     private func validateForm() -> Void {
@@ -187,89 +134,55 @@ public class ViewDetailViewController: UIViewController, FoVController {
         nameIconView!.isHidden = nameValid
     }
     
-    private func setEquipment() -> Void {
-        self.equipment = 0
-        if self.tripodSwitch.isOn {
-            self.equipment = self.equipment | Constants.EQP_TRIPOD.1
-        }
-        if self.gimbalSwitch.isOn {
-            self.equipment = self.equipment | Constants.EQP_GIMBAL.1
-        }
-        if self.cplFilterSwitch.isOn {
-            self.equipment = self.equipment | Constants.EQP_CPL_FILTER.1
-        }
-        if self.ndFilterSwitch.isOn {
-            self.equipment = self.equipment | Constants.EQP_ND_FILTER.1
-        }
-        if self.irFilterSwitch.isOn {
-            self.equipment = self.equipment | Constants.EQP_IR_FILTER.1
-        }
-        if self.flashSwitch.isOn {
-            self.equipment = self.equipment | Constants.EQP_FLASH.1
-        }
-    }
-    
-    private func setTags() -> Void {
-        self.tags = 0
-        if self.nightSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_NIGHT.1
-        }
-        if self.astroSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_ASTRO.1
-        }
-        if self.macroSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_MACRO.1
-        }
-        if self.poiSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_POI.1
-        }
-        if self.infraredSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_INFRARED.1
-        }
-        if self.longExposureSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_LONG_EXPOSURE.1
-        }
-        if self.cityscapeSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_CITYSCAPE.1
-        }
-        if self.landscapeSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_LANDSCAPE.1
-        }
-        if self.streetSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_STREET.1
-        }
-        if self.bridgeSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_BRIDGE.1
-        }
-        if self.lakeSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_LAKE.1
-        }
-        if self.shipSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_SHIP.1
-        }        
-        if self.carSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_CAR.1
-        }
-        if self.flowerSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_FLOWER.1
-        }
-        if self.treeSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_TREE.1
-        }
-        if self.buildingSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_BUILDING.1
-        }
-        if self.beachSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_BEACH.1
-        }
-        if self.sunriseSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_SUNRISE.1
-        }
-        if self.sunsetSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_SUNSET.1
-        }
-        if self.moonSwitch.isOn {
-            self.tags = self.tags | Constants.TAG_MOON.1
+    private func setItem(item: String, isOn: Bool) -> Void {
+        switch item {
+            case Constants.EQP_TRIPOD.0       : self.equipment = isOn ? self.equipment | Constants.EQP_TRIPOD.1     : self.equipment | -Constants.EQP_TRIPOD.1
+            case Constants.EQP_GIMBAL.0       : self.equipment = isOn ? self.equipment | Constants.EQP_GIMBAL.1     : self.equipment | -Constants.EQP_GIMBAL.1
+            case Constants.EQP_CPL_FILTER.0   : self.equipment = isOn ? self.equipment | Constants.EQP_CPL_FILTER.1 : self.equipment | -Constants.EQP_CPL_FILTER.1
+            case Constants.EQP_ND_FILTER.0    : self.equipment = isOn ? self.equipment | Constants.EQP_ND_FILTER.1  : self.equipment | -Constants.EQP_ND_FILTER.1
+            case Constants.EQP_IR_FILTER.0    : self.equipment = isOn ? self.equipment | Constants.EQP_IR_FILTER.1  : self.equipment | -Constants.EQP_IR_FILTER.1
+            case Constants.EQP_FLASH.0        : self.equipment = isOn ? self.equipment | Constants.EQP_FLASH.1      : self.equipment | Constants.EQP_FLASH.1
+            case Constants.EQP_REMOTE.0       : self.equipment = isOn ? self.equipment | Constants.EQP_REMOTE.1     : self.equipment | Constants.EQP_REMOTE.1
+            
+            case Constants.TMS_ALL_YEAR.0     : self.times = isOn ? self.times | Constants.TMS_ALL_YEAR.1           : self.times     | -Constants.TMS_ALL_YEAR.1
+            case Constants.TMS_SPRING.0       : self.times = isOn ? self.times | Constants.TMS_SPRING.1             : self.times     | -Constants.TMS_SPRING.1
+            case Constants.TMS_SUMMER.0       : self.times = isOn ? self.times | Constants.TMS_SUMMER.1             : self.times     | -Constants.TMS_SUMMER.1
+            case Constants.TMS_AUTUMN.0       : self.times = isOn ? self.times | Constants.TMS_AUTUMN.1             : self.times     | -Constants.TMS_AUTUMN.1
+            case Constants.TMS_WINTER.0       : self.times = isOn ? self.times | Constants.TMS_WINTER.1             : self.times     | -Constants.TMS_WINTER.1
+            case Constants.TMS_JANUARY.0      : self.times = isOn ? self.times | Constants.TMS_JANUARY.1            : self.times     | -Constants.TMS_JANUARY.1
+            case Constants.TMS_FEBRUARY.0     : self.times = isOn ? self.times | Constants.TMS_FEBRUARY.1           : self.times     | -Constants.TMS_FEBRUARY.1
+            case Constants.TMS_MARCH.0        : self.times = isOn ? self.times | Constants.TMS_MARCH.1              : self.times     | -Constants.TMS_MARCH.1
+            case Constants.TMS_APRIL.0        : self.times = isOn ? self.times | Constants.TMS_APRIL.1              : self.times     | -Constants.TMS_APRIL.1
+            case Constants.TMS_MAY.0          : self.times = isOn ? self.times | Constants.TMS_MAY.1                : self.times     | -Constants.TMS_MAY.1
+            case Constants.TMS_JUNE.0         : self.times = isOn ? self.times | Constants.TMS_JUNE.1               : self.times     | -Constants.TMS_JUNE.1
+            case Constants.TMS_JULY.0         : self.times = isOn ? self.times | Constants.TMS_JULY.1               : self.times     | -Constants.TMS_JULY.1
+            case Constants.TMS_AUGUST.0       : self.times = isOn ? self.times | Constants.TMS_AUGUST.1             : self.times     | -Constants.TMS_AUGUST.1
+            case Constants.TMS_SEPTEMBER.0    : self.times = isOn ? self.times | Constants.TMS_SEPTEMBER.1          : self.times     | -Constants.TMS_SEPTEMBER.1
+            case Constants.TMS_OCTOBER.0      : self.times = isOn ? self.times | Constants.TMS_OCTOBER.1            : self.times     | -Constants.TMS_OCTOBER.1
+            case Constants.TMS_NOVEMBER.0     : self.times = isOn ? self.times | Constants.TMS_NOVEMBER.1           : self.times     | -Constants.TMS_NOVEMBER.1
+            case Constants.TMS_DECEMBER.0     : self.times = isOn ? self.times | Constants.TMS_DECEMBER.1           : self.times     | -Constants.TMS_DECEMBER.1
+            
+            case Constants.TAG_NIGHT.0        : self.tags = isOn ? self.tags | Constants.TAG_NIGHT.1                : self.tags      | -Constants.TAG_NIGHT.1
+            case Constants.TAG_ASTRO.0        : self.tags = isOn ? self.tags | Constants.TAG_ASTRO.1                : self.tags      | -Constants.TAG_ASTRO.1
+            case Constants.TAG_MACRO.0        : self.tags = isOn ? self.tags | Constants.TAG_MACRO.1                : self.tags      | -Constants.TAG_MACRO.1
+            case Constants.TAG_POI.0          : self.tags = isOn ? self.tags | Constants.TAG_POI.1                  : self.tags      | -Constants.TAG_POI.1
+            case Constants.TAG_INFRARED.0     : self.tags = isOn ? self.tags | Constants.TAG_INFRARED.1             : self.tags      | -Constants.TAG_INFRARED.1
+            case Constants.TAG_LONG_EXPOSURE.0: self.tags = isOn ? self.tags | Constants.TAG_LONG_EXPOSURE.1        : self.tags      | -Constants.TAG_LONG_EXPOSURE.1
+            case Constants.TAG_CITYSCAPE.0    : self.tags = isOn ? self.tags | Constants.TAG_CITYSCAPE.1            : self.tags      | -Constants.TAG_CITYSCAPE.1
+            case Constants.TAG_LANDSCAPE.0    : self.tags = isOn ? self.tags | Constants.TAG_LANDSCAPE.1            : self.tags      | -Constants.TAG_LANDSCAPE.1
+            case Constants.TAG_STREET.0       : self.tags = isOn ? self.tags | Constants.TAG_STREET.1               : self.tags      | -Constants.TAG_STREET.1
+            case Constants.TAG_BRIDGE.0       : self.tags = isOn ? self.tags | Constants.TAG_BRIDGE.1               : self.tags      | -Constants.TAG_BRIDGE.1
+            case Constants.TAG_LAKE.0         : self.tags = isOn ? self.tags | Constants.TAG_LAKE.1                 : self.tags      | -Constants.TAG_LAKE.1
+            case Constants.TAG_SHIP.0         : self.tags = isOn ? self.tags | Constants.TAG_SHIP.1                 : self.tags      | -Constants.TAG_SHIP.1
+            case Constants.TAG_CAR.0          : self.tags = isOn ? self.tags | Constants.TAG_CAR.1                  : self.tags      | -Constants.TAG_CAR.1
+            case Constants.TAG_FLOWER.0       : self.tags = isOn ? self.tags | Constants.TAG_FLOWER.1               : self.tags      | -Constants.TAG_FLOWER.1
+            case Constants.TAG_TREE.0         : self.tags = isOn ? self.tags | Constants.TAG_TREE.1                 : self.tags      | -Constants.TAG_TREE.1
+            case Constants.TAG_BUILDING.0     : self.tags = isOn ? self.tags | Constants.TAG_BUILDING.1             : self.tags      | -Constants.TAG_BUILDING.1
+            case Constants.TAG_BEACH.0        : self.tags = isOn ? self.tags | Constants.TAG_BEACH.1                : self.tags      | -Constants.TAG_BEACH.1
+            case Constants.TAG_SUNRISE.0      : self.tags = isOn ? self.tags | Constants.TAG_SUNRISE.1              : self.tags      | -Constants.TAG_SUNRISE.1
+            case Constants.TAG_SUNSET.0       : self.tags = isOn ? self.tags | Constants.TAG_SUNSET.1               : self.tags      | -Constants.TAG_SUNSET.1
+            case Constants.TAG_MOON.0         : self.tags = isOn ? self.tags | Constants.TAG_MOON.1                 : self.tags      | -Constants.TAG_MOON.1
+            default                           : break
         }
     }
     
@@ -291,8 +204,58 @@ public class ViewDetailViewController: UIViewController, FoVController {
         if segue.identifier == "doneSegue" {
             self.name  = nameTextField.text!
             self.descr = descriptionTextField.text!
-            setEquipment()
-            setTags()
         }
+    }
+    
+    //MARK: tableview delegate methods
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items!.count
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ItemCell
+        let item : String    = items![indexPath.item]
+        
+        //here is programatically switch make to the table view
+        let switchView = UISwitch(frame: .zero)
+        switchView.setOn(false, animated: true)
+        switchView.tag = indexPath.row // for detect which row switch Changed
+        switchView.onTintColor = UIColor.systemTeal
+        switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
+        cell.accessoryView = switchView
+        
+        cell.textLabel?.text = item
+        
+        if equipmentItems.contains(item) {
+            cell.textLabel?.textColor = Constants.YELLOW
+            cell.detailTextLabel?.text = "Equipment"
+        } else if timesItems.contains(item) {
+            cell.textLabel?.textColor = Constants.BLUE
+            cell.detailTextLabel?.text = "Time"
+        } else {
+            cell.textLabel?.textColor = Constants.RED
+            cell.detailTextLabel?.text = "Tag"
+        }
+        
+        return cell
+    }
+    
+    @objc func switchChanged(_ sender : UISwitch!) {
+        if let text = tableView!.cellForRow(at: IndexPath(row: sender.tag, section:0))?.textLabel!.text {
+            //print("\(text) => \(sender.isOn ? "ON" : "OFF")")
+            setItem(item: text, isOn: sender.isOn)
+        }                        
+    }
+}
+
+
+class ItemCell: UITableViewCell {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        self.tintColor = UIColor.systemTeal
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

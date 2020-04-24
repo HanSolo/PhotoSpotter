@@ -34,10 +34,11 @@
         <attribute name="originLon" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="sensorName" optional="YES" attributeType="String"/>
         <attribute name="tags" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="times" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="ViewCD" positionX="-63" positionY="-18" width="128" height="373"/>
         <element name="CameraCD" positionX="-63" positionY="135" width="128" height="73"/>
         <element name="LensCD" positionX="-54" positionY="144" width="128" height="118"/>
+        <element name="ViewCD" positionX="-63" positionY="-18" width="128" height="388"/>
     </elements>
 </model>

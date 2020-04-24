@@ -85,7 +85,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func done(segue:UIStoryboardSegue) {
         let viewDetailVC = segue.source as! ViewDetailViewController
-        let view = View(name: viewDetailVC.name, description: viewDetailVC.descr, cameraPoint: stateController!.view.cameraPoint, motifPoint: stateController!.view.motifPoint, camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation, mapRect: stateController!.view.mapRect, tags: viewDetailVC.tags, equipment: viewDetailVC.equipment)
+        let view = View(name: viewDetailVC.name, description: viewDetailVC.descr, cameraPoint: stateController!.view.cameraPoint, motifPoint: stateController!.view.motifPoint, camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation, mapRect: stateController!.view.mapRect, tags: viewDetailVC.tags, equipment: viewDetailVC.equipment, times: viewDetailVC.times)
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             stateController!.addView(view)
             stateController!.addViewToCD(appDelegate: appDelegate, view: view)
@@ -141,6 +141,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         #endif
     }
     
+    
     // MARK: Tableview delegate and datasource methods
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -155,51 +156,106 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         cell.textLabel?.text = view.name
         
+        var text           : String
+        var equipmentBegin : Int
+        var equipmentEnd   : Int
+        var timesBegin     : Int
+        var timesEnd       : Int
+        var tagsBegin      : Int
+        
         var equipment : String = " ["
-        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_TRIPOD,     bitmask: view.equipment) ?         Constants.EQP_TRIPOD.0      : ""
-        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_GIMBAL,     bitmask: view.equipment) ? (", " + Constants.EQP_GIMBAL.0)     : ""
-        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_CPL_FILTER, bitmask: view.equipment) ? (", " + Constants.EQP_CPL_FILTER.0) : ""
-        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_ND_FILTER,  bitmask: view.equipment) ? (", " + Constants.EQP_ND_FILTER.0)  : ""
-        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_IR_FILTER,  bitmask: view.equipment) ? (", " + Constants.EQP_IR_FILTER.0)  : ""
-        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_FLASH,      bitmask: view.equipment) ? (", " + Constants.EQP_FLASH.0)      : ""
-        equipment += "]"
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_TRIPOD,     bitmask: view.equipment) ? Helper.textToAdd(item: Constants.EQP_TRIPOD.0,     withComma: true) : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_GIMBAL,     bitmask: view.equipment) ? Helper.textToAdd(item: Constants.EQP_GIMBAL.0,     withComma: true) : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_CPL_FILTER, bitmask: view.equipment) ? Helper.textToAdd(item: Constants.EQP_CPL_FILTER.0, withComma: true) : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_ND_FILTER,  bitmask: view.equipment) ? Helper.textToAdd(item: Constants.EQP_ND_FILTER.0,  withComma: true) : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_IR_FILTER,  bitmask: view.equipment) ? Helper.textToAdd(item: Constants.EQP_IR_FILTER.0,  withComma: true) : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_FLASH,      bitmask: view.equipment) ? Helper.textToAdd(item: Constants.EQP_FLASH.0,      withComma: true) : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_REMOTE,     bitmask: view.equipment) ? Helper.textToAdd(item: Constants.EQP_REMOTE.0,     withComma: true) : ""
         
-        if equipment.count > 3 {
-            cell.detailTextLabel?.text = view.description + equipment
+        if equipment.count > 2 {
+            equipment.removeLast(2)
+            equipment += "]"
+            text = view.description + equipment
         } else {
-            cell.detailTextLabel?.text = view.description
+            text = view.description
         }
+        equipmentBegin = view.description.count        
+        equipmentEnd   = equipmentBegin + (equipment.count > 2 ? equipment.count : 0)
         
-        var tags : String = ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_NIGHT,         bitmask: view.tags) ?        Constants.TAG_NIGHT.0          : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_ASTRO,         bitmask: view.tags) ? (" " + Constants.TAG_ASTRO.0)         : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_MACRO,         bitmask: view.tags) ? (" " + Constants.TAG_MACRO.0)         : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_POI,           bitmask: view.tags) ? (" " + Constants.TAG_POI.0)           : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_INFRARED,      bitmask: view.tags) ? (" " + Constants.TAG_INFRARED.0)      : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_LONG_EXPOSURE, bitmask: view.tags) ? (" " + Constants.TAG_LONG_EXPOSURE.0) : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_CITYSCAPE,     bitmask: view.tags) ? (" " + Constants.TAG_CITYSCAPE.0)     : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_LANDSCAPE,     bitmask: view.tags) ? (" " + Constants.TAG_LANDSCAPE.0)     : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_STREET,        bitmask: view.tags) ? (" " + Constants.TAG_STREET.0)        : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_BRIDGE,        bitmask: view.tags) ? (" " + Constants.TAG_BRIDGE.0)        : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_LAKE,          bitmask: view.tags) ? (" " + Constants.TAG_LAKE.0)          : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_SHIP,          bitmask: view.tags) ? (" " + Constants.TAG_SHIP.0)          : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_CAR,           bitmask: view.tags) ? (" " + Constants.TAG_CAR.0)           : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_FLOWER,        bitmask: view.tags) ? (" " + Constants.TAG_FLOWER.0)        : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_TREE,          bitmask: view.tags) ? (" " + Constants.TAG_TREE.0)          : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_BUILDING,      bitmask: view.tags) ? (" " + Constants.TAG_BUILDING.0)      : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_BEACH,         bitmask: view.tags) ? (" " + Constants.TAG_BEACH.0)         : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_SUNRISE,       bitmask: view.tags) ? (" " + Constants.TAG_SUNRISE.0)       : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_SUNSET,        bitmask: view.tags) ? (" " + Constants.TAG_SUNSET.0)        : ""
-        tags += Helper.tagInBitMask(tag: Constants.TAG_MOON,          bitmask: view.tags) ? (" " + Constants.TAG_MOON.0)          : ""
+        var times : String = ""
+        times += Helper.timeInBitMask(time: Constants.TMS_ALL_YEAR, bitmask: view.times)  ? Helper.textToAdd(item: Constants.TMS_ALL_YEAR.0)  : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_SPRING, bitmask: view.times)    ? Helper.textToAdd(item: Constants.TMS_SPRING.0)    : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_SUMMER, bitmask: view.times)    ? Helper.textToAdd(item: Constants.TMS_SUMMER.0)    : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_AUTUMN, bitmask: view.times)    ? Helper.textToAdd(item: Constants.TMS_AUTUMN.0)    : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_WINTER, bitmask: view.times)    ? Helper.textToAdd(item: Constants.TMS_WINTER.0)    : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_JANUARY, bitmask: view.times)   ? Helper.textToAdd(item: Constants.TMS_JANUARY.0)   : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_FEBRUARY, bitmask: view.times)  ? Helper.textToAdd(item: Constants.TMS_FEBRUARY.0)  : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_MARCH, bitmask: view.times)     ? Helper.textToAdd(item: Constants.TMS_MARCH.0)     : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_APRIL, bitmask: view.times)     ? Helper.textToAdd(item: Constants.TMS_APRIL.0)     : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_MAY, bitmask: view.times)       ? Helper.textToAdd(item: Constants.TMS_MAY.0)       : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_JUNE, bitmask: view.times)      ? Helper.textToAdd(item: Constants.TMS_JUNE.0)      : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_JULY, bitmask: view.times)      ? Helper.textToAdd(item: Constants.TMS_JULY.0)      : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_AUGUST, bitmask: view.times)    ? Helper.textToAdd(item: Constants.TMS_AUGUST.0)    : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_SEPTEMBER, bitmask: view.times) ? Helper.textToAdd(item: Constants.TMS_SEPTEMBER.0) : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_OCTOBER, bitmask: view.times)   ? Helper.textToAdd(item: Constants.TMS_OCTOBER.0)   : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_NOVEMBER, bitmask: view.times)  ? Helper.textToAdd(item: Constants.TMS_NOVEMBER.0)  : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_DECEMBER, bitmask: view.times)  ? Helper.textToAdd(item: Constants.TMS_DECEMBER.0)  : ""
         
-        if tags.count > 0 {
+        if times.count > 0 {
             if equipment.count > 2 {
-                cell.detailTextLabel?.text! += ("\n" + tags)
+                times.removeLast()
+                text += ("\n" + times)
             } else {
-                cell.detailTextLabel?.text! += tags
+                text += times
             }
         }
-                
+        timesBegin = equipment.count > 2 ? equipmentEnd + 1 : equipmentEnd
+        timesEnd   = timesBegin + times.count
+        
+        var tags : String = ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_NIGHT,         bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_NIGHT.0)         : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_ASTRO,         bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_ASTRO.0)         : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_MACRO,         bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_MACRO.0)         : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_POI,           bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_POI.0)           : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_INFRARED,      bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_INFRARED.0)      : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_LONG_EXPOSURE, bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_LONG_EXPOSURE.0) : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_CITYSCAPE,     bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_CITYSCAPE.0)     : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_LANDSCAPE,     bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_LANDSCAPE.0)     : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_STREET,        bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_STREET.0)        : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_BRIDGE,        bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_BRIDGE.0)        : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_LAKE,          bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_LAKE.0)          : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_SHIP,          bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_SHIP.0)          : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_CAR,           bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_CAR.0)           : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_FLOWER,        bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_FLOWER.0)        : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_TREE,          bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_TREE.0)          : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_BUILDING,      bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_BUILDING.0)      : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_BEACH,         bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_BEACH.0)         : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_SUNRISE,       bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_SUNRISE.0)       : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_SUNSET,        bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_SUNSET.0)        : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_MOON,          bitmask: view.tags) ? Helper.textToAdd(item: Constants.TAG_MOON.0)          : ""
+        
+        if tags.count > 0 {
+            if times.count > 0 || equipment.count > 2 {
+                tags.removeLast()
+                text += ("\n" + tags)
+            } else {
+                text += tags
+            }
+        }
+        tagsBegin = times.count == 0 ? timesEnd : timesEnd + 1
+        print("text length    : \(text.count)")
+        print("equipment begin: \(equipmentBegin) => \(equipment.count)  end: \(equipmentEnd)")
+        print("times begin    : \(timesBegin) => \(times.count)  end: \(timesEnd)")
+        print("tags begin     : \(timesBegin) => \(tags.count)")
+        print("text: \(text)")
+        if text.count > 0 {
+            let detailText :NSMutableAttributedString = NSMutableAttributedString(string: text)
+            detailText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.YELLOW], range: NSRange(location: equipmentBegin, length: equipment.count > 2 ? equipment.count : 0))
+            detailText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.BLUE], range: NSRange(location: timesBegin, length: times.count))
+            detailText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.RED], range: NSRange(location: tagsBegin, length: tags.count))
+        
+            cell.detailTextLabel?.attributedText = detailText
+        }
         return cell
     }
     

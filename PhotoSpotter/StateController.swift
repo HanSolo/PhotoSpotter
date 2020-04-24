@@ -15,7 +15,7 @@ class StateController {
     // Current view
     private(set) var view : View = Constants.DEFAULT_VIEW
     func setView(_ view: View) {
-        self.view = view
+        self.view = view.clone()
     }
     
     
@@ -480,6 +480,7 @@ class StateController {
                     viewCD.setValue(view.mapRect.size.height, forKeyPath: "mapHeight")
                     viewCD.setValue(view.tags, forKeyPath: "tags")
                     viewCD.setValue(view.equipment, forKeyPath: "equipment")
+                    viewCD.setValue(view.times, forKeyPath: "times")
                 } else {
                     // Insert
                     let viewCD = NSManagedObject(entity: entity, insertInto: managedContext)
@@ -505,6 +506,7 @@ class StateController {
                     viewCD.setValue(view.mapRect.size.height, forKeyPath: "mapHeight")
                     viewCD.setValue(view.tags, forKeyPath: "tags")
                     viewCD.setValue(view.equipment, forKeyPath: "equipment")
+                    viewCD.setValue(view.times, forKeyPath: "times")
                 }
             } catch let error as NSError {
                 print("Error fetching view from CoreData. \(error), \(error.userInfo)")
@@ -552,6 +554,7 @@ class StateController {
                 viewCD.setValue(view.mapRect.size.height, forKeyPath: "mapHeight")
                 viewCD.setValue(view.tags, forKeyPath: "tags")
                 viewCD.setValue(view.equipment, forKeyPath: "equipment")
+                viewCD.setValue(view.times, forKeyPath: "times")
             }
         } catch let error as NSError {
             print("Error fetching view from CoreData. \(error), \(error.userInfo)")
@@ -592,6 +595,7 @@ class StateController {
                 viewCD.setValue(view.mapRect.size.height, forKeyPath: "mapHeight")
                 viewCD.setValue(view.tags, forKeyPath: "tags")
                 viewCD.setValue(view.equipment, forKeyPath: "equipment")
+                viewCD.setValue(view.times, forKeyPath: "times")
             } else {
                 return
             }
@@ -663,7 +667,8 @@ class StateController {
                             mapWidth      : viewCD.value(forKey: "mapWidth") as! Double,
                             mapHeight     : viewCD.value(forKey: "mapHeight") as! Double,
                             tags          : viewCD.value(forKey: "tags") as! Int32,
-                            equipment     : viewCD.value(forKey: "equipment") as! Int32)
+                            equipment     : viewCD.value(forKey: "equipment") as! Int32,
+                            times         : viewCD.value(forKey: "times") as! Int32)
             viewsInCoreData.append(view)
         }
         for view in viewsInCoreData {

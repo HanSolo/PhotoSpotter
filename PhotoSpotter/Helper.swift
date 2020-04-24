@@ -280,6 +280,9 @@ public class Helper {
     public static func equipmentInBitMask(equipment: (String, Int32), bitmask: Int32) -> Bool {
         return (bitmask & equipment.1) != 0
     }
+    public static func timeInBitMask(time: (String, Int32), bitmask: Int32) -> Bool {
+        return (bitmask & time.1) != 0
+    }
     
     public static func setNavBarTitle(navBar: UINavigationBar) -> Void {
         navBar.topItem?.title = Constants.APP_TITLE
@@ -397,5 +400,107 @@ public class Helper {
         }
         
         return views
+    }
+    
+    public static func textToAdd(item: String, withComma: Bool? = false) -> String {
+        return nil == withComma ? item + " " : withComma! ? item + ", " : item + " "
+    }
+    
+    public static func getItemsTextFor(view: View) -> NSAttributedString {
+        var text           : String
+        var equipmentBegin : Int
+        var equipmentEnd   : Int
+        var timesBegin     : Int
+        var timesEnd       : Int
+        var tagsBegin      : Int
+        
+        var equipment : String = "["
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_TRIPOD,     bitmask: view.equipment) ? textToAdd(item: Constants.EQP_TRIPOD.0,     withComma: true) : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_GIMBAL,     bitmask: view.equipment) ? textToAdd(item: Constants.EQP_GIMBAL.0,     withComma: true) : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_CPL_FILTER, bitmask: view.equipment) ? textToAdd(item: Constants.EQP_CPL_FILTER.0, withComma: true) : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_ND_FILTER,  bitmask: view.equipment) ? textToAdd(item: Constants.EQP_ND_FILTER.0,  withComma: true) : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_IR_FILTER,  bitmask: view.equipment) ? textToAdd(item: Constants.EQP_IR_FILTER.0,  withComma: true) : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_FLASH,      bitmask: view.equipment) ? textToAdd(item: Constants.EQP_FLASH.0,      withComma: true) : ""
+        equipment += Helper.equipmentInBitMask(equipment: Constants.EQP_REMOTE,     bitmask: view.equipment) ? textToAdd(item: Constants.EQP_REMOTE.0,     withComma: true) : ""
+        
+        if equipment.count > 1 {
+            equipment.removeLast(2)
+            equipment += "]"
+            text = equipment
+        } else {
+            text = ""
+        }
+        equipmentBegin = 0
+        equipmentEnd   = equipmentBegin + (equipment.count > 1 ? equipment.count : 0)
+        
+        var times : String = ""
+        times += Helper.timeInBitMask(time: Constants.TMS_ALL_YEAR, bitmask: view.times)  ? textToAdd(item: Constants.TMS_ALL_YEAR.0)  : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_SPRING, bitmask: view.times)    ? textToAdd(item: Constants.TMS_SPRING.0)    : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_SUMMER, bitmask: view.times)    ? textToAdd(item: Constants.TMS_SUMMER.0)    : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_AUTUMN, bitmask: view.times)    ? textToAdd(item: Constants.TMS_AUTUMN.0)    : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_WINTER, bitmask: view.times)    ? textToAdd(item: Constants.TMS_WINTER.0)    : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_JANUARY, bitmask: view.times)   ? textToAdd(item: Constants.TMS_JANUARY.0)   : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_FEBRUARY, bitmask: view.times)  ? textToAdd(item: Constants.TMS_FEBRUARY.0)  : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_MARCH, bitmask: view.times)     ? textToAdd(item: Constants.TMS_MARCH.0)     : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_APRIL, bitmask: view.times)     ? textToAdd(item: Constants.TMS_APRIL.0)     : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_MAY, bitmask: view.times)       ? textToAdd(item: Constants.TMS_MAY.0)       : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_JUNE, bitmask: view.times)      ? textToAdd(item: Constants.TMS_JUNE.0)      : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_JULY, bitmask: view.times)      ? textToAdd(item: Constants.TMS_JULY.0)      : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_AUGUST, bitmask: view.times)    ? textToAdd(item: Constants.TMS_AUGUST.0)    : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_SEPTEMBER, bitmask: view.times) ? textToAdd(item: Constants.TMS_SEPTEMBER.0) : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_OCTOBER, bitmask: view.times)   ? textToAdd(item: Constants.TMS_OCTOBER.0)   : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_NOVEMBER, bitmask: view.times)  ? textToAdd(item: Constants.TMS_NOVEMBER.0)  : ""
+        times += Helper.timeInBitMask(time: Constants.TMS_DECEMBER, bitmask: view.times)  ? textToAdd(item: Constants.TMS_DECEMBER.0)  : ""
+        
+        if times.count > 0 {
+            if equipment.count > 1 {
+                times.removeLast()
+                text += ("\n" + times)
+            } else {
+                text += times
+            }
+        }
+        timesBegin = equipment.count == 0 ? equipmentEnd : equipmentEnd + 1
+        timesEnd   = timesBegin + times.count
+        
+        var tags : String = ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_NIGHT,         bitmask: view.tags) ? textToAdd(item: Constants.TAG_NIGHT.0)         : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_ASTRO,         bitmask: view.tags) ? textToAdd(item: Constants.TAG_ASTRO.0)         : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_MACRO,         bitmask: view.tags) ? textToAdd(item: Constants.TAG_MACRO.0)         : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_POI,           bitmask: view.tags) ? textToAdd(item: Constants.TAG_POI.0)           : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_INFRARED,      bitmask: view.tags) ? textToAdd(item: Constants.TAG_INFRARED.0)      : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_LONG_EXPOSURE, bitmask: view.tags) ? textToAdd(item: Constants.TAG_LONG_EXPOSURE.0) : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_CITYSCAPE,     bitmask: view.tags) ? textToAdd(item: Constants.TAG_CITYSCAPE.0)     : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_LANDSCAPE,     bitmask: view.tags) ? textToAdd(item: Constants.TAG_LANDSCAPE.0)     : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_STREET,        bitmask: view.tags) ? textToAdd(item: Constants.TAG_STREET.0)        : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_BRIDGE,        bitmask: view.tags) ? textToAdd(item: Constants.TAG_BRIDGE.0)        : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_LAKE,          bitmask: view.tags) ? textToAdd(item: Constants.TAG_LAKE.0)          : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_SHIP,          bitmask: view.tags) ? textToAdd(item: Constants.TAG_SHIP.0)          : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_CAR,           bitmask: view.tags) ? textToAdd(item: Constants.TAG_CAR.0)           : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_FLOWER,        bitmask: view.tags) ? textToAdd(item: Constants.TAG_FLOWER.0)        : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_TREE,          bitmask: view.tags) ? textToAdd(item: Constants.TAG_TREE.0)          : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_BUILDING,      bitmask: view.tags) ? textToAdd(item: Constants.TAG_BUILDING.0)      : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_BEACH,         bitmask: view.tags) ? textToAdd(item: Constants.TAG_BEACH.0)         : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_SUNRISE,       bitmask: view.tags) ? textToAdd(item: Constants.TAG_SUNRISE.0)       : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_SUNSET,        bitmask: view.tags) ? textToAdd(item: Constants.TAG_SUNSET.0)        : ""
+        tags += Helper.tagInBitMask(tag: Constants.TAG_MOON,          bitmask: view.tags) ? textToAdd(item: Constants.TAG_MOON.0)          : ""
+        
+        if tags.count > 0 {
+            if times.count > 0 || equipment.count > 1 {
+                tags.removeLast()
+                text += ("\n" + tags)
+            } else {
+                text += tags
+            }
+        }
+        tagsBegin = times.count == 0 ? timesEnd : timesEnd + 1
+        
+        let itemsText :NSMutableAttributedString = NSMutableAttributedString(string: text)
+        if text.count > 0 {
+            itemsText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.YELLOW], range: NSRange(location: equipmentBegin, length: equipment.count > 2 ? equipment.count : 0))
+            itemsText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.BLUE], range: NSRange(location: timesBegin, length: times.count))
+            itemsText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.RED], range: NSRange(location: tagsBegin, length: tags.count))
+        }
+        return itemsText
     }
 }

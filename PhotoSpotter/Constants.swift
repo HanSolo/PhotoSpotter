@@ -63,6 +63,7 @@ public class Constants {
     
     public static let YELLOW              : UIColor = UIColor(red: 1.00, green: 0.77, blue: 0.32, alpha: 1.00)
     public static let RED                 : UIColor = UIColor(red: 1.00, green: 0.42, blue: 0.37, alpha: 1.00)
+    public static let BLUE                : UIColor = UIColor(red: 0.30, green: 0.78, blue: 1.00, alpha: 1.00)
     
     
     public static let SENSOR_FORMATS      : [SensorFormat] = [ SensorFormat.MICRO_FOUR_THIRDS, SensorFormat.APS_C_CANON, SensorFormat.APS_C,
@@ -105,28 +106,6 @@ public class Constants {
     public static let INFO_ICON           : UIImage = UIImage(systemName: "info.circle")!
     public static let ERROR_ICON          : UIImage = UIImage(systemName: "xmark.octagon")!
     
-    // Tags
-    public static let TAG_NIGHT         : (String, Int32) = ("Nightshot"    , 1 << 0)  //     1
-    public static let TAG_ASTRO         : (String, Int32) = ("Astro"        , 1 << 1)  //     2
-    public static let TAG_MACRO         : (String, Int32) = ("Macro"        , 1 << 2)  //     4
-    public static let TAG_POI           : (String, Int32) = ("POI"          , 1 << 3)  //     8
-    public static let TAG_INFRARED      : (String, Int32) = ("Infrared"     , 1 << 4)  //    16
-    public static let TAG_LONG_EXPOSURE : (String, Int32) = ("Long Exposure", 1 << 5)  //    32
-    public static let TAG_CITYSCAPE     : (String, Int32) = ("Cityscape"    , 1 << 6)  //    64
-    public static let TAG_LANDSCAPE     : (String, Int32) = ("Landscape"    , 1 << 7)  //   128
-    public static let TAG_STREET        : (String, Int32) = ("Street"       , 1 << 8)  //   256
-    public static let TAG_BRIDGE        : (String, Int32) = ("Bridge"       , 1 << 9)  //   512
-    public static let TAG_LAKE          : (String, Int32) = ("Lake"         , 1 << 10) //  1024
-    public static let TAG_SHIP          : (String, Int32) = ("Ship"         , 1 << 11) //  2048
-    public static let TAG_CAR           : (String, Int32) = ("Car"          , 1 << 12) //  4096
-    public static let TAG_FLOWER        : (String, Int32) = ("Flower"       , 1 << 13) //  8192
-    public static let TAG_TREE          : (String, Int32) = ("Tree"         , 1 << 14) // 16384
-    public static let TAG_BUILDING      : (String, Int32) = ("Building"     , 1 << 15) // 32768
-    public static let TAG_BEACH         : (String, Int32) = ("Beach"        , 1 << 16) // 65536
-    public static let TAG_SUNRISE       : (String, Int32) = ("Sunrise"      , 1 << 17) // 65536
-    public static let TAG_SUNSET        : (String, Int32) = ("Sunset"       , 1 << 18) // 65536
-    public static let TAG_MOON          : (String, Int32) = ("Moon"         , 1 << 19) // 65536
-        
     // Equipment
     public static let EQP_TRIPOD     : (String, Int32) = ("Tripod",     1 << 0) //  1
     public static let EQP_GIMBAL     : (String, Int32) = ("Gimbal",     1 << 1) //  2
@@ -134,7 +113,48 @@ public class Constants {
     public static let EQP_ND_FILTER  : (String, Int32) = ("ND Filter",  1 << 3) //  8
     public static let EQP_IR_FILTER  : (String, Int32) = ("IR Filter",  1 << 4) // 16
     public static let EQP_FLASH      : (String, Int32) = ("Flash",      1 << 5) // 32
+    public static let EQP_REMOTE     : (String, Int32) = ("Remote",     1 << 6) // 64
     
+    // Times
+    public static let TMS_ALL_YEAR   : (String, Int32) = ("All Year",   1 << 0)
+    public static let TMS_SPRING     : (String, Int32) = ("Spring",     1 << 1)
+    public static let TMS_SUMMER     : (String, Int32) = ("Summer",     1 << 2)
+    public static let TMS_AUTUMN     : (String, Int32) = ("Autumn",     1 << 3)
+    public static let TMS_WINTER     : (String, Int32) = ("Winter",     1 << 4)
+    public static let TMS_JANUARY    : (String, Int32) = ("January",    1 << 5)
+    public static let TMS_FEBRUARY   : (String, Int32) = ("February",   1 << 6)
+    public static let TMS_MARCH      : (String, Int32) = ("March",      1 << 7)
+    public static let TMS_APRIL      : (String, Int32) = ("April",      1 << 8)
+    public static let TMS_MAY        : (String, Int32) = ("May",        1 << 9)
+    public static let TMS_JUNE       : (String, Int32) = ("June",       1 << 10)
+    public static let TMS_JULY       : (String, Int32) = ("July",       1 << 11)
+    public static let TMS_AUGUST     : (String, Int32) = ("August",     1 << 12)
+    public static let TMS_SEPTEMBER  : (String, Int32) = ("September",  1 << 13)
+    public static let TMS_OCTOBER    : (String, Int32) = ("October",    1 << 14)
+    public static let TMS_NOVEMBER   : (String, Int32) = ("November",   1 << 15)
+    public static let TMS_DECEMBER   : (String, Int32) = ("December",   1 << 16)
+    
+    // Tags
+    public static let TAG_NIGHT         : (String, Int32) = ("Nightshot"    , 1 << 0)
+    public static let TAG_ASTRO         : (String, Int32) = ("Astro"        , 1 << 1)
+    public static let TAG_MACRO         : (String, Int32) = ("Macro"        , 1 << 2)
+    public static let TAG_POI           : (String, Int32) = ("POI"          , 1 << 3)
+    public static let TAG_INFRARED      : (String, Int32) = ("Infrared"     , 1 << 4)
+    public static let TAG_LONG_EXPOSURE : (String, Int32) = ("Long Exposure", 1 << 5)
+    public static let TAG_CITYSCAPE     : (String, Int32) = ("Cityscape"    , 1 << 6)
+    public static let TAG_LANDSCAPE     : (String, Int32) = ("Landscape"    , 1 << 7)
+    public static let TAG_STREET        : (String, Int32) = ("Street"       , 1 << 8)
+    public static let TAG_BRIDGE        : (String, Int32) = ("Bridge"       , 1 << 9)
+    public static let TAG_LAKE          : (String, Int32) = ("Lake"         , 1 << 10)
+    public static let TAG_SHIP          : (String, Int32) = ("Ship"         , 1 << 11)
+    public static let TAG_CAR           : (String, Int32) = ("Car"          , 1 << 12)
+    public static let TAG_FLOWER        : (String, Int32) = ("Flower"       , 1 << 13)
+    public static let TAG_TREE          : (String, Int32) = ("Tree"         , 1 << 14)
+    public static let TAG_BUILDING      : (String, Int32) = ("Building"     , 1 << 15)
+    public static let TAG_BEACH         : (String, Int32) = ("Beach"        , 1 << 16)
+    public static let TAG_SUNRISE       : (String, Int32) = ("Sunrise"      , 1 << 17)
+    public static let TAG_SUNSET        : (String, Int32) = ("Sunset"       , 1 << 18)
+    public static let TAG_MOON          : (String, Int32) = ("Moon"         , 1 << 19)
     
     // CoreData entities
     public static let LENS_CD   : String = "LensCD"

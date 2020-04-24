@@ -31,11 +31,12 @@ public struct ViewData: Codable {
     let mapHeight     : String?
     let tags          : String?
     let equipment     : String?
+    let times         : String?
     
     
     init(name: String, description: String, cameraLat: String, cameraLon: String, motifLat: String, motifLon: String, cameraName: String, sensorName: String,
          lensName: String, minFocalLength: String, maxFocalLength: String, minAperture: String, maxAperture: String,
-         focalLength: String, aperture: String, orientation: String, originLat: String, originLon: String, mapWidth: String, mapHeight: String, tags: String, equipment: String) {
+         focalLength: String, aperture: String, orientation: String, originLat: String, originLon: String, mapWidth: String, mapHeight: String, tags: String, equipment: String, times: String) {
         self.name           = name
         self.description    = description
         self.cameraLat      = cameraLat
@@ -58,6 +59,7 @@ public struct ViewData: Codable {
         self.mapHeight      = mapHeight
         self.tags           = tags
         self.equipment      = equipment
+        self.times          = times
     }
     init(dictionary: Dictionary<String, String>) throws {
         self = try JSONDecoder().decode(ViewData.self, from: JSONSerialization.data(withJSONObject: dictionary))

@@ -23,9 +23,10 @@ public class View: Equatable, Hashable {
     var mapRect     : MKMapRect
     var tags        : Int32
     var equipment   : Int32
+    var times       : Int32
     
     
-    init(name: String, description: String, cameraPoint: MKMapPoint, motifPoint: MKMapPoint, camera: Camera, lens: Lens, focalLength: Double, aperture: Double, orientation: Orientation, mapRect: MKMapRect, tags: Int32? = 0, equipment: Int32? = 0) {
+    init(name: String, description: String, cameraPoint: MKMapPoint, motifPoint: MKMapPoint, camera: Camera, lens: Lens, focalLength: Double, aperture: Double, orientation: Orientation, mapRect: MKMapRect, tags: Int32? = 0, equipment: Int32? = 0, times: Int32? = 0) {
         self.name        = name
         self.description = description
         self.cameraPoint = cameraPoint
@@ -38,6 +39,7 @@ public class View: Equatable, Hashable {
         self.mapRect     = mapRect
         self.tags        = tags ?? 0
         self.equipment   = equipment ?? 0
+        self.times       = times ?? 0
     }
     
     init(dictionary: Dictionary<String, String>, cameras: [Camera], lenses: [Lens]) throws {        
@@ -68,6 +70,7 @@ public class View: Equatable, Hashable {
         
         self.tags      = Int32(viewData.tags ?? "0") ?? 0
         self.equipment = Int32(viewData.equipment ?? "0") ?? 0
+        self.times     = Int32(viewData.times ?? "0") ?? 0
     }
     
     init(viewData: ViewData) {
@@ -99,11 +102,12 @@ public class View: Equatable, Hashable {
         
         self.tags      = Int32(viewData.tags ?? "0") ?? 0
         self.equipment = Int32(viewData.equipment ?? "0") ?? 0
+        self.times     = Int32(viewData.times ?? "0") ?? 0
     }
     
     init(name: String, description: String, cameraLat: Double, cameraLon: Double, motifLat: Double, motifLon: Double, cameraName: String, sensorName: String,
     lensName: String, minFocalLength: Double, maxFocalLength: Double, minAperture: Double, maxAperture: Double,
-    focalLength: Double, aperture: Double, orientation: String, originLat: Double, originLon: Double, mapWidth: Double, mapHeight: Double, tags: Int32, equipment: Int32) {
+    focalLength: Double, aperture: Double, orientation: String, originLat: Double, originLon: Double, mapWidth: Double, mapHeight: Double, tags: Int32, equipment: Int32, times: Int32) {
         self.name          = name
         self.description   = description
         self.cameraPoint   = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees(cameraLat), longitude: CLLocationDegrees(cameraLon)))
@@ -121,6 +125,7 @@ public class View: Equatable, Hashable {
         self.mapRect       = MKMapRect(origin: origin, size: size)
         self.tags          = tags
         self.equipment     = equipment
+        self.times         = times
     }
     
     public static func ==(lhs: View, rhs: View) -> Bool {
@@ -152,7 +157,8 @@ public class View: Equatable, Hashable {
         jsonString += "\"mapWidth\":\"\(mapRect.size.width)\","
         jsonString += "\"mapHeight\":\"\(mapRect.size.height)\","
         jsonString += "\"tags\":\"\(tags)\","
-        jsonString += "\"equipment\":\"\(equipment)\""
+        jsonString += "\"equipment\":\"\(equipment)\","
+        jsonString += "\"times\":\"\(times)\""
         jsonString += "}"
         return jsonString
     }
@@ -180,11 +186,20 @@ public class View: Equatable, Hashable {
         jsonString += "\"mapWidth\":\"\(mapRect.size.width)\","
         jsonString += "\"mapHeight\":\"\(mapRect.size.height)\","
         jsonString += "\"tags\":\"\(tags)\","
-        jsonString += "\"equipment\":\"\(equipment)\""
+        jsonString += "\"equipment\":\"\(equipment)\","
+        jsonString += "\"times\":\"\(times)\""
         jsonString += "}"
         return jsonString
     }
     
+    public func clone() -> View {
+        return View(name: self.name, description: self.description,
+                    cameraLat: self.cameraPoint.coordinate.latitude, cameraLon: self.cameraPoint.coordinate.longitude, motifLat: self.motifPoint.coordinate.latitude, motifLon: self.motifPoint.coordinate.longitude,
+                    cameraName: self.camera.name, sensorName: self.camera.sensorFormat.rawValue, lensName: self.lens.name, minFocalLength: self.lens.minFocalLength, maxFocalLength: self.lens.maxFocalLength,
+                    minAperture: self.lens.minAperture, maxAperture: self.lens.maxAperture, focalLength: self.focalLength, aperture: self.aperture, orientation: self.orientation.rawValue,
+                    originLat: self.mapRect.origin.coordinate.latitude, originLon: self.mapRect.origin.coordinate.longitude, mapWidth: self.mapRect.width, mapHeight: self.mapRect.height,
+                    tags: self.tags, equipment: self.equipment, times: self.times)
+    }
     
     // Make sure the class conforms to hashable protocol
     public func hash(into hasher: inout Hasher) {

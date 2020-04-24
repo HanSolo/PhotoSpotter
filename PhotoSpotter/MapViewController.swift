@@ -270,24 +270,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let dX = motifPin!.point().x - cameraPin!.point().x
         let dY = motifPin!.point().y - cameraPin!.point().y
         
-        self.cameraPin = MapPin(pinType: PinType.camera, coordinate: mapView.centerCoordinate)
-        self.motifPin  = MapPin(pinType: PinType.motif, coordinate : MKMapPoint(x: self.cameraPin!.point().x + dX, y: self.cameraPin!.point().y + dY).coordinate)
+        let cameraPoint :MKMapPoint = MKMapPoint(mapView.centerCoordinate)
+        let motifPoint  :MKMapPoint = MKMapPoint(x: cameraPoint.x + dX, y: cameraPoint.y + dY)
+        let mapRect     :MKMapRect  = MKMapRect(origin: cameraPoint, size: MKMapSize(width: stateController!.view.mapRect.width, height: stateController!.view.mapRect.height))
         
-        self.mapView.removeAnnotations(self.mapPins)
-        self.mapPins.removeAll()
-        self.mapPins.append(self.cameraPin!)
-        self.mapPins.append(self.motifPin!)
-        self.mapView.addAnnotations(mapPins)
-        
-        self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
-        
-        stateController!.view.cameraPoint = self.cameraPin!.point()
-        stateController!.view.motifPoint  = self.motifPin!.point()
-        
-        updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
-        updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
-        updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
-        updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
+        let newView :View = View(name: stateController!.view.name, description: stateController!.view.description, cameraPoint: cameraPoint, motifPoint: motifPoint,
+                                 camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture,
+                                 orientation: stateController!.view.orientation, mapRect: mapRect)
+        setView(view: newView)
     }
     
     @IBAction func mapTypeChanged(_ sender: Any) {
@@ -447,8 +437,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
             if annotationView == nil {
                 annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                annotationView!.canShowCallout = true
+                annotationView!.canShowCallout           = true
                 annotationView!.isUserInteractionEnabled = true
+                
+                // Add items e.g. equipment, times, tags
+                let itemsLabel : UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
+                itemsLabel.numberOfLines = 0
+                itemsLabel.attributedText = Helper.getItemsTextFor(view: stateController!.view)
+                itemsLabel.font           = itemsLabel.font.withSize(10)
+                let width = NSLayoutConstraint(item: itemsLabel, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.lessThanOrEqual, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 200)
+                itemsLabel.addConstraint(width)
+                let height = NSLayoutConstraint(item: itemsLabel, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.lessThanOrEqual, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 90)
+                itemsLabel.addConstraint(height)
+                annotationView!.detailCalloutAccessoryView = itemsLabel
+                
+                // Add button
                 let viewButton : UIButton = UIButton(type: .infoLight)
                 let icon       : UIImage  = UIImage(systemName: "viewfinder.circle")!
                 viewButton.setImage(icon, for: .normal)
@@ -816,6 +819,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                    view.cameraPoint.coordinate.longitude != self.cameraPin!.coordinate.longitude {
                     let viewAnnotation : MKPointAnnotation = MKPointAnnotation()
                     viewAnnotation.title      = view.name
+                                    
                     viewAnnotation.coordinate = view.cameraPoint.coordinate
                     viewAnnotations.append(viewAnnotation)
                 }
@@ -1133,5 +1137,85 @@ class ViewPinAnnotation: MKPinAnnotationView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+class MultiPolygon: NSObject, MKOverlay {
+    var polygons: [MKPolygon]?
+
+    var boundingMapRect: MKMapRect
+
+    init(polygons: [MKPolygon]?) {
+        self.polygons = polygons
+        self.boundingMapRect = MKMapRect.null
+
+        super.init()
+
+        guard let pols = polygons else { return }
+        for (index, polygon) in pols.enumerated() {
+            if index == 0 { self.boundingMapRect = polygon.boundingMapRect; continue }
+            boundingMapRect = boundingMapRect.union(polygon.boundingMapRect)
+        }
+    }
+
+    var coordinate: CLLocationCoordinate2D {
+        return MKMapPoint(x: boundingMapRect.midX, y: boundingMapRect.maxY).coordinate
+    }
+}
+
+class MultiPolygonPathRenderer: MKOverlayPathRenderer {
+    /**
+     Returns a `CGPath` equivalent to this polygon in given renderer.
+
+     - parameter polygon: MKPolygon defining coordinates that will be drawn.
+
+     - returns: Path equivalent to this polygon in given renderer.
+     */
+    func polyPath(for polygon: MKPolygon?) -> CGPath? {
+        guard let polygon = polygon else { return nil }
+        let points = polygon.points()
+
+        if polygon.pointCount < 3 { return nil }
+        let pointCount = polygon.pointCount
+
+        let path = CGMutablePath()
+
+        if let interiorPolygons = polygon.interiorPolygons {
+            for interiorPolygon in interiorPolygons {
+                guard let interiorPath = polyPath(for: interiorPolygon) else { continue }
+                path.addPath(interiorPath, transform: .identity)
+            }
+        }
+
+        let startPoint = point(for: points[0])
+        path.move(to: CGPoint(x: startPoint.x, y: startPoint.y), transform: .identity)
+
+        for i in 1..<pointCount {
+            let nextPoint = point(for: points[i])
+            path.addLine(to: CGPoint(x: nextPoint.x, y: nextPoint.y), transform: .identity)
+        }
+
+        return path
+    }
+
+    /// Draws the overlay’s contents at the specified location on the map.
+    override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
+        // Taken from: http://stackoverflow.com/a/17673411
+
+        guard let multiPolygon = self.overlay as? MultiPolygon else { return }
+        guard let polygons = multiPolygon.polygons else { return }
+
+        for polygon in polygons {
+            guard let path = self.polyPath(for: polygon) else { continue }
+            self.applyFillProperties(to: context, atZoomScale: zoomScale)
+            context.beginPath()
+            context.addPath(path)
+            context.drawPath(using: CGPathDrawingMode.eoFill)
+            self.applyStrokeProperties(to: context, atZoomScale: zoomScale)
+            context.beginPath()
+            context.addPath(path)
+            context.strokePath()
+        }
     }
 }
