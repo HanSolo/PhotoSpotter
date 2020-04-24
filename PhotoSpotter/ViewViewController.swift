@@ -243,11 +243,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
         tagsBegin = times.count == 0 ? timesEnd : timesEnd + 1
-        print("text length    : \(text.count)")
-        print("equipment begin: \(equipmentBegin) => \(equipment.count)  end: \(equipmentEnd)")
-        print("times begin    : \(timesBegin) => \(times.count)  end: \(timesEnd)")
-        print("tags begin     : \(timesBegin) => \(tags.count)")
-        print("text: \(text)")
+       
         if text.count > 0 {
             let detailText :NSMutableAttributedString = NSMutableAttributedString(string: text)
             detailText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.YELLOW], range: NSRange(location: equipmentBegin, length: equipment.count > 2 ? equipment.count : 0))

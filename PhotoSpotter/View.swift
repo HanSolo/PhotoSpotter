@@ -205,5 +205,7 @@ public class View: Equatable, Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(name)
         hasher.combine(description)
+        hasher.combine(lens)
+        hasher.combine(camera)
     }
 }

@@ -119,13 +119,6 @@ public class LensDetailViewController: UIViewController, UITextFieldDelegate, Fo
         self.present(alertController, animated: true, completion: nil)
     }
     
-    
-    public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "doneSegue" {
-            lensName = nameTextField.text!
-        }
-    }
-    
     //MARK - UITextField Delegates
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string.isEmpty { return true }

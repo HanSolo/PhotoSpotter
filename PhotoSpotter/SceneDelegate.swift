@@ -29,8 +29,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.stateController = stateController
         
-        // Retrieve data from UserDefaults and CoreData
-        self.stateController.retrieve(appDelegate: appDelegate)
+        // Retrieve data from UserDefaults and CoreData            
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.stateController = stateController
+            self.stateController.retrieveFromCoreData(appDelegate: appDelegate)
+        } else {
+            self.stateController.retrieveFromUserDefaults()
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -61,7 +66,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             appDelegate.saveContext()
-            self.stateController.store(appDelegate: appDelegate)
+            self.stateController.storeToCoreData(appDelegate: appDelegate)
         } else {
             self.stateController.storeToUserDefaults()
         }

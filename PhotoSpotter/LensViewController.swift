@@ -104,7 +104,7 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let hideDefaultLens : Bool = stateController!.lenses.count > 1
         lensSelection = hideDefaultLens ? stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name } : stateController!.lenses
-        lensSelector.selectedSegmentIndex = 0
+        //lensSelector.selectedSegmentIndex = 0
         tableView.reloadData()
         
         let cells = self.tableView.visibleCells as! Array<LensCell>
@@ -116,7 +116,9 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.selectRow(at: lensIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: lensIndex)?.accessoryType = .checkmark
         
-        stateController!.view.lens = lens
+        stateController!.view.lens        = lens
+        stateController!.view.focalLength = lens.minFocalLength
+        stateController!.view.aperture    = lens.minAperture
     }
     
     @IBAction func cancel(segue:UIStoryboardSegue) {
@@ -213,7 +215,7 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         if lens.isPrime {
             cell.textLabel?.textColor = Constants.YELLOW
         } else {
-            cell.textLabel?.textColor = UIColor.lightText
+            cell.textLabel?.textColor = Constants.BLUE
         }
         cell.detailTextLabel?.text = lens.description()
         
@@ -230,7 +232,7 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         let lens = lensSelection![indexPath.item]
         stateController!.view.lens                              = lens
         stateController!.view.focalLength                       = lens.minFocalLength
-        stateController!.view.aperture                          = lens.minFocalLength
+        stateController!.view.aperture                          = lens.minAperture
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

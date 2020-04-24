@@ -49,7 +49,7 @@ class StateController {
         lenses.removeAll(where: { lensesToRemove.contains($0) })
     }
     func isLensInLenses(lens: Lens) -> Bool {
-        return lenses.filter({ $0.name == lens.name && $0.description() == lens.description() }).count >= 1
+        return lenses.filter({ $0.name == lens.name && $0.minFocalLength == lens.minFocalLength && $0.maxFocalLength == lens.maxFocalLength && $0.minAperture == lens.minAperture && $0.maxAperture == lens.maxAperture }).count >= 1
     }
     
     
@@ -115,7 +115,7 @@ class StateController {
             lensesCD = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch lenses from CoreData. \(error), \(error.userInfo)")
-        }
+        }        
         
         mergeLenses(appDelegate: appDelegate)
     }
@@ -251,7 +251,7 @@ class StateController {
                             minFocalLength: lensCD.value(forKey: "minFocalLength") as! Double,
                             maxFocalLength: lensCD.value(forKey: "maxFocalLength") as! Double,
                             minAperture   : lensCD.value(forKey: "minAperture")    as! Double,
-                            maxAperture   : lensCD.value(forKey: "minAperture")    as! Double)
+                            maxAperture   : lensCD.value(forKey: "maxAperture")    as! Double)
             lensesInCoreData.append(lens)
         }
         for lens in lensesInCoreData {
@@ -716,20 +716,6 @@ class StateController {
     // Store views to documents
     func storeViews() -> Void {
         Helper.saveViewsToDocuments(views: views)
-    }
-    
-    
-    
-    // Store
-    func store(appDelegate: AppDelegate) {
-        storeToUserDefaults()
-        storeToCoreData(appDelegate: appDelegate)
-    }
-    
-    // Retrieve
-    func retrieve(appDelegate: AppDelegate) {
-        retrieveFromUserDefaults()
-        retrieveFromCoreData(appDelegate: appDelegate)
     }
     
     

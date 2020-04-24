@@ -168,6 +168,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         ]
         NSLayoutConstraint.activate(scaleViewConstraints)
         
+        gotoCurrentLocation()
+                
         setView(view: stateController!.view)
     }
     
@@ -358,7 +360,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         switch stateController!.mapType {
             case 0 : mapView.mapType = MKMapType.standard
             case 1 : mapView.mapType = MKMapType.satellite
-            case 2 : mapView.mapType = MKMapType.hybrid
+            //case 2 : mapView.mapType = MKMapType.hybrid
             default: mapView.mapType = MKMapType.standard
         }
         mapTypeSelector.selectedSegmentIndex = stateController!.mapType
@@ -590,15 +592,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.mapPins.append(self.motifPin!)
         self.mapView.addAnnotations(mapPins)
         
-        self.focalLengthSlider.minimumValue = Float(lens.minFocalLength)
         self.focalLengthSlider.maximumValue = Float(lens.maxFocalLength)
+        self.focalLengthSlider.minimumValue = Float(lens.minFocalLength)
         self.focalLengthSlider.value        = Float(focalLength)
         self.focalLengthLabel.text          = String(format: "%.0f mm", Double(round(focalLength)))
         self.minFocalLengthLabel.text       = String(format: "%.0f", Double(round(lens.minFocalLength)))
         self.maxFocalLengthLabel.text       = String(format: "%.0f", Double(round(lens.maxFocalLength)))
-        
-        self.apertureSlider.minimumValue    = Float(lens.minAperture)
+                
         self.apertureSlider.maximumValue    = Float(lens.maxAperture)
+        self.apertureSlider.minimumValue    = Float(lens.minAperture)
         self.apertureSlider.value           = Float(aperture)
         self.apertureLabel.text             = String(format: "f %.1f", Double(round(aperture * 10) / 10))
         self.minApertureLabel.text          = String(format: "%.1f", Double(round(lens.minAperture * 10) / 10))
@@ -628,31 +630,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     
     // Update methods
-    func updateLens(lens: Lens) -> Void {
-        stateController!.view.lens = lens
-        
-        stateController!.view.focalLength = lens.minFocalLength + (lens.maxFocalLength - lens.minFocalLength)
-        stateController!.view.aperture    = lens.minAperture + (lens.maxAperture - lens.minAperture)
-        
-        focalLengthSlider.minimumValue = Float(lens.minFocalLength)
-        focalLengthSlider.maximumValue = Float(lens.maxFocalLength)
-        focalLengthSlider.value        = focalLengthSlider.minimumValue + (focalLengthSlider.maximumValue - focalLengthSlider.minimumValue) / 2
-        focalLengthLabel.text          = String(format: "%.0f mm", Double(round(focalLengthSlider!.value)))
-        minFocalLengthLabel.text       = String(format: "%.0f", Double(round(lens.minFocalLength)))
-        maxFocalLengthLabel.text       = String(format: "%.0f", Double(round(lens.maxFocalLength)))
-        
-        apertureSlider.minimumValue    = Float(lens.minAperture)
-        apertureSlider.maximumValue    = Float(lens.maxAperture)
-        apertureSlider.value           = apertureSlider.minimumValue + (apertureSlider.maximumValue - apertureSlider.minimumValue) / 2
-        apertureLabel.text             = String(format: "f %.1f", Double(round(apertureSlider!.value * 10) / 10))
-        minApertureLabel.text          = String(format: "%.1f", Double(round(lens.minAperture * 10) / 10))
-        maxApertureLabel.text          = String(format: "%.1f", Double(round(lens.maxAperture * 10) / 10))
-    }
-    
-    func updateCamera(camera: Camera) -> Void {
-        stateController!.view.camera = camera
-    }
-    
     func updateFoVTriangle(cameraPoint: MKMapPoint, motifPoint: MKMapPoint, focalLength: Double, aperture: Double, sensorFormat: SensorFormat, orientation: Orientation) -> Void {
         let distance : CLLocationDistance = cameraPoint.distance(to: motifPoint)
         if distance < 0.01 || distance > 9999 { return }
@@ -889,7 +866,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func createView(name: String, description: String) -> View {
-        return View(name: name, description: description, cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation, mapRect: stateController!.view.mapRect)
+        return View(name: name, description: description, cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: Double(focalLengthSlider.value), aperture: Double(apertureSlider.value), orientation: stateController!.view.orientation, mapRect: mapView.visibleMapRect)
     }
     
     func getElevation(camera: MapPin, motif: MapPin) -> Void {
