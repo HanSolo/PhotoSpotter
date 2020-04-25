@@ -115,6 +115,10 @@ public class Constants {
     public static let EQP_FLASH      : (String, Int32) = ("Flash",      1 << 5) // 32
     public static let EQP_REMOTE     : (String, Int32) = ("Remote",     1 << 6) // 64
     
+    public static let EQUIPMENT      :[(String, Int32)] = [
+        EQP_TRIPOD, EQP_GIMBAL, EQP_CPL_FILTER, EQP_ND_FILTER, EQP_IR_FILTER, EQP_FLASH, EQP_REMOTE
+    ]
+    
     // Times
     public static let TMS_ALL_YEAR   : (String, Int32) = ("All Year",   1 << 0)
     public static let TMS_SPRING     : (String, Int32) = ("Spring",     1 << 1)
@@ -133,6 +137,11 @@ public class Constants {
     public static let TMS_OCTOBER    : (String, Int32) = ("October",    1 << 14)
     public static let TMS_NOVEMBER   : (String, Int32) = ("November",   1 << 15)
     public static let TMS_DECEMBER   : (String, Int32) = ("December",   1 << 16)
+    
+    public static let TIMES          : [(String, Int32)] = [
+        TMS_ALL_YEAR, TMS_SPRING, TMS_SUMMER, TMS_AUTUMN, TMS_WINTER, TMS_JANUARY, TMS_FEBRUARY, TMS_MARCH,
+        TMS_APRIL, TMS_MAY, TMS_JUNE, TMS_JULY, TMS_AUGUST, TMS_SEPTEMBER, TMS_OCTOBER, TMS_NOVEMBER, TMS_DECEMBER
+    ]
     
     // Tags
     public static let TAG_NIGHT         : (String, Int32) = ("Nightshot"    , 1 << 0)
@@ -155,6 +164,12 @@ public class Constants {
     public static let TAG_SUNRISE       : (String, Int32) = ("Sunrise"      , 1 << 17)
     public static let TAG_SUNSET        : (String, Int32) = ("Sunset"       , 1 << 18)
     public static let TAG_MOON          : (String, Int32) = ("Moon"         , 1 << 19)
+    
+    public static let TAGS              : [(String, Int32)] = [
+        TAG_NIGHT, TAG_ASTRO, TAG_MACRO, TAG_POI, TAG_INFRARED, TAG_LONG_EXPOSURE, TAG_CITYSCAPE, TAG_LANDSCAPE,
+        TAG_STREET, TAG_BRIDGE, TAG_LAKE, TAG_SHIP, TAG_CAR, TAG_FLOWER, TAG_TREE, TAG_BUILDING, TAG_BEACH,
+        TAG_SUNRISE, TAG_SUNSET, TAG_MOON
+    ]
     
     // CoreData entities
     public static let LENS_CD   : String = "LensCD"

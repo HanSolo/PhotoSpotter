@@ -168,8 +168,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         ]
         NSLayoutConstraint.activate(scaleViewConstraints)
         
-        gotoCurrentLocation()
-                
         setView(view: stateController!.view)
     }
     
@@ -200,7 +198,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     @IBAction func camerasButtonPressed(_ sender: Any) {
         stateController!.setView(createView(name: "current", description: ""))
-        //stateController!.storeToUserDefaults()
+        stateController!.storeLocationToUserDefaults()
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let cameraVC = storyboard.instantiateViewController(identifier: "CameraViewController")
@@ -208,11 +206,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     @IBAction func lensesButtonPressed(_ sender: Any) {
         stateController!.setView(createView(name: "current", description: ""))
-        //stateController!.storeToUserDefaults()
+        stateController!.storeLocationToUserDefaults()
         performSegue(withIdentifier: "mapViewToLensesView", sender: self)
     }
     @IBAction func viewsButtonPressed(_ sender: Any) {
-        //stateController!.storeToUserDefaults()
+        stateController!.storeLocationToUserDefaults()
         performSegue(withIdentifier: "mapViewToViewsView", sender: self)
     }
     
@@ -364,9 +362,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             default: mapView.mapType = MKMapType.standard
         }
         mapTypeSelector.selectedSegmentIndex = stateController!.mapType
-                
+                                
         mapView.visibleMapRect = visibleArea!
-                
+        mapView.centerCoordinate = stateController!.lastLocation.coordinate
+        
         mapView.register(MapPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         
         #if targetEnvironment(macCatalyst)
@@ -434,7 +433,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 mapPinAnnotationView.setOnMapPinEvent(observer: self)
                 return mapPinAnnotationView
             }
-        } else if annotation is MKPointAnnotation {
+        } else if annotation is ViewPinAnnotation {
+            let viewPinAnnotation : ViewPinAnnotation = annotation as! ViewPinAnnotation
             let identifier = "Annotation"
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
             if annotationView == nil {
@@ -444,8 +444,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 
                 // Add items e.g. equipment, times, tags
                 let itemsLabel : UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
-                itemsLabel.numberOfLines = 0
-                itemsLabel.attributedText = Helper.getItemsTextFor(view: stateController!.view)
+                itemsLabel.numberOfLines  = 0
+                itemsLabel.attributedText = Helper.getItemsTextFor(view: viewPinAnnotation.view!)
                 itemsLabel.font           = itemsLabel.font.withSize(10)
                 let width = NSLayoutConstraint(item: itemsLabel, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.lessThanOrEqual, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 200)
                 itemsLabel.addConstraint(width)
@@ -537,9 +537,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         return MKPolylineRenderer()
     }
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-        self.visibleArea = mapView.visibleMapRect
-        self.heading     = mapView.camera.heading
-        stateController!.view.mapRect = mapView.visibleMapRect        
+        self.visibleArea              = mapView.visibleMapRect
+        self.heading                  = mapView.camera.heading
+        stateController!.view.mapRect = mapView.visibleMapRect
+        stateController!.setLastLocation(CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude))
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {}
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -576,6 +577,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     // Set a view
     func setView(view: View) -> Void {
         stateController!.setView(view)
+        stateController!.setLastLocation(CLLocation(latitude: view.cameraPoint.coordinate.latitude, longitude: view.cameraPoint.coordinate.longitude))
         
         self.cameraPin = MapPin(pinType: PinType.camera, coordinate: view.cameraPoint.coordinate)
         self.motifPin  = MapPin(pinType: PinType.motif, coordinate : view.motifPoint.coordinate)
@@ -794,9 +796,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             for view in self.stateController!.views {
                 if view.cameraPoint.coordinate.latitude != self.cameraPin!.coordinate.latitude &&
                    view.cameraPoint.coordinate.longitude != self.cameraPin!.coordinate.longitude {
-                    let viewAnnotation : MKPointAnnotation = MKPointAnnotation()
-                    viewAnnotation.title      = view.name
-                                    
+                    let viewAnnotation : ViewPinAnnotation = ViewPinAnnotation(view: view)
+                    viewAnnotation.title = view.name
+                                                        
                     viewAnnotation.coordinate = view.cameraPoint.coordinate
                     viewAnnotations.append(viewAnnotation)
                 }
@@ -1104,11 +1106,11 @@ class Line: MKPolyline {
 }
 
 
-class ViewPinAnnotation: MKPinAnnotationView {
+class ViewPinAnnotation: MKPointAnnotation {
     var view: View?
     
-    init(annotation: MKAnnotation, identifier: String, view: View) {
-        super.init(annotation: annotation, reuseIdentifier: identifier)
+    init(view: View) {
+        super.init()
         self.view = view
     }
     

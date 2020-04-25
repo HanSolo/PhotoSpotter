@@ -58,31 +58,21 @@ public class ViewDetailViewController: UIViewController, UITableViewDelegate, UI
     var nameIconView         : UIView?
     var tapGestureRecognizer : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showAlert(sender:)))
     
-    var name                 : String      = ""
-    var descr                : String      = ""
-    var equipment            : Int32       = 0
-    var times                : Int32       = 0
-    var tags                 : Int32       = 0
-    var equipmentItems       : [String]    = [Constants.EQP_TRIPOD.0, Constants.EQP_GIMBAL.0, Constants.EQP_CPL_FILTER.0, Constants.EQP_ND_FILTER.0, Constants.EQP_IR_FILTER.0, Constants.EQP_FLASH.0, Constants.EQP_REMOTE.0]
-    var timesItems           : [String]    = [Constants.TMS_ALL_YEAR.0, Constants.TMS_SPRING.0, Constants.TMS_SUMMER.0, Constants.TMS_AUTUMN.0, Constants.TMS_WINTER.0,
-                                              Constants.TMS_JANUARY.0, Constants.TMS_FEBRUARY.0, Constants.TMS_MARCH.0, Constants.TMS_APRIL.0, Constants.TMS_MAY.0, Constants.TMS_JUNE.0,
-                                              Constants.TMS_JULY.0, Constants.TMS_AUGUST.0, Constants.TMS_SEPTEMBER.0, Constants.TMS_OCTOBER.0, Constants.TMS_NOVEMBER.0, Constants.TMS_DECEMBER.0]
-    var tagsItems            : [String]    = [Constants.TAG_NIGHT.0, Constants.TAG_ASTRO.0, Constants.TAG_MACRO.0, Constants.TAG_POI.0, Constants.TAG_INFRARED.0, Constants.TAG_LONG_EXPOSURE.0,
-                                              Constants.TAG_CITYSCAPE.0, Constants.TAG_LANDSCAPE.0, Constants.TAG_STREET.0, Constants.TAG_BRIDGE.0, Constants.TAG_LAKE.0, Constants.TAG_SHIP.0,
-                                              Constants.TAG_CAR.0, Constants.TAG_FLOWER.0, Constants.TAG_TREE.0, Constants.TAG_BUILDING.0, Constants.TAG_BEACH.0, Constants.TAG_SUNRISE.0,
-                                              Constants.TAG_SUNSET.0, Constants.TAG_MOON.0]
-    var items                : [String]?
+    var name                 : String            = ""
+    var descr                : String            = ""
+    var equipment            : Int32             = 0
+    var times                : Int32             = 0
+    var tags                 : Int32             = 0
+    var items                : [(String, Int32)] = Constants.EQUIPMENT + Constants.TIMES + Constants.TAGS
     
-    var nameValid            : Bool        = false
-    var descriptionValid     : Bool        = false
+    var nameValid            : Bool              = false
+    var descriptionValid     : Bool              = false
     
     
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.items = equipmentItems + timesItems + tagsItems
-        
+                
         Helper.setNavBarTitle(navBar: navBar)
         
         let appDelegate      = UIApplication.shared.delegate as! AppDelegate
@@ -209,12 +199,12 @@ public class ViewDetailViewController: UIViewController, UITableViewDelegate, UI
     
     //MARK: tableview delegate methods
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items!.count
+        return items.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ItemCell
-        let item : String    = items![indexPath.item]
+        let item : (String, Int32) = items[indexPath.item]
         
         //here is programatically switch make to the table view
         let switchView = UISwitch(frame: .zero)
@@ -222,14 +212,21 @@ public class ViewDetailViewController: UIViewController, UITableViewDelegate, UI
         switchView.tag = indexPath.row // for detect which row switch Changed
         switchView.onTintColor = UIColor.systemTeal
         switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
+        if Helper.isItemInGroup(item: item, group: Constants.EQUIPMENT) {
+            switchView.setOn(Helper.itemInBitmask(item: item, bitmask: equipment), animated: false)
+        } else if Helper.isItemInGroup(item: item, group: Constants.TIMES) {
+            switchView.setOn(Helper.itemInBitmask(item: item, bitmask: times), animated: false)
+        } else if Helper.isItemInGroup(item: item, group: Constants.TAGS) {
+            switchView.setOn(Helper.itemInBitmask(item: item, bitmask: tags), animated: false)
+        }
         cell.accessoryView = switchView
         
-        cell.textLabel?.text = item
+        cell.textLabel?.text = item.0
         
-        if equipmentItems.contains(item) {
+        if Helper.isItemInGroup(item: item, group: Constants.EQUIPMENT) {
             cell.textLabel?.textColor = Constants.YELLOW
             cell.detailTextLabel?.text = "Equipment"
-        } else if timesItems.contains(item) {
+        } else if Helper.isItemInGroup(item: item, group: Constants.TIMES) {
             cell.textLabel?.textColor = Constants.BLUE
             cell.detailTextLabel?.text = "Time"
         } else {

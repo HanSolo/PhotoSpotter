@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CoreLocation
 
 
 class StateController {
@@ -16,6 +17,13 @@ class StateController {
     private(set) var view : View = Constants.DEFAULT_VIEW
     func setView(_ view: View) {
         self.view = view.clone()
+    }
+    
+    
+    // Last location
+    private(set) var lastLocation : CLLocation = CLLocation(latitude: Constants.DEFAULT_POSITION.coordinate.latitude, longitude: Constants.DEFAULT_POSITION.coordinate.longitude)
+    func setLastLocation(_ location: CLLocation) {
+        self.lastLocation = location        
     }
     
     
@@ -735,6 +743,16 @@ class StateController {
     
     
     // Store to UserDefaults
+    func storeLocationToUserDefaults() {
+        let defaults = UserDefaults.standard
+        do {
+            let encodedLocation = try NSKeyedArchiver.archivedData(withRootObject: self.lastLocation, requiringSecureCoding: false)
+            defaults.set(encodedLocation, forKey: "lastLocation")
+        } catch {
+            print("Error saving last location. \(error)")
+        }
+    }
+    
     func storeToUserDefaults() {
         let defaults = UserDefaults.standard
         do {
@@ -772,6 +790,19 @@ class StateController {
     }
     
     // Retrieve from UserDefaults
+    func retrieveLocationFromUserDefaults() {
+        let defaults = UserDefaults.standard
+        if let previousLocationEncoded = defaults.object(forKey: "lastLocation") as? Data {
+            do {
+                if let location = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(previousLocationEncoded) as? CLLocation {
+                    setLastLocation(location)
+                }
+            } catch {
+                print("Error retrieving last location from UserDefaults. \(error)")
+            }
+        }
+    }
+    
     func retrieveFromUserDefaults() {
         let defaults = UserDefaults.standard
         if let lensesData = defaults.data(forKey: "lenses") {

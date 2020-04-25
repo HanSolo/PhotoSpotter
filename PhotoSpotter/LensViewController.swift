@@ -65,11 +65,10 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         lensSelector.setTitleTextAttributes(lensSelectorTextAttr, for: .normal)
         lensSelector.setTitleTextAttributes(lensSelectorTextAttrSelected, for: .selected)
         
-        let lensIndex : IndexPath = IndexPath(row: (lensSelection!.firstIndex(of: stateController!.view.lens) ?? 0), section: 0)
-        tableView.selectRow(at: lensIndex, animated: true, scrollPosition: .none)
-        tableView.cellForRow(at: lensIndex)?.accessoryType = .checkmark
-        tableView.isEditing = false
-        tableView.remembersLastFocusedIndexPath = false
+        //let lensIndex : IndexPath = IndexPath(row: (lensSelection!.firstIndex(of: stateController!.view.lens) ?? 0), section: 0)
+        //tableView.selectRow(at: lensIndex, animated: true, scrollPosition: .none)
+        //tableView.cellForRow(at: lensIndex)?.accessoryType = .checkmark
+        tableView.isEditing = false        
     }
     
     

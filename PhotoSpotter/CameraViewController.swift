@@ -57,9 +57,9 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate   = self
         tableView.dataSource = self
                 
-        let cameraIndex : IndexPath = IndexPath(row: (cameraSelection!.firstIndex(of: stateController!.view.camera) ?? 0), section: 0)
-        tableView.selectRow(at: cameraIndex, animated: true, scrollPosition: .none)
-        tableView.cellForRow(at: cameraIndex)?.accessoryType = .checkmark
+        //let cameraIndex : IndexPath = IndexPath(row: (cameraSelection!.firstIndex(of: stateController!.view.camera) ?? 0), section: 0)
+        //tableView.selectRow(at: cameraIndex, animated: true, scrollPosition: .none)
+        //tableView.cellForRow(at: cameraIndex)?.accessoryType = .checkmark
         tableView.isEditing = false
     }
 
