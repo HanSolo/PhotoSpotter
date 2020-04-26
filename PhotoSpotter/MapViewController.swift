@@ -45,6 +45,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var moonButton          : UIButton!
     @IBOutlet weak var sunButton           : UIButton!
     @IBOutlet weak var showViewsButton     : UIButton!
+    @IBOutlet weak var routingButton       : UIButton!
     @IBOutlet weak var cameraLabel         : UILabel!
     @IBOutlet weak var lensLabel           : UILabel!
     @IBOutlet weak var elevationButton     : UIButton!
@@ -78,13 +79,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var moonsetLine           : MKPolyline?
     var sunriseLine           : MKPolyline?
     var sunsetLine            : MKPolyline?
+    var routePolylines        : [MKPolyline]        = []
     var data                  : FoVData?
     var fovVisible            : Bool                = true
     var dofVisible            : Bool                = false
     var moonVisible           : Bool                = false
     var sunVisible            : Bool                = false
     var viewsVisible          : Bool                = false
-    var elevationChartVisible : Bool                = false;
+    var routeVisible          : Bool                = false
+    var elevationChartVisible : Bool                = false
     var infoVisible           : Bool                = false
     var focalLength           : Double              = 50
     var aperture              : Double              = 2.8
@@ -99,6 +102,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var visibleArea           : MKMapRect?
     var heading               : CLLocationDirection?
     var elevationPoints       : [ElevationPoint]    = [] { didSet { drawElevationChart() } }
+    var userLocation          : CLLocation?
+    var distanceToView        : CLLocationDistance  = 0
+    var timeToView            : TimeInterval        = TimeInterval()
     
     var cameraBodyButton      : UIButton?
 
@@ -284,6 +290,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         switch mapTypeSelector.selectedSegmentIndex {
             case 0 : mapView.mapType = MKMapType.standard
             case 1 : mapView.mapType = MKMapType.satellite
+            case 2 : mapView.mapType = MKMapType.hybrid
             default: mapView.mapType = MKMapType.standard
         }
         self.stateController!.updateMapType(mapTypeSelector.selectedSegmentIndex)
@@ -324,6 +331,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
+    @IBAction func routingButtonPressed(_ sender: Any) {
+        if self.routeVisible {
+            self.routeVisible   = false
+            self.distanceToView = 0
+            self.timeToView     = TimeInterval()
+            self.mapView.removeOverlays(self.routePolylines)
+            self.routingButton.setImage(UIImage(systemName: "car"), for: UIControl.State.normal)
+        } else {
+            self.routeVisible = true
+            self.routingButton.setImage(UIImage(systemName: "car.fill"), for: UIControl.State.normal)
+        }
+        showRoute(show: self.routeVisible)
+    }
+    
     @IBAction func infoButtonPressed(_ sender: Any) {
         if self.infoVisible {
             self.infoVisible = false
@@ -358,7 +379,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         switch stateController!.mapType {
             case 0 : mapView.mapType = MKMapType.standard
             case 1 : mapView.mapType = MKMapType.satellite
-            //case 2 : mapView.mapType = MKMapType.hybrid
+            case 2 : mapView.mapType = MKMapType.hybrid
             default: mapView.mapType = MKMapType.standard
         }
         mapTypeSelector.selectedSegmentIndex = stateController!.mapType
@@ -396,10 +417,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
     // MARK: CLLocationManagerDelegate methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation:CLLocation = locations[0] as CLLocation
+        self.userLocation = locations[0] as CLLocation
         manager.stopUpdatingLocation()
         
-        let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        let center = CLLocationCoordinate2D(latitude: userLocation!.coordinate.latitude, longitude: userLocation!.coordinate.longitude)
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
         mapView.setRegion(region, animated: true)
     }
@@ -470,68 +491,75 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         // Draw Overlays
         if let overlay = overlay as? Polygon {
             if overlay.id == "dof" && dofVisible {
-                let polygonView             = MKPolygonRenderer(overlay: overlay)
-                polygonView.fillColor       = UIColor.init(displayP3Red: 0.45490196, green: 0.80784314, blue: 1.0, alpha: 0.25)
-                polygonView.strokeColor     = UIColor.init(displayP3Red: 0.45490196, green: 0.80784314, blue: 1.0, alpha: 1.0)
-                polygonView.lineWidth       = 1.0
-                polygonView.lineDashPattern = [10, 10]
-                polygonView.lineDashPhase   = 10
-                return polygonView
+                let polygonRenderer             = MKPolygonRenderer(overlay: overlay)
+                polygonRenderer.fillColor       = UIColor.init(displayP3Red: 0.45490196, green: 0.80784314, blue: 1.0, alpha: 0.25)
+                polygonRenderer.strokeColor     = UIColor.init(displayP3Red: 0.45490196, green: 0.80784314, blue: 1.0, alpha: 1.0)
+                polygonRenderer.lineWidth       = 1.0
+                polygonRenderer.lineDashPattern = [10, 10]
+                polygonRenderer.lineDashPhase   = 10
+                return polygonRenderer
             } else if overlay.id == "maxFov" && fovVisible {
-                let polygonView         = MKPolygonRenderer(overlay: overlay)
-                polygonView.fillColor   = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue: 0.8627451, alpha: 0.15)
-                polygonView.strokeColor = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue:  0.8627451, alpha: 1.0)
-                polygonView.lineWidth   = 1.0
-                return polygonView
+                let polygonRenderer         = MKPolygonRenderer(overlay: overlay)
+                polygonRenderer.fillColor   = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue: 0.8627451, alpha: 0.15)
+                polygonRenderer.strokeColor = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue:  0.8627451, alpha: 1.0)
+                polygonRenderer.lineWidth   = 1.0
+                return polygonRenderer
             } else if overlay.id == "minFov" && fovVisible {
-                let polygonView         = MKPolygonRenderer(overlay: overlay)
-                polygonView.fillColor   = UIColor.clear
-                polygonView.strokeColor = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue:  0.8627451, alpha: 1.0)
-                polygonView.lineWidth   = 1.0
-                return polygonView
+                let polygonRenderer         = MKPolygonRenderer(overlay: overlay)
+                polygonRenderer.fillColor   = UIColor.clear
+                polygonRenderer.strokeColor = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue:  0.8627451, alpha: 1.0)
+                polygonRenderer.lineWidth   = 1.0
+                return polygonRenderer
             } else if overlay.id == "fov" && fovVisible {
-                let polygonView         = MKPolygonRenderer(overlay: overlay)
-                polygonView.fillColor   = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue: 0.8627451, alpha: 0.45)
-                polygonView.strokeColor = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue:  0.8627451, alpha: 1.0)
-                polygonView.lineWidth   = 1.0
-                return polygonView
+                let polygonRenderer         = MKPolygonRenderer(overlay: overlay)
+                polygonRenderer.fillColor   = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue: 0.8627451, alpha: 0.45)
+                polygonRenderer.strokeColor = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue:  0.8627451, alpha: 1.0)
+                polygonRenderer.lineWidth   = 1.0
+                return polygonRenderer
             } else if overlay.id == "fovFrame" && fovVisible {
-                let polygonView         = MKPolygonRenderer(overlay: overlay)
-                polygonView.fillColor   = UIColor.clear
-                polygonView.strokeColor = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue:  0.8627451, alpha: 1.0)
-                polygonView.lineWidth   = 1.0
-                return polygonView
+                let polygonRenderer         = MKPolygonRenderer(overlay: overlay)
+                polygonRenderer.fillColor   = UIColor.clear
+                polygonRenderer.strokeColor = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue:  0.8627451, alpha: 1.0)
+                polygonRenderer.lineWidth   = 1.0
+                return polygonRenderer
             } else {
                 return MKPolylineRenderer()
             }
         } else if let overlay = overlay as? Line {
             if overlay.id == "centerLine" && fovVisible {
-                let polylineView         = MKPolylineRenderer(overlay: overlay)
-                polylineView.strokeColor = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue:  0.8627451, alpha: 1.0)
-                polylineView.lineWidth   = 1.0
-                return polylineView
+                let polylineRenderer         = MKPolylineRenderer(overlay: overlay)
+                polylineRenderer.strokeColor = UIColor.init(displayP3Red: 0.0, green: 0.56078431, blue:  0.8627451, alpha: 1.0)
+                polylineRenderer.lineWidth   = 1.0
+                return polylineRenderer
             } else if overlay.id == "moonrise" && moonVisible {
-                let polylineView         = MKPolylineRenderer(overlay: overlay)
-                polylineView.strokeColor = UIColor.init(displayP3Red: 0.5, green: 0.5, blue:  0.5, alpha: 1.0)
-                polylineView.lineWidth   = 1.5
-                return polylineView
+                let polylineRenderer         = MKPolylineRenderer(overlay: overlay)
+                polylineRenderer.strokeColor = UIColor.init(displayP3Red: 0.5, green: 0.5, blue:  0.5, alpha: 1.0)
+                polylineRenderer.lineWidth   = 1.5
+                return polylineRenderer
             } else if overlay.id == "moonset" && moonVisible {
-                let polylineView         = MKPolylineRenderer(overlay: overlay)
-                polylineView.strokeColor = UIColor.init(displayP3Red: 0.25, green: 0.25, blue:  0.25, alpha: 1.0)
-                polylineView.lineWidth   = 1.5
-                return polylineView
+                let polylineRenderer         = MKPolylineRenderer(overlay: overlay)
+                polylineRenderer.strokeColor = UIColor.init(displayP3Red: 0.25, green: 0.25, blue:  0.25, alpha: 1.0)
+                polylineRenderer.lineWidth   = 1.5
+                return polylineRenderer
             } else if overlay.id == "sunrise" && sunVisible {
-                let polylineView         = MKPolylineRenderer(overlay: overlay)
-                polylineView.strokeColor = UIColor.init(displayP3Red: 0.9, green: 0.9, blue:  0.0, alpha: 1.0)
-                polylineView.lineWidth   = 1.5
-                return polylineView
+                let polylineRenderer         = MKPolylineRenderer(overlay: overlay)
+                polylineRenderer.strokeColor = UIColor.init(displayP3Red: 0.9, green: 0.9, blue:  0.0, alpha: 1.0)
+                polylineRenderer.lineWidth   = 1.5
+                return polylineRenderer
             } else if overlay.id == "sunset" && sunVisible {
-                let polylineView         = MKPolylineRenderer(overlay: overlay)
-                polylineView.strokeColor = UIColor.init(displayP3Red: 0.75, green: 0.75, blue:  0.0, alpha: 1.0)
-                polylineView.lineWidth   = 1.5
-                return polylineView
+                let polylineRenderer         = MKPolylineRenderer(overlay: overlay)
+                polylineRenderer.strokeColor = UIColor.init(displayP3Red: 0.75, green: 0.75, blue:  0.0, alpha: 1.0)
+                polylineRenderer.lineWidth   = 1.5
+                return polylineRenderer
             } else {
                 return MKPolylineRenderer()
+            }
+        } else {
+            if routeVisible {
+                let polylineRenderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
+                polylineRenderer.strokeColor = Constants.BLUE
+                polylineRenderer.lineWidth   = 1.5
+                return polylineRenderer
             }
         }
         return MKPolylineRenderer()
@@ -576,6 +604,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     // Set a view
     func setView(view: View) -> Void {
+        self.routeVisible   = false
+        self.routingButton.setImage(UIImage(systemName: "car"), for: UIControl.State.normal)
+        self.distanceToView = 0
+        self.timeToView     = TimeInterval()
+        
         stateController!.setView(view)
         stateController!.setLastLocation(CLLocation(latitude: view.cameraPoint.coordinate.latitude, longitude: view.cameraPoint.coordinate.longitude))
         
@@ -903,6 +936,66 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         elevationChartView.setNeedsDisplay()        
     }
 
+    func showRoute(show: Bool) -> Void {
+        if (show) {
+            let request                     = MKDirections.Request()
+            request.source                  = MKMapItem(placemark: MKPlacemark(coordinate: self.userLocation?.coordinate ?? Constants.DEFAULT_POSITION.coordinate, addressDictionary: nil))
+            request.destination             = MKMapItem(placemark: MKPlacemark(coordinate: self.stateController?.view.cameraPoint.coordinate ?? Constants.DEFAULT_VIEW.cameraPoint.coordinate, addressDictionary: nil))
+            //request.requestsAlternateRoutes = true
+            request.transportType           = .automobile
+            
+            /*
+            CLGeocoder().reverseGeocodeLocation(self.userLocation ?? CLLocation(latitude: Constants.DEFAULT_POSITION.coordinate.latitude, longitude: Constants.DEFAULT_POSITION.coordinate.longitude)) { placemarks, error in
+                guard let placemarks = placemarks, error == nil else {
+                    self.processResponse(placemarks: nil, error: error)
+                    return
+                }
+                self.processResponse(placemarks: placemarks, error: nil)
+            }
+            */
+            
+            let directions = MKDirections(request: request)
+
+            directions.calculate { [unowned self] response, error in
+                guard let unwrappedResponse = response else { return }
+                self.routePolylines.removeAll()
+                for route in unwrappedResponse.routes {
+                    self.distanceToView = route.distance
+                    self.timeToView     = route.expectedTravelTime
+                    self.mapView.addOverlay(route.polyline)
+                    self.routePolylines.append(route.polyline)
+                    self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+                }
+                                
+                let time  = Int(self.timeToView)
+                let h = time / 3600
+                let m = time / 60 % 60
+                //let s = time % 60
+                
+                let title : String =  "Route to"
+                var text   : String =  "\(self.stateController?.view.name ?? Constants.DEFAULT_VIEW.name)\n"
+                text += "Distance: \(String(format:"%.0f km", self.distanceToView / 1000.0))\n"
+                //text += "Time: \(String(format:"%02i:%02i:%02i", h, m, s))"
+                text += "Time: \(String(format:"%02i:%02i", h, m))"
+                
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.alignment = .left
+                let msg = NSAttributedString(
+                    string: text,
+                    attributes: [
+                        .paragraphStyle : paragraphStyle,
+                        .foregroundColor: UIColor.lightGray
+                        //.font           : UIFont.systemFont(ofSize: 12)
+                ])
+                
+                let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
+                alert.setValue(msg, forKey: "attributedMessage")
+                alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
     func showInfoView(show: Bool) -> Void {
         if (show) {
             self.infoView.fovData = self.fovData
@@ -922,6 +1015,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             })
         }
     }
+    
+    private func processResponse(placemarks: [CLPlacemark]?, error: Error?) {
+        if nil == placemarks { return }
+        for placemark in placemarks! {
+            print("Country: \(placemark.country)")
+        }
+    }
+    
 }
 
 

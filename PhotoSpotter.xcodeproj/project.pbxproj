@@ -44,6 +44,7 @@
 		4F9B85AB2434CABF00289E8A /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9B85AA2434CABF00289E8A /* CameraViewController.swift */; };
 		4FAF22EA244D680E007D0BE6 /* CameraData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAF22E9244D680E007D0BE6 /* CameraData.swift */; };
 		4FAF22EC244D6886007D0BE6 /* LensData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAF22EB244D6886007D0BE6 /* LensData.swift */; };
+		4FB131EA245563E70084ADD8 /* TimeInterval+format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB131E9245563E70084ADD8 /* TimeInterval+format.swift */; };
 		4FDF9E59244617AF00395923 /* CloudDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDF9E58244617AF00395923 /* CloudDataManager.swift */; };
 		4FF364F224376B0800A749A1 /* CameraDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF364F124376B0800A749A1 /* CameraDetailViewController.swift */; };
 /* End PBXBuildFile section */
@@ -88,6 +89,7 @@
 		4FA94021244052EF009430D7 /* PhotoSpotter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PhotoSpotter.entitlements; sourceTree = "<group>"; };
 		4FAF22E9244D680E007D0BE6 /* CameraData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraData.swift; sourceTree = "<group>"; };
 		4FAF22EB244D6886007D0BE6 /* LensData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LensData.swift; sourceTree = "<group>"; };
+		4FB131E9245563E70084ADD8 /* TimeInterval+format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+format.swift"; sourceTree = "<group>"; };
 		4FC19F9824444B5C006A8FAF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		4FC19F9A244450B1006A8FAF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		4FDF9E58244617AF00395923 /* CloudDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDataManager.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				4F22A07324458B22000DBF9E /* UIButton+imagealign.swift */,
 				4F323000244EB16000E6E834 /* Array+difference.swift */,
 				4F41579A245005B40086B1CD /* Array+removeDuplicates.swift */,
+				4FB131E9245563E70084ADD8 /* TimeInterval+format.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				4F22A07424458B22000DBF9E /* UIButton+imagealign.swift in Sources */,
 				4F7D7B50242E270F00771992 /* AppDelegate.swift in Sources */,
 				4FAF22EA244D680E007D0BE6 /* CameraData.swift in Sources */,
+				4FB131EA245563E70084ADD8 /* TimeInterval+format.swift in Sources */,
 				4F13D831243457E400903059 /* Camera.swift in Sources */,
 				4F7D7B7D242E28D900771992 /* Lens.swift in Sources */,
 				4F7D7B73242E28D900771992 /* FoVError.swift in Sources */,

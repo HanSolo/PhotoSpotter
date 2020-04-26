@@ -87,7 +87,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="1AH-m3-ZnM">
-                                                        <rect key="frame" x="88" y="1" width="44" height="38"/>
+                                                        <rect key="frame" x="76.5" y="1" width="44" height="38"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ouh-Jp-2aV" userLabel="ElevationButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="44" height="24"/>
@@ -110,7 +110,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="NKI-mN-u1r">
-                                                        <rect key="frame" x="195.5" y="1" width="28.5" height="38"/>
+                                                        <rect key="frame" x="172.5" y="1" width="28.5" height="38"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-Qk-HLX" userLabel="ViewsButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="28.5" height="24"/>
@@ -132,8 +132,31 @@
                                                             </label>
                                                         </subviews>
                                                     </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="9o6-qt-WBK">
+                                                        <rect key="frame" x="252.5" y="2" width="29.5" height="36"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f21-dR-J3l" userLabel="RoutingButton">
+                                                                <rect key="frame" x="0.0" y="0.0" width="29.5" height="22"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <state key="normal" image="car" catalog="system">
+                                                                    <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="routingButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vIs-0K-tOu"/>
+                                                                </connections>
+                                                            </button>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CHv-LK-4TL" userLabel="RoutingLabel">
+                                                                <rect key="frame" x="0.0" y="24" width="29.5" height="12"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                <color key="textColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="7rZ-wO-Mz3">
-                                                        <rect key="frame" x="287" y="0.0" width="26.5" height="39.5"/>
+                                                        <rect key="frame" x="333.5" y="0.0" width="26.5" height="39.5"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I8n-ya-JHH" userLabel="SunButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="26.5" height="25.5"/>
@@ -156,7 +179,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="tey-5w-SRf">
-                                                        <rect key="frame" x="377" y="1" width="27" height="37.5"/>
+                                                        <rect key="frame" x="411.5" y="1" width="27" height="37.5"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9KS-Fw-qnA" userLabel="MoonButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="27" height="23.5"/>
@@ -179,7 +202,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="A60-9w-g50">
-                                                        <rect key="frame" x="467" y="3" width="20" height="33.5"/>
+                                                        <rect key="frame" x="490.5" y="3" width="20" height="33.5"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFe-Iv-Phh" userLabel="DoFButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="20" height="19.5"/>
@@ -202,7 +225,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Iol-cx-YGc">
-                                                        <rect key="frame" x="550.5" y="1.5" width="54" height="36.5"/>
+                                                        <rect key="frame" x="562" y="1.5" width="54" height="36.5"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIT-Ve-K0R" userLabel="OrientationButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="54" height="22.5"/>
@@ -298,7 +321,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1021"/>
                                     </mapView>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dt3-lS-mdA">
-                                        <rect key="frame" x="20" y="20" width="91" height="41"/>
+                                        <rect key="frame" x="20" y="20" width="137" height="41"/>
                                         <color key="backgroundColor" red="0.27450980392156865" green="0.27450980392156865" blue="0.27450980392156865" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="TFg-o7-ODG"/>
@@ -307,6 +330,7 @@
                                         <segments>
                                             <segment title="Map"/>
                                             <segment title="Sat"/>
+                                            <segment title="Hyb"/>
                                         </segments>
                                         <color key="selectedSegmentTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
@@ -553,6 +577,7 @@
                         <outlet property="orientationButton" destination="oIT-Ve-K0R" id="jMp-v7-FTy"/>
                         <outlet property="orientationLabel" destination="7lK-US-IIb" id="hKE-cc-amE"/>
                         <outlet property="placeButton" destination="xp3-1c-EGH" id="RKG-WR-YCE"/>
+                        <outlet property="routingButton" destination="f21-dR-J3l" id="o0a-GA-sKP"/>
                         <outlet property="showViewsButton" destination="gyl-Qk-HLX" id="upb-Ml-tu1"/>
                         <outlet property="sunButton" destination="I8n-ya-JHH" id="6rF-Lh-ncv"/>
                         <outlet property="viewsButton" destination="gyl-Qk-HLX" id="TJk-Aq-t84"/>
@@ -1566,6 +1591,7 @@
         <image name="arrowtriangle.down" catalog="system" width="128" height="124"/>
         <image name="camera.fill" catalog="system" width="128" height="96"/>
         <image name="camera.rotate.fill" catalog="system" width="128" height="96"/>
+        <image name="car" catalog="system" width="128" height="93"/>
         <image name="info.circle" catalog="system" width="128" height="121"/>
         <image name="location.fill" catalog="system" width="128" height="115"/>
         <image name="mappin.circle" catalog="system" width="128" height="121"/>
