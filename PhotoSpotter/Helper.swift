@@ -181,9 +181,8 @@ public class Helper {
         }
     }
     
-    public static func getPointByAngleAndDistance(point: MKMapPoint, distanceInMeters: Double, angleDeg: Double) -> MKMapPoint {
-        let latlon : (Double, Double) = getLatLonByAngleAndDistance(lat: point.coordinate.latitude, lon: point.coordinate.longitude, distanceInMeters: distanceInMeters, angleDeg: angleDeg)
-        return MKMapPoint(CLLocationCoordinate2D(latitude: latlon.0, longitude: latlon.1))
+    public static func getPointByAngle(point: MKMapPoint, angleDeg: Double) -> MKMapPoint {
+        return rotatePointAroundCenter(point: MKMapPoint(CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude + .pi/2)), rotationCenter: point, rad: toRadians(degrees: angleDeg))
     }
     
     public static func getLatLonByAngleAndDistance(lat :Double, lon :Double, distanceInMeters :Double, angleDeg: Double) -> (Double, Double){

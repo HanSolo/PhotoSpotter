@@ -92,7 +92,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var focalLength           : Double              = 50
     var aperture              : Double              = 2.8
     var orientation           : Orientation         = Orientation.landscape
-    let sunMoonCalc           : SunMoon             = SunMoon()
+    let sunMoonCalc           : SunMoon             = SunMoon()    
     var eventAngles           : Dictionary<String, (Double, Double)>?
     var pointsSunrise         : [MKMapPoint]        = []
     var pointsSunset          : [MKMapPoint]        = []
@@ -789,11 +789,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         self.sunsetLine = nil
         
-        
-        // Draw moon rise/set
-        
-        let distance : Double = 10000000
-        
         pointsMoonrise.removeAll()
         pointsMoonrise.append(cameraPoint)
         pointsMoonset.removeAll()
@@ -805,8 +800,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         pointsSunset.append(cameraPoint)
         
         for (event, angles) in eventAngles! {
-            let startAngle : Double     = Helper.toDegrees(radians: angles.0) - 180.0
-            let point      : MKMapPoint = Helper.getPointByAngleAndDistance(point: cameraPoint, distanceInMeters: distance, angleDeg: startAngle)
+            let startAngle : Double     = Helper.toDegrees(radians: angles.0) + 90.0
+            let point      : MKMapPoint = Helper.getPointByAngle(point: cameraPoint, angleDeg: startAngle)
             switch event {
                 case Constants.EPD_SUNRISE:
                     pointsSunrise.append(point)

@@ -384,7 +384,7 @@ struct SunMoon {
         
         let currentSunAngle             :Double = sunPosition[Constants.EPD_AZIMUTH]!
         let currentSunAltitude          :Double = sunPosition[Constants.EPD_ALTITUDE]!
-        
+                
         let currentMoonAngle            :Double = moonPosition[Constants.EPD_AZIMUTH]!
         let currentMoonAltitude         :Double = moonPosition[Constants.EPD_ALTITUDE]!
         
