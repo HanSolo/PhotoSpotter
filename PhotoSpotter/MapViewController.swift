@@ -433,10 +433,22 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func mapView(_ mapView: MKMapView, annotationView: MKAnnotationView, didChange: MKAnnotationView.DragState, fromOldState: MKAnnotationView.DragState) {
         switch (didChange) {
             case .starting:
+                if annotationView is MapPinAnnotationView {
+                    annotationView.center.y -= 56
+                    var center = MKMapPoint(mapView.centerCoordinate)
+                    center.y += 2000
+                    mapView.setCenter(center.coordinate, animated: true)
+                }
                 break;
             case .dragging:
                 break;
             case .ending, .canceling:
+                if annotationView is MapPinAnnotationView {
+                    annotationView.center.y += 56
+                    var center = MKMapPoint(mapView.centerCoordinate)
+                    center.y -= 2000
+                    mapView.setCenter(center.coordinate, animated: true)
+                }
                 self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
                 updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
                 updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
@@ -1113,7 +1125,7 @@ class MapPinAnnotationView: MKAnnotationView {
         setDragState(MKAnnotationView.DragState.dragging, animated: false)
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: {
             self.layer.opacity = 0.8
-            self.transform     = CGAffineTransform.identity.scaledBy(x: 1.25, y: 1.25)
+            //self.transform     = CGAffineTransform.identity.scaledBy(x: 1.25, y: 1.25)
         }, completion: nil)
         
         if #available(iOS 10.0, *) {
@@ -1122,12 +1134,13 @@ class MapPinAnnotationView: MKAnnotationView {
         }
     }
     func endDragging() {
+        /*
         transform = CGAffineTransform.identity.scaledBy(x: 1.5, y: 1.5)
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: {
             self.layer.opacity = 1
             self.transform     = CGAffineTransform.identity.scaledBy(x: 1, y: 1)
         }, completion: nil)
-
+        */
         // Give the user more haptic feedback when they drop the annotation.
         if #available(iOS 10.0, *) {
             let hapticFeedback = UIImpactFeedbackGenerator(style: .light)
