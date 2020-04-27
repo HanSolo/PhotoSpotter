@@ -208,7 +208,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let cameraVC = storyboard.instantiateViewController(identifier: "CameraViewController")
-        show(cameraVC, sender: self)
+        show(cameraVC, sender: self)        
     }
     @IBAction func lensesButtonPressed(_ sender: Any) {
         stateController!.setView(createView(name: "current", description: ""))
@@ -282,7 +282,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let newView :View = View(name: stateController!.view.name, description: stateController!.view.description, cameraPoint: cameraPoint, motifPoint: motifPoint,
                                  camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture,
-                                 orientation: stateController!.view.orientation, mapRect: mapRect)
+                                 orientation: stateController!.view.orientation, country: stateController!.view.country, mapRect: mapRect)
         setView(view: newView)
     }
     
@@ -548,7 +548,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 return polylineRenderer
             } else if overlay.id == "sunset" && sunVisible {
                 let polylineRenderer         = MKPolylineRenderer(overlay: overlay)
-                polylineRenderer.strokeColor = UIColor.init(displayP3Red: 0.75, green: 0.75, blue:  0.0, alpha: 1.0)
+                polylineRenderer.strokeColor = UIColor.init(displayP3Red: 0.75, green: 0.375, blue:  0.0, alpha: 1.0)
                 polylineRenderer.lineWidth   = 1.5
                 return polylineRenderer
             } else {
@@ -608,6 +608,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.routingButton.setImage(UIImage(systemName: "car"), for: UIControl.State.normal)
         self.distanceToView = 0
         self.timeToView     = TimeInterval()
+        self.mapView.removeOverlays(routePolylines)
         
         stateController!.setView(view)
         stateController!.setLastLocation(CLLocation(latitude: view.cameraPoint.coordinate.latitude, longitude: view.cameraPoint.coordinate.longitude))
@@ -804,7 +805,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         pointsSunset.append(cameraPoint)
         
         for (event, angles) in eventAngles! {
-            let startAngle : Double     = Helper.toDegrees(radians: angles.0) + 180.0
+            let startAngle : Double     = Helper.toDegrees(radians: angles.0) - 180.0
             let point      : MKMapPoint = Helper.getPointByAngleAndDistance(point: cameraPoint, distanceInMeters: distance, angleDeg: startAngle)
             switch event {
                 case Constants.EPD_SUNRISE:
@@ -901,7 +902,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func createView(name: String, description: String) -> View {
-        return View(name: name, description: description, cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: Double(focalLengthSlider.value), aperture: Double(apertureSlider.value), orientation: stateController!.view.orientation, mapRect: mapView.visibleMapRect)
+        return View(name: name, description: description, cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: Double(focalLengthSlider.value), aperture: Double(apertureSlider.value), orientation: stateController!.view.orientation, country: stateController!.view.country, mapRect: mapView.visibleMapRect)
     }
     
     func getElevation(camera: MapPin, motif: MapPin) -> Void {
@@ -943,16 +944,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             request.destination             = MKMapItem(placemark: MKPlacemark(coordinate: self.stateController?.view.cameraPoint.coordinate ?? Constants.DEFAULT_VIEW.cameraPoint.coordinate, addressDictionary: nil))
             //request.requestsAlternateRoutes = true
             request.transportType           = .automobile
-            
-            /*
-            CLGeocoder().reverseGeocodeLocation(self.userLocation ?? CLLocation(latitude: Constants.DEFAULT_POSITION.coordinate.latitude, longitude: Constants.DEFAULT_POSITION.coordinate.longitude)) { placemarks, error in
-                guard let placemarks = placemarks, error == nil else {
-                    self.processResponse(placemarks: nil, error: error)
-                    return
-                }
-                self.processResponse(placemarks: placemarks, error: nil)
-            }
-            */
             
             let directions = MKDirections(request: request)
 
@@ -1015,14 +1006,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             })
         }
     }
-    
-    private func processResponse(placemarks: [CLPlacemark]?, error: Error?) {
-        if nil == placemarks { return }
-        for placemark in placemarks! {
-            print("Country: \(placemark.country)")
-        }
-    }
-    
 }
 
 

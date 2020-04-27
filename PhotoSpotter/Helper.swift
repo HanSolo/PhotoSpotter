@@ -187,7 +187,7 @@ public class Helper {
     }
     
     public static func getLatLonByAngleAndDistance(lat :Double, lon :Double, distanceInMeters :Double, angleDeg: Double) -> (Double, Double){
-        let earthRadius      :Double = 6_371_000.0 // m
+        let earthRadius      :Double = Constants.EARTH_RADIUS // m 
         let radians          :Double = toRadians(degrees: angleDeg)
         
         let originLatRad     :Double = toRadians(degrees: lat)
@@ -502,5 +502,29 @@ public class Helper {
     
     public static func isItemInGroup(item: (String, Int32), group: [(String, Int32)]) -> Bool {
         return group.filter({ $0.0 == item.0 }).count > 0
+    }
+    
+    
+    public static func getCountryForView(view: View) -> Void {
+        let location : CLLocation = CLLocation(latitude: view.cameraPoint.coordinate.latitude, longitude: view.cameraPoint.coordinate.longitude)
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            guard let placemarks = placemarks, error == nil else {
+                self.processResponse(view: view, placemarks: nil, error: error)
+                return
+            }
+            self.processResponse(view: view, placemarks: placemarks, error: nil)
+        }
+    }
+    private static func processResponse(view: View, placemarks: [CLPlacemark]?, error: Error?) -> Void {
+        if nil == placemarks { return }
+        for placemark in placemarks! {
+            if let country = placemark.country {
+                view.country = country
+                print("Country: \(country)")
+                return
+            } else {
+                view.country = "-"                
+            }
+        }
     }
 }

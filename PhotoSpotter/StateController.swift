@@ -109,7 +109,7 @@ class StateController {
         views.removeAll(where: { viewsToRemove.contains($0) })
     }
     func isViewInViews(view: View) -> Bool {
-        return views.filter({ $0.name == view.name && $0.description == view.description }).count >= 1
+        return views.filter({ $0.name == view.name && $0.description == view.description && $0.tags == view.tags && $0.equipment == view.equipment }).count >= 1
     }
     
     
@@ -482,6 +482,7 @@ class StateController {
                     viewCD.setValue(view.focalLength, forKeyPath: "focalLength")
                     viewCD.setValue(view.aperture, forKeyPath: "aperture")
                     viewCD.setValue(view.orientation.rawValue, forKeyPath: "orientation")
+                    viewCD.setValue(view.country, forKeyPath: "country")
                     viewCD.setValue(view.mapRect.origin.coordinate.latitude, forKeyPath: "originLat")
                     viewCD.setValue(view.mapRect.origin.coordinate.longitude, forKeyPath: "originLon")
                     viewCD.setValue(view.mapRect.size.width, forKeyPath: "mapWidth")
@@ -508,6 +509,7 @@ class StateController {
                     viewCD.setValue(view.focalLength, forKeyPath: "focalLength")
                     viewCD.setValue(view.aperture, forKeyPath: "aperture")
                     viewCD.setValue(view.orientation.rawValue, forKeyPath: "orientation")
+                    viewCD.setValue(view.country, forKeyPath: "country")
                     viewCD.setValue(view.mapRect.origin.coordinate.latitude, forKeyPath: "originLat")
                     viewCD.setValue(view.mapRect.origin.coordinate.longitude, forKeyPath: "originLon")
                     viewCD.setValue(view.mapRect.size.width, forKeyPath: "mapWidth")
@@ -556,6 +558,7 @@ class StateController {
                 viewCD.setValue(view.focalLength, forKeyPath: "focalLength")
                 viewCD.setValue(view.aperture, forKeyPath: "aperture")
                 viewCD.setValue(view.orientation.rawValue, forKeyPath: "orientation")
+                viewCD.setValue(view.country, forKeyPath: "country")
                 viewCD.setValue(view.mapRect.origin.coordinate.latitude, forKeyPath: "originLat")
                 viewCD.setValue(view.mapRect.origin.coordinate.longitude, forKeyPath: "originLon")
                 viewCD.setValue(view.mapRect.size.width, forKeyPath: "mapWidth")
@@ -597,6 +600,7 @@ class StateController {
                 viewCD.setValue(view.focalLength, forKeyPath: "focalLength")
                 viewCD.setValue(view.aperture, forKeyPath: "aperture")
                 viewCD.setValue(view.orientation.rawValue, forKeyPath: "orientation")
+                viewCD.setValue(view.country, forKeyPath: "country")
                 viewCD.setValue(view.mapRect.origin.coordinate.latitude, forKeyPath: "originLat")
                 viewCD.setValue(view.mapRect.origin.coordinate.longitude, forKeyPath: "originLon")
                 viewCD.setValue(view.mapRect.size.width, forKeyPath: "mapWidth")
@@ -670,6 +674,7 @@ class StateController {
                             focalLength   : viewCD.value(forKey: "focalLength") as! Double,
                             aperture      : viewCD.value(forKey: "aperture") as! Double,
                             orientation   : viewCD.value(forKey: "orientation") as! String,
+                            country       : viewCD.value(forKey: "country") as? String ?? "",
                             originLat     : viewCD.value(forKey: "originLat") as! Double,
                             originLon     : viewCD.value(forKey: "originLon") as! Double,
                             mapWidth      : viewCD.value(forKey: "mapWidth") as! Double,

@@ -16,8 +16,7 @@ public class Constants {
     public static let JSON_FILE_NAME          : String = "photospotter"
     public static let JSON_FILE_EXTENSION     : String = "json"
     
-    public static let EARTH_RADIUS            : Double = 6_378_137 // in m
-    
+    public static let EARTH_RADIUS            : Double = 6_378_137.0 // in m                                                         
     public static let DATE_FORMAT             : String = "HH:mm"
     public static let EPD_SUN                 : String = "sun"
     public static let EPD_MOON                : String = "moon"
@@ -96,6 +95,7 @@ public class Constants {
                                                           focalLength: DEFAULT_LENS.minFocalLength + (DEFAULT_LENS.maxFocalLength - DEFAULT_LENS.minFocalLength) / 2,
                                                           aperture   : DEFAULT_LENS.minAperture + (DEFAULT_LENS.maxAperture - DEFAULT_LENS.minAperture) / 2,
                                                           orientation: Orientation.landscape,
+                                                          country    : "Germany",
                                                           mapRect    : MKMapRect(origin: DEFAULT_ORIGIN, size: DEFAULT_MAP_SIZE)
                                                           )
     

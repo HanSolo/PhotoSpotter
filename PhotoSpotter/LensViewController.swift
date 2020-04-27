@@ -233,6 +233,7 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         stateController!.view.focalLength                       = lens.minFocalLength
         stateController!.view.aperture                          = lens.minAperture
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        performSegue(withIdentifier: "lensesViewToMapView", sender: self)
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .none

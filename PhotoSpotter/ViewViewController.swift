@@ -85,7 +85,8 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func done(segue:UIStoryboardSegue) {
         let viewDetailVC = segue.source as! ViewDetailViewController
-        let view = View(name: viewDetailVC.name, description: viewDetailVC.descr, cameraPoint: stateController!.view.cameraPoint, motifPoint: stateController!.view.motifPoint, camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation, mapRect: stateController!.view.mapRect, tags: viewDetailVC.tags, equipment: viewDetailVC.equipment, times: viewDetailVC.times)
+        let view = View(name: viewDetailVC.name, description: viewDetailVC.descr, cameraPoint: stateController!.view.cameraPoint, motifPoint: stateController!.view.motifPoint, camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation, country: "-", mapRect: stateController!.view.mapRect, tags: viewDetailVC.tags, equipment: viewDetailVC.equipment, times: viewDetailVC.times)
+        Helper.getCountryForView(view: view)
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             stateController!.addView(view)
             stateController!.addViewToCD(appDelegate: appDelegate, view: view)
@@ -264,8 +265,8 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let view = viewSelection![indexPath.item]
         stateController!.setView(view)
-        
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        performSegue(withIdentifier: "viewsViewToMapView", sender: self)
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .none

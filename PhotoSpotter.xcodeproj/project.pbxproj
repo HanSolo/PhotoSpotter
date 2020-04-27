@@ -23,6 +23,7 @@
 		4F5DDD362435A29900A49C20 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD352435A29900A49C20 /* StateController.swift */; };
 		4F5DDD382435A42E00A49C20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD372435A42E00A49C20 /* Constants.swift */; };
 		4F5DDD3A2435A8D500A49C20 /* FoVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5DDD392435A8D500A49C20 /* FoVController.swift */; };
+		4F70F7B62455C95B004670C4 /* SwiftySuncalc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70F7B52455C95B004670C4 /* SwiftySuncalc.swift */; };
 		4F79B0DA2439A50400F61CF4 /* ViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F79B0D92439A50400F61CF4 /* ViewViewController.swift */; };
 		4F79B0DC2439A80500F61CF4 /* ViewDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F79B0DB2439A80500F61CF4 /* ViewDetailViewController.swift */; };
 		4F7D7B50242E270F00771992 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D7B4F242E270F00771992 /* AppDelegate.swift */; };
@@ -65,6 +66,7 @@
 		4F5DDD352435A29900A49C20 /* StateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 		4F5DDD372435A42E00A49C20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4F5DDD392435A8D500A49C20 /* FoVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoVController.swift; sourceTree = "<group>"; };
+		4F70F7B52455C95B004670C4 /* SwiftySuncalc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftySuncalc.swift; sourceTree = "<group>"; };
 		4F79B0D92439A50400F61CF4 /* ViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewViewController.swift; sourceTree = "<group>"; };
 		4F79B0DB2439A80500F61CF4 /* ViewDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDetailViewController.swift; sourceTree = "<group>"; };
 		4F7D7B4C242E270F00771992 /* PhotoSpotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSpotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +150,7 @@
 				4F7D7B6A242E28D900771992 /* Triangle.swift */,
 				4F7D7B69242E28D900771992 /* Helper.swift */,
 				4F2E8A382436F3A0007C9360 /* SunMoon.swift */,
+				4F70F7B52455C95B004670C4 /* SwiftySuncalc.swift */,
 				4F5B01F9243B5C4800CDA088 /* RestManager.swift */,
 				4FDF9E58244617AF00395923 /* CloudDataManager.swift */,
 				4F5DDD372435A42E00A49C20 /* Constants.swift */,
@@ -277,6 +280,7 @@
 				4F22A07424458B22000DBF9E /* UIButton+imagealign.swift in Sources */,
 				4F7D7B50242E270F00771992 /* AppDelegate.swift in Sources */,
 				4FAF22EA244D680E007D0BE6 /* CameraData.swift in Sources */,
+				4F70F7B62455C95B004670C4 /* SwiftySuncalc.swift in Sources */,
 				4FB131EA245563E70084ADD8 /* TimeInterval+format.swift in Sources */,
 				4F13D831243457E400903059 /* Camera.swift in Sources */,
 				4F7D7B7D242E28D900771992 /* Lens.swift in Sources */,

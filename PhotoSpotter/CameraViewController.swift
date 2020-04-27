@@ -174,6 +174,7 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let camera = cameraSelection![indexPath.item]
         stateController!.view.camera = camera
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        performSegue(withIdentifier: "camerasViewToMapView", sender: self)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
