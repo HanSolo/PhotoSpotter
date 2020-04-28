@@ -27,6 +27,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var navBar: UINavigationBar!
     
     var viewSelection : [View]?
+    var groupedViews  : Dictionary<String, [View]>?
     
     
     override func viewDidLoad() {
@@ -59,6 +60,8 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         //tableView.selectRow(at: viewIndex, animated: true, scrollPosition: .none)
         //tableView.cellForRow(at: viewIndex)?.accessoryType = .checkmark
         tableView.isEditing = false
+        
+        groupedViews = groupByCountry()
     }
     
     
@@ -94,6 +97,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let hideDefaultView : Bool = stateController!.views.count > 1
         viewSelection = hideDefaultView ? stateController!.views.filter { $0.name != Constants.DEFAULT_VIEW.name } : stateController!.views
+        groupedViews  = groupByCountry()
         tableView.reloadData()
         
         let cells = self.tableView.visibleCells as! Array<ViewCell>
@@ -142,20 +146,41 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         #endif
     }
     
+    private func groupByCountry() -> Dictionary<String, [View]> {
+        print("\(Dictionary(grouping: viewSelection!, by: { $0.country }))")
+        
+        
+        return Dictionary(grouping: viewSelection!, by: { $0.country })
+    }
+    
     
     // MARK: Tableview delegate and datasource methods
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewSelection!.count
+        return groupedViews![(Array(groupedViews!.keys)[section])]?.count ?? 0
+        //return viewSelection!.count
     }
-
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let country      = Array(groupedViews!.keys)[section]
+        let countryName = (NSLocale.system.localizedString(forRegionCode: country) ?? "")
+        //print("Title for header in section \(section): \(countryName)")
+        return countryName
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return groupedViews!.keys.count
+    }
+    
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell                            = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ViewCell
         let view : View                     = viewSelection![indexPath.item]
         cell.detailTextLabel!.numberOfLines = 0
         
-        cell.textLabel?.text = view.name
+        //cell.textLabel?.text = view.name
+        let country = Array(groupedViews!.keys)[indexPath.section]
+        cell.textLabel?.text = (groupedViews![country]?[indexPath.row].name ?? "-")
         
         var text           : String
         var equipmentBegin : Int

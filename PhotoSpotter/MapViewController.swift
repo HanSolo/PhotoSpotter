@@ -48,6 +48,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var routingButton       : UIButton!
     @IBOutlet weak var cameraLabel         : UILabel!
     @IBOutlet weak var lensLabel           : UILabel!
+    @IBOutlet weak var viewLabel           : UILabel!
     @IBOutlet weak var elevationButton     : UIButton!
     @IBOutlet weak var infoButton          : UIButton!
     @IBOutlet weak var locateMeButton      : UIButton!
@@ -436,8 +437,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 if annotationView is MapPinAnnotationView {
                     annotationView.center.y -= 56
                     var center = MKMapPoint(mapView.centerCoordinate)
-                    center.y += 2000
-                    mapView.setCenter(center.coordinate, animated: true)
+                    center.y += (mapView.visibleMapRect.height * 0.04941444)
+                    mapView.setCenter(center.coordinate, animated: true)                    
                 }
                 break;
             case .dragging:
@@ -446,7 +447,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 if annotationView is MapPinAnnotationView {
                     annotationView.center.y += 56
                     var center = MKMapPoint(mapView.centerCoordinate)
-                    center.y -= 2000
+                    center.y -= (mapView.visibleMapRect.height * 0.04941444)
                     mapView.setCenter(center.coordinate, animated: true)
                 }
                 self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
@@ -667,6 +668,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         self.cameraLabel.text = camera.name
         self.lensLabel.text   = lens.name
+        self.viewLabel.text   = view.name
         self.eventAngles      = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
         self.visibleArea      = view.mapRect
         

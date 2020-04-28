@@ -95,7 +95,7 @@ public class Constants {
                                                           focalLength: DEFAULT_LENS.minFocalLength + (DEFAULT_LENS.maxFocalLength - DEFAULT_LENS.minFocalLength) / 2,
                                                           aperture   : DEFAULT_LENS.minAperture + (DEFAULT_LENS.maxAperture - DEFAULT_LENS.minAperture) / 2,
                                                           orientation: Orientation.landscape,
-                                                          country    : "Germany",
+                                                          country    : "DE",
                                                           mapRect    : MKMapRect(origin: DEFAULT_ORIGIN, size: DEFAULT_MAP_SIZE)
                                                           )
     

@@ -517,9 +517,8 @@ public class Helper {
     private static func processResponse(view: View, placemarks: [CLPlacemark]?, error: Error?) -> Void {
         if nil == placemarks { return }
         for placemark in placemarks! {
-            if let country = placemark.country {
-                view.country = country
-                print("Country: \(country)")
+            if let countryCode = placemark.isoCountryCode {
+                view.country = countryCode                
                 return
             } else {
                 view.country = "-"                

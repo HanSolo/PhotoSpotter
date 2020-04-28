@@ -42,13 +42,6 @@ class StateController {
         self.lenses = lenses
     }
     func removeLens(_ lens: Lens) {
-        /*
-        lenses.removeAll { $0.name == lens.name &&
-                           $0.minFocalLength == lens.minFocalLength &&
-                           $0.maxFocalLength == lens.maxFocalLength &&
-                           $0.minAperture == lens.minAperture &&
-                           $0.maxAperture == lens.maxAperture }
-        */
         let lensesToRemove : [Lens] = lenses.filter({ $0.name           == lens.name &&
                                                       $0.minFocalLength == lens.minFocalLength &&
                                                       $0.maxFocalLength == lens.maxFocalLength &&
@@ -460,6 +453,10 @@ class StateController {
         let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
         
         for view in views {
+            if view.country.isEmpty {
+                Helper.getCountryForView(view: view)
+            }
+            
             let predicate = NSPredicate(format: "%K == %@", "name", view.name)
             fetchRequest.predicate = predicate
             do {
@@ -626,6 +623,7 @@ class StateController {
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
         let predicate      = NSPredicate(format: "%K == %@", "name", view.name)
+        //predicate = NSPredicate(format: "username = %@ AND password = %@", txtUserName.text!, txtPassword.text!) // combine multiple conditions
         fetchRequest.predicate = predicate
         do {
             let fetchResult = try managedContext.fetch(fetchRequest).first
