@@ -45,12 +45,17 @@ struct SunMoon {
         [   -18.0,   Constants.EPD_NIGHT_END,          Constants.EPD_NIGHT              ]
     ]
     
-
-    func toJulianDate(date :Date) -> Double { return (date.timeIntervalSince1970 * 1000.0) / dayMs - 0.5 + J1970 }
-    func fromJulianDate(jd :Double) -> Date {
-        let millis = Int64((jd - 2440587.5) * 86400.0 * 1000.0)
-        return dateFromMillis(millis: millis)
+    
+    func toJulianDate(date : Date) -> Double {
+        let JD_JAN_1_1970_0000GMT = 2440587.5
+        return JD_JAN_1_1970_0000GMT + date.timeIntervalSince1970 / 86400
     }
+
+    func fromJulianDate(jd : Double) -> Date {
+        let JD_JAN_1_1970_0000GMT = 2440587.5
+        return  Date(timeIntervalSince1970: (jd - JD_JAN_1_1970_0000GMT) * 86400)
+    }
+    
     func toDays(date :Date) -> Double { return toJulianDate(date: date) - J2000 }
     
     func dateToMillis(date :Date) -> Int64 { return Int64(date.timeIntervalSince1970 * 1000.0) }
@@ -321,9 +326,9 @@ struct SunMoon {
         let eventNames :Dictionary<String,String> = [
             Constants.EPD_BLUE_HOUR_MORNING   : blueHourMorningString,
             Constants.EPD_GOLDEN_HOUR_MORNING : goldenHourMorningString,
-            Constants.EPD_SUNRISE           : sunriseString,
+            Constants.EPD_SUNRISE             : sunriseString,
             Constants.EPD_GOLDEN_HOUR_EVENING : goldenHourEveningString,
-            Constants.EPD_SUNSET            : sunsetString,
+            Constants.EPD_SUNSET              : sunsetString,
             Constants.EPD_BLUE_HOUR_EVENING   : blueHourEveningString
         ]
         
