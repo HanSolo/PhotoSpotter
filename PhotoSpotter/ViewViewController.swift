@@ -147,9 +147,6 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     private func groupByCountry() -> Dictionary<String, [View]> {
-        print("\(Dictionary(grouping: viewSelection!, by: { $0.country }))")
-        
-        
         return Dictionary(grouping: viewSelection!, by: { $0.country })
     }
     
@@ -157,12 +154,12 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: Tableview delegate and datasource methods
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groupedViews![(Array(groupedViews!.keys)[section])]?.count ?? 0
+        return groupedViews![(Array(groupedViews!.keys.sorted())[section])]?.count ?? 0
         //return viewSelection!.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let country      = Array(groupedViews!.keys)[section]
+        let country      = Array(groupedViews!.keys.sorted())[section]
         let countryName = (NSLocale.system.localizedString(forRegionCode: country) ?? "")
         //print("Title for header in section \(section): \(countryName)")
         return countryName
@@ -179,7 +176,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.detailTextLabel!.numberOfLines = 0
         
         //cell.textLabel?.text = view.name
-        let country = Array(groupedViews!.keys)[indexPath.section]
+        let country = Array(groupedViews!.keys.sorted())[indexPath.section]
         cell.textLabel?.text = (groupedViews![country]?[indexPath.row].name ?? "-")
         
         var text           : String
@@ -288,10 +285,12 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let view = viewSelection![indexPath.item]
-        stateController!.setView(view)
-        self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        performSegue(withIdentifier: "viewsViewToMapView", sender: self)
+        let country = Array(groupedViews!.keys.sorted())[indexPath.section]
+        if let view = groupedViews![country]?[indexPath.row] {
+            stateController!.setView(view)
+            self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            performSegue(withIdentifier: "viewsViewToMapView", sender: self)
+        }
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
@@ -299,8 +298,8 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let selectedCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
-            if let view = self.stateController!.views.filter({ $0.name == selectedCell.textLabel?.text }).first {
+            let country = Array(groupedViews!.keys.sorted())[indexPath.section]
+            if let view = groupedViews![country]?[indexPath.row] {
                 if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                     stateController!.removeView(view)
                     stateController!.removeViewFromCD(appDelegate: appDelegate, view: view)

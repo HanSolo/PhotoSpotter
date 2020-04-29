@@ -49,6 +49,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var cameraLabel         : UILabel!
     @IBOutlet weak var lensLabel           : UILabel!
     @IBOutlet weak var viewLabel           : UILabel!
+    @IBOutlet weak var viewButton          : UIButton!
     @IBOutlet weak var elevationButton     : UIButton!
     @IBOutlet weak var infoButton          : UIButton!
     @IBOutlet weak var locateMeButton      : UIButton!
@@ -106,6 +107,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var userLocation          : CLLocation?
     var distanceToView        : CLLocationDistance  = 0
     var timeToView            : TimeInterval        = TimeInterval()
+    var selectedViewMapRect   : MKMapRect           = Constants.DEFAULT_VIEW.mapRect
     
     var cameraBodyButton      : UIButton?
 
@@ -222,6 +224,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     // MARK: Event Handlers
+    @IBAction func viewButtonPressed(_ sender: Any) {
+        self.mapView.setVisibleMapRect(selectedViewMapRect, animated: true)
+    }
     @IBAction func focalLengthChanged(_ sender: Any) {
         self.focalLengthLabel.text             = String(format: "%.0f mm", Double(round(focalLengthSlider!.value)))
         self.stateController!.view.focalLength = Double(round(focalLengthSlider!.value))
@@ -626,6 +631,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         stateController!.setView(view)
         stateController!.setLastLocation(CLLocation(latitude: view.cameraPoint.coordinate.latitude, longitude: view.cameraPoint.coordinate.longitude))
         
+        self.selectedViewMapRect = view.mapRect
+        
         self.cameraPin = MapPin(pinType: PinType.camera, coordinate: view.cameraPoint.coordinate)
         self.motifPin  = MapPin(pinType: PinType.motif, coordinate : view.motifPoint.coordinate)
         
@@ -671,6 +678,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.viewLabel.text   = view.name
         self.eventAngles      = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
         self.visibleArea      = view.mapRect
+        
+        self.mapView.visibleMapRect = self.visibleArea!
         
         updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: focalLength, aperture: aperture, sensorFormat: camera.sensorFormat, orientation: orientation)
         updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: focalLength, aperture: aperture, sensorFormat: camera.sensorFormat, orientation: orientation)
