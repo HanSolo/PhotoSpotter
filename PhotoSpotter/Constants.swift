@@ -60,6 +60,7 @@ public class Constants {
     public static let UNIT_LENGTH         : String = " m"
     public static let UNIT_ANGLE          : String = " °"
     
+    public static let TRANSLUCENT_GRAY    : UIColor = UIColor.darkGray.withAlphaComponent(0.75)
     public static let YELLOW              : UIColor = UIColor(red: 1.00, green: 0.77, blue: 0.32, alpha: 1.00)
     public static let RED                 : UIColor = UIColor(red: 1.00, green: 0.42, blue: 0.37, alpha: 1.00)
     public static let BLUE                : UIColor = UIColor(red: 0.30, green: 0.78, blue: 1.00, alpha: 1.00)

@@ -105,12 +105,14 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.accessoryType = .none
         }
         
+        /*
         let sectionIndex = groupedViews!.index(forKey: view.country)
         let rowIndex     = groupedViews![view.country]?.firstIndex(of: view) ?? 0
         
         let viewIndex : IndexPath = IndexPath(row: rowIndex, section: sectionIndex?.hashValue ?? 0)
         tableView.selectRow(at: viewIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: viewIndex)?.accessoryType = .checkmark
+        */
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             stateController!.storeViewsToCD(appDelegate: appDelegate)

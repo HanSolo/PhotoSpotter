@@ -14,6 +14,7 @@
 		4F13D83324345B7400903059 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F13D83224345B7400903059 /* View.swift */; };
 		4F22A07424458B22000DBF9E /* UIButton+imagealign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F22A07324458B22000DBF9E /* UIButton+imagealign.swift */; };
 		4F2E8A392436F3A0007C9360 /* SunMoon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8A382436F3A0007C9360 /* SunMoon.swift */; };
+		4F2F8A0B245AC06C00B05989 /* UIStackView+background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F8A0A245AC06C00B05989 /* UIStackView+background.swift */; };
 		4F2FB2F7243EE58D00A5B37F /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FB2F6243EE58D00A5B37F /* InfoView.swift */; };
 		4F323001244EB16000E6E834 /* Array+difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F323000244EB16000E6E834 /* Array+difference.swift */; };
 		4F375E0D2448194900CF5534 /* PhotoSpotter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F375E0B2448194900CF5534 /* PhotoSpotter.xcdatamodeld */; };
@@ -57,6 +58,7 @@
 		4F13D83224345B7400903059 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		4F22A07324458B22000DBF9E /* UIButton+imagealign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+imagealign.swift"; sourceTree = "<group>"; };
 		4F2E8A382436F3A0007C9360 /* SunMoon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunMoon.swift; sourceTree = "<group>"; };
+		4F2F8A0A245AC06C00B05989 /* UIStackView+background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+background.swift"; sourceTree = "<group>"; };
 		4F2FB2F6243EE58D00A5B37F /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		4F323000244EB16000E6E834 /* Array+difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+difference.swift"; sourceTree = "<group>"; };
 		4F375E0C2448194900CF5534 /* PhotoSpotter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoSpotter.xcdatamodel; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				4F323000244EB16000E6E834 /* Array+difference.swift */,
 				4F41579A245005B40086B1CD /* Array+removeDuplicates.swift */,
 				4FB131E9245563E70084ADD8 /* TimeInterval+format.swift */,
+				4F2F8A0A245AC06C00B05989 /* UIStackView+background.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				4FAF22EC244D6886007D0BE6 /* LensData.swift in Sources */,
 				4FF364F224376B0800A749A1 /* CameraDetailViewController.swift in Sources */,
 				4F7D7B77242E28D900771992 /* Helper.swift in Sources */,
+				4F2F8A0B245AC06C00B05989 /* UIStackView+background.swift in Sources */,
 				4F9B85A724346EDD00289E8A /* ViewData.swift in Sources */,
 				4F7D7B52242E270F00771992 /* SceneDelegate.swift in Sources */,
 				4F5DDD382435A42E00A49C20 /* Constants.swift in Sources */,

@@ -54,6 +54,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var infoButton          : UIButton!
     @IBOutlet weak var locateMeButton      : UIButton!
     
+    @IBOutlet weak var distanceToViewLabel : UILabel!
+    @IBOutlet weak var timeToViewLabel     : UILabel!
+    @IBOutlet weak var routeInfoView       : UIStackView!
+    
     @IBOutlet weak var elevationChartHeight: NSLayoutConstraint!
     @IBOutlet weak var infoViewHeight      : NSLayoutConstraint!
     
@@ -176,6 +180,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             scaleView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 20)
         ]
         NSLayoutConstraint.activate(scaleViewConstraints)
+        
+        routeInfoView.addBackground(color: Constants.TRANSLUCENT_GRAY)
+        distanceToViewLabel.textColor = Constants.YELLOW
+        timeToViewLabel.textColor     = Constants.YELLOW
+        routeInfoView.isHidden = true
         
         setView(view: stateController!.view)
     }
@@ -947,12 +956,37 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                         //.font           : UIFont.systemFont(ofSize: 12)
                 ])
                 
+                self.setRouteInfoText(distance: self.distanceToView, time: self.timeToView)
+                self.routeInfoView.isHidden   = false
+                
                 let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
                 alert.setValue(msg, forKey: "attributedMessage")
                 alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
+        } else {
+            self.routeInfoView.isHidden = true
         }
+    }
+    
+    private func setRouteInfoText(distance: Double, time: TimeInterval) -> Void {
+        let textAttributes  = [NSAttributedString.Key.foregroundColor: Constants.BLUE]
+        let valueAttributes = [NSAttributedString.Key.foregroundColor: UIColor.lightText]
+        
+        let distanceText : String = "\(String(format:"%.0f km", distance / 1000.0))"
+        let distanceToViewString  = NSMutableAttributedString(string: "")
+        distanceToViewString.append(NSAttributedString(string: "Distance: ", attributes: textAttributes))
+        distanceToViewString.append(NSAttributedString(string: distanceText, attributes: valueAttributes))
+        self.distanceToViewLabel.attributedText = distanceToViewString
+        
+        let time              = Int(time)
+        let hour              = time / 3600
+        let minute            = time / 60 % 60
+        let timeText : String = "\(String(format:"%02i:%02i", hour, minute))"
+        let timeToViewString  = NSMutableAttributedString(string: "")
+        timeToViewString.append(NSAttributedString(string: "Time: ", attributes: textAttributes))
+        timeToViewString.append(NSAttributedString(string: timeText, attributes: valueAttributes))
+        self.timeToViewLabel.attributedText = timeToViewString
     }
     
     func showInfoView(show: Bool) -> Void {

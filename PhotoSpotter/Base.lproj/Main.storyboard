@@ -338,6 +338,25 @@
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eEB-0J-bVb">
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="994"/>
                                     </mapView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="YQT-CV-hyc" userLabel="RouteInfo">
+                                        <rect key="frame" x="20" y="933.5" width="215" height="40.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6F-h6-dXV" userLabel="DistanceToViewLabel">
+                                                <rect key="frame" x="10" y="10" width="72" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvS-hH-GuU" userLabel="TimeToViewLabel">
+                                                <rect key="frame" x="162" y="10" width="43" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <edgeInsets key="layoutMargins" top="10" left="10" bottom="10" right="10"/>
+                                    </stackView>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dt3-lS-mdA">
                                         <rect key="frame" x="20" y="20" width="137" height="41"/>
                                         <color key="backgroundColor" red="0.27450980392156865" green="0.27450980392156865" blue="0.27450980392156865" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
@@ -389,10 +408,12 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="YQT-CV-hyc" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" constant="20" id="CSM-i2-HsU"/>
                                     <constraint firstItem="dt3-lS-mdA" firstAttribute="top" secondItem="6ir-dF-OFO" secondAttribute="top" constant="20" id="EdY-db-6W1"/>
                                     <constraint firstItem="eEB-0J-bVb" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" id="LfX-Z4-qRb"/>
                                     <constraint firstAttribute="trailing" secondItem="eEB-0J-bVb" secondAttribute="trailing" id="PTL-sb-uuI"/>
                                     <constraint firstAttribute="trailing" secondItem="P8R-Ia-68G" secondAttribute="trailing" constant="20" id="RZ3-Ab-Iea"/>
+                                    <constraint firstItem="GtQ-2N-JhX" firstAttribute="top" secondItem="YQT-CV-hyc" secondAttribute="bottom" constant="20" id="bDa-Ox-cAR"/>
                                     <constraint firstAttribute="bottom" secondItem="GtQ-2N-JhX" secondAttribute="bottom" id="bc5-4z-fj6"/>
                                     <constraint firstAttribute="bottom" secondItem="eEB-0J-bVb" secondAttribute="bottom" id="dyP-Vo-7jy"/>
                                     <constraint firstAttribute="trailing" secondItem="GtQ-2N-JhX" secondAttribute="trailing" id="fFO-3P-K3Z"/>
@@ -570,6 +591,7 @@
                         <outlet property="cameraLabel" destination="YnF-jc-dhj" id="OGi-do-oDL"/>
                         <outlet property="camerasButton" destination="xUA-Eg-sBT" id="WdR-pf-7Pg"/>
                         <outlet property="distanceLabel" destination="g1m-Vc-WVH" id="nQT-DG-QlX"/>
+                        <outlet property="distanceToViewLabel" destination="L6F-h6-dXV" id="4t3-kH-7oB"/>
                         <outlet property="dofButton" destination="kFe-Iv-Phh" id="BdE-6l-LkE"/>
                         <outlet property="elevationButton" destination="Ouh-Jp-2aV" id="M24-XH-h8E"/>
                         <outlet property="elevationChartHeight" destination="hrY-dB-gR5" id="ILx-xR-xW0"/>
@@ -595,9 +617,11 @@
                         <outlet property="orientationButton" destination="oIT-Ve-K0R" id="jMp-v7-FTy"/>
                         <outlet property="orientationLabel" destination="7lK-US-IIb" id="hKE-cc-amE"/>
                         <outlet property="placeButton" destination="xp3-1c-EGH" id="RKG-WR-YCE"/>
+                        <outlet property="routeInfoView" destination="YQT-CV-hyc" id="58b-Fq-8OR"/>
                         <outlet property="routingButton" destination="f21-dR-J3l" id="o0a-GA-sKP"/>
                         <outlet property="showViewsButton" destination="gyl-Qk-HLX" id="upb-Ml-tu1"/>
                         <outlet property="sunButton" destination="I8n-ya-JHH" id="6rF-Lh-ncv"/>
+                        <outlet property="timeToViewLabel" destination="zvS-hH-GuU" id="b0w-bT-Kzh"/>
                         <outlet property="viewButton" destination="auU-zc-U9g" id="Ox5-pT-8xJ"/>
                         <outlet property="viewLabel" destination="Uor-yK-ven" id="BEg-0f-cSs"/>
                         <outlet property="viewsButton" destination="gyl-Qk-HLX" id="TJk-Aq-t84"/>

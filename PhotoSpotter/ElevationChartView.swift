@@ -38,7 +38,7 @@ public class ElevationChartView: UIView {
         let ctx : CGContext? = UIGraphicsGetCurrentContext()
         
         ctx?.clear(self.frame)
-        ctx?.setFillColor(UIColor.darkGray.withAlphaComponent(0.75).cgColor)
+        ctx?.setFillColor(Constants.TRANSLUCENT_GRAY.cgColor)
         ctx?.fill(rect)
         
         let font = UIFont.systemFont(ofSize: 10)
