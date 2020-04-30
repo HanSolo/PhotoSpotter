@@ -489,10 +489,12 @@ class StateController {
                 Helper.getCountryForView(view: view)
             }
             
-            let predicateName     = NSPredicate(format: "%K == %@", Constants.NAME_CD,        view.name)
-            let predicateDesc     = NSPredicate(format: "%K == %@", Constants.DESCRIPTION_CD, view.description)
-            let predicateCountry  = NSPredicate(format: "%K == %@", Constants.COUNTRY_CD,     view.country)
-            let compoundPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry])
+            let predicateName       = NSPredicate(format: "%K == %@",   Constants.NAME_CD,        view.name)
+            let predicateDesc       = NSPredicate(format: "%K == %@",   Constants.DESCRIPTION_CD, view.description)
+            let predicateCountry    = NSPredicate(format: "%K == %@",   Constants.COUNTRY_CD,     view.country)
+            let predicateCameraName = NSPredicate(format: "%K == %@", Constants.CAMERA_NAME_CD,   view.camera.name)
+            let predicateLensName   = NSPredicate(format: "%K == %@",   Constants.LENS_NAME_CD,   view.lens.name)
+            let compoundPredicate   = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry, predicateCameraName, predicateLensName])
             
             fetchRequest.predicate = compoundPredicate
             do {
@@ -563,13 +565,15 @@ class StateController {
         }
     }
     func addViewToCD(appDelegate: AppDelegate, view: View) -> Void {
-        let managedContext    = appDelegate.persistentContainer.viewContext
-        let entity            = NSEntityDescription.entity(forEntityName: Constants.VIEW_CD, in: managedContext)!
-        let fetchRequest      = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
-        let predicateName     = NSPredicate(format: "%K == %@", Constants.NAME_CD,        view.name)
-        let predicateDesc     = NSPredicate(format: "%K == %@", Constants.DESCRIPTION_CD, view.description)
-        let predicateCountry  = NSPredicate(format: "%K == %@", Constants.COUNTRY_CD,     view.country)
-        let compoundPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry])
+        let managedContext      = appDelegate.persistentContainer.viewContext
+        let entity              = NSEntityDescription.entity(forEntityName: Constants.VIEW_CD, in: managedContext)!
+        let fetchRequest        = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
+        let predicateName       = NSPredicate(format: "%K == %@",   Constants.NAME_CD,        view.name)
+        let predicateDesc       = NSPredicate(format: "%K == %@",   Constants.DESCRIPTION_CD, view.description)
+        let predicateCountry    = NSPredicate(format: "%K == %@",   Constants.COUNTRY_CD,     view.country)
+        let predicateCameraName = NSPredicate(format: "%K == %@", Constants.CAMERA_NAME_CD,   view.camera.name)
+        let predicateLensName   = NSPredicate(format: "%K == %@",   Constants.LENS_NAME_CD,   view.lens.name)
+        let compoundPredicate   = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry, predicateCameraName, predicateLensName])
         
         fetchRequest.predicate = compoundPredicate
         do {
@@ -664,12 +668,14 @@ class StateController {
     func removeViewFromCD(appDelegate: AppDelegate, view: View) -> Void {
         if view.name == Constants.DEFAULT_VIEW.name { return }
         
-        let managedContext    = appDelegate.persistentContainer.viewContext
-        let fetchRequest      = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
-        let predicateName     = NSPredicate(format: "%K == %@", Constants.NAME_CD,        view.name)
-        let predicateDesc     = NSPredicate(format: "%K == %@", Constants.DESCRIPTION_CD, view.description)
-        let predicateCountry  = NSPredicate(format: "%K == %@", Constants.COUNTRY_CD,     view.country)
-        let compoundPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry])
+        let managedContext      = appDelegate.persistentContainer.viewContext
+        let fetchRequest        = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
+        let predicateName       = NSPredicate(format: "%K == %@",   Constants.NAME_CD,        view.name)
+        let predicateDesc       = NSPredicate(format: "%K == %@",   Constants.DESCRIPTION_CD, view.description)
+        let predicateCountry    = NSPredicate(format: "%K == %@",   Constants.COUNTRY_CD,     view.country)
+        let predicateCameraName = NSPredicate(format: "%K == %@", Constants.CAMERA_NAME_CD,   view.camera.name)
+        let predicateLensName   = NSPredicate(format: "%K == %@",   Constants.LENS_NAME_CD,   view.lens.name)
+        let compoundPredicate   = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry, predicateCameraName, predicateLensName])
         
         fetchRequest.predicate = compoundPredicate
         do {
@@ -685,12 +691,14 @@ class StateController {
         }
     }
     func isViewInCD(appDelegate: AppDelegate, view: View) -> Bool {
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
-        let predicateName     = NSPredicate(format: "%K == %@", Constants.NAME_CD,        view.name)
-        let predicateDesc     = NSPredicate(format: "%K == %@", Constants.DESCRIPTION_CD, view.description)
-        let predicateCountry  = NSPredicate(format: "%K == %@", Constants.COUNTRY_CD,     view.country)
-        let compoundPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry])
+        let managedContext      = appDelegate.persistentContainer.viewContext
+        let fetchRequest        = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
+        let predicateName       = NSPredicate(format: "%K == %@",   Constants.NAME_CD,        view.name)
+        let predicateDesc       = NSPredicate(format: "%K == %@",   Constants.DESCRIPTION_CD, view.description)
+        let predicateCountry    = NSPredicate(format: "%K == %@",   Constants.COUNTRY_CD,     view.country)
+        let predicateCameraName = NSPredicate(format: "%K == %@", Constants.CAMERA_NAME_CD,   view.camera.name)
+        let predicateLensName   = NSPredicate(format: "%K == %@",   Constants.LENS_NAME_CD,   view.lens.name)
+        let compoundPredicate   = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry, predicateCameraName, predicateLensName])
         
         fetchRequest.predicate = compoundPredicate
         do {
