@@ -562,7 +562,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.visibleArea              = mapView.visibleMapRect
         self.heading                  = mapView.camera.heading
         stateController!.view.mapRect = mapView.visibleMapRect
-        stateController!.setLastLocation(CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude))
+        stateController!.setLastLocation(CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude))        
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {}
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {

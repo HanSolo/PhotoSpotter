@@ -79,6 +79,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func addViewButtonPressed(_ sender: Any) {
+        Helper.getCountryForView(view: stateController!.view)
         performSegue(withIdentifier: "viewsViewToViewDetailsView", sender: self)
     }
     
@@ -88,8 +89,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func done(segue:UIStoryboardSegue) {
         let viewDetailVC = segue.source as! ViewDetailViewController
-        let view = View(name: viewDetailVC.name, description: viewDetailVC.descr, cameraPoint: stateController!.view.cameraPoint, motifPoint: stateController!.view.motifPoint, camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation, country: "-", mapRect: stateController!.view.mapRect, tags: viewDetailVC.tags, equipment: viewDetailVC.equipment, times: viewDetailVC.times)
-        Helper.getCountryForView(view: view)
+        let view = View(name: viewDetailVC.name, description: viewDetailVC.descr, cameraPoint: stateController!.view.cameraPoint, motifPoint: stateController!.view.motifPoint, camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, orientation: stateController!.view.orientation, country: stateController!.view.country, mapRect: stateController!.view.mapRect, tags: viewDetailVC.tags, equipment: viewDetailVC.equipment, times: viewDetailVC.times)        
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             stateController!.addView(view)
             stateController!.addViewToCD(appDelegate: appDelegate, view: view)
@@ -105,7 +105,10 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.accessoryType = .none
         }
         
-        let viewIndex : IndexPath = IndexPath(row: (viewSelection!.firstIndex(of: view) ?? 0), section: 0)
+        let sectionIndex = groupedViews!.index(forKey: view.country)
+        let rowIndex     = groupedViews![view.country]?.firstIndex(of: view) ?? 0
+        
+        let viewIndex : IndexPath = IndexPath(row: rowIndex, section: sectionIndex?.hashValue ?? 0)
         tableView.selectRow(at: viewIndex, animated: true, scrollPosition: .none)
         tableView.cellForRow(at: viewIndex)?.accessoryType = .checkmark
         
@@ -155,13 +158,11 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groupedViews![(Array(groupedViews!.keys.sorted())[section])]?.count ?? 0
-        //return viewSelection!.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let country      = Array(groupedViews!.keys.sorted())[section]
         let countryName = (NSLocale.system.localizedString(forRegionCode: country) ?? "")
-        //print("Title for header in section \(section): \(countryName)")
         return countryName
     }
     
@@ -306,6 +307,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
                 let hideDefaultView : Bool = stateController!.views.count > 1
                 viewSelection = hideDefaultView ? stateController!.views.filter { $0.name != Constants.DEFAULT_VIEW.name } : stateController!.views
+                groupedViews  = groupByCountry()
                 tableView.reloadData()
             }
         } else if editingStyle == .insert {

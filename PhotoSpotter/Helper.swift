@@ -503,7 +503,6 @@ public class Helper {
         return group.filter({ $0.0 == item.0 }).count > 0
     }
     
-    
     public static func getCountryForView(view: View) -> Void {
         let location : CLLocation = CLLocation(latitude: view.cameraPoint.coordinate.latitude, longitude: view.cameraPoint.coordinate.longitude)
         CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
@@ -521,7 +520,7 @@ public class Helper {
                 view.country = countryCode                
                 return
             } else {
-                view.country = "-"                
+                view.country = ""                
             }
         }
     }
