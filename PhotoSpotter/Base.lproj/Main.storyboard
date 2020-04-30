@@ -662,19 +662,19 @@
                                 <rect key="frame" x="0.0" y="50" width="1024" height="1246"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TIv-ey-g5L" userLabel="ToolsView">
-                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="36"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="48"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="WjI-uE-o66">
-                                                <rect key="frame" x="20" y="0.0" width="984" height="36"/>
+                                                <rect key="frame" x="20" y="0.0" width="984" height="40"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cameras" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbd-1R-P4e" userLabel="CameraLabel">
-                                                        <rect key="frame" x="0.0" y="12" width="78" height="24"/>
+                                                        <rect key="frame" x="0.0" y="16" width="78" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HzJ-Sl-xYq" userLabel="AddCameraButton">
-                                                        <rect key="frame" x="962.5" y="15" width="21.5" height="20"/>
+                                                        <rect key="frame" x="962.5" y="19" width="21.5" height="20"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
@@ -691,15 +691,15 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="36" id="3sI-sM-CgP"/>
+                                            <constraint firstAttribute="height" constant="48" id="3sI-sM-CgP"/>
                                             <constraint firstItem="WjI-uE-o66" firstAttribute="leading" secondItem="TIv-ey-g5L" secondAttribute="leading" constant="20" id="Ebw-nO-wWA"/>
                                             <constraint firstItem="WjI-uE-o66" firstAttribute="top" secondItem="TIv-ey-g5L" secondAttribute="top" id="EqP-9R-7yk"/>
                                             <constraint firstAttribute="trailing" secondItem="WjI-uE-o66" secondAttribute="trailing" constant="20" id="QOR-ox-cq5"/>
-                                            <constraint firstAttribute="bottom" secondItem="WjI-uE-o66" secondAttribute="bottom" id="yl5-cr-dZY"/>
+                                            <constraint firstAttribute="bottom" secondItem="WjI-uE-o66" secondAttribute="bottom" constant="8" id="yl5-cr-dZY"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aPu-Xv-FEd" userLabel="CameraTableView">
-                                        <rect key="frame" x="0.0" y="36" width="1024" height="1210"/>
+                                        <rect key="frame" x="0.0" y="48" width="1024" height="1198"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
@@ -957,19 +957,19 @@
                                 <rect key="frame" x="0.0" y="50" width="1024" height="1246"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Q5-rG-QqX" userLabel="ToolsView">
-                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="36"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="48"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="Igg-gL-avp">
-                                                <rect key="frame" x="20" y="0.0" width="984" height="36"/>
+                                                <rect key="frame" x="20" y="0.0" width="984" height="40"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lenses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4B-c3-CUk" userLabel="LensLabel">
-                                                        <rect key="frame" x="0.0" y="12" width="62.5" height="24"/>
+                                                        <rect key="frame" x="0.0" y="16" width="62.5" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="frm-EY-Hfq" userLabel="AddLensButton">
-                                                        <rect key="frame" x="962.5" y="15" width="21.5" height="20"/>
+                                                        <rect key="frame" x="962.5" y="19" width="21.5" height="20"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
@@ -986,15 +986,15 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="Igg-gL-avp" secondAttribute="bottom" id="5X3-6O-Jmv"/>
+                                            <constraint firstAttribute="bottom" secondItem="Igg-gL-avp" secondAttribute="bottom" constant="8" id="5X3-6O-Jmv"/>
                                             <constraint firstItem="Igg-gL-avp" firstAttribute="leading" secondItem="2Q5-rG-QqX" secondAttribute="leading" constant="20" id="LpM-bh-uVi"/>
                                             <constraint firstItem="Igg-gL-avp" firstAttribute="top" secondItem="2Q5-rG-QqX" secondAttribute="top" id="Mby-gH-6FP"/>
-                                            <constraint firstAttribute="height" constant="36" id="Xhb-y9-VAx"/>
+                                            <constraint firstAttribute="height" constant="48" id="Xhb-y9-VAx"/>
                                             <constraint firstAttribute="trailing" secondItem="Igg-gL-avp" secondAttribute="trailing" constant="20" id="hAM-dp-J1H"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rTE-xB-yBm" userLabel="LensTableView">
-                                        <rect key="frame" x="0.0" y="36" width="1024" height="1210"/>
+                                        <rect key="frame" x="0.0" y="48" width="1024" height="1198"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
@@ -1316,19 +1316,19 @@
                                 <rect key="frame" x="0.0" y="50" width="1024" height="1246"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fka-5F-yN6" userLabel="ToolsView">
-                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="36"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="48"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="IhS-kF-E1w">
-                                                <rect key="frame" x="20" y="0.0" width="984" height="36"/>
+                                                <rect key="frame" x="20" y="0.0" width="984" height="40"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Views" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gbx-Qu-hNx" userLabel="LensLabel">
-                                                        <rect key="frame" x="0.0" y="12" width="52.5" height="24"/>
+                                                        <rect key="frame" x="0.0" y="16" width="52.5" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1O-kc-Aro" userLabel="AddViewButton">
-                                                        <rect key="frame" x="962.5" y="15" width="21.5" height="20"/>
+                                                        <rect key="frame" x="962.5" y="19" width="21.5" height="20"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
@@ -1346,14 +1346,14 @@
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="IhS-kF-E1w" secondAttribute="trailing" constant="20" id="7fU-sk-rLq"/>
-                                            <constraint firstAttribute="height" constant="36" id="88T-a8-Dl5"/>
+                                            <constraint firstAttribute="height" constant="48" id="88T-a8-Dl5"/>
                                             <constraint firstItem="IhS-kF-E1w" firstAttribute="top" secondItem="Fka-5F-yN6" secondAttribute="top" id="YfW-ZM-WdZ"/>
                                             <constraint firstItem="IhS-kF-E1w" firstAttribute="leading" secondItem="Fka-5F-yN6" secondAttribute="leading" constant="20" id="gx5-QG-qKO"/>
-                                            <constraint firstAttribute="bottom" secondItem="IhS-kF-E1w" secondAttribute="bottom" id="k1U-da-7u7"/>
+                                            <constraint firstAttribute="bottom" secondItem="IhS-kF-E1w" secondAttribute="bottom" constant="8" id="k1U-da-7u7"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n34-ih-Ers" userLabel="ViewTableView">
-                                        <rect key="frame" x="0.0" y="36" width="1024" height="1210"/>
+                                        <rect key="frame" x="0.0" y="48" width="1024" height="1198"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
@@ -1625,10 +1625,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Tqb-kX-mOs"/>
-        <segue reference="q1Q-0p-CtR"/>
-        <segue reference="6Gl-Tl-cdW"/>
-        <segue reference="Yg0-Ub-0Bk"/>
+        <segue reference="xGg-4x-7zw"/>
+        <segue reference="Gpb-NS-Hlh"/>
+        <segue reference="heU-sJ-624"/>
+        <segue reference="8Mg-Zc-6jN"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.up.and.down.circle" catalog="system" width="128" height="121"/>

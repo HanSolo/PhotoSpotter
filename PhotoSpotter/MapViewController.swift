@@ -295,7 +295,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let motifPoint  :MKMapPoint = MKMapPoint(x: cameraPoint.x + dX, y: cameraPoint.y + dY)
         let mapRect     :MKMapRect  = self.mapView.visibleMapRect
         
-        let newView :View = View(name: stateController!.view.name, description: stateController!.view.description, cameraPoint: cameraPoint, motifPoint: motifPoint,
+        let newView :View = View(name: "current", description: stateController!.view.description, cameraPoint: cameraPoint, motifPoint: motifPoint,
                                  camera: stateController!.view.camera, lens: stateController!.view.lens, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture,
                                  orientation: stateController!.view.orientation, country: stateController!.view.country, mapRect: mapRect)
         setView(view: newView)

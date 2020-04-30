@@ -43,7 +43,7 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         let hideDefaultLens : Bool = stateController!.lenses.count > 1
-        lensSelection = hideDefaultLens ? stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name } : stateController!.lenses
+        self.lensSelection = hideDefaultLens ? (self.stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name }).sorted(by: { $0.isPrime && !$1.isPrime }) : self.stateController!.lenses.sorted(by: { $0.isPrime && !$1.isPrime })
         
         // Register the table view cell class and its reuse id
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
@@ -102,7 +102,7 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         let hideDefaultLens : Bool = stateController!.lenses.count > 1
-        lensSelection = hideDefaultLens ? stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name } : stateController!.lenses
+        self.lensSelection = hideDefaultLens ? (self.stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name }).sorted(by: { $0.isPrime && !$1.isPrime }) : self.stateController!.lenses.sorted(by: { $0.isPrime && !$1.isPrime })
         //lensSelector.selectedSegmentIndex = 0
         tableView.reloadData()
         
@@ -133,9 +133,9 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch lensSelector.selectedSegmentIndex {
             case 0 :  // All lenses
                 if hideDefaultLens {
-                    lensSelection = stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name }
+                    lensSelection = (stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name }).sorted(by: { $0.isPrime && !$1.isPrime })
                 } else {
-                    lensSelection = stateController!.lenses
+                    lensSelection = stateController!.lenses.sorted(by: { $0.isPrime && !$1.isPrime })
                 }
                 break;
             case 1 : // Prime lenses
@@ -259,7 +259,7 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.stateController!.removeLensFromCD(appDelegate: appDelegate!, lens: lens)
                 }
                 let hideDefaultLens : Bool = self.stateController!.lenses.count > 1
-                self.lensSelection = hideDefaultLens ? self.stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name } : self.stateController!.lenses
+                self.lensSelection = hideDefaultLens ? (self.stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name }).sorted(by: { $0.isPrime && !$1.isPrime }) : self.stateController!.lenses.sorted(by: { $0.isPrime && !$1.isPrime })
                 tableView.reloadData()
             })
             alertController.addAction(deleteAction)

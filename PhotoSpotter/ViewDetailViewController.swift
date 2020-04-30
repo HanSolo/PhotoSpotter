@@ -126,52 +126,52 @@ public class ViewDetailViewController: UIViewController, UITableViewDelegate, UI
     
     private func setItem(item: String, isOn: Bool) -> Void {
         switch item {
-            case Constants.EQP_TRIPOD.0       : self.equipment = isOn ? self.equipment | Constants.EQP_TRIPOD.1     : self.equipment | -Constants.EQP_TRIPOD.1
-            case Constants.EQP_GIMBAL.0       : self.equipment = isOn ? self.equipment | Constants.EQP_GIMBAL.1     : self.equipment | -Constants.EQP_GIMBAL.1
-            case Constants.EQP_CPL_FILTER.0   : self.equipment = isOn ? self.equipment | Constants.EQP_CPL_FILTER.1 : self.equipment | -Constants.EQP_CPL_FILTER.1
-            case Constants.EQP_ND_FILTER.0    : self.equipment = isOn ? self.equipment | Constants.EQP_ND_FILTER.1  : self.equipment | -Constants.EQP_ND_FILTER.1
-            case Constants.EQP_IR_FILTER.0    : self.equipment = isOn ? self.equipment | Constants.EQP_IR_FILTER.1  : self.equipment | -Constants.EQP_IR_FILTER.1
-            case Constants.EQP_FLASH.0        : self.equipment = isOn ? self.equipment | Constants.EQP_FLASH.1      : self.equipment | Constants.EQP_FLASH.1
-            case Constants.EQP_REMOTE.0       : self.equipment = isOn ? self.equipment | Constants.EQP_REMOTE.1     : self.equipment | Constants.EQP_REMOTE.1
+            case Constants.EQP_TRIPOD.0       : self.equipment = isOn ? self.equipment | Constants.EQP_TRIPOD.1     : self.equipment ^ Constants.EQP_TRIPOD.1
+            case Constants.EQP_GIMBAL.0       : self.equipment = isOn ? self.equipment | Constants.EQP_GIMBAL.1     : self.equipment ^ Constants.EQP_GIMBAL.1
+            case Constants.EQP_CPL_FILTER.0   : self.equipment = isOn ? self.equipment | Constants.EQP_CPL_FILTER.1 : self.equipment ^ Constants.EQP_CPL_FILTER.1
+            case Constants.EQP_ND_FILTER.0    : self.equipment = isOn ? self.equipment | Constants.EQP_ND_FILTER.1  : self.equipment ^ Constants.EQP_ND_FILTER.1
+            case Constants.EQP_IR_FILTER.0    : self.equipment = isOn ? self.equipment | Constants.EQP_IR_FILTER.1  : self.equipment ^ Constants.EQP_IR_FILTER.1
+            case Constants.EQP_FLASH.0        : self.equipment = isOn ? self.equipment | Constants.EQP_FLASH.1      : self.equipment ^ Constants.EQP_FLASH.1
+            case Constants.EQP_REMOTE.0       : self.equipment = isOn ? self.equipment | Constants.EQP_REMOTE.1     : self.equipment ^ Constants.EQP_REMOTE.1
             
-            case Constants.TMS_ALL_YEAR.0     : self.times = isOn ? self.times | Constants.TMS_ALL_YEAR.1           : self.times     | -Constants.TMS_ALL_YEAR.1
-            case Constants.TMS_SPRING.0       : self.times = isOn ? self.times | Constants.TMS_SPRING.1             : self.times     | -Constants.TMS_SPRING.1
-            case Constants.TMS_SUMMER.0       : self.times = isOn ? self.times | Constants.TMS_SUMMER.1             : self.times     | -Constants.TMS_SUMMER.1
-            case Constants.TMS_AUTUMN.0       : self.times = isOn ? self.times | Constants.TMS_AUTUMN.1             : self.times     | -Constants.TMS_AUTUMN.1
-            case Constants.TMS_WINTER.0       : self.times = isOn ? self.times | Constants.TMS_WINTER.1             : self.times     | -Constants.TMS_WINTER.1
-            case Constants.TMS_JANUARY.0      : self.times = isOn ? self.times | Constants.TMS_JANUARY.1            : self.times     | -Constants.TMS_JANUARY.1
-            case Constants.TMS_FEBRUARY.0     : self.times = isOn ? self.times | Constants.TMS_FEBRUARY.1           : self.times     | -Constants.TMS_FEBRUARY.1
-            case Constants.TMS_MARCH.0        : self.times = isOn ? self.times | Constants.TMS_MARCH.1              : self.times     | -Constants.TMS_MARCH.1
-            case Constants.TMS_APRIL.0        : self.times = isOn ? self.times | Constants.TMS_APRIL.1              : self.times     | -Constants.TMS_APRIL.1
-            case Constants.TMS_MAY.0          : self.times = isOn ? self.times | Constants.TMS_MAY.1                : self.times     | -Constants.TMS_MAY.1
-            case Constants.TMS_JUNE.0         : self.times = isOn ? self.times | Constants.TMS_JUNE.1               : self.times     | -Constants.TMS_JUNE.1
-            case Constants.TMS_JULY.0         : self.times = isOn ? self.times | Constants.TMS_JULY.1               : self.times     | -Constants.TMS_JULY.1
-            case Constants.TMS_AUGUST.0       : self.times = isOn ? self.times | Constants.TMS_AUGUST.1             : self.times     | -Constants.TMS_AUGUST.1
-            case Constants.TMS_SEPTEMBER.0    : self.times = isOn ? self.times | Constants.TMS_SEPTEMBER.1          : self.times     | -Constants.TMS_SEPTEMBER.1
-            case Constants.TMS_OCTOBER.0      : self.times = isOn ? self.times | Constants.TMS_OCTOBER.1            : self.times     | -Constants.TMS_OCTOBER.1
-            case Constants.TMS_NOVEMBER.0     : self.times = isOn ? self.times | Constants.TMS_NOVEMBER.1           : self.times     | -Constants.TMS_NOVEMBER.1
-            case Constants.TMS_DECEMBER.0     : self.times = isOn ? self.times | Constants.TMS_DECEMBER.1           : self.times     | -Constants.TMS_DECEMBER.1
+            case Constants.TMS_ALL_YEAR.0     : self.times = isOn ? self.times | Constants.TMS_ALL_YEAR.1           : self.times     ^ Constants.TMS_ALL_YEAR.1
+            case Constants.TMS_SPRING.0       : self.times = isOn ? self.times | Constants.TMS_SPRING.1             : self.times     ^ Constants.TMS_SPRING.1
+            case Constants.TMS_SUMMER.0       : self.times = isOn ? self.times | Constants.TMS_SUMMER.1             : self.times     ^ Constants.TMS_SUMMER.1
+            case Constants.TMS_AUTUMN.0       : self.times = isOn ? self.times | Constants.TMS_AUTUMN.1             : self.times     ^ Constants.TMS_AUTUMN.1
+            case Constants.TMS_WINTER.0       : self.times = isOn ? self.times | Constants.TMS_WINTER.1             : self.times     ^ Constants.TMS_WINTER.1
+            case Constants.TMS_JANUARY.0      : self.times = isOn ? self.times | Constants.TMS_JANUARY.1            : self.times     ^ Constants.TMS_JANUARY.1
+            case Constants.TMS_FEBRUARY.0     : self.times = isOn ? self.times | Constants.TMS_FEBRUARY.1           : self.times     ^ Constants.TMS_FEBRUARY.1
+            case Constants.TMS_MARCH.0        : self.times = isOn ? self.times | Constants.TMS_MARCH.1              : self.times     ^ Constants.TMS_MARCH.1
+            case Constants.TMS_APRIL.0        : self.times = isOn ? self.times | Constants.TMS_APRIL.1              : self.times     ^ Constants.TMS_APRIL.1
+            case Constants.TMS_MAY.0          : self.times = isOn ? self.times | Constants.TMS_MAY.1                : self.times     ^ Constants.TMS_MAY.1
+            case Constants.TMS_JUNE.0         : self.times = isOn ? self.times | Constants.TMS_JUNE.1               : self.times     ^ Constants.TMS_JUNE.1
+            case Constants.TMS_JULY.0         : self.times = isOn ? self.times | Constants.TMS_JULY.1               : self.times     ^ Constants.TMS_JULY.1
+            case Constants.TMS_AUGUST.0       : self.times = isOn ? self.times | Constants.TMS_AUGUST.1             : self.times     ^ Constants.TMS_AUGUST.1
+            case Constants.TMS_SEPTEMBER.0    : self.times = isOn ? self.times | Constants.TMS_SEPTEMBER.1          : self.times     ^ Constants.TMS_SEPTEMBER.1
+            case Constants.TMS_OCTOBER.0      : self.times = isOn ? self.times | Constants.TMS_OCTOBER.1            : self.times     ^ Constants.TMS_OCTOBER.1
+            case Constants.TMS_NOVEMBER.0     : self.times = isOn ? self.times | Constants.TMS_NOVEMBER.1           : self.times     ^ Constants.TMS_NOVEMBER.1
+            case Constants.TMS_DECEMBER.0     : self.times = isOn ? self.times | Constants.TMS_DECEMBER.1           : self.times     ^ Constants.TMS_DECEMBER.1
             
-            case Constants.TAG_NIGHT.0        : self.tags = isOn ? self.tags | Constants.TAG_NIGHT.1                : self.tags      | -Constants.TAG_NIGHT.1
-            case Constants.TAG_ASTRO.0        : self.tags = isOn ? self.tags | Constants.TAG_ASTRO.1                : self.tags      | -Constants.TAG_ASTRO.1
-            case Constants.TAG_MACRO.0        : self.tags = isOn ? self.tags | Constants.TAG_MACRO.1                : self.tags      | -Constants.TAG_MACRO.1
-            case Constants.TAG_POI.0          : self.tags = isOn ? self.tags | Constants.TAG_POI.1                  : self.tags      | -Constants.TAG_POI.1
-            case Constants.TAG_INFRARED.0     : self.tags = isOn ? self.tags | Constants.TAG_INFRARED.1             : self.tags      | -Constants.TAG_INFRARED.1
-            case Constants.TAG_LONG_EXPOSURE.0: self.tags = isOn ? self.tags | Constants.TAG_LONG_EXPOSURE.1        : self.tags      | -Constants.TAG_LONG_EXPOSURE.1
-            case Constants.TAG_CITYSCAPE.0    : self.tags = isOn ? self.tags | Constants.TAG_CITYSCAPE.1            : self.tags      | -Constants.TAG_CITYSCAPE.1
-            case Constants.TAG_LANDSCAPE.0    : self.tags = isOn ? self.tags | Constants.TAG_LANDSCAPE.1            : self.tags      | -Constants.TAG_LANDSCAPE.1
-            case Constants.TAG_STREET.0       : self.tags = isOn ? self.tags | Constants.TAG_STREET.1               : self.tags      | -Constants.TAG_STREET.1
-            case Constants.TAG_BRIDGE.0       : self.tags = isOn ? self.tags | Constants.TAG_BRIDGE.1               : self.tags      | -Constants.TAG_BRIDGE.1
-            case Constants.TAG_LAKE.0         : self.tags = isOn ? self.tags | Constants.TAG_LAKE.1                 : self.tags      | -Constants.TAG_LAKE.1
-            case Constants.TAG_SHIP.0         : self.tags = isOn ? self.tags | Constants.TAG_SHIP.1                 : self.tags      | -Constants.TAG_SHIP.1
-            case Constants.TAG_CAR.0          : self.tags = isOn ? self.tags | Constants.TAG_CAR.1                  : self.tags      | -Constants.TAG_CAR.1
-            case Constants.TAG_FLOWER.0       : self.tags = isOn ? self.tags | Constants.TAG_FLOWER.1               : self.tags      | -Constants.TAG_FLOWER.1
-            case Constants.TAG_TREE.0         : self.tags = isOn ? self.tags | Constants.TAG_TREE.1                 : self.tags      | -Constants.TAG_TREE.1
-            case Constants.TAG_BUILDING.0     : self.tags = isOn ? self.tags | Constants.TAG_BUILDING.1             : self.tags      | -Constants.TAG_BUILDING.1
-            case Constants.TAG_BEACH.0        : self.tags = isOn ? self.tags | Constants.TAG_BEACH.1                : self.tags      | -Constants.TAG_BEACH.1
-            case Constants.TAG_SUNRISE.0      : self.tags = isOn ? self.tags | Constants.TAG_SUNRISE.1              : self.tags      | -Constants.TAG_SUNRISE.1
-            case Constants.TAG_SUNSET.0       : self.tags = isOn ? self.tags | Constants.TAG_SUNSET.1               : self.tags      | -Constants.TAG_SUNSET.1
-            case Constants.TAG_MOON.0         : self.tags = isOn ? self.tags | Constants.TAG_MOON.1                 : self.tags      | -Constants.TAG_MOON.1
+            case Constants.TAG_NIGHT.0        : self.tags = isOn ? self.tags | Constants.TAG_NIGHT.1                : self.tags      ^ Constants.TAG_NIGHT.1
+            case Constants.TAG_ASTRO.0        : self.tags = isOn ? self.tags | Constants.TAG_ASTRO.1                : self.tags      ^ Constants.TAG_ASTRO.1
+            case Constants.TAG_MACRO.0        : self.tags = isOn ? self.tags | Constants.TAG_MACRO.1                : self.tags      ^ Constants.TAG_MACRO.1
+            case Constants.TAG_POI.0          : self.tags = isOn ? self.tags | Constants.TAG_POI.1                  : self.tags      ^ Constants.TAG_POI.1
+            case Constants.TAG_INFRARED.0     : self.tags = isOn ? self.tags | Constants.TAG_INFRARED.1             : self.tags      ^ Constants.TAG_INFRARED.1
+            case Constants.TAG_LONG_EXPOSURE.0: self.tags = isOn ? self.tags | Constants.TAG_LONG_EXPOSURE.1        : self.tags      ^ Constants.TAG_LONG_EXPOSURE.1
+            case Constants.TAG_CITYSCAPE.0    : self.tags = isOn ? self.tags | Constants.TAG_CITYSCAPE.1            : self.tags      ^ Constants.TAG_CITYSCAPE.1
+            case Constants.TAG_LANDSCAPE.0    : self.tags = isOn ? self.tags | Constants.TAG_LANDSCAPE.1            : self.tags      ^ Constants.TAG_LANDSCAPE.1
+            case Constants.TAG_STREET.0       : self.tags = isOn ? self.tags | Constants.TAG_STREET.1               : self.tags      ^ Constants.TAG_STREET.1
+            case Constants.TAG_BRIDGE.0       : self.tags = isOn ? self.tags | Constants.TAG_BRIDGE.1               : self.tags      ^ Constants.TAG_BRIDGE.1
+            case Constants.TAG_LAKE.0         : self.tags = isOn ? self.tags | Constants.TAG_LAKE.1                 : self.tags      ^ Constants.TAG_LAKE.1
+            case Constants.TAG_SHIP.0         : self.tags = isOn ? self.tags | Constants.TAG_SHIP.1                 : self.tags      ^ Constants.TAG_SHIP.1
+            case Constants.TAG_CAR.0          : self.tags = isOn ? self.tags | Constants.TAG_CAR.1                  : self.tags      ^ Constants.TAG_CAR.1
+            case Constants.TAG_FLOWER.0       : self.tags = isOn ? self.tags | Constants.TAG_FLOWER.1               : self.tags      ^ Constants.TAG_FLOWER.1
+            case Constants.TAG_TREE.0         : self.tags = isOn ? self.tags | Constants.TAG_TREE.1                 : self.tags      ^ Constants.TAG_TREE.1
+            case Constants.TAG_BUILDING.0     : self.tags = isOn ? self.tags | Constants.TAG_BUILDING.1             : self.tags      ^ Constants.TAG_BUILDING.1
+            case Constants.TAG_BEACH.0        : self.tags = isOn ? self.tags | Constants.TAG_BEACH.1                : self.tags      ^ Constants.TAG_BEACH.1
+            case Constants.TAG_SUNRISE.0      : self.tags = isOn ? self.tags | Constants.TAG_SUNRISE.1              : self.tags      ^ Constants.TAG_SUNRISE.1
+            case Constants.TAG_SUNSET.0       : self.tags = isOn ? self.tags | Constants.TAG_SUNSET.1               : self.tags      ^ Constants.TAG_SUNSET.1
+            case Constants.TAG_MOON.0         : self.tags = isOn ? self.tags | Constants.TAG_MOON.1                 : self.tags      ^ Constants.TAG_MOON.1
             default                           : break
         }
     }
