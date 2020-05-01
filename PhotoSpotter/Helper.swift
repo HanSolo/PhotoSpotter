@@ -32,14 +32,16 @@ public class Helper {
         return hypot(ac, cb)
     }
     
-    public static func calc(camera: MKMapPoint, motif: MKMapPoint, focalLengthInMM: Double, aperture: Double,sensorFormat: SensorFormat, orientation: Orientation) throws -> FoVData {        
+    public static func calc(camera: MKMapPoint, motif: MKMapPoint, focalLengthInMM: Double, aperture: Double, sensorFormat: Int64, orientation: Orientation) throws -> FoVData {
         let distance : Double = camera.distance(to: motif)
         
         if focalLengthInMM < 8 || focalLengthInMM > 2400 { throw FoVError.invalidArgument(message: "Error, focal length must be between 8mm and 2400mm") }
         if aperture < 0.7 || aperture > 99 { throw FoVError.invalidArgument(message: "Error, aperture must be between f/0.7 and f/99"); }
         if distance < 0.01 || distance > 9999 { throw FoVError.invalidArgument(message: "Error, distance must be between 0.01m and 9999m"); }
 
-        let cropFactor: Double = sensorFormat.cropFactor
+        let format : SensorFormat = SensorFormat.allCases[Int(sensorFormat)]
+        
+        let cropFactor: Double = format.cropFactor
 
         // Do all calculations in metres (because that's sensible).
         let focalLength: Double = focalLengthInMM / 1000.0
@@ -57,7 +59,7 @@ public class Helper {
         let behindPercent : Double = (farLimit - distance) / (farLimit - nearLimit) * 100
         let total         : Double = farLimit - nearLimit
 
-        let d             : Double = sqrt((sensorFormat.width * sensorFormat.width) + (sensorFormat.height * sensorFormat.height))
+        let d             : Double = sqrt((format.width * format.width) + (format.height * format.height))
         let diagonalAngle : Double = 2.0 * atan(d / (2.0 * focalLengthInMM))
         let diagonalLength: Double = ((distance * sin(diagonalAngle / 2.0)) / cos(diagonalAngle / 2.0)) * 2.0
         let phi           : Double = asin(2.0 / 3.605551)
@@ -81,7 +83,7 @@ public class Helper {
         return FoVData(camera: camera, motif: motif, focalLength: focalLengthInMM, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation, infinite: infinite, hyperFocal: hyperFocal, nearLimit: nearLimit, farLimit: farLimit, frontPercent: frontPercent, behindPercent: behindPercent, total: total, diagonalAngle: diagonalAngle, diagonalLength: diagonalLength, fovWidth: fovWidth, fovWidthAngle: fovWidthAngle, fovHeight: fovHeight, fovHeightAngle: fovHeightAngle, radius: radius)
     }
     
-    public static func updateTriangle(camera: MKMapPoint, motif: MKMapPoint, focalLengthInMM: Double, aperture: Double, sensorFormat: SensorFormat, orientation: Orientation, triangle: Triangle) {
+    public static func updateTriangle(camera: MKMapPoint, motif: MKMapPoint, focalLengthInMM: Double, aperture: Double, sensorFormat: Int64, orientation: Orientation, triangle: Triangle) {
         do {
             let data: FoVData = try calc(camera: camera, motif: motif, focalLengthInMM: focalLengthInMM, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
             let trianglePoints: [MKMapPoint] = calcTrianglePoints(data: data)
@@ -101,7 +103,7 @@ public class Helper {
         return [p1, p2, p3]
     }
     
-    public static func updateTrapezoid(camera: MKMapPoint, motif: MKMapPoint, focalLengthInMM: Double, aperture: Double, sensorFormat: SensorFormat, orientation: Orientation, trapezoid: Trapezoid) {
+    public static func updateTrapezoid(camera: MKMapPoint, motif: MKMapPoint, focalLengthInMM: Double, aperture: Double, sensorFormat: Int64, orientation: Orientation, trapezoid: Trapezoid) {
         do {
             let data: FoVData = try calc(camera: camera, motif: motif, focalLengthInMM: focalLengthInMM, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
             let trapezoidPoints: [MKMapPoint] = calcTrapezoidPoints(data: data)

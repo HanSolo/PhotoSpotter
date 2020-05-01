@@ -24,7 +24,7 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
     var tapGestureRecognizer : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showAlert(sender:)))
     
     var name                 : String                 = ""
-    var sensorFormat         : SensorFormat           = SensorFormat.FULL_FORMAT
+    var sensorFormat         : Int64                  = SensorFormat.FULL_FORMAT.id
     
     var nameValid            : Bool                   = false
     
@@ -44,6 +44,8 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
         
         tapGestureRecognizer.numberOfTapsRequired = 1
         nameIconView = Helper.setupTextFieldWithAlertIcon(field: nameTextField, gestureRecognizer: tapGestureRecognizer)
+        
+        validateForm()
     }
     
     
@@ -65,7 +67,7 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
     @objc private func textFieldChanged(_ textField: UITextField) -> Void {
         if (textField === nameTextField) {
             self.name      = textField.text!
-            self.nameValid = !textField.text!.isEmpty
+            self.nameValid = !textField.text!.isEmpty && stateController!.cameras.firstIndex(where: { $0.name == textField.text! }) == nil
         }
         validateForm()
     }
@@ -101,7 +103,7 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
     }
     
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Constants.SENSOR_FORMATS.count
+        return SensorFormat.allCases.count
     }
     
     public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
@@ -113,14 +115,14 @@ public class CameraDetailViewController: UIViewController, UIPickerViewDataSourc
         }
         
         if pickerView === sensorFormatPicker {
-            pickerLabel?.text = Constants.SENSOR_FORMATS[row].description
+            pickerLabel?.text = SensorFormat.allCases[row].description
         }
         return pickerLabel!
     }
     
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView === sensorFormatPicker {
-            self.sensorFormat = Constants.SENSOR_FORMATS[row]
+            self.sensorFormat = SensorFormat.allCases[row].id
         }
     }
 }

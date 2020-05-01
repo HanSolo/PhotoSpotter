@@ -46,11 +46,13 @@ class StateController {
                                                       $0.minFocalLength == lens.minFocalLength &&
                                                       $0.maxFocalLength == lens.maxFocalLength &&
                                                       $0.minAperture    == lens.minAperture &&
-                                                      $0.maxAperture    == lens.maxAperture})
+                                                      $0.maxAperture    == lens.maxAperture &&
+                                                      $0.sensorFormat   == lens.sensorFormat
+        })
         lenses.removeAll(where: { lensesToRemove.contains($0) })
     }
     func isLensInLenses(lens: Lens) -> Bool {
-        return lenses.filter({ $0.name == lens.name && $0.minFocalLength == lens.minFocalLength && $0.maxFocalLength == lens.maxFocalLength && $0.minAperture == lens.minAperture && $0.maxAperture == lens.maxAperture }).count >= 1
+        return lenses.filter({ $0.name == lens.name && $0.minFocalLength == lens.minFocalLength && $0.maxFocalLength == lens.maxFocalLength && $0.minAperture == lens.minAperture && $0.maxAperture == lens.maxAperture && $0.sensorFormat == lens.sensorFormat }).count >= 1
     }
     
     
@@ -75,7 +77,7 @@ class StateController {
         cameras.removeAll(where: { camerasToRemove.contains($0) })        
     }
     func isCameraInCameras(camera: Camera) -> Bool {
-        return cameras.filter({ $0.name == camera.name && $0.description() == camera.description() }).count >= 1
+        return cameras.filter({ $0.name == camera.name && $0.sensorFormat == camera.sensorFormat }).count >= 1
     }
     
     
@@ -127,6 +129,7 @@ class StateController {
         
         for lens in lenses {
             let predicateName           = NSPredicate(format: "%K == %@", Constants.NAME_CD,             lens.name)
+            //let predicateSensorFormat   = NSPredicate(format: "%K == %@", Constants.SENSOR_FORMAT_CD,    lens.sensorFormat)
             //let predicateMinAperture    = NSPredicate(format: "%K == %@", Constants.MIN_APERTURE_CD,     lens.minAperture)
             //let predicateMaxAperture    = NSPredicate(format: "%K == %@", Constants.MAX_APERTURE_CD,     lens.maxAperture)
             //let predicateMinFocalLength = NSPredicate(format: "%K == %@", Constants.MIN_FOCAL_LENGTH_CD, lens.minFocalLength)
@@ -144,6 +147,7 @@ class StateController {
                     lensCD.setValue(lens.maxFocalLength, forKeyPath: Constants.MAX_FOCAL_LENGTH_CD)
                     lensCD.setValue(lens.minAperture,    forKeyPath: Constants.MIN_APERTURE_CD)
                     lensCD.setValue(lens.maxAperture,    forKeyPath: Constants.MAX_APERTURE_CD)
+                    lensCD.setValue(lens.sensorFormat,   forKeyPath: Constants.SENSOR_FORMAT_CD)
                 } else {
                     // Insert
                     let lensCD = NSManagedObject(entity: entity, insertInto: managedContext)
@@ -152,6 +156,7 @@ class StateController {
                     lensCD.setValue(lens.maxFocalLength, forKeyPath: Constants.MAX_FOCAL_LENGTH_CD)
                     lensCD.setValue(lens.minAperture,    forKeyPath: Constants.MIN_APERTURE_CD)
                     lensCD.setValue(lens.maxAperture,    forKeyPath: Constants.MAX_APERTURE_CD)
+                    lensCD.setValue(lens.sensorFormat,   forKeyPath: Constants.SENSOR_FORMAT_CD)
                 }
             } catch let error as NSError {
                 print("Error fetching lens from CoreData. \(error), \(error.userInfo)")
@@ -188,6 +193,7 @@ class StateController {
                 lensCD.setValue(lens.maxFocalLength, forKeyPath: Constants.MAX_FOCAL_LENGTH_CD)
                 lensCD.setValue(lens.minAperture,    forKeyPath: Constants.MIN_APERTURE_CD)
                 lensCD.setValue(lens.maxAperture,    forKeyPath: Constants.MAX_APERTURE_CD)
+                lensCD.setValue(lens.sensorFormat,   forKeyPath: Constants.SENSOR_FORMAT_CD)
             }
         } catch let error as NSError {
             print("Error fetching lens from CoreData. \(error), \(error.userInfo)")
@@ -284,7 +290,8 @@ class StateController {
                             minFocalLength: lensCD.value(forKey: Constants.MIN_FOCAL_LENGTH_CD) as! Double,
                             maxFocalLength: lensCD.value(forKey: Constants.MAX_FOCAL_LENGTH_CD) as! Double,
                             minAperture   : lensCD.value(forKey: Constants.MIN_APERTURE_CD)     as! Double,
-                            maxAperture   : lensCD.value(forKey: Constants.MAX_APERTURE_CD)     as! Double)
+                            maxAperture   : lensCD.value(forKey: Constants.MAX_APERTURE_CD)     as! Double,
+                            sensorFormat  : lensCD.value(forKey: Constants.SENSOR_FORMAT_CD)    as! Int64)
             lensesInCoreData.append(lens)
         }
         for lens in lensesInCoreData {
@@ -321,21 +328,21 @@ class StateController {
         
         for camera in cameras {
             let predicateName         = NSPredicate(format: "%K == %@", Constants.NAME_CD,          camera.name)
-            let predicateSensorFormat = NSPredicate(format: "%K == %@", Constants.SENSOR_FORMAT_CD, camera.sensorFormat.rawValue)
-            let compoundPredicate     = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateSensorFormat])
+            //let predicateSensorFormat = NSPredicate(format: "%K == %@", Constants.SENSOR_FORMAT_CD, camera.sensorFormat)
+            //let compoundPredicate     = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateSensorFormat])
             
-            fetchRequest.predicate = compoundPredicate
+            fetchRequest.predicate = predicateName
             do {
                 let fetchResult = try managedContext.fetch(fetchRequest).first
                 if fetchResult != nil {
                     // Update
                     let cameraCD = fetchResult!
-                    cameraCD.setValue(camera.sensorFormat.rawValue, forKeyPath: Constants.SENSOR_FORMAT_CD)
+                    cameraCD.setValue(camera.sensorFormat, forKeyPath: Constants.SENSOR_FORMAT_CD)
                 } else {
                     // Insert
                     let cameraCD = NSManagedObject(entity: entity, insertInto: managedContext)
-                    cameraCD.setValue(camera.name,                  forKeyPath: Constants.NAME_CD)
-                    cameraCD.setValue(camera.sensorFormat.rawValue, forKeyPath: Constants.SENSOR_FORMAT_CD)
+                    cameraCD.setValue(camera.name,         forKeyPath: Constants.NAME_CD)
+                    cameraCD.setValue(camera.sensorFormat, forKeyPath: Constants.SENSOR_FORMAT_CD)
                 }
             } catch let error as NSError {
                 print("Error fetching camera from CoreData. \(error), \(error.userInfo)")
@@ -353,18 +360,18 @@ class StateController {
         let entity                = NSEntityDescription.entity(forEntityName: Constants.CAMERA_CD, in: managedContext)!
         let fetchRequest          = NSFetchRequest<NSManagedObject>(entityName: Constants.CAMERA_CD)
         let predicateName         = NSPredicate(format: "%K == %@", Constants.NAME_CD,          camera.name)
-        let predicateSensorFormat = NSPredicate(format: "%K == %@", Constants.SENSOR_FORMAT_CD, camera.sensorFormat.rawValue)
-        let compoundPredicate     = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateSensorFormat])
+        //let predicateSensorFormat = NSPredicate(format: "%K == %@", Constants.SENSOR_FORMAT_CD, camera.sensorFormat)
+        //let compoundPredicate     = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateSensorFormat])
         
-        fetchRequest.predicate = compoundPredicate
+        fetchRequest.predicate = predicateName
         do {
             let fetchResult = try managedContext.fetch(fetchRequest).first
             if fetchResult != nil {
                 return
             } else {
                 let cameraCD = NSManagedObject(entity: entity, insertInto: managedContext)
-                cameraCD.setValue(camera.name,                  forKeyPath: Constants.NAME_CD)
-                cameraCD.setValue(camera.sensorFormat.rawValue, forKeyPath: Constants.SENSOR_FORMAT_CD)
+                cameraCD.setValue(camera.name,         forKeyPath: Constants.NAME_CD)
+                cameraCD.setValue(camera.sensorFormat, forKeyPath: Constants.SENSOR_FORMAT_CD)
             }
         } catch let error as NSError {
             print("Error fetching camera from CoreData. \(error), \(error.userInfo)")
@@ -379,15 +386,15 @@ class StateController {
         let managedContext        = appDelegate.persistentContainer.viewContext
         let fetchRequest          = NSFetchRequest<NSManagedObject>(entityName: Constants.CAMERA_CD)
         let predicateName         = NSPredicate(format: "%K == %@", Constants.NAME_CD,          camera.name)
-        let predicateSensorFormat = NSPredicate(format: "%K == %@", Constants.SENSOR_FORMAT_CD, camera.sensorFormat.rawValue)
-        let compoundPredicate     = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateSensorFormat])
+        //let predicateSensorFormat = NSPredicate(format: "%K == %@", Constants.SENSOR_FORMAT_CD, camera.sensorFormat)
+        //let compoundPredicate     = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateSensorFormat])
         
-        fetchRequest.predicate = compoundPredicate
+        fetchRequest.predicate = predicateName
         do {
             let fetchResult = try managedContext.fetch(fetchRequest).first
             if fetchResult != nil {
                 let cameraCD = fetchResult!
-                cameraCD.setValue(camera.sensorFormat.rawValue, forKeyPath: Constants.SENSOR_FORMAT_CD)
+                cameraCD.setValue(camera.sensorFormat, forKeyPath: Constants.SENSOR_FORMAT_CD)
             } else {
                 return
             }
@@ -406,10 +413,10 @@ class StateController {
         let managedContext        = appDelegate.persistentContainer.viewContext
         let fetchRequest          = NSFetchRequest<NSManagedObject>(entityName: Constants.CAMERA_CD)
         let predicateName         = NSPredicate(format: "%K == %@", Constants.NAME_CD,          camera.name)
-        let predicateSensorFormat = NSPredicate(format: "%K == %@", Constants.SENSOR_FORMAT_CD, camera.sensorFormat.rawValue)
-        let compoundPredicate     = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateSensorFormat])
+        //let predicateSensorFormat = NSPredicate(format: "%K == %@", Constants.SENSOR_FORMAT_CD, camera.sensorFormat)
+        //let compoundPredicate     = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateSensorFormat])
         
-        fetchRequest.predicate = compoundPredicate
+        fetchRequest.predicate = predicateName
         do {
             let fetchResult = try managedContext.fetch(fetchRequest).first
             if fetchResult != nil {
@@ -426,10 +433,10 @@ class StateController {
         let managedContext        = appDelegate.persistentContainer.viewContext
         let fetchRequest          = NSFetchRequest<NSManagedObject>(entityName: Constants.CAMERA_CD)
         let predicateName         = NSPredicate(format: "%K == %@", Constants.NAME_CD,          camera.name)
-        let predicateSensorFormat = NSPredicate(format: "%K == %@", Constants.SENSOR_FORMAT_CD, camera.sensorFormat.rawValue)
-        let compoundPredicate     = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateSensorFormat])
+        //let predicateSensorFormat = NSPredicate(format: "%K == %@", Constants.SENSOR_FORMAT_CD, camera.sensorFormat)
+        //let compoundPredicate     = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateSensorFormat])
         
-        fetchRequest.predicate = compoundPredicate
+        fetchRequest.predicate = predicateName
         do {
             if (try managedContext.fetch(fetchRequest).first) != nil {
                 return true
@@ -444,12 +451,9 @@ class StateController {
     func mergeCameras(appDelegate: AppDelegate) -> Void {
         var camerasInCoreData : [Camera] = []
         for cameraCD in camerasCD {
-            let name        : String = cameraCD.value(forKey: Constants.NAME_CD) as! String
-            let sensorName  : String = cameraCD.value(forKey: Constants.SENSOR_FORMAT_CD) as! String
-            if let sensorFormat: SensorFormat = Constants.SENSOR_FORMATS.filter({ $0.rawValue == sensorName }).first {
-                let camera = Camera(name : name,sensorFormat : sensorFormat)
-                camerasInCoreData.append(camera)
-            }
+            let camera = Camera(name        : cameraCD.value(forKey: Constants.NAME_CD) as! String,
+                                sensorFormat: cameraCD.value(forKey: Constants.SENSOR_FORMAT_CD) as! Int64)
+            camerasInCoreData.append(camera)
         }
         
         for camera in camerasInCoreData {
@@ -508,7 +512,7 @@ class StateController {
                     viewCD.setValue(view.motifPoint.coordinate.latitude,      forKeyPath: Constants.MOTIF_LAT_CD)
                     viewCD.setValue(view.motifPoint.coordinate.longitude,     forKeyPath: Constants.MOTIF_LON_CD)
                     viewCD.setValue(view.camera.name,                         forKeyPath: Constants.CAMERA_NAME_CD)
-                    viewCD.setValue(view.camera.sensorFormat.rawValue,        forKeyPath: Constants.SENSOR_NAME_CD)
+                    viewCD.setValue(view.camera.sensorFormat,                 forKeyPath: Constants.SENSOR_FORMAT_CD)
                     viewCD.setValue(view.lens.name,                           forKeyPath: Constants.LENS_NAME_CD)
                     viewCD.setValue(view.lens.minFocalLength,                 forKeyPath: Constants.MIN_FOCAL_LENGTH_CD)
                     viewCD.setValue(view.lens.maxFocalLength,                 forKeyPath: Constants.MAX_FOCAL_LENGTH_CD)
@@ -535,7 +539,7 @@ class StateController {
                     viewCD.setValue(view.motifPoint.coordinate.latitude,      forKeyPath: Constants.MOTIF_LAT_CD)
                     viewCD.setValue(view.motifPoint.coordinate.longitude,     forKeyPath: Constants.MOTIF_LON_CD)
                     viewCD.setValue(view.camera.name,                         forKeyPath: Constants.CAMERA_NAME_CD)
-                    viewCD.setValue(view.camera.sensorFormat.rawValue,        forKeyPath: Constants.SENSOR_NAME_CD)
+                    viewCD.setValue(view.camera.sensorFormat,                 forKeyPath: Constants.SENSOR_FORMAT_CD)
                     viewCD.setValue(view.lens.name,                           forKeyPath: Constants.LENS_NAME_CD)
                     viewCD.setValue(view.lens.minFocalLength,                 forKeyPath: Constants.MIN_FOCAL_LENGTH_CD)
                     viewCD.setValue(view.lens.maxFocalLength,                 forKeyPath: Constants.MAX_FOCAL_LENGTH_CD)
@@ -589,7 +593,7 @@ class StateController {
                 viewCD.setValue(view.motifPoint.coordinate.latitude,      forKeyPath: Constants.MOTIF_LAT_CD)
                 viewCD.setValue(view.motifPoint.coordinate.longitude,     forKeyPath: Constants.MOTIF_LON_CD)
                 viewCD.setValue(view.camera.name,                         forKeyPath: Constants.CAMERA_NAME_CD)
-                viewCD.setValue(view.camera.sensorFormat.rawValue,        forKeyPath: Constants.SENSOR_NAME_CD)
+                viewCD.setValue(view.camera.sensorFormat,                 forKeyPath: Constants.SENSOR_FORMAT_CD)
                 viewCD.setValue(view.lens.name,                           forKeyPath: Constants.LENS_NAME_CD)
                 viewCD.setValue(view.lens.minFocalLength,                 forKeyPath: Constants.MIN_FOCAL_LENGTH_CD)
                 viewCD.setValue(view.lens.maxFocalLength,                 forKeyPath: Constants.MAX_FOCAL_LENGTH_CD)
@@ -636,7 +640,7 @@ class StateController {
                 viewCD.setValue(view.motifPoint.coordinate.latitude,      forKeyPath: Constants.MOTIF_LAT_CD)
                 viewCD.setValue(view.motifPoint.coordinate.longitude,     forKeyPath: Constants.MOTIF_LON_CD)
                 viewCD.setValue(view.camera.name,                         forKeyPath: Constants.CAMERA_NAME_CD)
-                viewCD.setValue(view.camera.sensorFormat.rawValue,        forKeyPath: Constants.SENSOR_NAME_CD)
+                viewCD.setValue(view.camera.sensorFormat,                 forKeyPath: Constants.SENSOR_FORMAT_CD)
                 viewCD.setValue(view.lens.name,                           forKeyPath: Constants.LENS_NAME_CD)
                 viewCD.setValue(view.lens.minFocalLength,                 forKeyPath: Constants.MIN_FOCAL_LENGTH_CD)
                 viewCD.setValue(view.lens.maxFocalLength,                 forKeyPath: Constants.MAX_FOCAL_LENGTH_CD)
@@ -693,11 +697,11 @@ class StateController {
     func isViewInCD(appDelegate: AppDelegate, view: View) -> Bool {
         let managedContext      = appDelegate.persistentContainer.viewContext
         let fetchRequest        = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
-        let predicateName       = NSPredicate(format: "%K == %@",   Constants.NAME_CD,        view.name)
-        let predicateDesc       = NSPredicate(format: "%K == %@",   Constants.DESCRIPTION_CD, view.description)
-        let predicateCountry    = NSPredicate(format: "%K == %@",   Constants.COUNTRY_CD,     view.country)
-        let predicateCameraName = NSPredicate(format: "%K == %@", Constants.CAMERA_NAME_CD,   view.camera.name)
-        let predicateLensName   = NSPredicate(format: "%K == %@",   Constants.LENS_NAME_CD,   view.lens.name)
+        let predicateName       = NSPredicate(format: "%K == %@", Constants.NAME_CD,        view.name)
+        let predicateDesc       = NSPredicate(format: "%K == %@", Constants.DESCRIPTION_CD, view.description)
+        let predicateCountry    = NSPredicate(format: "%K == %@", Constants.COUNTRY_CD,     view.country)
+        let predicateCameraName = NSPredicate(format: "%K == %@", Constants.CAMERA_NAME_CD, view.camera.name)
+        let predicateLensName   = NSPredicate(format: "%K == %@", Constants.LENS_NAME_CD,   view.lens.name)
         let compoundPredicate   = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry, predicateCameraName, predicateLensName])
         
         fetchRequest.predicate = compoundPredicate
@@ -722,7 +726,7 @@ class StateController {
                             motifLat      : viewCD.value(forKey: Constants.MOTIF_LAT_CD) as! Double,
                             motifLon      : viewCD.value(forKey: Constants.MOTIF_LON_CD) as! Double,
                             cameraName    : viewCD.value(forKey: Constants.CAMERA_NAME_CD) as! String,
-                            sensorName    : viewCD.value(forKey: Constants.SENSOR_NAME_CD) as! String,
+                            sensorFormat  : viewCD.value(forKey: Constants.SENSOR_FORMAT_CD) as! Int64,
                             lensName      : viewCD.value(forKey: Constants.LENS_NAME_CD) as! String,
                             minFocalLength: viewCD.value(forKey: Constants.MIN_FOCAL_LENGTH_CD) as! Double,
                             maxFocalLength: viewCD.value(forKey: Constants.MAX_FOCAL_LENGTH_CD) as! Double,

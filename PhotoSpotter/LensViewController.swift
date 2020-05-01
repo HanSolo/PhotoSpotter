@@ -43,7 +43,9 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         let hideDefaultLens : Bool = stateController!.lenses.count > 1
-        self.lensSelection = hideDefaultLens ? (self.stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name }).sorted(by: { $0.isPrime && !$1.isPrime }) : self.stateController!.lenses.sorted(by: { $0.isPrime && !$1.isPrime })
+        self.lensSelection = hideDefaultLens ? (self.stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name &&
+                                                                                      $0.sensorFormat == self.stateController!.view.camera.sensorFormat }).sorted(by: { $0.isPrime && !$1.isPrime }) :
+                                                self.stateController!.lenses.filter { $0.sensorFormat == self.stateController!.view.camera.sensorFormat }.sorted(by: { $0.isPrime && !$1.isPrime })
         
         // Register the table view cell class and its reuse id
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
@@ -95,14 +97,17 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func done(segue:UIStoryboardSegue) {
         let lensDetailVC = segue.source as! LensDetailViewController
-        let lens = Lens(name: lensDetailVC.lensName, minFocalLength: lensDetailVC.minFocalLength, maxFocalLength: lensDetailVC.maxFocalLength, minAperture: lensDetailVC.minAperture, maxAperture: lensDetailVC.maxAperture)
+        let lens = Lens(name: lensDetailVC.lensName, minFocalLength: lensDetailVC.minFocalLength, maxFocalLength: lensDetailVC.maxFocalLength, minAperture: lensDetailVC.minAperture, maxAperture:          lensDetailVC.maxAperture, sensorFormat: lensDetailVC.sensorFormat)
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             stateController!.addLens(lens)
             stateController!.addLensToCD(appDelegate: appDelegate, lens: lens)
         }
         
         let hideDefaultLens : Bool = stateController!.lenses.count > 1
-        self.lensSelection = hideDefaultLens ? (self.stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name }).sorted(by: { $0.isPrime && !$1.isPrime }) : self.stateController!.lenses.sorted(by: { $0.isPrime && !$1.isPrime })
+        
+        self.lensSelection = hideDefaultLens ? (self.stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name &&
+                                                                                      $0.sensorFormat == self.stateController!.view.camera.sensorFormat }).sorted(by: { $0.isPrime && !$1.isPrime }) :
+                                                self.stateController!.lenses.filter { $0.sensorFormat == self.stateController!.view.camera.sensorFormat }.sorted(by: { $0.isPrime && !$1.isPrime })
         //lensSelector.selectedSegmentIndex = 0
         tableView.reloadData()
         
@@ -133,14 +138,16 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch lensSelector.selectedSegmentIndex {
             case 0 :  // All lenses
                 if hideDefaultLens {
-                    lensSelection = (stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name }).sorted(by: { $0.isPrime && !$1.isPrime })
+                    lensSelection = (stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name &&
+                                                                      $0.sensorFormat == self.stateController!.view.camera.sensorFormat
+                    }).sorted(by: { $0.isPrime && !$1.isPrime })
                 } else {
-                    lensSelection = stateController!.lenses.sorted(by: { $0.isPrime && !$1.isPrime })
+                    lensSelection = stateController!.lenses.filter{ $0.sensorFormat == self.stateController!.view.camera.sensorFormat }.sorted(by: { $0.isPrime && !$1.isPrime })
                 }
                 break;
             case 1 : // Prime lenses
                 if stateController!.lenses.filter({ $0.isPrime }).count > 0 {
-                    lensSelection = stateController!.lenses.filter { $0.isPrime }
+                    lensSelection = stateController!.lenses.filter { $0.isPrime && $0.sensorFormat == self.stateController!.view.camera.sensorFormat }
                 } else {
                     lensSelection = []
                 }
@@ -148,9 +155,12 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
             case 2 :  // Zoom lenses
                 if stateController!.lenses.filter({ !$0.isPrime }).count > 0 {
                     if hideDefaultLens {
-                        lensSelection = stateController!.lenses.filter { !$0.isPrime && $0.name != Constants.DEFAULT_LENS.name }
+                        lensSelection = stateController!.lenses.filter { !$0.isPrime &&
+                                                                          $0.name != Constants.DEFAULT_LENS.name &&
+                                                                          $0.sensorFormat == self.stateController!.view.camera.sensorFormat
+                        }
                     } else {
-                        lensSelection = stateController!.lenses.filter { !$0.isPrime }
+                        lensSelection = stateController!.lenses.filter { !$0.isPrime && $0.sensorFormat == self.stateController!.view.camera.sensorFormat }
                     }
                 } else {
                     lensSelection = []
@@ -158,9 +168,11 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
                 break;
             default:
                 if hideDefaultLens {
-                    lensSelection = stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name }
+                    lensSelection = stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name &&
+                                                                     $0.sensorFormat == self.stateController!.view.camera.sensorFormat
+                    }
                 } else {
-                    lensSelection = stateController!.lenses
+                    lensSelection = stateController!.lenses.filter { $0.sensorFormat == self.stateController!.view.camera.sensorFormat }
                 }
                 break;
         }
@@ -188,8 +200,10 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
                             self.stateController!.removeLens(lens)
                             self.stateController!.removeLensFromCD(appDelegate: appDelegate!, lens: lens)
                         }
-                        let hideDefaultLens : Bool = stateController!.lenses.count > 1
-                        lensSelection = hideDefaultLens ? stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name } : stateController!.lenses
+                        let hideDefaultLens : Bool = self.stateController!.lenses.count > 1
+                        self.lensSelection = hideDefaultLens ? (self.stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name &&
+                                                                                                      $0.sensorFormat == self.stateController!.view.camera.sensorFormat }).sorted(by: { $0.isPrime && !$1.isPrime }) :
+                                                                self.stateController!.lenses.filter { $0.sensorFormat == self.stateController!.view.camera.sensorFormat }.sorted(by: { $0.isPrime && !$1.isPrime })
                         tableView.reloadData()
                     }
             default:
@@ -259,7 +273,9 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.stateController!.removeLensFromCD(appDelegate: appDelegate!, lens: lens)
                 }
                 let hideDefaultLens : Bool = self.stateController!.lenses.count > 1
-                self.lensSelection = hideDefaultLens ? (self.stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name }).sorted(by: { $0.isPrime && !$1.isPrime }) : self.stateController!.lenses.sorted(by: { $0.isPrime && !$1.isPrime })
+                self.lensSelection = hideDefaultLens ? (self.stateController!.lenses.filter { $0.name != Constants.DEFAULT_LENS.name &&
+                                                                                              $0.sensorFormat == self.stateController!.view.camera.sensorFormat }).sorted(by: { $0.isPrime && !$1.isPrime }) :
+                                                        self.stateController!.lenses.filter { $0.sensorFormat == self.stateController!.view.camera.sensorFormat }.sorted(by: { $0.isPrime && !$1.isPrime })
                 tableView.reloadData()
             })
             alertController.addAction(deleteAction)

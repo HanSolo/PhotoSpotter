@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum SensorFormat: String, Equatable {
+public enum SensorFormat: String, Equatable, CaseIterable {
     case MEDIUM_FORMAT
     case FULL_FORMAT
     case APS_H
@@ -24,6 +24,17 @@ public enum SensorFormat: String, Equatable {
             case .APS_C            : return "APS-C"
             case .APS_C_CANON      : return "APS-C Canon"
             case .MICRO_FOUR_THIRDS: return "Micro 4/3"
+        }
+    }
+    
+    var id: Int64  {
+        switch self {
+            case .MEDIUM_FORMAT    : return 0
+            case .FULL_FORMAT      : return 1
+            case .APS_H            : return 2
+            case .APS_C            : return 3
+            case .APS_C_CANON      : return 4
+            case .MICRO_FOUR_THIRDS: return 5
         }
     }
     

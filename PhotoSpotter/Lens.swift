@@ -14,21 +14,23 @@ public class Lens: NSObject, NSCoding {
     var maxFocalLength: Double
     var minAperture   : Double
     var maxAperture   : Double
+    var sensorFormat  : Int64
     var isPrime       : Bool
     
     
     convenience override init() {
-        self.init(name: "Lens", minFocalLength: 8, maxFocalLength: 1000, minAperture: 0.7, maxAperture: 50)
+        self.init(name: "Lens", minFocalLength: 8, maxFocalLength: 1000, minAperture: 0.7, maxAperture: 50, sensorFormat: SensorFormat.FULL_FORMAT.id)
     }
-    convenience init(name: String, focalLength: Double, minAperture: Double, maxAperture: Double) {
-        self.init(name: name, minFocalLength: focalLength, maxFocalLength: focalLength, minAperture: minAperture, maxAperture: maxAperture)
+    convenience init(name: String, focalLength: Double, minAperture: Double, maxAperture: Double, sensorFormat: Int64) {
+        self.init(name: name, minFocalLength: focalLength, maxFocalLength: focalLength, minAperture: minAperture, maxAperture: maxAperture, sensorFormat: sensorFormat)
     }
-    init(name: String, minFocalLength: Double, maxFocalLength: Double, minAperture: Double, maxAperture: Double) {
+    init(name: String, minFocalLength: Double, maxFocalLength: Double, minAperture: Double, maxAperture: Double, sensorFormat: Int64) {
         self.name = name
         self.minFocalLength = minFocalLength
         self.maxFocalLength = maxFocalLength
         self.minAperture    = minAperture
         self.maxAperture    = maxAperture
+        self.sensorFormat   = sensorFormat
         self.isPrime        = minFocalLength == maxFocalLength
     }
     public required init?(coder: NSCoder) {
@@ -37,6 +39,7 @@ public class Lens: NSObject, NSCoding {
         self.maxFocalLength = coder.decodeDouble(forKey: "maxFocalLength")
         self.minAperture    = coder.decodeDouble(forKey: "minAperture")
         self.maxAperture    = coder.decodeDouble(forKey: "maxAperture")
+        self.sensorFormat   = coder.decodeInt64(forKey: "sensorFormat")
         self.isPrime        = minFocalLength == maxFocalLength
     }
     
@@ -47,6 +50,7 @@ public class Lens: NSObject, NSCoding {
         coder.encode(self.maxFocalLength as Double, forKey: "maxFocalLength")
         coder.encode(self.minAperture    as Double, forKey: "minAperture")
         coder.encode(self.maxAperture    as Double, forKey: "maxAperture")
+        coder.encode(self.sensorFormat   as Int64,  forKey: "sensorFormat")
     }
     
     
@@ -68,7 +72,8 @@ public class Lens: NSObject, NSCoding {
         jsonString += "\"minFocalLength\":\"\(minFocalLength)\","
         jsonString += "\"maxFocalLength\":\"\(maxFocalLength)\","
         jsonString += "\"minAperture\":\"\(minAperture)\","
-        jsonString += "\"maxAperture\":\"\(maxAperture)\""
+        jsonString += "\"maxAperture\":\"\(maxAperture)\","
+        jsonString += "\"sensorFormat\":\(sensorFormat)\""
         jsonString += "}"
         return jsonString
     }

@@ -16,7 +16,7 @@ public class FoVData {
     public let focalLength               : Double
     public let aperture                  : Double
     public let distance                  : Double
-    public let sensorFormat              : SensorFormat
+    public let sensorFormat              : Int64
     public let orientation               : Orientation
     public let infinite                  : Bool
     public let hyperFocal                : Double
@@ -37,7 +37,7 @@ public class FoVData {
     public let dofBehind                 : Double
     
     
-    init(camera: MKMapPoint, motif: MKMapPoint, focalLength: Double, aperture: Double, sensorFormat: SensorFormat, orientation: Orientation,
+    init(camera: MKMapPoint, motif: MKMapPoint, focalLength: Double, aperture: Double, sensorFormat: Int64, orientation: Orientation,
          infinite: Bool, hyperFocal: Double, nearLimit: Double, farLimit: Double, frontPercent: Double, behindPercent: Double, total: Double,
          diagonalAngle: Double, diagonalLength: Double, fovWidth: Double, fovWidthAngle: Double, fovHeight: Double, fovHeightAngle: Double, radius: Double) {
         self.camera                     = camera
@@ -67,7 +67,7 @@ public class FoVData {
     }
     
     public func toString() -> String {
-        var text: String = "Sensor      : \(sensorFormat.name)" + "\n"
+        var text: String = "Sensor      : \(SensorFormat.allCases[Int(sensorFormat)].name)" + "\n"
         text += "Focal length: \(String(format: "%.0f", focalLength)) mm" + "\n"
         text += "Aperture    : \(String(format: "%.1f", aperture))" + "\n"
         text += "Orientation : \(orientation.name)" + "\n"

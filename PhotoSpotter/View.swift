@@ -83,15 +83,15 @@ public class View: Equatable, Hashable {
         self.motifPoint    = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees((viewData.motifLat! as NSString).doubleValue), longitude: CLLocationDegrees((viewData.motifLon! as NSString).doubleValue)))
         
         let cameraName     = viewData.cameraName ?? Constants.DEFAULT_CAMERA.name
-        let sensorFormat   = Constants.SENSOR_FORMATS.first(where: { $0.name == viewData.sensorName })
-        self.camera        = Camera(name: cameraName, sensorFormat: sensorFormat ?? Constants.DEFAULT_CAMERA.sensorFormat)
+        let sensorFormat   = Int64(viewData.sensorFormat ?? "1") ?? 1
+        self.camera        = Camera(name: cameraName, sensorFormat: sensorFormat)
         
         let lensName       = viewData.lensName ?? Constants.DEFAULT_LENS.name
         let minFocalLength = Double(viewData.minFocalLength!) ?? Constants.DEFAULT_LENS.minFocalLength
         let maxFocalLength = Double(viewData.maxFocalLength!) ?? Constants.DEFAULT_LENS.maxFocalLength
         let minAperture    = Double(viewData.minAperture!) ?? Constants.DEFAULT_LENS.minAperture
         let maxAperture    = Double(viewData.maxAperture!) ?? Constants.DEFAULT_LENS.maxAperture
-        self.lens          = Lens(name: lensName, minFocalLength: minFocalLength, maxFocalLength: maxFocalLength, minAperture: minAperture, maxAperture: maxAperture)
+        self.lens          = Lens(name: lensName, minFocalLength: minFocalLength, maxFocalLength: maxFocalLength, minAperture: minAperture, maxAperture: maxAperture, sensorFormat: sensorFormat)
             
         self.focalLength   = Double(viewData.focalLength!)!
         self.aperture      = Double(viewData.aperture!)!
@@ -109,16 +109,16 @@ public class View: Equatable, Hashable {
         self.times     = Int32(viewData.times ?? "0") ?? 0
     }
     
-    init(name: String, description: String, cameraLat: Double, cameraLon: Double, motifLat: Double, motifLon: Double, cameraName: String, sensorName: String,
+    init(name: String, description: String, cameraLat: Double, cameraLon: Double, motifLat: Double, motifLon: Double, cameraName: String, sensorFormat: Int64,
     lensName: String, minFocalLength: Double, maxFocalLength: Double, minAperture: Double, maxAperture: Double,
     focalLength: Double, aperture: Double, orientation: String, country: String, originLat: Double, originLon: Double, mapWidth: Double, mapHeight: Double, tags: Int32, equipment: Int32, times: Int32) {
         self.name          = name
         self.description   = description
         self.cameraPoint   = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees(cameraLat), longitude: CLLocationDegrees(cameraLon)))
         self.motifPoint    = MKMapPoint(CLLocationCoordinate2D(latitude: CLLocationDegrees(motifLat), longitude: CLLocationDegrees(motifLon)))
-        let sensorFormat   = Constants.SENSOR_FORMATS.first(where: { $0.name == sensorName })
-        self.camera        = Camera(name: cameraName, sensorFormat: sensorFormat ?? Constants.DEFAULT_CAMERA.sensorFormat)
-        self.lens          = Lens(name: lensName, minFocalLength: minFocalLength, maxFocalLength: maxFocalLength, minAperture: minAperture, maxAperture: maxAperture)
+        let sensorFormat   = sensorFormat
+        self.camera        = Camera(name: cameraName, sensorFormat: sensorFormat)
+        self.lens          = Lens(name: lensName, minFocalLength: minFocalLength, maxFocalLength: maxFocalLength, minAperture: minAperture, maxAperture: maxAperture, sensorFormat: sensorFormat)
         self.focalLength   = focalLength
         self.aperture      = aperture
         self.orientation   = Orientation(rawValue: orientation)!
@@ -178,7 +178,7 @@ public class View: Equatable, Hashable {
         jsonString += "\"motifLat\":\"\(motifPoint.coordinate.latitude)\","
         jsonString += "\"motifLon\":\"\(motifPoint.coordinate.longitude)\","
         jsonString += "\"cameraName\":\"\(camera.name)\","
-        jsonString += "\"sensorName\":\"\(camera.sensorFormat)\","
+        jsonString += "\"sensorFormat\":\"\(camera.sensorFormat)\","
         jsonString += "\"lensName\":\"\(lens.name)\","
         jsonString += "\"minFocalLength\":\"\(lens.minFocalLength)\","
         jsonString += "\"maxFocalLength\":\"\(lens.maxFocalLength)\","
@@ -202,7 +202,7 @@ public class View: Equatable, Hashable {
     public func clone() -> View {
         return View(name: self.name, description: self.description,
                     cameraLat: self.cameraPoint.coordinate.latitude, cameraLon: self.cameraPoint.coordinate.longitude, motifLat: self.motifPoint.coordinate.latitude, motifLon: self.motifPoint.coordinate.longitude,
-                    cameraName: self.camera.name, sensorName: self.camera.sensorFormat.rawValue, lensName: self.lens.name, minFocalLength: self.lens.minFocalLength, maxFocalLength: self.lens.maxFocalLength,
+                    cameraName: self.camera.name, sensorFormat: self.camera.sensorFormat, lensName: self.lens.name, minFocalLength: self.lens.minFocalLength, maxFocalLength: self.lens.maxFocalLength,
                     minAperture: self.lens.minAperture, maxAperture: self.lens.maxAperture, focalLength: self.focalLength, aperture: self.aperture, orientation: self.orientation.rawValue,
                     country: self.country, originLat: self.mapRect.origin.coordinate.latitude, originLon: self.mapRect.origin.coordinate.longitude, mapWidth: self.mapRect.width, mapHeight: self.mapRect.height,
                     tags: self.tags, equipment: self.equipment, times: self.times)

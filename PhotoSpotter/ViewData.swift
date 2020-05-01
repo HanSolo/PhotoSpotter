@@ -16,7 +16,7 @@ public struct ViewData: Codable {
     let motifLat      : String?
     let motifLon      : String?
     let cameraName    : String?
-    let sensorName    : String?
+    let sensorFormat  : String?
     let lensName      : String?
     let minFocalLength: String?
     let maxFocalLength: String?
@@ -35,7 +35,7 @@ public struct ViewData: Codable {
     let times         : String?
     
     
-    init(name: String, description: String, cameraLat: String, cameraLon: String, motifLat: String, motifLon: String, cameraName: String, sensorName: String,
+    init(name: String, description: String, cameraLat: String, cameraLon: String, motifLat: String, motifLon: String, cameraName: String, sensorFormat: String,
          lensName: String, minFocalLength: String, maxFocalLength: String, minAperture: String, maxAperture: String,
          focalLength: String, aperture: String, orientation: String, country: String, originLat: String, originLon: String, mapWidth: String, mapHeight: String, tags: String, equipment: String, times: String) {
         self.name           = name
@@ -45,7 +45,7 @@ public struct ViewData: Codable {
         self.motifLat       = motifLat
         self.motifLon       = motifLon
         self.cameraName     = cameraName
-        self.sensorName     = sensorName
+        self.sensorFormat   = sensorFormat
         self.lensName       = lensName
         self.minFocalLength = minFocalLength
         self.maxFocalLength = maxFocalLength

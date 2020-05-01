@@ -102,13 +102,15 @@ public class ViewDetailViewController: UIViewController, UITableViewDelegate, UI
         // This view controller itself will provide the delegate methods and row data for the table view.
         tableView.delegate   = self
         tableView.dataSource = self
+        
+        validateForm()
     }
     
     
     @objc private func textFieldChanged(_ textField: UITextField) -> Void {
         if textField === nameTextField {
             self.name      = textField.text!
-            self.nameValid = !textField.text!.isEmpty
+            self.nameValid = !textField.text!.isEmpty && stateController!.views.firstIndex(where: { $0.name == textField.text! }) == nil
         } else if textField === descriptionTextField {
             self.descr = textField.text!
         }
@@ -238,8 +240,7 @@ public class ViewDetailViewController: UIViewController, UITableViewDelegate, UI
     }
     
     @objc func switchChanged(_ sender : UISwitch!) {
-        if let text = tableView!.cellForRow(at: IndexPath(row: sender.tag, section:0))?.textLabel!.text {
-            //print("\(text) => \(sender.isOn ? "ON" : "OFF")")
+        if let text = tableView!.cellForRow(at: IndexPath(row: sender.tag, section:0))?.textLabel!.text {            
             setItem(item: text, isOn: sender.isOn)
         }                        
     }

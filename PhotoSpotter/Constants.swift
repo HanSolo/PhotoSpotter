@@ -82,21 +82,18 @@ public class Constants {
     public static let SUN_RISE_STROKE     : UIColor = UIColor.init(displayP3Red: 0.9, green: 0.9, blue:  0.0, alpha: 1.0)
     public static let SUN_SET_STROKE      : UIColor = UIColor.init(displayP3Red: 0.75, green: 0.375, blue:  0.0, alpha: 1.0)
     
-    
-    public static let SENSOR_FORMATS      : [SensorFormat] = [ SensorFormat.MICRO_FOUR_THIRDS, SensorFormat.APS_C_CANON, SensorFormat.APS_C,
-                                                               SensorFormat.APS_H, SensorFormat.FULL_FORMAT, SensorFormat.MEDIUM_FORMAT ]
-    
     public static let DEFAULT_POSITION    : MKMapPoint = MKMapPoint(CLLocationCoordinate2D(latitude : 51.911821,
                                                                                            longitude: 7.633703))
     
     public static let DEFAULT_CAMERA      : Camera = Camera(name        : "DEFAULT DSLR",
-                                                            sensorFormat: SensorFormat.FULL_FORMAT)
+                                                            sensorFormat: SensorFormat.FULL_FORMAT.id)
     
     public static let DEFAULT_LENS        : Lens   = Lens(name          : "DEFAULT LENS",
                                                           minFocalLength: 8,
                                                           maxFocalLength: 1000,
                                                           minAperture   : 0.7,
-                                                          maxAperture   : 99)
+                                                          maxAperture   : 99,
+                                                          sensorFormat  : SensorFormat.FULL_FORMAT.id)
     
     public static let DEFAULT_ORIENTATION : Orientation = Orientation.landscape
     
@@ -208,7 +205,6 @@ public class Constants {
     public static let MOTIF_LAT_CD        : String = "motifLat"
     public static let MOTIF_LON_CD        : String = "motifLon"
     public static let CAMERA_NAME_CD      : String = "cameraName"
-    public static let SENSOR_NAME_CD      : String = "sensorName"
     public static let LENS_NAME_CD        : String = "lensName"
     public static let APERTURE_CD         : String = "aperture"
     public static let FOCAL_LENGTH_CD     : String = "focalLength"

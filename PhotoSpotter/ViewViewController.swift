@@ -174,13 +174,13 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell                            = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ViewCell
-        let view : View                     = viewSelection![indexPath.item]
+        let cell    = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ViewCell
         cell.detailTextLabel!.numberOfLines = 0
         
-        //cell.textLabel?.text = view.name
         let country = Array(groupedViews!.keys.sorted())[indexPath.section]
-        cell.textLabel?.text = (groupedViews![country]?[indexPath.row].name ?? "-")
+        let view    = groupedViews![country]?[indexPath.row] ?? Constants.DEFAULT_VIEW
+                                
+        cell.textLabel?.text = (view.name)
         
         var text           : String
         var equipmentBegin : Int

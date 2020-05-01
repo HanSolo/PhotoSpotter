@@ -160,7 +160,7 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell                   = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! CameraCell
         let camera : Camera        = cameraSelection![indexPath.item]
         cell.textLabel?.text       = camera.name
-        cell.detailTextLabel?.text = camera.sensorFormat.description
+        cell.detailTextLabel?.text = SensorFormat.allCases[Int(camera.sensorFormat)].description
         return cell
     }
     
@@ -173,6 +173,9 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let camera = cameraSelection![indexPath.item]
         stateController!.view.camera = camera
+        if stateController!.view.lens.sensorFormat != camera.sensorFormat {
+            stateController!.view.lens = stateController!.lenses.first(where: { $0.sensorFormat == camera.sensorFormat }) ?? Constants.DEFAULT_LENS
+        }
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         performSegue(withIdentifier: "camerasViewToMapView", sender: self)
     }
