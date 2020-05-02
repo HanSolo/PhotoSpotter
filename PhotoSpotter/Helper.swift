@@ -411,13 +411,9 @@ public class Helper {
         var tagsBegin      : Int
         
         var equipment : String = "["
-        equipment += Helper.itemInBitmask(item: Constants.EQP_TRIPOD,     bitmask: view.equipment) ? textToAdd(item: Constants.EQP_TRIPOD.0,     withComma: true) : ""
-        equipment += Helper.itemInBitmask(item: Constants.EQP_GIMBAL,     bitmask: view.equipment) ? textToAdd(item: Constants.EQP_GIMBAL.0,     withComma: true) : ""
-        equipment += Helper.itemInBitmask(item: Constants.EQP_CPL_FILTER, bitmask: view.equipment) ? textToAdd(item: Constants.EQP_CPL_FILTER.0, withComma: true) : ""
-        equipment += Helper.itemInBitmask(item: Constants.EQP_ND_FILTER,  bitmask: view.equipment) ? textToAdd(item: Constants.EQP_ND_FILTER.0,  withComma: true) : ""
-        equipment += Helper.itemInBitmask(item: Constants.EQP_IR_FILTER,  bitmask: view.equipment) ? textToAdd(item: Constants.EQP_IR_FILTER.0,  withComma: true) : ""
-        equipment += Helper.itemInBitmask(item: Constants.EQP_FLASH,      bitmask: view.equipment) ? textToAdd(item: Constants.EQP_FLASH.0,      withComma: true) : ""
-        equipment += Helper.itemInBitmask(item: Constants.EQP_REMOTE,     bitmask: view.equipment) ? textToAdd(item: Constants.EQP_REMOTE.0,     withComma: true) : ""
+        for equip in Constants.EQUIPMENT {
+            equipment += Helper.itemInBitmask(item: equip, bitmask: view.equipment) ? textToAdd(item: equip.0, withComma: true) : ""
+        }
         
         if equipment.count > 1 {
             equipment.removeLast(2)
@@ -430,23 +426,9 @@ public class Helper {
         equipmentEnd   = equipmentBegin + (equipment.count > 1 ? equipment.count : 0)
         
         var times : String = ""
-        times += Helper.itemInBitmask(item: Constants.TMS_ALL_YEAR, bitmask: view.times)  ? textToAdd(item: Constants.TMS_ALL_YEAR.0)  : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_SPRING, bitmask: view.times)    ? textToAdd(item: Constants.TMS_SPRING.0)    : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_SUMMER, bitmask: view.times)    ? textToAdd(item: Constants.TMS_SUMMER.0)    : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_AUTUMN, bitmask: view.times)    ? textToAdd(item: Constants.TMS_AUTUMN.0)    : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_WINTER, bitmask: view.times)    ? textToAdd(item: Constants.TMS_WINTER.0)    : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_JANUARY, bitmask: view.times)   ? textToAdd(item: Constants.TMS_JANUARY.0)   : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_FEBRUARY, bitmask: view.times)  ? textToAdd(item: Constants.TMS_FEBRUARY.0)  : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_MARCH, bitmask: view.times)     ? textToAdd(item: Constants.TMS_MARCH.0)     : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_APRIL, bitmask: view.times)     ? textToAdd(item: Constants.TMS_APRIL.0)     : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_MAY, bitmask: view.times)       ? textToAdd(item: Constants.TMS_MAY.0)       : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_JUNE, bitmask: view.times)      ? textToAdd(item: Constants.TMS_JUNE.0)      : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_JULY, bitmask: view.times)      ? textToAdd(item: Constants.TMS_JULY.0)      : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_AUGUST, bitmask: view.times)    ? textToAdd(item: Constants.TMS_AUGUST.0)    : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_SEPTEMBER, bitmask: view.times) ? textToAdd(item: Constants.TMS_SEPTEMBER.0) : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_OCTOBER, bitmask: view.times)   ? textToAdd(item: Constants.TMS_OCTOBER.0)   : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_NOVEMBER, bitmask: view.times)  ? textToAdd(item: Constants.TMS_NOVEMBER.0)  : ""
-        times += Helper.itemInBitmask(item: Constants.TMS_DECEMBER, bitmask: view.times)  ? textToAdd(item: Constants.TMS_DECEMBER.0)  : ""
+        for time in Constants.TIMES {
+            times += Helper.itemInBitmask(item: time, bitmask: view.times)  ? textToAdd(item: time.0)  : ""
+        }
         
         if times.count > 0 {
             if equipment.count > 1 {
@@ -460,26 +442,9 @@ public class Helper {
         timesEnd   = timesBegin + times.count
                 
         var tags : String = ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_NIGHT,         bitmask: view.tags) ? textToAdd(item: Constants.TAG_NIGHT.0)         : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_ASTRO,         bitmask: view.tags) ? textToAdd(item: Constants.TAG_ASTRO.0)         : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_MACRO,         bitmask: view.tags) ? textToAdd(item: Constants.TAG_MACRO.0)         : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_POI,           bitmask: view.tags) ? textToAdd(item: Constants.TAG_POI.0)           : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_INFRARED,      bitmask: view.tags) ? textToAdd(item: Constants.TAG_INFRARED.0)      : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_LONG_EXPOSURE, bitmask: view.tags) ? textToAdd(item: Constants.TAG_LONG_EXPOSURE.0) : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_CITYSCAPE,     bitmask: view.tags) ? textToAdd(item: Constants.TAG_CITYSCAPE.0)     : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_LANDSCAPE,     bitmask: view.tags) ? textToAdd(item: Constants.TAG_LANDSCAPE.0)     : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_STREET,        bitmask: view.tags) ? textToAdd(item: Constants.TAG_STREET.0)        : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_BRIDGE,        bitmask: view.tags) ? textToAdd(item: Constants.TAG_BRIDGE.0)        : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_LAKE,          bitmask: view.tags) ? textToAdd(item: Constants.TAG_LAKE.0)          : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_SHIP,          bitmask: view.tags) ? textToAdd(item: Constants.TAG_SHIP.0)          : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_CAR,           bitmask: view.tags) ? textToAdd(item: Constants.TAG_CAR.0)           : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_FLOWER,        bitmask: view.tags) ? textToAdd(item: Constants.TAG_FLOWER.0)        : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_TREE,          bitmask: view.tags) ? textToAdd(item: Constants.TAG_TREE.0)          : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_BUILDING,      bitmask: view.tags) ? textToAdd(item: Constants.TAG_BUILDING.0)      : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_BEACH,         bitmask: view.tags) ? textToAdd(item: Constants.TAG_BEACH.0)         : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_SUNRISE,       bitmask: view.tags) ? textToAdd(item: Constants.TAG_SUNRISE.0)       : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_SUNSET,        bitmask: view.tags) ? textToAdd(item: Constants.TAG_SUNSET.0)        : ""
-        tags += Helper.itemInBitmask(item: Constants.TAG_MOON,          bitmask: view.tags) ? textToAdd(item: Constants.TAG_MOON.0)          : ""
+        for tag in Constants.TAGS {
+            tags += Helper.itemInBitmask(item: tag, bitmask: view.tags) ? textToAdd(item: tag.0) : ""
+        }        
         
         if tags.count > 0 {
             if times.count > 0 || equipment.count > 1 {

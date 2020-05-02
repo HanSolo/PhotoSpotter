@@ -174,6 +174,11 @@ public class ViewDetailViewController: UIViewController, UITableViewDelegate, UI
             case Constants.TAG_SUNRISE.0      : self.tags = isOn ? self.tags | Constants.TAG_SUNRISE.1              : self.tags      ^ Constants.TAG_SUNRISE.1
             case Constants.TAG_SUNSET.0       : self.tags = isOn ? self.tags | Constants.TAG_SUNSET.1               : self.tags      ^ Constants.TAG_SUNSET.1
             case Constants.TAG_MOON.0         : self.tags = isOn ? self.tags | Constants.TAG_MOON.1                 : self.tags      ^ Constants.TAG_MOON.1
+            case Constants.TAG_ARCHITECTURE.0 : self.tags = isOn ? self.tags | Constants.TAG_ARCHITECTURE.1         : self.tags      ^ Constants.TAG_ARCHITECTURE.1
+            case Constants.TAG_CLOSEUP.0      : self.tags = isOn ? self.tags | Constants.TAG_CLOSEUP.1              : self.tags      ^ Constants.TAG_CLOSEUP.1
+            case Constants.TAG_RIVER.0        : self.tags = isOn ? self.tags | Constants.TAG_RIVER.1                : self.tags      ^ Constants.TAG_RIVER.1
+            case Constants.TAG_CHURCH.0       : self.tags = isOn ? self.tags | Constants.TAG_CHURCH.1               : self.tags      ^ Constants.TAG_CHURCH.1
+            case Constants.TAG_TRAIN.0        : self.tags = isOn ? self.tags | Constants.TAG_TRAIN.1                : self.tags      ^ Constants.TAG_TRAIN.1
             default                           : break
         }
     }

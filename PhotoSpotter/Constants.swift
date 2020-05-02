@@ -179,11 +179,16 @@ public class Constants {
     public static let TAG_SUNRISE       : (String, Int32) = ("Sunrise"      , 1 << 17)
     public static let TAG_SUNSET        : (String, Int32) = ("Sunset"       , 1 << 18)
     public static let TAG_MOON          : (String, Int32) = ("Moon"         , 1 << 19)
+    public static let TAG_ARCHITECTURE  : (String, Int32) = ("Architecture" , 1 << 20)
+    public static let TAG_CLOSEUP       : (String, Int32) = ("Close up"     , 1 << 21)
+    public static let TAG_RIVER         : (String, Int32) = ("River"        , 1 << 22)
+    public static let TAG_CHURCH        : (String, Int32) = ("Church"       , 1 << 23)
+    public static let TAG_TRAIN         : (String, Int32) = ("Train"        , 1 << 24)
     
     public static let TAGS              : [(String, Int32)] = [
         TAG_NIGHT, TAG_ASTRO, TAG_MACRO, TAG_POI, TAG_INFRARED, TAG_LONG_EXPOSURE, TAG_CITYSCAPE, TAG_LANDSCAPE,
         TAG_STREET, TAG_BRIDGE, TAG_LAKE, TAG_SHIP, TAG_CAR, TAG_FLOWER, TAG_TREE, TAG_BUILDING, TAG_BEACH,
-        TAG_SUNRISE, TAG_SUNSET, TAG_MOON
+        TAG_SUNRISE, TAG_SUNSET, TAG_MOON, TAG_ARCHITECTURE, TAG_CLOSEUP, TAG_RIVER, TAG_CHURCH, TAG_TRAIN
     ]
     
     // CoreData entities

@@ -961,7 +961,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 
                 let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
                 alert.setValue(msg, forKey: "attributedMessage")
-                alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+                alert.addAction(UIAlertAction(title: "Open in maps",
+                                              style: .default,
+                                              handler: {(alert: UIAlertAction!) in self.openMapsAppWithDirections(to: self.stateController!.view.cameraPoint.coordinate, destinationName: self.stateController!.view.name)}))
+                alert.addAction(UIAlertAction(title: "Close",
+                                              style: .default,
+                                              handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
         } else {
@@ -1007,6 +1012,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 self.infoView.isHidden = true
             })
         }
+    }
+    
+    func openMapsAppWithDirections(to coordinate: CLLocationCoordinate2D, destinationName name: String) {
+        let options   = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+        let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+        let mapItem   = MKMapItem(placemark: placemark)
+        mapItem.name  = name
+        mapItem.openInMaps(launchOptions: options)
     }
 }
 
