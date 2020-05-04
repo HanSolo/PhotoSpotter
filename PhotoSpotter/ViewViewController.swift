@@ -19,6 +19,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var camerasButton : UIBarButtonItem!
     @IBOutlet weak var lensesButton  : UIBarButtonItem!
     @IBOutlet weak var viewsButton   : UIBarButtonItem!
+    @IBOutlet weak var spotsButton   : UIBarButtonItem!
     
     @IBOutlet weak var tableView     : UITableView!
     @IBOutlet weak var editViewButton: UIButton!
@@ -76,6 +77,9 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         performSegue(withIdentifier: "viewsViewToLensesView", sender: self)
     }
     @IBAction func viewsButtonPressed(_ sender: Any) {
+    }
+    @IBAction func spotsButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "viewsViewToSpotsView", sender: self)
     }
     
     @IBAction func addViewButtonPressed(_ sender: Any) {
@@ -212,8 +216,10 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         if times.count > 0 {
             if equipment.count > 2 {
                 times.removeLast()
+                text += times
+            } else {
+                text += ("\n" + times)
             }
-            text += ("\n" + times)
         }
         timesBegin = equipment.count > 2 ? equipmentEnd + 1 : equipmentEnd
         timesEnd   = timesBegin + times.count
@@ -226,8 +232,10 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         if tags.count > 0 {
             if times.count > 0 || equipment.count > 2 {
                 tags.removeLast()
+                text += tags
+            } else {
+                text += ("\n" + tags)
             }
-            text += ("\n" + tags)
         }
         tagsBegin = times.count == 0 ? timesEnd : timesEnd + 1
        

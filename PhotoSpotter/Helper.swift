@@ -402,6 +402,26 @@ public class Helper {
         return nil == withComma ? item + " " : withComma! ? item + ", " : item + " "
     }
     
+    public static func getItemsTextFor(spot: Spot) -> NSAttributedString {
+        var text : String = ""
+                            
+        var tags : String = ""
+        for tag in Constants.TAGS {
+            tags += Helper.itemInBitmask(item: tag, bitmask: spot.tags) ? textToAdd(item: tag.0) : ""
+        }
+        
+        if tags.count > 0 {
+            text += ("\n" + tags)
+        }
+        
+        let itemsText :NSMutableAttributedString = NSMutableAttributedString(string: text)
+        if text.count > 0 {
+            itemsText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.RED], range: NSRange(location: 0, length: tags.count))
+        }
+        
+        return itemsText
+    }
+    
     public static func getItemsTextFor(view: View) -> NSAttributedString {
         var text           : String
         var equipmentBegin : Int
@@ -468,6 +488,28 @@ public class Helper {
     
     public static func isItemInGroup(item: (String, Int32), group: [(String, Int32)]) -> Bool {
         return group.filter({ $0.0 == item.0 }).count > 0
+    }
+    
+    public static func getCountryForSpot(spot: Spot) -> Void {
+        let location : CLLocation = CLLocation(latitude: spot.point.coordinate.latitude, longitude: spot.point.coordinate.longitude)
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            guard let placemarks = placemarks, error == nil else {
+                self.processResponse(spot: spot, placemarks: nil, error: error)
+                return
+            }
+            self.processResponse(spot: spot, placemarks: placemarks, error: nil)
+        }
+    }
+    private static func processResponse(spot: Spot, placemarks: [CLPlacemark]?, error: Error?) -> Void {
+        if nil == placemarks { return }
+        for placemark in placemarks! {
+            if let countryCode = placemark.isoCountryCode {
+                spot.country = countryCode
+                return
+            } else {
+                spot.country = ""
+            }
+        }
     }
     
     public static func getCountryForView(view: View) -> Void {

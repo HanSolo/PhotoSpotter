@@ -20,6 +20,7 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var camerasButton    : UIBarButtonItem!
     @IBOutlet weak var lensesButton     : UIBarButtonItem!
     @IBOutlet weak var viewsButton      : UIBarButtonItem!
+    @IBOutlet weak var spotsButton      : UIBarButtonItem!
     
     // View items
     @IBOutlet weak var tableView        : UITableView!
@@ -75,6 +76,9 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     @IBAction func viewsButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "camerasViewToViewsView", sender: self)
+    }
+    @IBAction func spotsButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "camerasViewToSpotsView", sender: self)
     }
     
     @IBAction func editCameraButtonPressed(_ sender: Any) {

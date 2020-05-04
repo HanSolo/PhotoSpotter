@@ -13,6 +13,13 @@ import CoreLocation
 
 class StateController {
     
+    // Current spot
+    private(set) var spot : Spot = Constants.DEFAULT_SPOT
+    func setSpot(_ spot: Spot) {
+        self.spot = spot.clone()
+    }
+    
+    
     // Current view
     private(set) var view : View = Constants.DEFAULT_VIEW
     func setView(_ view: View) {
@@ -78,6 +85,31 @@ class StateController {
     }
     func isCameraInCameras(camera: Camera) -> Bool {
         return cameras.filter({ $0.name == camera.name && $0.sensorFormat == camera.sensorFormat }).count >= 1
+    }
+    
+    
+    // Spots
+    private(set) var spots : [Spot] = [
+        Constants.DEFAULT_SPOT
+    ]
+    func addSpot(_ spot: Spot) {
+        if isSpotInSpots(spot: spot) {
+            return
+        } else {
+            spots.append(spot)
+        }
+    }
+    func setSpots(_ spots: [Spot]) {
+        self.spots = spots
+    }
+    func removeSpot(_ spot: Spot) {
+        let spotsToRemove : [Spot] = spots.filter({ $0.name        == view.name &&
+                                                    $0.description == view.description &&
+                                                    $0.tags        == view.tags })
+        spots.removeAll(where: { spotsToRemove.contains($0) })
+    }
+    func isSpotInSpots(spot: Spot) -> Bool {
+        return spots.filter({ $0.name == spot.name && $0.description == spot.description && $0.tags == spot.tags }).count >= 1
     }
     
     
@@ -469,6 +501,193 @@ class StateController {
     }
     
     
+    // Spots CoreData
+    var spotsCD : [NSManagedObject] = []
+    func loadSpotsFromCD(appDelegate: AppDelegate) -> Void {
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.SPOT_CD)
+        
+        do {
+            spotsCD = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch spots from CoreData. \(error), \(error.userInfo)")
+        }
+        
+        mergeViews(appDelegate: appDelegate)
+    }
+    func storeSpotsToCD(appDelegate: AppDelegate) -> Void {
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity         = NSEntityDescription.entity(forEntityName: Constants.SPOT_CD, in: managedContext)!
+        let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.SPOT_CD)
+        
+        for spot in spots {
+            if spot.country.isEmpty {
+                Helper.getCountryForSpot(spot: spot)
+            }
+            
+            let predicateName       = NSPredicate(format: "%K == %@", Constants.NAME_CD,        spot.name)
+            let predicateDesc       = NSPredicate(format: "%K == %@", Constants.DESCRIPTION_CD, spot.description)
+            let predicateCountry    = NSPredicate(format: "%K == %@", Constants.COUNTRY_CD,     spot.country)
+            let compoundPredicate   = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry])
+            
+            fetchRequest.predicate = compoundPredicate
+            do {
+                let fetchResult = try managedContext.fetch(fetchRequest).first
+                if fetchResult != nil {
+                    // Update
+                    let spotCD = fetchResult!
+                    spotCD.setValue(spot.description,                forKeyPath: Constants.DESCRIPTION_CD)
+                    spotCD.setValue(spot.point.coordinate.latitude,  forKeyPath: Constants.LAT_CD)
+                    spotCD.setValue(spot.point.coordinate.longitude, forKeyPath: Constants.LON_CD)
+                    spotCD.setValue(spot.country,                    forKeyPath: Constants.COUNTRY_CD)
+                    spotCD.setValue(spot.tags,                       forKeyPath: Constants.TAGS_CD)
+                } else {
+                    // Insert
+                    let spotCD = NSManagedObject(entity: entity, insertInto: managedContext)
+                    spotCD.setValue(spot.name,                       forKeyPath: Constants.NAME_CD)
+                    spotCD.setValue(spot.description,                forKeyPath: Constants.DESCRIPTION_CD)
+                    spotCD.setValue(spot.point.coordinate.latitude,  forKeyPath: Constants.LAT_CD)
+                    spotCD.setValue(spot.point.coordinate.longitude, forKeyPath: Constants.LON_CD)
+                    spotCD.setValue(spot.country,                    forKeyPath: Constants.COUNTRY_CD)
+                    spotCD.setValue(spot.tags,                       forKeyPath: Constants.TAGS_CD)
+                }
+            } catch let error as NSError {
+                print("Error fetching spot from CoreData. \(error), \(error.userInfo)")
+            }
+        }
+                
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not store spots to CoreData. \(error), \(error.userInfo)")
+        }
+    }
+    func addSpotToCD(appDelegate: AppDelegate, spot: Spot) -> Void {
+        let managedContext      = appDelegate.persistentContainer.viewContext
+        let entity              = NSEntityDescription.entity(forEntityName:   Constants.SPOT_CD, in: managedContext)!
+        let fetchRequest        = NSFetchRequest<NSManagedObject>(entityName: Constants.SPOT_CD)
+        let predicateName       = NSPredicate(format: "%K == %@",             Constants.NAME_CD,        spot.name)
+        let predicateDesc       = NSPredicate(format: "%K == %@",             Constants.DESCRIPTION_CD, spot.description)
+        let predicateCountry    = NSPredicate(format: "%K == %@",             Constants.COUNTRY_CD,     spot.country)
+        let compoundPredicate   = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry])
+        
+        fetchRequest.predicate = compoundPredicate
+        do {
+            let fetchResult = try managedContext.fetch(fetchRequest).first
+            if fetchResult != nil {
+                return
+            } else {
+                let spotCD = NSManagedObject(entity: entity, insertInto: managedContext)
+                spotCD.setValue(spot.name,                       forKeyPath: Constants.NAME_CD)
+                spotCD.setValue(spot.description,                forKeyPath: Constants.DESCRIPTION_CD)
+                spotCD.setValue(spot.point.coordinate.latitude,  forKeyPath: Constants.LAT_CD)
+                spotCD.setValue(spot.point.coordinate.longitude, forKeyPath: Constants.LON_CD)
+                spotCD.setValue(spot.country,                    forKeyPath: Constants.COUNTRY_CD)
+                spotCD.setValue(spot.tags,                       forKeyPath: Constants.TAGS_CD)
+            }
+        } catch let error as NSError {
+            print("Error fetching spot from CoreData. \(error), \(error.userInfo)")
+        }
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not store spots to CoreData. \(error), \(error.userInfo)")
+        }
+    }
+    func updateSpotInCD(appDelegate: AppDelegate, spot: Spot) -> Void {
+        let managedContext       = appDelegate.persistentContainer.viewContext
+        let fetchRequest         = NSFetchRequest<NSManagedObject>(entityName: Constants.SPOT_CD)
+        let predicateName        = NSPredicate(format: "%K == %@", Constants.NAME_CD,         spot.name)
+        let predicateDesc        = NSPredicate(format: "%K == %@", Constants.DESCRIPTION_CD,  spot.description)
+        let compoundPredicate    = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc])
+        
+        fetchRequest.predicate = compoundPredicate
+        do {
+            let fetchResult = try managedContext.fetch(fetchRequest).first
+            if fetchResult != nil {
+                let spotCD = fetchResult!
+                spotCD.setValue(spot.description,                forKeyPath: Constants.DESCRIPTION_CD)
+                spotCD.setValue(spot.point.coordinate.latitude,  forKeyPath: Constants.LAT_CD)
+                spotCD.setValue(spot.point.coordinate.longitude, forKeyPath: Constants.LON_CD)
+                spotCD.setValue(spot.country,                    forKeyPath: Constants.COUNTRY_CD)
+                spotCD.setValue(spot.tags,                       forKeyPath: Constants.TAGS_CD)
+            } else {
+                return
+            }
+        } catch let error as NSError {
+            print("Error fetching view from CoreData. \(error), \(error.userInfo)")
+        }
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not store views to CoreData. \(error), \(error.userInfo)")
+        }
+    }
+    func removeSpotFromCD(appDelegate: AppDelegate, spot: Spot) -> Void {
+        let managedContext      = appDelegate.persistentContainer.viewContext
+        let fetchRequest        = NSFetchRequest<NSManagedObject>(entityName: Constants.SPOT_CD)
+        let predicateName       = NSPredicate(format: "%K == %@",   Constants.NAME_CD,        spot.name)
+        let predicateDesc       = NSPredicate(format: "%K == %@",   Constants.DESCRIPTION_CD, spot.description)
+        let predicateCountry    = NSPredicate(format: "%K == %@",   Constants.COUNTRY_CD,     spot.country)
+        let compoundPredicate   = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry])
+        
+        fetchRequest.predicate = compoundPredicate
+        do {
+            let fetchResult = try managedContext.fetch(fetchRequest).first
+            if fetchResult != nil {
+                managedContext.delete(fetchResult!)
+                try managedContext.save()
+            } else {
+                return
+            }
+        } catch let error as NSError {
+            print("Error fetching spot from CoreData. \(error), \(error.userInfo)")
+        }
+    }
+    func isSpotInCD(appDelegate: AppDelegate, spot: Spot) -> Bool {
+        let managedContext      = appDelegate.persistentContainer.viewContext
+        let fetchRequest        = NSFetchRequest<NSManagedObject>(entityName: Constants.SPOT_CD)
+        let predicateName       = NSPredicate(format: "%K == %@", Constants.NAME_CD,        spot.name)
+        let predicateDesc       = NSPredicate(format: "%K == %@", Constants.DESCRIPTION_CD, spot.description)
+        let predicateCountry    = NSPredicate(format: "%K == %@", Constants.COUNTRY_CD,     spot.country)
+        let compoundPredicate   = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry])
+        
+        fetchRequest.predicate = compoundPredicate
+        do {
+            if (try managedContext.fetch(fetchRequest).first) != nil {
+                return true
+            } else {
+                return false
+            }
+        } catch {
+            print("Error checking core data for spot.\(error)")
+        }
+        return false
+    }
+    func mergeSpots(appDelegate: AppDelegate) -> Void {
+        var spotsInCoreData : [Spot] = []
+        for spotCD in spotsCD {
+            let spot = Spot(name        : spotCD.value(forKey: Constants.NAME_CD) as! String,
+                            description : spotCD.value(forKey: Constants.DESCRIPTION_CD) as! String,
+                            lat         : spotCD.value(forKey: Constants.LAT_CD) as! Double,
+                            lon         : spotCD.value(forKey: Constants.LON_CD) as! Double,
+                            country     : spotCD.value(forKey: Constants.COUNTRY_CD) as? String ?? "",
+                            tags        : spotCD.value(forKey: Constants.TAGS_CD) as! Int32)
+            spotsInCoreData.append(spot)
+        }
+        for spot in spotsInCoreData {
+            if !isSpotInSpots(spot: spot) {
+                addSpot(spot)
+            }
+        }
+        for spot in spots {
+            if !isSpotInCD(appDelegate: appDelegate, spot: spot) {
+                addSpotToCD(appDelegate: appDelegate, spot: spot)
+            }
+        }
+    }
+    
+    
     // Views CoreData
     var viewsCD : [NSManagedObject] = []
     func loadViewsFromCD(appDelegate: AppDelegate) -> Void {
@@ -585,7 +804,7 @@ class StateController {
             if fetchResult != nil {
                 return
             } else {
-                let viewCD         = NSManagedObject(entity: entity, insertInto: managedContext)
+                let viewCD = NSManagedObject(entity: entity, insertInto: managedContext)
                 viewCD.setValue(view.name,                                forKeyPath: Constants.NAME_CD)
                 viewCD.setValue(view.description,                         forKeyPath: Constants.DESCRIPTION_CD)
                 viewCD.setValue(view.cameraPoint.coordinate.latitude,     forKeyPath: Constants.CAMERA_LAT_CD)
@@ -779,7 +998,6 @@ class StateController {
     }
 
     
-    
     // MapView Type
     private(set) var mapType : Int = 0
     func updateMapType(_ mapType: Int) {
@@ -797,6 +1015,7 @@ class StateController {
     func storeToCoreData(appDelegate: AppDelegate) {
         storeLensesToCD(appDelegate: appDelegate)
         storeCamerasToCD(appDelegate: appDelegate)
+        storeSpotsToCD(appDelegate: appDelegate)
         storeViewsToCD(appDelegate: appDelegate)
     }
     
@@ -804,6 +1023,7 @@ class StateController {
     func retrieveFromCoreData(appDelegate: AppDelegate) {
         loadLensesFromCD(appDelegate: appDelegate)
         loadCamerasFromCD(appDelegate: appDelegate)
+        loadSpotsFromCD(appDelegate: appDelegate)
         loadViewsFromCD(appDelegate: appDelegate)
     }
     

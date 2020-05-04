@@ -82,8 +82,9 @@ public class Constants {
     public static let SUN_RISE_STROKE     : UIColor = UIColor.init(displayP3Red: 0.9, green: 0.9, blue:  0.0, alpha: 1.0)
     public static let SUN_SET_STROKE      : UIColor = UIColor.init(displayP3Red: 0.75, green: 0.375, blue:  0.0, alpha: 1.0)
     
-    public static let DEFAULT_POSITION    : MKMapPoint = MKMapPoint(CLLocationCoordinate2D(latitude : 51.911821,
-                                                                                           longitude: 7.633703))
+    public static let DEFAULT_COUNTRY     : String     = "DE"
+    
+    public static let DEFAULT_POSITION    : MKMapPoint = MKMapPoint(CLLocationCoordinate2D(latitude : 51.911821, longitude: 7.633703))
     
     public static let DEFAULT_CAMERA      : Camera = Camera(name        : "DEFAULT DSLR",
                                                             sensorFormat: SensorFormat.FULL_FORMAT.id)
@@ -101,18 +102,20 @@ public class Constants {
 
     public static let DEFAULT_MAP_SIZE    : MKMapSize   = MKMapSize(width: 46585.40107989311, height: 49490.00642307103)
     
-    public static let DEFAULT_VIEW        : View   = View(name       : "View",
-                                                          description: "Default View",
-                                                          cameraPoint: DEFAULT_POSITION,
-                                                          motifPoint : MKMapPoint(CLLocationCoordinate2D(latitude: DEFAULT_POSITION.coordinate.latitude + 0.005, longitude: DEFAULT_POSITION.coordinate.longitude)),
-                                                          camera     : DEFAULT_CAMERA,
-                                                          lens       : DEFAULT_LENS,
-                                                          focalLength: DEFAULT_LENS.minFocalLength + (DEFAULT_LENS.maxFocalLength - DEFAULT_LENS.minFocalLength) / 2,
-                                                          aperture   : DEFAULT_LENS.minAperture + (DEFAULT_LENS.maxAperture - DEFAULT_LENS.minAperture) / 2,
-                                                          orientation: Orientation.landscape,
-                                                          country    : "DE",
-                                                          mapRect    : MKMapRect(origin: DEFAULT_ORIGIN, size: DEFAULT_MAP_SIZE)
-                                                          )
+    public static let DEFAULT_SPOT        : Spot        = Spot(name: "Home", description: "Test", point: DEFAULT_POSITION, country: DEFAULT_COUNTRY)
+    
+    public static let DEFAULT_VIEW        : View        = View(name       : "View",
+                                                               description: "Default View",
+                                                               cameraPoint: DEFAULT_POSITION,
+                                                               motifPoint : MKMapPoint(CLLocationCoordinate2D(latitude: DEFAULT_POSITION.coordinate.latitude + 0.005, longitude: DEFAULT_POSITION.coordinate.longitude)),
+                                                               camera     : DEFAULT_CAMERA,
+                                                               lens       : DEFAULT_LENS,
+                                                               focalLength: DEFAULT_LENS.minFocalLength + (DEFAULT_LENS.maxFocalLength - DEFAULT_LENS.minFocalLength) / 2,
+                                                               aperture   : DEFAULT_LENS.minAperture + (DEFAULT_LENS.maxAperture - DEFAULT_LENS.minAperture) / 2,
+                                                               orientation: Orientation.landscape,
+                                                               country    : DEFAULT_COUNTRY,
+                                                               mapRect    : MKMapRect(origin: DEFAULT_ORIGIN, size: DEFAULT_MAP_SIZE)
+                                                              )
     
     public static let VALID_CLEAR         : CGColor = CGColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 0)
     public static let INVALID_RED         : CGColor = UIColor(red: 1.00, green: 0.42, blue: 0.37, alpha: 1.00).cgColor
@@ -120,6 +123,7 @@ public class Constants {
     public static let ATTENTION_ICON      : UIImage = UIImage(systemName: "exclamationmark.circle")!
     public static let INFO_ICON           : UIImage = UIImage(systemName: "info.circle")!
     public static let ERROR_ICON          : UIImage = UIImage(systemName: "xmark.octagon")!
+    public static let STAR_ICON           : UIImage = (UIImage(named: "star")?.resize(to: CGSize(width: 24, height: 24)))!   
     
     // Equipment
     public static let EQP_TRIPOD     : (String, Int32) = ("Tripod",     1 << 0) //  1
@@ -194,6 +198,7 @@ public class Constants {
     // CoreData entities
     public static let LENS_CD   : String = "LensCD"
     public static let CAMERA_CD : String = "CameraCD"
+    public static let SPOT_CD   : String = "SpotCD"
     public static let VIEW_CD   : String = "ViewCD"
     
     
@@ -222,4 +227,6 @@ public class Constants {
     public static let TAGS_CD             : String = "tags"
     public static let EQUIPMENT_CD        : String = "equipment"
     public static let TIMES_CD            : String = "times"
+    public static let LAT_CD              : String = "lat"
+    public static let LON_CD              : String = "lon"
 }

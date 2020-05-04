@@ -23,6 +23,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var camerasButton       : UIBarButtonItem!
     @IBOutlet weak var lensesButton        : UIBarButtonItem!
     @IBOutlet weak var viewsButton         : UIBarButtonItem!
+    @IBOutlet weak var spotsButton         : UIBarButtonItem!
     
     // View items
     @IBOutlet weak var mapView             : MKMapView!
@@ -44,6 +45,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var heightLabel         : UILabel!
     @IBOutlet weak var moonButton          : UIButton!
     @IBOutlet weak var sunButton           : UIButton!
+    @IBOutlet weak var showSpotsButton     : UIButton!
     @IBOutlet weak var showViewsButton     : UIButton!
     @IBOutlet weak var routingButton       : UIButton!
     @IBOutlet weak var cameraLabel         : UILabel!
@@ -62,7 +64,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var infoViewHeight      : NSLayoutConstraint!
     
     @IBOutlet weak var navBar              : UINavigationBar!
+    @IBOutlet weak var navBarItem          : UINavigationItem!
     
+    @IBOutlet weak var crossHair           : UIImageView!
     
     let monitor               : NWPathMonitor       = NWPathMonitor()
     var connected             : Bool                = false
@@ -91,6 +95,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var dofVisible            : Bool                = false
     var moonVisible           : Bool                = false
     var sunVisible            : Bool                = false
+    var spotsVisible          : Bool                = false
     var viewsVisible          : Bool                = false
     var routeVisible          : Bool                = false
     var elevationChartVisible : Bool                = false
@@ -104,6 +109,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var pointsSunset          : [MKMapPoint]        = []
     var pointsMoonrise        : [MKMapPoint]        = []
     var pointsMoonset         : [MKMapPoint]        = []
+    var spotAnnotations       : [MKPointAnnotation] = []
     var viewAnnotations       : [MKPointAnnotation] = []
     var visibleArea           : MKMapRect?
     var heading               : CLLocationDirection?
@@ -186,6 +192,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         timeToViewLabel.textColor     = Constants.YELLOW
         routeInfoView.isHidden = true
         
+        self.view.bringSubviewToFront(self.crossHair)
+        
         setView(view: stateController!.view)
     }
     
@@ -230,6 +238,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBAction func viewsButtonPressed(_ sender: Any) {
         stateController!.storeLocationToUserDefaults()
         performSegue(withIdentifier: "mapViewToViewsView", sender: self)
+    }
+    @IBAction func spotsButtonPressed(_ sender: Any) {
+        stateController!.storeLocationToUserDefaults()
+        performSegue(withIdentifier: "mapViewToSpotsView", sender: self)
     }
     
     // MARK: Event Handlers
@@ -335,6 +347,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
+    @IBAction func showSpotsButtonPressed(_ sender: Any) {
+        if self.spotsVisible {
+            self.spotsVisible = false
+            showSpotsButton.setImage(UIImage(systemName: "star.circle"), for: UIControl.State.normal)
+        } else {
+            self.spotsVisible = true
+            showSpotsButton.setImage(UIImage(systemName: "star.circle.fill"), for: UIControl.State.normal)
+        }
+        updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
+    }
+    
     @IBAction func showViewsButtonPressed(_ sender: Any) {
         if self.viewsVisible {
             self.viewsVisible = false
@@ -429,6 +452,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
+    /*
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        if size.width > size.height {
+            self.navBar.isHidden = true
+        } else {
+            self.navBar.isHidden = false
+        }
+        super.viewWillTransition(to: size, with: coordinator)
+    }
+    */
+       
         
     // MARK: CLLocationManagerDelegate methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -481,14 +515,46 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 mapPinAnnotationView.setOnMapPinEvent(observer: self)
                 return mapPinAnnotationView
             }
+        } else if annotation is SpotPinAnnotation {
+            let spotPinAnnotation : SpotPinAnnotation = annotation as! SpotPinAnnotation
+            let identifier = "SpotAnnotation"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+            if annotationView == nil {
+                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                annotationView!.canShowCallout           = true
+                annotationView!.image                    = Constants.STAR_ICON
+                annotationView!.isUserInteractionEnabled = true
+                
+                // Add items e.g. equipment, times, tags
+                let itemsLabel : UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
+                itemsLabel.numberOfLines  = 0
+                itemsLabel.attributedText = Helper.getItemsTextFor(spot: spotPinAnnotation.spot!)
+                itemsLabel.font           = itemsLabel.font.withSize(10)
+                let width = NSLayoutConstraint(item: itemsLabel, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.lessThanOrEqual, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 200)
+                itemsLabel.addConstraint(width)
+                let height = NSLayoutConstraint(item: itemsLabel, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.lessThanOrEqual, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 90)
+                itemsLabel.addConstraint(height)
+                annotationView!.detailCalloutAccessoryView = itemsLabel
+                
+                // Add button
+                let viewButton : UIButton = UIButton(type: .infoLight)
+                let icon       : UIImage  = UIImage(systemName: "viewfinder.circle")!
+                viewButton.setImage(icon, for: .normal)
+                viewButton.tintColor = UIColor.systemTeal
+                annotationView!.rightCalloutAccessoryView = viewButton
+            } else {
+                annotationView!.annotation = annotation
+            }
+            return annotationView
         } else if annotation is ViewPinAnnotation {
             let viewPinAnnotation : ViewPinAnnotation = annotation as! ViewPinAnnotation
-            let identifier = "Annotation"
-            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+            let identifier = "ViewAnnotation"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
             if annotationView == nil {
                 annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 annotationView!.canShowCallout           = true
                 annotationView!.isUserInteractionEnabled = true
+                annotationView!.pinTintColor             = Constants.BLUE
                 
                 // Add items e.g. equipment, times, tags
                 let itemsLabel : UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
@@ -580,6 +646,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 if let view = stateController!.views.filter({ $0.name == annotationView.annotation?.title }).first {
                     setView(view: view)
                 }
+            } else {
+                if let spot = stateController!.spots.filter({ $0.name == view.annotation?.title }).first {
+                    gotoSpot(spot: spot)
+                }
             }
         }
     }
@@ -604,6 +674,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
+    // Goto a spot
+    func gotoSpot(spot: Spot) -> Void {
+        self.routeVisible   = false
+        self.routingButton.setImage(UIImage(systemName: "car"), for: UIControl.State.normal)
+        self.distanceToView = 0
+        self.timeToView     = TimeInterval()
+        self.mapView.removeOverlays(routePolylines)
+                
+        stateController!.setSpot(spot)
+        
+        self.mapView!.setCenter(spot.point.coordinate, animated: true)
+    }
     
     // Set a view
     func setView(view: View) -> Void {
@@ -747,12 +829,27 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func updateOverlay(cameraPoint: MKMapPoint, motifPoint: MKMapPoint) -> Void {
+        // Spot Annotations
+        if !spotAnnotations.isEmpty {
+            mapView.removeAnnotations(spotAnnotations)
+        }
+        spotAnnotations.removeAll()
+        if spotsVisible {
+            for spot in self.stateController!.spots {
+                let spotAnnotation : SpotPinAnnotation = SpotPinAnnotation(spot: spot)
+                spotAnnotation.title = spot.name
+                                                    
+                spotAnnotation.coordinate = spot.point.coordinate
+                spotAnnotations.append(spotAnnotation)
+            }
+            mapView.addAnnotations(spotAnnotations)
+        }
+        
         // View Annotations
         if !viewAnnotations.isEmpty {
             mapView.removeAnnotations(viewAnnotations)
         }
         viewAnnotations.removeAll()
-        
         if viewsVisible {
             for view in self.stateController!.views {
                 if view.cameraPoint.coordinate.latitude != self.cameraPin!.coordinate.latitude &&
@@ -873,7 +970,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let dofTrapezoid = Polygon(coordinates: dofTrapezoidCoordinates, count: dofTrapezoidCoordinates.count)
         dofTrapezoid.id = "dof"
         self.dofTrapezoid = dofTrapezoid
-        
+                
         // Add all overlays at once
         mapView.addOverlays([moonriseLine, moonsetLine, sunriseLine, sunsetLine, minFovTriangle, maxFovTriangle, fovTriangle, fovCenterLine, dofTrapezoid])
     }
@@ -1207,7 +1304,7 @@ class Line: MKPolyline {
 
 
 class ViewPinAnnotation: MKPointAnnotation {
-    var view: View?
+    var view    : View?
     
     init(view: View) {
         super.init()
@@ -1219,6 +1316,18 @@ class ViewPinAnnotation: MKPointAnnotation {
     }
 }
 
+class SpotPinAnnotation: MKPointAnnotation {
+    var spot : Spot?
+    
+    init(spot: Spot) {
+        super.init()
+        self.spot = spot
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
 class MultiPolygon: NSObject, MKOverlay {
     var polygons: [MKPolygon]?

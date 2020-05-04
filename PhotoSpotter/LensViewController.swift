@@ -18,6 +18,7 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var camerasButton : UIBarButtonItem!
     @IBOutlet weak var lensesButton  : UIBarButtonItem!
     @IBOutlet weak var viewsButton   : UIBarButtonItem!
+    @IBOutlet weak var spotsButton   : UIBarButtonItem!
     
     @IBOutlet weak var tableView     : UITableView!
     @IBOutlet weak var backButton    : UIBarButtonItem!
@@ -85,6 +86,9 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     @IBAction func viewsButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "lensesViewToViewsView", sender: self)
+    }
+    @IBAction func spotsButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "lensesViewToSpotsView", sender: self)
     }
     
     @IBAction func addLensButtonPressed(_ sender: Any) {

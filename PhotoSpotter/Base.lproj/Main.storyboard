@@ -105,7 +105,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="1AH-m3-ZnM">
-                                                        <rect key="frame" x="73" y="7.5" width="44" height="38"/>
+                                                        <rect key="frame" x="64.5" y="7.5" width="44" height="38"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ouh-Jp-2aV" userLabel="ElevationButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="44" height="24"/>
@@ -128,9 +128,32 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="NKI-mN-u1r">
-                                                        <rect key="frame" x="165" y="7.5" width="28.5" height="38"/>
+                                                        <rect key="frame" x="148" y="7.5" width="28" height="38"/>
                                                         <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-Qk-HLX" userLabel="ViewsButton">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-Qk-HLX" userLabel="SpotsButton">
+                                                                <rect key="frame" x="0.0" y="0.0" width="28" height="24"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <state key="normal" image="star.circle" catalog="system">
+                                                                    <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="showSpotsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KMO-DZ-7g8"/>
+                                                                </connections>
+                                                            </button>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spots" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OK2-n2-Pwl" userLabel="SpotsLabel">
+                                                                <rect key="frame" x="0.0" y="26" width="28" height="12"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                <color key="textColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="q3r-Hj-uog">
+                                                        <rect key="frame" x="215.5" y="7.5" width="28.5" height="38"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aPa-8a-0ta" userLabel="ViewsButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="28.5" height="24"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -139,10 +162,10 @@
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="showViewsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tO4-wb-HiU"/>
+                                                                    <action selector="showViewsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l9c-cu-3DA"/>
                                                                 </connections>
                                                             </button>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Views" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OK2-n2-Pwl" userLabel="ViewsLabel">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Views" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQl-v6-3MC" userLabel="ViewsLabel">
                                                                 <rect key="frame" x="0.0" y="26" width="28.5" height="12"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="textColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -151,7 +174,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="9o6-qt-WBK">
-                                                        <rect key="frame" x="241" y="8.5" width="29.5" height="36"/>
+                                                        <rect key="frame" x="283.5" y="8.5" width="29.5" height="36"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f21-dR-J3l" userLabel="RoutingButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="29.5" height="22"/>
@@ -174,7 +197,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="7rZ-wO-Mz3">
-                                                        <rect key="frame" x="318.5" y="7" width="26.5" height="39.5"/>
+                                                        <rect key="frame" x="352" y="7" width="26.5" height="39.5"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I8n-ya-JHH" userLabel="SunButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="26.5" height="25.5"/>
@@ -197,7 +220,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="tey-5w-SRf">
-                                                        <rect key="frame" x="393" y="8" width="27" height="37.5"/>
+                                                        <rect key="frame" x="418" y="8" width="27" height="37.5"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9KS-Fw-qnA" userLabel="MoonButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="27" height="23.5"/>
@@ -220,7 +243,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="A60-9w-g50">
-                                                        <rect key="frame" x="468" y="10" width="20" height="33.5"/>
+                                                        <rect key="frame" x="484.5" y="10" width="20" height="33.5"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFe-Iv-Phh" userLabel="DoFButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="20" height="19.5"/>
@@ -243,7 +266,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Iol-cx-YGc">
-                                                        <rect key="frame" x="535.5" y="8.5" width="54" height="36.5"/>
+                                                        <rect key="frame" x="544" y="8.5" width="54" height="36.5"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIT-Ve-K0R" userLabel="OrientationButton">
                                                                 <rect key="frame" x="0.0" y="0.0" width="54" height="22.5"/>
@@ -405,9 +428,16 @@
                                             <constraint firstAttribute="height" constant="1" id="zmV-a0-XS1"/>
                                         </constraints>
                                     </view>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="7E7-Ih-Ugf" userLabel="CrossHair">
+                                        <rect key="frame" x="495" y="481" width="34.5" height="32.5"/>
+                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="28" scale="large" weight="ultraLight"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="7E7-Ih-Ugf" firstAttribute="centerX" secondItem="6ir-dF-OFO" secondAttribute="centerX" id="3Xh-JU-ErM"/>
+                                    <constraint firstItem="7E7-Ih-Ugf" firstAttribute="centerY" secondItem="6ir-dF-OFO" secondAttribute="centerY" id="8Tr-JW-e6i"/>
                                     <constraint firstItem="YQT-CV-hyc" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" constant="20" id="CSM-i2-HsU"/>
                                     <constraint firstItem="dt3-lS-mdA" firstAttribute="top" secondItem="6ir-dF-OFO" secondAttribute="top" constant="20" id="EdY-db-6W1"/>
                                     <constraint firstItem="eEB-0J-bVb" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" id="LfX-Z4-qRb"/>
@@ -559,6 +589,13 @@
                                             <action selector="viewsButtonPressed:" destination="BYZ-38-t0r" id="uZc-N8-fx3"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Spots" id="mh3-ph-L6a" userLabel="SpotsButton">
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <connections>
+                                            <action selector="spotsButtonPressed:" destination="BYZ-38-t0r" id="0xK-Cy-MO4"/>
+                                            <segue destination="3Xq-N8-mWk" kind="show" identifier="mapViewToSpotsView" id="uyG-BO-9BQ"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                                 <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </toolbar>
@@ -590,6 +627,7 @@
                         <outlet property="apertureSlider" destination="Crf-to-ZRf" id="9iY-on-KpT"/>
                         <outlet property="cameraLabel" destination="YnF-jc-dhj" id="OGi-do-oDL"/>
                         <outlet property="camerasButton" destination="xUA-Eg-sBT" id="WdR-pf-7Pg"/>
+                        <outlet property="crossHair" destination="7E7-Ih-Ugf" id="Fmy-OW-5PU"/>
                         <outlet property="distanceLabel" destination="g1m-Vc-WVH" id="nQT-DG-QlX"/>
                         <outlet property="distanceToViewLabel" destination="L6F-h6-dXV" id="4t3-kH-7oB"/>
                         <outlet property="dofButton" destination="kFe-Iv-Phh" id="BdE-6l-LkE"/>
@@ -614,26 +652,30 @@
                         <outlet property="minFocalLengthLabel" destination="94S-EW-znH" id="eTv-iH-eIZ"/>
                         <outlet property="moonButton" destination="9KS-Fw-qnA" id="M5G-eZ-uik"/>
                         <outlet property="navBar" destination="YLE-9w-5zA" id="vx4-m4-4LK"/>
+                        <outlet property="navBarItem" destination="MAW-bR-kSY" id="PtB-Ao-ry1"/>
                         <outlet property="orientationButton" destination="oIT-Ve-K0R" id="jMp-v7-FTy"/>
                         <outlet property="orientationLabel" destination="7lK-US-IIb" id="hKE-cc-amE"/>
                         <outlet property="placeButton" destination="xp3-1c-EGH" id="RKG-WR-YCE"/>
                         <outlet property="routeInfoView" destination="YQT-CV-hyc" id="58b-Fq-8OR"/>
                         <outlet property="routingButton" destination="f21-dR-J3l" id="o0a-GA-sKP"/>
-                        <outlet property="showViewsButton" destination="gyl-Qk-HLX" id="upb-Ml-tu1"/>
+                        <outlet property="showSpotsButton" destination="gyl-Qk-HLX" id="cNB-oK-enh"/>
+                        <outlet property="showViewsButton" destination="aPa-8a-0ta" id="0jF-Lq-CtX"/>
+                        <outlet property="spotsButton" destination="mh3-ph-L6a" id="HgY-nM-VeJ"/>
                         <outlet property="sunButton" destination="I8n-ya-JHH" id="6rF-Lh-ncv"/>
                         <outlet property="timeToViewLabel" destination="zvS-hH-GuU" id="b0w-bT-Kzh"/>
                         <outlet property="viewButton" destination="auU-zc-U9g" id="Ox5-pT-8xJ"/>
                         <outlet property="viewLabel" destination="Uor-yK-ven" id="BEg-0f-cSs"/>
-                        <outlet property="viewsButton" destination="gyl-Qk-HLX" id="TJk-Aq-t84"/>
+                        <outlet property="viewsButton" destination="hH1-Gl-vEn" id="47M-9r-NZ0"/>
                         <outlet property="widthLabel" destination="RmB-Ja-Iry" id="92x-8t-yw4"/>
                         <segue destination="r0P-5x-ec1" kind="show" identifier="mapViewToCamerasView" destinationCreationSelector="exitMapViewController:" id="6Gl-Tl-cdW"/>
                         <segue destination="jc5-Uv-5Ut" kind="show" identifier="mapViewToLensesView" id="q1Q-0p-CtR"/>
                         <segue destination="5BG-JW-kIW" kind="show" identifier="mapViewToViewsView" id="Tqb-kX-mOs"/>
+                        <segue destination="3Xq-N8-mWk" kind="show" id="LcV-PU-V2T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-472.26562499999994" y="179.64860907759882"/>
+            <point key="canvasLocation" x="-976" y="550"/>
         </scene>
         <!--Cameras-->
         <scene sceneID="sVy-pe-ezY">
@@ -739,6 +781,13 @@
                                             <action selector="viewsButtonPressed:" destination="r0P-5x-ec1" id="H1y-lv-AXV"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Spots" id="FcI-C1-pDW" userLabel="SpotsButton">
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <connections>
+                                            <action selector="spotsButtonPressed:" destination="r0P-5x-ec1" id="yeX-fd-nmI"/>
+                                            <segue destination="3Xq-N8-mWk" kind="show" identifier="camerasViewToSpotsView" id="LUc-rD-T6h"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                                 <color key="barTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </toolbar>
@@ -781,12 +830,14 @@
                         <outlet property="lensesButton" destination="zRr-qX-d3W" id="4WE-B2-4tr"/>
                         <outlet property="mapButton" destination="rhp-eT-sbI" id="Mm7-Nd-AoC"/>
                         <outlet property="navBar" destination="QN9-0I-M3X" id="EAJ-Gv-pS3"/>
+                        <outlet property="spotsButton" destination="FcI-C1-pDW" id="D0k-nD-eNq"/>
                         <outlet property="tableView" destination="aPu-Xv-FEd" id="eM7-RC-XYy"/>
                         <outlet property="viewsButton" destination="igL-Oe-WgJ" id="7Q7-v9-hxN"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="camerasViewToMapView" destinationCreationSelector="exitCamerasViewController:" id="8Mg-Zc-6jN"/>
                         <segue destination="ZSD-z4-pEY" kind="presentation" identifier="camerasViewToCameraDetailsView" id="DbK-qt-g9Q"/>
                         <segue destination="jc5-Uv-5Ut" kind="show" identifier="camerasViewToLensesView" id="Gpb-NS-Hlh"/>
                         <segue destination="5BG-JW-kIW" kind="show" identifier="camerasViewToViewsView" id="xGg-4x-7zw"/>
+                        <segue destination="3Xq-N8-mWk" kind="show" id="pUo-dC-VJ5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HNz-Z9-Js7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -822,7 +873,6 @@
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="editCameraButtonPressed:" destination="r0P-5x-ec1" eventType="touchUpInside" id="Ic0-UF-XhQ"/>
                                                     <segue destination="Jyd-R2-m1K" kind="unwind" unwindAction="cancelWithSegue:" id="gn6-kR-r1J"/>
                                                 </connections>
                                             </button>
@@ -842,7 +892,6 @@
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="addCameraButtonPressed:" destination="r0P-5x-ec1" eventType="touchUpInside" id="aMg-Kc-JYz"/>
                                                     <segue destination="Jyd-R2-m1K" kind="unwind" unwindAction="doneWithSegue:" id="HXh-9k-Zjo"/>
                                                 </connections>
                                             </button>
@@ -1037,6 +1086,13 @@
                                             <action selector="viewsButtonPressed:" destination="jc5-Uv-5Ut" id="mfV-M8-1oP"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Spots" id="s4d-N3-S9o" userLabel="SpotsButton">
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <connections>
+                                            <action selector="spotsButtonPressed:" destination="jc5-Uv-5Ut" id="cjL-OJ-erG"/>
+                                            <segue destination="3Xq-N8-mWk" kind="show" identifier="lensesViewToSpotsView" id="leb-qC-F3o"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                                 <color key="barTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </toolbar>
@@ -1096,12 +1152,14 @@
                         <outlet property="lensesButton" destination="idh-yb-BdL" id="4i5-e4-ws6"/>
                         <outlet property="mapButton" destination="CXV-eb-nSj" id="JWY-DW-LCj"/>
                         <outlet property="navBar" destination="4mQ-Nd-XCn" id="njf-WF-c54"/>
+                        <outlet property="spotsButton" destination="s4d-N3-S9o" id="Ca0-CQ-wLe"/>
                         <outlet property="tableView" destination="rTE-xB-yBm" id="BMk-v4-msp"/>
                         <outlet property="viewsButton" destination="Rzq-xO-SJL" id="1v9-yH-a2f"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="lensesViewToMapView" id="Yg0-Ub-0Bk"/>
                         <segue destination="jFM-z6-LRW" kind="presentation" identifier="lensesViewToLensDetailsView" id="JOV-DF-Wgt"/>
                         <segue destination="r0P-5x-ec1" kind="show" identifier="lensesViewToCamerasView" id="heU-sJ-624"/>
                         <segue destination="5BG-JW-kIW" kind="show" identifier="lensesViewToViewsView" id="hyq-cO-83h"/>
+                        <segue destination="3Xq-N8-mWk" kind="show" id="nw4-yd-EiZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JlN-2i-LQY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1137,7 +1195,6 @@
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="editCameraButtonPressed:" destination="r0P-5x-ec1" eventType="touchUpInside" id="u5g-fy-Geb"/>
                                                     <segue destination="a7g-jp-tiP" kind="unwind" unwindAction="cancelWithSegue:" id="SsH-UG-IXp"/>
                                                 </connections>
                                             </button>
@@ -1157,7 +1214,6 @@
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="addCameraButtonPressed:" destination="r0P-5x-ec1" eventType="touchUpInside" id="3AU-lG-QIn"/>
                                                     <segue destination="a7g-jp-tiP" kind="unwind" unwindAction="doneWithSegue:" id="16m-O5-at6"/>
                                                 </connections>
                                             </button>
@@ -1355,7 +1411,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="IhS-kF-E1w">
                                                 <rect key="frame" x="20" y="0.0" width="984" height="40"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Views" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gbx-Qu-hNx" userLabel="LensLabel">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Views" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gbx-Qu-hNx" userLabel="ViewLabel">
                                                         <rect key="frame" x="0.0" y="16" width="52.5" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
@@ -1430,6 +1486,13 @@
                                             <action selector="viewsButtonPressed:" destination="5BG-JW-kIW" id="s6R-bE-xlB"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Spots" id="XSJ-eX-8cR" userLabel="SpotsButton">
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <connections>
+                                            <action selector="spotsButtonPressed:" destination="5BG-JW-kIW" id="lY2-NP-95O"/>
+                                            <segue destination="3Xq-N8-mWk" kind="show" identifier="viewsViewToSpotsView" id="yDZ-IK-3lV"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                                 <color key="barTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </toolbar>
@@ -1472,12 +1535,14 @@
                         <outlet property="lensesButton" destination="sFq-T1-7Fo" id="RwO-8J-PRg"/>
                         <outlet property="mapButton" destination="3zj-hc-Yok" id="T0Y-mD-3MH"/>
                         <outlet property="navBar" destination="hlu-vr-GCU" id="dPL-Tg-f7g"/>
+                        <outlet property="spotsButton" destination="XSJ-eX-8cR" id="hH3-VG-2FL"/>
                         <outlet property="tableView" destination="n34-ih-Ers" id="6U0-X6-ggQ"/>
                         <outlet property="viewsButton" destination="9r7-fs-59W" id="7rN-M9-VIP"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="viewsViewToMapView" id="Wzc-Ww-caD"/>
                         <segue destination="jc5-Uv-5Ut" kind="show" identifier="viewsViewToLensesView" id="v21-rP-BLs"/>
                         <segue destination="r0P-5x-ec1" kind="show" identifier="viewsViewToCamerasView" id="dje-rX-Wew"/>
                         <segue destination="pfM-O1-aVk" kind="presentation" identifier="viewsViewToViewDetailsView" id="IyG-L9-v0k"/>
+                        <segue destination="3Xq-N8-mWk" kind="show" id="8Ig-cM-Ff1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CUd-c7-rnl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1513,7 +1578,6 @@
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="editCameraButtonPressed:" destination="r0P-5x-ec1" eventType="touchUpInside" id="b5m-ve-s2R"/>
                                                     <segue destination="9K2-fx-6Yh" kind="unwind" unwindAction="cancelWithSegue:" id="hVY-IE-hir"/>
                                                 </connections>
                                             </button>
@@ -1533,7 +1597,6 @@
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="addCameraButtonPressed:" destination="r0P-5x-ec1" eventType="touchUpInside" id="1ba-F9-miM"/>
                                                     <segue destination="9K2-fx-6Yh" kind="unwind" unwindAction="doneWithSegue:" id="0w9-tz-OOL"/>
                                                 </connections>
                                             </button>
@@ -1657,12 +1720,322 @@
             </objects>
             <point key="canvasLocation" x="1159.5703125" y="911.85944363103943"/>
         </scene>
+        <!--SpotViewController-->
+        <scene sceneID="sBW-0F-Ksi">
+            <objects>
+                <viewController storyboardIdentifier="SpotViewController" title="SpotViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3Xq-N8-mWk" customClass="SpotViewController" customModule="PhotoSpotter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GlC-rb-zVi">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Qr-5M-vmC">
+                                <rect key="frame" x="0.0" y="658" width="1024" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="barTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                    <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </textAttributes>
+                                <textAttributes key="largeTitleTextAttributes">
+                                    <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="PhotoSpotter" id="6TV-MH-wcj"/>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u48-lr-TEz" userLabel="MainView">
+                                <rect key="frame" x="0.0" y="50" width="1024" height="1246"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dXF-4D-Dgl" userLabel="ToolsView">
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="48"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="uBs-GT-H8Z">
+                                                <rect key="frame" x="20" y="0.0" width="984" height="40"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spots" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fqm-7i-UYO" userLabel="SpotsLabel">
+                                                        <rect key="frame" x="0.0" y="16" width="51" height="24"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u2q-p4-Pnf" userLabel="AddSpotButton">
+                                                        <rect key="frame" x="962.5" y="19" width="21.5" height="20"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
+                                                        <state key="normal" image="plus" catalog="system">
+                                                            <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="addSpotButtonPressed:" destination="3Xq-N8-mWk" eventType="touchUpInside" id="eUt-Ga-3Dz"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="uBs-GT-H8Z" firstAttribute="top" secondItem="dXF-4D-Dgl" secondAttribute="top" id="AZ9-2L-kyG"/>
+                                            <constraint firstAttribute="trailing" secondItem="uBs-GT-H8Z" secondAttribute="trailing" constant="20" id="gMH-Zd-QSm"/>
+                                            <constraint firstAttribute="height" constant="48" id="lW8-vO-qpe"/>
+                                            <constraint firstAttribute="bottom" secondItem="uBs-GT-H8Z" secondAttribute="bottom" constant="8" id="qF6-tq-xqf"/>
+                                            <constraint firstItem="uBs-GT-H8Z" firstAttribute="leading" secondItem="dXF-4D-Dgl" secondAttribute="leading" constant="20" id="z6y-of-smG"/>
+                                        </constraints>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n1p-Uv-GNd" userLabel="SpotTableView">
+                                        <rect key="frame" x="0.0" y="48" width="1024" height="1198"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="n1p-Uv-GNd" firstAttribute="leading" secondItem="u48-lr-TEz" secondAttribute="leading" id="1eR-Dl-8Kh"/>
+                                    <constraint firstItem="dXF-4D-Dgl" firstAttribute="top" secondItem="u48-lr-TEz" secondAttribute="top" id="FL4-HC-b4E"/>
+                                    <constraint firstAttribute="bottom" secondItem="n1p-Uv-GNd" secondAttribute="bottom" id="HA2-Ej-qia"/>
+                                    <constraint firstAttribute="trailing" secondItem="n1p-Uv-GNd" secondAttribute="trailing" id="Saa-ci-QuG"/>
+                                    <constraint firstItem="dXF-4D-Dgl" firstAttribute="leading" secondItem="u48-lr-TEz" secondAttribute="leading" id="o9A-ei-CRL"/>
+                                    <constraint firstAttribute="trailing" secondItem="dXF-4D-Dgl" secondAttribute="trailing" id="vbp-cV-9ne"/>
+                                    <constraint firstItem="n1p-Uv-GNd" firstAttribute="top" secondItem="dXF-4D-Dgl" secondAttribute="bottom" id="zdw-mT-jU4"/>
+                                </constraints>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oim-m8-Xd5">
+                                <rect key="frame" x="0.0" y="1296" width="1024" height="50"/>
+                                <items>
+                                    <barButtonItem title="Map" id="3A2-KJ-Izm" userLabel="MapButton">
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <connections>
+                                            <action selector="mapButtonPressed:" destination="3Xq-N8-mWk" id="jrd-T8-Fy3"/>
+                                            <segue destination="BYZ-38-t0r" kind="show" identifier="spotsViewToMapView" id="Vr5-m4-xts"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Lenses" id="CCA-Fq-ZZw" userLabel="LensesButton">
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <connections>
+                                            <action selector="lensesButtonPressed:" destination="3Xq-N8-mWk" id="lwB-JK-HzX"/>
+                                            <segue destination="jc5-Uv-5Ut" kind="show" identifier="spotsViewToLensesView" id="bVp-BO-Ms6"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Cameras" id="4te-Qt-SVQ" userLabel="CamerasButton">
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <connections>
+                                            <action selector="camerasButtonPressed:" destination="3Xq-N8-mWk" id="Am8-bu-Q6y"/>
+                                            <segue destination="r0P-5x-ec1" kind="show" identifier="spotsViewToCamerasView" id="9wG-xL-2Aj"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Views" id="DLU-c1-OPN" userLabel="ViewsButton">
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <connections>
+                                            <action selector="viewsButtonPressed:" destination="3Xq-N8-mWk" id="Cva-sa-Bec"/>
+                                            <segue destination="5BG-JW-kIW" kind="show" identifier="spotsViewToViewsView" id="9kl-OT-FTv"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Spots" id="VGX-9D-rif" userLabel="SpotsButton">
+                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="spotsButtonPressed:" destination="3Xq-N8-mWk" id="zAh-b1-Rk2"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </toolbar>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuh-v1-r4X">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="50"/>
+                                <color key="barTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                    <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </textAttributes>
+                                <textAttributes key="largeTitleTextAttributes">
+                                    <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem id="6xl-ew-5cA"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="u48-lr-TEz" firstAttribute="trailing" secondItem="Gmx-hB-eRM" secondAttribute="trailing" id="7fc-PM-iiL"/>
+                            <constraint firstItem="u48-lr-TEz" firstAttribute="top" secondItem="fuh-v1-r4X" secondAttribute="bottom" id="8V1-iR-9bc"/>
+                            <constraint firstItem="u48-lr-TEz" firstAttribute="leading" secondItem="Gmx-hB-eRM" secondAttribute="leading" id="Cle-7n-mMQ"/>
+                            <constraint firstItem="fuh-v1-r4X" firstAttribute="top" secondItem="Gmx-hB-eRM" secondAttribute="top" id="Mwb-7H-Kbw"/>
+                            <constraint firstItem="fuh-v1-r4X" firstAttribute="trailing" secondItem="Gmx-hB-eRM" secondAttribute="trailing" id="Uof-qN-V6X"/>
+                            <constraint firstItem="oim-m8-Xd5" firstAttribute="top" secondItem="u48-lr-TEz" secondAttribute="bottom" id="UvT-xl-s1x"/>
+                            <constraint firstItem="oim-m8-Xd5" firstAttribute="trailing" secondItem="Gmx-hB-eRM" secondAttribute="trailing" id="bZP-Bo-ANg"/>
+                            <constraint firstItem="oim-m8-Xd5" firstAttribute="leading" secondItem="Gmx-hB-eRM" secondAttribute="leading" id="bqy-6S-QT2"/>
+                            <constraint firstItem="oim-m8-Xd5" firstAttribute="bottom" secondItem="Gmx-hB-eRM" secondAttribute="bottom" id="kIs-lq-deI"/>
+                            <constraint firstItem="oim-m8-Xd5" firstAttribute="top" secondItem="u48-lr-TEz" secondAttribute="bottom" id="nVN-8W-2U7"/>
+                            <constraint firstItem="fuh-v1-r4X" firstAttribute="leading" secondItem="Gmx-hB-eRM" secondAttribute="leading" id="rKx-VB-yCo"/>
+                            <constraint firstItem="u48-lr-TEz" firstAttribute="top" secondItem="fuh-v1-r4X" secondAttribute="bottom" id="u7o-di-W6k"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Gmx-hB-eRM"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="MTs-V1-lcm"/>
+                    <connections>
+                        <outlet property="addSpotButton" destination="u2q-p4-Pnf" id="4Uw-cB-pfa"/>
+                        <outlet property="camerasButton" destination="4te-Qt-SVQ" id="Ijs-hl-kOT"/>
+                        <outlet property="lensesButton" destination="CCA-Fq-ZZw" id="Icr-wx-Ryh"/>
+                        <outlet property="mapButton" destination="3A2-KJ-Izm" id="YZn-Te-Wyo"/>
+                        <outlet property="navBar" destination="fuh-v1-r4X" id="8OA-uu-SrV"/>
+                        <outlet property="tableView" destination="n1p-Uv-GNd" id="hjB-3r-cw7"/>
+                        <outlet property="viewsButton" destination="DLU-c1-OPN" id="Rbk-Dh-IET"/>
+                        <segue destination="7vO-tA-kDQ" kind="presentation" identifier="spotsViewToSpotDetailsView" id="EZd-my-FGF"/>
+                        <segue destination="5BG-JW-kIW" kind="show" id="b8v-2D-UTe"/>
+                        <segue destination="BYZ-38-t0r" kind="show" id="UCn-cx-41A"/>
+                        <segue destination="jc5-Uv-5Ut" kind="show" id="gL5-h3-HKC"/>
+                        <segue destination="r0P-5x-ec1" kind="show" id="Haq-50-77K"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kRD-eo-YPy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="296" y="1699"/>
+        </scene>
+        <!--SpotDetailViewController-->
+        <scene sceneID="ZRS-xn-5dJ">
+            <objects>
+                <viewController storyboardIdentifier="SpotDetailViewController" title="SpotDetailViewController" definesPresentationContext="YES" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7vO-tA-kDQ" customClass="SpotDetailViewController" customModule="PhotoSpotter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Xap-IJ-5nC">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bbN-CU-U7Y">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="50"/>
+                                <color key="barTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items>
+                                    <navigationItem id="FTf-UY-2Wi"/>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rau-gw-vik" userLabel="ToolsView">
+                                <rect key="frame" x="0.0" y="50" width="1024" height="48"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="vqq-hW-TF5">
+                                        <rect key="frame" x="20" y="10" width="984" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mjA-2y-wVZ" userLabel="CancelButton">
+                                                <rect key="frame" x="0.0" y="0.0" width="48" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <state key="normal" title="Cancel">
+                                                    <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="LKG-pB-0DW" kind="unwind" unwindAction="cancelWithSegue:" id="X2Y-1T-m4R"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Spot" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T1d-Qd-AFF" userLabel="AddLensLabel">
+                                                <rect key="frame" x="457" y="1.5" width="81.5" height="24"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIr-ZH-P4l" userLabel="DoneButton">
+                                                <rect key="frame" x="947" y="0.0" width="37" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
+                                                <state key="normal" title="Done">
+                                                    <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="LKG-pB-0DW" kind="unwind" unwindAction="doneWithSegue:" id="fnz-Rj-6rO"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="vqq-hW-TF5" secondAttribute="trailing" constant="20" id="Wtx-se-QMx"/>
+                                    <constraint firstAttribute="height" constant="48" id="lK2-0G-mam"/>
+                                    <constraint firstItem="vqq-hW-TF5" firstAttribute="leading" secondItem="rau-gw-vik" secondAttribute="leading" constant="20" id="szj-6L-5wI"/>
+                                    <constraint firstAttribute="bottom" secondItem="vqq-hW-TF5" secondAttribute="bottom" constant="8" id="tey-Ww-fLG"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="00d-ke-eot">
+                                <rect key="frame" x="20" y="118" width="984" height="72"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="3a5-ZF-cCA" userLabel="SpotNameView">
+                                        <rect key="frame" x="0.0" y="0.0" width="984" height="26"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spot name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jId-Z6-juY" userLabel="SpotNameLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="482" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="name of spot" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dlF-um-aas" userLabel="SpotNameTextField">
+                                                <rect key="frame" x="502" y="-8" width="482" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="MaJ-ci-sps" userLabel="DescriptionView">
+                                        <rect key="frame" x="0.0" y="46" width="984" height="26"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8W5-3x-ZxC" userLabel="DescriptionLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="482" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WiP-1s-XgS" userLabel="DescriptionTextField">
+                                                <rect key="frame" x="502" y="-8" width="482" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PEq-HA-8A6">
+                                <rect key="frame" x="20" y="210" width="984" height="1156"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="rau-gw-vik" firstAttribute="leading" secondItem="zmd-Dn-c3e" secondAttribute="leading" id="4hq-Zt-1F9"/>
+                            <constraint firstItem="PEq-HA-8A6" firstAttribute="leading" secondItem="zmd-Dn-c3e" secondAttribute="leading" constant="20" id="6P7-ae-YLW"/>
+                            <constraint firstItem="00d-ke-eot" firstAttribute="leading" secondItem="zmd-Dn-c3e" secondAttribute="leading" constant="20" id="8DZ-dE-QAO"/>
+                            <constraint firstItem="PEq-HA-8A6" firstAttribute="bottom" secondItem="zmd-Dn-c3e" secondAttribute="bottom" constant="20" id="9Ug-JS-YnX"/>
+                            <constraint firstItem="rau-gw-vik" firstAttribute="top" secondItem="bbN-CU-U7Y" secondAttribute="bottom" id="DxV-Ag-ykY"/>
+                            <constraint firstItem="PEq-HA-8A6" firstAttribute="top" secondItem="00d-ke-eot" secondAttribute="bottom" constant="20" id="Kwp-oP-W5S"/>
+                            <constraint firstItem="zmd-Dn-c3e" firstAttribute="trailing" secondItem="PEq-HA-8A6" secondAttribute="trailing" constant="20" id="P8O-CJ-Ezo"/>
+                            <constraint firstItem="zmd-Dn-c3e" firstAttribute="trailing" secondItem="00d-ke-eot" secondAttribute="trailing" constant="20" id="Qcl-7A-tvi"/>
+                            <constraint firstItem="zmd-Dn-c3e" firstAttribute="trailing" secondItem="bbN-CU-U7Y" secondAttribute="trailing" id="RxT-7c-0uJ"/>
+                            <constraint firstItem="rau-gw-vik" firstAttribute="trailing" secondItem="zmd-Dn-c3e" secondAttribute="trailing" id="S3T-Zp-45j"/>
+                            <constraint firstItem="00d-ke-eot" firstAttribute="top" secondItem="rau-gw-vik" secondAttribute="bottom" constant="20" id="lUv-4P-i3v"/>
+                            <constraint firstItem="bbN-CU-U7Y" firstAttribute="leading" secondItem="zmd-Dn-c3e" secondAttribute="leading" id="qkY-FA-4gC"/>
+                            <constraint firstItem="bbN-CU-U7Y" firstAttribute="top" secondItem="zmd-Dn-c3e" secondAttribute="top" id="xP2-Zc-0MT"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zmd-Dn-c3e"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="NoB-a2-ZZx"/>
+                    <connections>
+                        <outlet property="cancelButton" destination="mjA-2y-wVZ" id="jUb-RA-bd4"/>
+                        <outlet property="descriptionTextField" destination="WiP-1s-XgS" id="qlb-9U-bLy"/>
+                        <outlet property="doneButton" destination="TIr-ZH-P4l" id="53q-eg-6vQ"/>
+                        <outlet property="nameTextField" destination="dlF-um-aas" id="im0-22-uo1"/>
+                        <outlet property="navBar" destination="bbN-CU-U7Y" id="KPK-Ht-sA6"/>
+                        <outlet property="tableView" destination="PEq-HA-8A6" id="eK5-rI-IEI"/>
+                    </connections>
+                </viewController>
+                <exit id="LKG-pB-0DW" userLabel="Exit" sceneMemberID="exit"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Qn-zg-l1w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1159" y="1699"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hyq-cO-83h"/>
-        <segue reference="Gpb-NS-Hlh"/>
-        <segue reference="heU-sJ-624"/>
-        <segue reference="Yg0-Ub-0Bk"/>
+        <segue reference="8Ig-cM-Ff1"/>
+        <segue reference="9kl-OT-FTv"/>
+        <segue reference="gL5-h3-HKC"/>
+        <segue reference="Haq-50-77K"/>
+        <segue reference="Vr5-m4-xts"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.up.and.down.circle" catalog="system" width="128" height="121"/>
@@ -1675,6 +2048,7 @@
         <image name="mappin.circle" catalog="system" width="128" height="121"/>
         <image name="moon" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="star.circle" catalog="system" width="128" height="121"/>
         <image name="sun.max" catalog="system" width="128" height="124"/>
         <image name="viewfinder.circle" catalog="system" width="128" height="121"/>
     </resources>
