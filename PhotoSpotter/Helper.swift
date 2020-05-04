@@ -161,6 +161,28 @@ public class Helper {
         return MKMapPoint(x: rotationCenter.x + (dx * cosValue) - (dy * sinValue), y: rotationCenter.y + (dx * sinValue) + (dy * cosValue))
     }
     
+    public static func spotToDictionary(spot: Spot) -> Dictionary<String,String> {
+        let jsonString : String = spot.toFlatJsonString()
+        if let data = jsonString.data(using: String.Encoding.utf8) {
+            do {
+                let decoder = JSONDecoder()
+                let jsonDictionary = try decoder.decode(Dictionary<String, String>.self, from: data)
+                return jsonDictionary
+            } catch {
+                return Dictionary<String,String>()
+            }
+        }
+        return Dictionary<String,String>()
+    }
+    
+    public static func dictionaryToSpot(dictionary: Dictionary<String,String>) -> Spot {
+        do {
+            return try Spot(dictionary: dictionary)
+        } catch {
+            return Constants.DEFAULT_SPOT
+        }
+    }
+    
     public static func viewToDictionary(view: View) -> Dictionary<String,String> {
         let jsonString : String = view.toFlatJsonString()
         if let data = jsonString.data(using: String.Encoding.utf8) {

@@ -586,14 +586,13 @@
                                     <barButtonItem title="Views" id="hH1-Gl-vEn" userLabel="ViewsButton">
                                         <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
                                         <connections>
-                                            <action selector="viewsButtonPressed:" destination="BYZ-38-t0r" id="uZc-N8-fx3"/>
+                                            <action selector="viewsButtonPressed:" destination="BYZ-38-t0r" id="Pxi-Bk-0G1"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem title="Spots" id="mh3-ph-L6a" userLabel="SpotsButton">
                                         <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
                                         <connections>
                                             <action selector="spotsButtonPressed:" destination="BYZ-38-t0r" id="0xK-Cy-MO4"/>
-                                            <segue destination="3Xq-N8-mWk" kind="show" identifier="mapViewToSpotsView" id="uyG-BO-9BQ"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -665,12 +664,12 @@
                         <outlet property="timeToViewLabel" destination="zvS-hH-GuU" id="b0w-bT-Kzh"/>
                         <outlet property="viewButton" destination="auU-zc-U9g" id="Ox5-pT-8xJ"/>
                         <outlet property="viewLabel" destination="Uor-yK-ven" id="BEg-0f-cSs"/>
-                        <outlet property="viewsButton" destination="hH1-Gl-vEn" id="47M-9r-NZ0"/>
+                        <outlet property="viewsButton" destination="hH1-Gl-vEn" id="O0N-X8-GSx"/>
                         <outlet property="widthLabel" destination="RmB-Ja-Iry" id="92x-8t-yw4"/>
                         <segue destination="r0P-5x-ec1" kind="show" identifier="mapViewToCamerasView" destinationCreationSelector="exitMapViewController:" id="6Gl-Tl-cdW"/>
                         <segue destination="jc5-Uv-5Ut" kind="show" identifier="mapViewToLensesView" id="q1Q-0p-CtR"/>
                         <segue destination="5BG-JW-kIW" kind="show" identifier="mapViewToViewsView" id="Tqb-kX-mOs"/>
-                        <segue destination="3Xq-N8-mWk" kind="show" id="LcV-PU-V2T"/>
+                        <segue destination="3Xq-N8-mWk" kind="show" identifier="mapViewToSpotsView" id="LcV-PU-V2T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -837,7 +836,7 @@
                         <segue destination="ZSD-z4-pEY" kind="presentation" identifier="camerasViewToCameraDetailsView" id="DbK-qt-g9Q"/>
                         <segue destination="jc5-Uv-5Ut" kind="show" identifier="camerasViewToLensesView" id="Gpb-NS-Hlh"/>
                         <segue destination="5BG-JW-kIW" kind="show" identifier="camerasViewToViewsView" id="xGg-4x-7zw"/>
-                        <segue destination="3Xq-N8-mWk" kind="show" id="pUo-dC-VJ5"/>
+                        <segue destination="3Xq-N8-mWk" kind="show" identifier="camerasViewToSpotsView" id="pUo-dC-VJ5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HNz-Z9-Js7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1159,7 +1158,7 @@
                         <segue destination="jFM-z6-LRW" kind="presentation" identifier="lensesViewToLensDetailsView" id="JOV-DF-Wgt"/>
                         <segue destination="r0P-5x-ec1" kind="show" identifier="lensesViewToCamerasView" id="heU-sJ-624"/>
                         <segue destination="5BG-JW-kIW" kind="show" identifier="lensesViewToViewsView" id="hyq-cO-83h"/>
-                        <segue destination="3Xq-N8-mWk" kind="show" id="nw4-yd-EiZ"/>
+                        <segue destination="3Xq-N8-mWk" kind="show" identifier="lensesViewToSpotsView" id="nw4-yd-EiZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JlN-2i-LQY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1542,7 +1541,7 @@
                         <segue destination="jc5-Uv-5Ut" kind="show" identifier="viewsViewToLensesView" id="v21-rP-BLs"/>
                         <segue destination="r0P-5x-ec1" kind="show" identifier="viewsViewToCamerasView" id="dje-rX-Wew"/>
                         <segue destination="pfM-O1-aVk" kind="presentation" identifier="viewsViewToViewDetailsView" id="IyG-L9-v0k"/>
-                        <segue destination="3Xq-N8-mWk" kind="show" id="8Ig-cM-Ff1"/>
+                        <segue destination="3Xq-N8-mWk" kind="show" identifier="viewsViewToSpotView" id="8Ig-cM-Ff1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CUd-c7-rnl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1882,10 +1881,6 @@
                         <outlet property="tableView" destination="n1p-Uv-GNd" id="hjB-3r-cw7"/>
                         <outlet property="viewsButton" destination="DLU-c1-OPN" id="Rbk-Dh-IET"/>
                         <segue destination="7vO-tA-kDQ" kind="presentation" identifier="spotsViewToSpotDetailsView" id="EZd-my-FGF"/>
-                        <segue destination="5BG-JW-kIW" kind="show" id="b8v-2D-UTe"/>
-                        <segue destination="BYZ-38-t0r" kind="show" id="UCn-cx-41A"/>
-                        <segue destination="jc5-Uv-5Ut" kind="show" id="gL5-h3-HKC"/>
-                        <segue destination="r0P-5x-ec1" kind="show" id="Haq-50-77K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kRD-eo-YPy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2031,11 +2026,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="8Ig-cM-Ff1"/>
-        <segue reference="9kl-OT-FTv"/>
-        <segue reference="gL5-h3-HKC"/>
-        <segue reference="Haq-50-77K"/>
-        <segue reference="Vr5-m4-xts"/>
+        <segue reference="nw4-yd-EiZ"/>
+        <segue reference="Tqb-kX-mOs"/>
+        <segue reference="v21-rP-BLs"/>
+        <segue reference="dje-rX-Wew"/>
+        <segue reference="Wzc-Ww-caD"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.up.and.down.circle" catalog="system" width="128" height="121"/>

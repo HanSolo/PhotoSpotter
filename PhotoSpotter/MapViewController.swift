@@ -208,6 +208,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             stateController!.loadCamerasFromCD(appDelegate: appDelegate)
             stateController!.loadLensesFromCD(appDelegate: appDelegate)
+            stateController!.loadSpotsFromCD(appDelegate: appDelegate)
             stateController!.loadViewsFromCD(appDelegate: appDelegate)
         }
                 

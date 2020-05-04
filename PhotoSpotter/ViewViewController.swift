@@ -192,6 +192,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         var timesBegin     : Int
         var timesEnd       : Int
         var tagsBegin      : Int
+        var tagsEnd        : Int
         
         var equipment : String = " ["
         for equip in Constants.EQUIPMENT {
@@ -216,10 +217,8 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         if times.count > 0 {
             if equipment.count > 2 {
                 times.removeLast()
-                text += times
-            } else {
-                text += ("\n" + times)
             }
+            text += ("\n" + times)
         }
         timesBegin = equipment.count > 2 ? equipmentEnd + 1 : equipmentEnd
         timesEnd   = timesBegin + times.count
@@ -232,18 +231,17 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         if tags.count > 0 {
             if times.count > 0 || equipment.count > 2 {
                 tags.removeLast()
-                text += tags
-            } else {
-                text += ("\n" + tags)
             }
+            text += ("\n" + tags)
         }
         tagsBegin = times.count == 0 ? timesEnd : timesEnd + 1
+        tagsEnd   = equipment.count > 2 ? tags.count : tags.count + 1
        
         if text.count > 0 {
             let detailText :NSMutableAttributedString = NSMutableAttributedString(string: text)
             detailText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.YELLOW], range: NSRange(location: equipmentBegin, length: equipment.count > 2 ? equipment.count : 0))
             detailText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.BLUE], range: NSRange(location: timesBegin, length: times.count))
-            detailText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.RED], range: NSRange(location: tagsBegin, length: tags.count))
+            detailText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.RED], range: NSRange(location: tagsBegin, length: tagsEnd))
         
             cell.detailTextLabel?.attributedText = detailText
         }

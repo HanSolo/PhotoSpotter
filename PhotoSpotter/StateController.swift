@@ -89,9 +89,7 @@ class StateController {
     
     
     // Spots
-    private(set) var spots : [Spot] = [
-        Constants.DEFAULT_SPOT
-    ]
+    private(set) var spots : [Spot] = []
     func addSpot(_ spot: Spot) {
         if isSpotInSpots(spot: spot) {
             return
@@ -103,13 +101,17 @@ class StateController {
         self.spots = spots
     }
     func removeSpot(_ spot: Spot) {
-        let spotsToRemove : [Spot] = spots.filter({ $0.name        == view.name &&
-                                                    $0.description == view.description &&
-                                                    $0.tags        == view.tags })
+        let spotsToRemove : [Spot] = spots.filter({ $0.name        == spot.name &&
+                                                    $0.description == spot.description &&
+                                                    $0.country     == spot.country &&
+                                                    $0.tags        == spot.tags })
         spots.removeAll(where: { spotsToRemove.contains($0) })
     }
     func isSpotInSpots(spot: Spot) -> Bool {
-        return spots.filter({ $0.name == spot.name && $0.description == spot.description && $0.tags == spot.tags }).count >= 1
+        return spots.filter({ $0.name        == spot.name &&
+                              $0.description == spot.description &&
+                              $0.country     == spot.country &&
+                              $0.tags        == spot.tags }).count >= 1
     }
     
     
@@ -512,8 +514,7 @@ class StateController {
         } catch let error as NSError {
             print("Could not fetch spots from CoreData. \(error), \(error.userInfo)")
         }
-        
-        mergeViews(appDelegate: appDelegate)
+        mergeSpots(appDelegate: appDelegate)
     }
     func storeSpotsToCD(appDelegate: AppDelegate) -> Void {
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -615,12 +616,12 @@ class StateController {
                 return
             }
         } catch let error as NSError {
-            print("Error fetching view from CoreData. \(error), \(error.userInfo)")
+            print("Error fetching spot from CoreData. \(error), \(error.userInfo)")
         }
         do {
             try managedContext.save()
         } catch let error as NSError {
-            print("Could not store views to CoreData. \(error), \(error.userInfo)")
+            print("Could not store spots to CoreData. \(error), \(error.userInfo)")
         }
     }
     func removeSpotFromCD(appDelegate: AppDelegate, spot: Spot) -> Void {
@@ -667,14 +668,15 @@ class StateController {
     func mergeSpots(appDelegate: AppDelegate) -> Void {
         var spotsInCoreData : [Spot] = []
         for spotCD in spotsCD {
-            let spot = Spot(name        : spotCD.value(forKey: Constants.NAME_CD) as! String,
+            let spot = Spot(name        : spotCD.value(forKey: Constants.NAME_CD)        as! String,
                             description : spotCD.value(forKey: Constants.DESCRIPTION_CD) as! String,
-                            lat         : spotCD.value(forKey: Constants.LAT_CD) as! Double,
-                            lon         : spotCD.value(forKey: Constants.LON_CD) as! Double,
-                            country     : spotCD.value(forKey: Constants.COUNTRY_CD) as? String ?? "",
-                            tags        : spotCD.value(forKey: Constants.TAGS_CD) as! Int32)
+                            lat         : spotCD.value(forKey: Constants.LAT_CD)         as! Double,
+                            lon         : spotCD.value(forKey: Constants.LON_CD)         as! Double,
+                            country     : spotCD.value(forKey: Constants.COUNTRY_CD)     as? String ?? "",
+                            tags        : spotCD.value(forKey: Constants.TAGS_CD)        as! Int32)
             spotsInCoreData.append(spot)
         }
+        
         for spot in spotsInCoreData {
             if !isSpotInSpots(spot: spot) {
                 addSpot(spot)
@@ -712,11 +714,11 @@ class StateController {
                 Helper.getCountryForView(view: view)
             }
             
-            let predicateName       = NSPredicate(format: "%K == %@",   Constants.NAME_CD,        view.name)
-            let predicateDesc       = NSPredicate(format: "%K == %@",   Constants.DESCRIPTION_CD, view.description)
-            let predicateCountry    = NSPredicate(format: "%K == %@",   Constants.COUNTRY_CD,     view.country)
-            let predicateCameraName = NSPredicate(format: "%K == %@", Constants.CAMERA_NAME_CD,   view.camera.name)
-            let predicateLensName   = NSPredicate(format: "%K == %@",   Constants.LENS_NAME_CD,   view.lens.name)
+            let predicateName       = NSPredicate(format: "%K == %@", Constants.NAME_CD,        view.name)
+            let predicateDesc       = NSPredicate(format: "%K == %@", Constants.DESCRIPTION_CD, view.description)
+            let predicateCountry    = NSPredicate(format: "%K == %@", Constants.COUNTRY_CD,     view.country)
+            let predicateCameraName = NSPredicate(format: "%K == %@", Constants.CAMERA_NAME_CD, view.camera.name)
+            let predicateLensName   = NSPredicate(format: "%K == %@", Constants.LENS_NAME_CD,   view.lens.name)
             let compoundPredicate   = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry, predicateCameraName, predicateLensName])
             
             fetchRequest.predicate = compoundPredicate
@@ -791,11 +793,11 @@ class StateController {
         let managedContext      = appDelegate.persistentContainer.viewContext
         let entity              = NSEntityDescription.entity(forEntityName: Constants.VIEW_CD, in: managedContext)!
         let fetchRequest        = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
-        let predicateName       = NSPredicate(format: "%K == %@",   Constants.NAME_CD,        view.name)
-        let predicateDesc       = NSPredicate(format: "%K == %@",   Constants.DESCRIPTION_CD, view.description)
-        let predicateCountry    = NSPredicate(format: "%K == %@",   Constants.COUNTRY_CD,     view.country)
-        let predicateCameraName = NSPredicate(format: "%K == %@", Constants.CAMERA_NAME_CD,   view.camera.name)
-        let predicateLensName   = NSPredicate(format: "%K == %@",   Constants.LENS_NAME_CD,   view.lens.name)
+        let predicateName       = NSPredicate(format: "%K == %@", Constants.NAME_CD,        view.name)
+        let predicateDesc       = NSPredicate(format: "%K == %@", Constants.DESCRIPTION_CD, view.description)
+        let predicateCountry    = NSPredicate(format: "%K == %@", Constants.COUNTRY_CD,     view.country)
+        let predicateCameraName = NSPredicate(format: "%K == %@", Constants.CAMERA_NAME_CD, view.camera.name)
+        let predicateLensName   = NSPredicate(format: "%K == %@", Constants.LENS_NAME_CD,   view.lens.name)
         let compoundPredicate   = NSCompoundPredicate(type: .and, subpredicates: [predicateName, predicateDesc, predicateCountry, predicateCameraName, predicateLensName])
         
         fetchRequest.predicate = compoundPredicate
@@ -938,30 +940,30 @@ class StateController {
     func mergeViews(appDelegate: AppDelegate) -> Void {
         var viewsInCoreData : [View] = []
         for viewCD in viewsCD {
-            let view = View(name          : viewCD.value(forKey: Constants.NAME_CD) as! String,
-                            description   : viewCD.value(forKey: Constants.DESCRIPTION_CD) as! String,
-                            cameraLat     : viewCD.value(forKey: Constants.CAMERA_LAT_CD) as! Double,
-                            cameraLon     : viewCD.value(forKey: Constants.CAMERA_LON_CD) as! Double,
-                            motifLat      : viewCD.value(forKey: Constants.MOTIF_LAT_CD) as! Double,
-                            motifLon      : viewCD.value(forKey: Constants.MOTIF_LON_CD) as! Double,
-                            cameraName    : viewCD.value(forKey: Constants.CAMERA_NAME_CD) as! String,
-                            sensorFormat  : viewCD.value(forKey: Constants.SENSOR_FORMAT_CD) as! Int64,
-                            lensName      : viewCD.value(forKey: Constants.LENS_NAME_CD) as! String,
+            let view = View(name          : viewCD.value(forKey: Constants.NAME_CD)             as! String,
+                            description   : viewCD.value(forKey: Constants.DESCRIPTION_CD)      as! String,
+                            cameraLat     : viewCD.value(forKey: Constants.CAMERA_LAT_CD)       as! Double,
+                            cameraLon     : viewCD.value(forKey: Constants.CAMERA_LON_CD)       as! Double,
+                            motifLat      : viewCD.value(forKey: Constants.MOTIF_LAT_CD)        as! Double,
+                            motifLon      : viewCD.value(forKey: Constants.MOTIF_LON_CD)        as! Double,
+                            cameraName    : viewCD.value(forKey: Constants.CAMERA_NAME_CD)      as! String,
+                            sensorFormat  : viewCD.value(forKey: Constants.SENSOR_FORMAT_CD)    as! Int64,
+                            lensName      : viewCD.value(forKey: Constants.LENS_NAME_CD)        as! String,
                             minFocalLength: viewCD.value(forKey: Constants.MIN_FOCAL_LENGTH_CD) as! Double,
                             maxFocalLength: viewCD.value(forKey: Constants.MAX_FOCAL_LENGTH_CD) as! Double,
-                            minAperture   : viewCD.value(forKey: Constants.MIN_APERTURE_CD) as! Double,
-                            maxAperture   : viewCD.value(forKey: Constants.MAX_APERTURE_CD) as! Double,
-                            focalLength   : viewCD.value(forKey: Constants.FOCAL_LENGTH_CD) as! Double,
-                            aperture      : viewCD.value(forKey: Constants.APERTURE_CD) as! Double,
-                            orientation   : viewCD.value(forKey: Constants.ORIENTATION_CD) as! String,
-                            country       : viewCD.value(forKey: Constants.COUNTRY_CD) as? String ?? "",
-                            originLat     : viewCD.value(forKey: Constants.ORIGIN_LAT_CD) as! Double,
-                            originLon     : viewCD.value(forKey: Constants.ORIGIN_LON_CD) as! Double,
-                            mapWidth      : viewCD.value(forKey: Constants.MAP_WIDTH_CD) as! Double,
-                            mapHeight     : viewCD.value(forKey: Constants.MAP_HEIGHT_CD) as! Double,
-                            tags          : viewCD.value(forKey: Constants.TAGS_CD) as! Int32,
-                            equipment     : viewCD.value(forKey: Constants.EQUIPMENT_CD) as! Int32,
-                            times         : viewCD.value(forKey: Constants.TIMES_CD) as! Int32)
+                            minAperture   : viewCD.value(forKey: Constants.MIN_APERTURE_CD)     as! Double,
+                            maxAperture   : viewCD.value(forKey: Constants.MAX_APERTURE_CD)     as! Double,
+                            focalLength   : viewCD.value(forKey: Constants.FOCAL_LENGTH_CD)     as! Double,
+                            aperture      : viewCD.value(forKey: Constants.APERTURE_CD)         as! Double,
+                            orientation   : viewCD.value(forKey: Constants.ORIENTATION_CD)      as! String,
+                            country       : viewCD.value(forKey: Constants.COUNTRY_CD)          as? String ?? "",
+                            originLat     : viewCD.value(forKey: Constants.ORIGIN_LAT_CD)       as! Double,
+                            originLon     : viewCD.value(forKey: Constants.ORIGIN_LON_CD)       as! Double,
+                            mapWidth      : viewCD.value(forKey: Constants.MAP_WIDTH_CD)        as! Double,
+                            mapHeight     : viewCD.value(forKey: Constants.MAP_HEIGHT_CD)       as! Double,
+                            tags          : viewCD.value(forKey: Constants.TAGS_CD)             as! Int32,
+                            equipment     : viewCD.value(forKey: Constants.EQUIPMENT_CD)        as! Int32,
+                            times         : viewCD.value(forKey: Constants.TIMES_CD)            as! Int32)
             viewsInCoreData.append(view)
         }
         for view in viewsInCoreData {

@@ -90,7 +90,7 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func done(segue:UIStoryboardSegue) {        
         let spotDetailVC = segue.source as! SpotDetailViewController
-        let spot = Spot(name: spotDetailVC.name, description: spotDetailVC.descr, point: MKMapPoint(stateController!.lastLocation.coordinate), country: stateController!.view.country, tags: spotDetailVC.tags)
+        let spot = Spot(name: spotDetailVC.name, description: spotDetailVC.descr, point: MKMapPoint(stateController!.lastLocation.coordinate), country: stateController!.spot.country, tags: spotDetailVC.tags)
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             stateController!.addSpot(spot)
             stateController!.addSpotToCD(appDelegate: appDelegate, spot: spot)
@@ -105,17 +105,8 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.accessoryType = .none
         }
         
-        /*
-        let sectionIndex = groupedViews!.index(forKey: view.country)
-        let rowIndex     = groupedViews![view.country]?.firstIndex(of: view) ?? 0
-        
-        let viewIndex : IndexPath = IndexPath(row: rowIndex, section: sectionIndex?.hashValue ?? 0)
-        tableView.selectRow(at: viewIndex, animated: true, scrollPosition: .none)
-        tableView.cellForRow(at: viewIndex)?.accessoryType = .checkmark
-        */
-        
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            stateController!.storeViewsToCD(appDelegate: appDelegate)
+            stateController!.storeSpotsToCD(appDelegate: appDelegate)
         }
         
         stateController!.setSpot(spot)
@@ -138,7 +129,7 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
                                 stateController!.removeSpot(spot)
                                 stateController!.removeSpotFromCD(appDelegate: appDelegate, spot: spot)
                             }
-                            self.viewSelection = self.stateController!.spots
+                            self.spotSelection = self.stateController!.spots
                             tableView.reloadData()
                         }
                     }
