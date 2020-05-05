@@ -82,7 +82,7 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func addSpotButtonPressed(_ sender: Any) {
         stateController!.setSpot(Spot(name: "current", description: "", point: MKMapPoint(stateController!.lastLocation.coordinate), country: ""))
         Helper.getCountryForSpot(spot: stateController!.spot)
-        performSegue(withIdentifier: "spotsViewToSpotDetailsView", sender: self)
+        performSegue(withIdentifier: "spotsViewToSpotDetailsView", sender: self) // uses prepare function to access object from destination controller
     }
     
     @IBAction func editSpotButtonPressed(_ sender: Any) {
@@ -117,7 +117,7 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
        
     }
     
-    
+        
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         #if targetEnvironment(macCatalyst)
             guard let key = presses.first?.key else { return }
@@ -202,7 +202,7 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let country = Array(groupedSpots!.keys.sorted())[indexPath.section]
         if let spot = groupedSpots![country]?[indexPath.row] {
-            stateController!.setSpot(spot)
+            stateController!.setSpot(spot)            
             self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
             performSegue(withIdentifier: "spotsViewToMapView", sender: self)
         }
@@ -243,8 +243,10 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     // MARK: - Navigation
+    // Needed to access this view from the mapview after the segue was done
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
- 
+        let destination = segue.destination as! MapViewController
+        destination.sentViaSegueObject = sender as? SpotViewController
     }
 }
 

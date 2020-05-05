@@ -2027,10 +2027,10 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="LcV-PU-V2T"/>
-        <segue reference="Tqb-kX-mOs"/>
-        <segue reference="q1Q-0p-CtR"/>
-        <segue reference="6Gl-Tl-cdW"/>
-        <segue reference="Wzc-Ww-caD"/>
+        <segue reference="9kl-OT-FTv"/>
+        <segue reference="bVp-BO-Ms6"/>
+        <segue reference="9wG-xL-2Aj"/>
+        <segue reference="Vr5-m4-xts"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.up.and.down.circle" catalog="system" width="128" height="121"/>

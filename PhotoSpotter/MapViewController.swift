@@ -118,6 +118,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var distanceToView        : CLLocationDistance  = 0
     var timeToView            : TimeInterval        = TimeInterval()
     var selectedViewMapRect   : MKMapRect           = Constants.DEFAULT_VIEW.mapRect
+    var sentViaSegueObject    : FoVController?
     
     var cameraBodyButton      : UIButton?
 
@@ -217,6 +218,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if sentViaSegueObject is SpotViewController {
+            gotoSpot(spot: stateController!.spot)
+        }
     }
     
     
@@ -423,7 +428,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         mapTypeSelector.selectedSegmentIndex = stateController!.mapType
                                 
-        mapView.visibleMapRect = visibleArea!
+        mapView.visibleMapRect   = visibleArea ?? Constants.DEFAULT_VIEW.mapRect
         mapView.centerCoordinate = stateController!.lastLocation.coordinate
         
         mapView.register(MapPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
@@ -682,10 +687,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.distanceToView = 0
         self.timeToView     = TimeInterval()
         self.mapView.removeOverlays(routePolylines)
-                
         stateController!.setSpot(spot)
         
-        self.mapView!.setCenter(spot.point.coordinate, animated: true)
+        self.mapView!.setCenter(spot.point.coordinate, animated: false)
     }
     
     // Set a view
