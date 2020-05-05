@@ -11,7 +11,8 @@ import MapKit
 import UIKit
 
 class SpotViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FoVController {
-    var stateController : StateController?
+    var stateController    : StateController?
+    var sentViaSegueObject : FoVController?
     
     // cell reuse id (cells that scroll out of view can be reused)
     let cellReuseIdentifier = "spotCell"
@@ -245,7 +246,7 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - Navigation
     // Needed to access this view from the mapview after the segue was done
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as! MapViewController
+        var destination = segue.destination as! FoVController
         destination.sentViaSegueObject = sender as? SpotViewController
     }
 }

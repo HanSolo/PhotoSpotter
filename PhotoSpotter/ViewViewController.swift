@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 
 class ViewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FoVController {
-    var stateController : StateController?
+    var stateController    : StateController?
+    var sentViaSegueObject : FoVController?
     
     // cell reuse id (cells that scroll out of view can be reused)
     let cellReuseIdentifier = "viewCell"

@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 
 public class ViewDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FoVController {
-    var stateController: StateController?
+    var stateController    : StateController?
+    var sentViaSegueObject : FoVController?
     
     
     @IBOutlet weak var nameTextField        : UITextField!

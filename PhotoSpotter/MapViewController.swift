@@ -16,7 +16,8 @@ import CloudKit
 
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, MapPinEventObserver, FoVController {
-    var stateController : StateController?
+    var stateController    : StateController?
+    var sentViaSegueObject : FoVController?
     
     // Toolbar items
     @IBOutlet weak var mapButton           : UIBarButtonItem!
@@ -117,8 +118,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var userLocation          : CLLocation?
     var distanceToDestination        : CLLocationDistance  = 0
     var timeToDestination            : TimeInterval        = TimeInterval()
-    var selectedViewMapRect   : MKMapRect           = Constants.DEFAULT_VIEW.mapRect
-    var sentViaSegueObject    : FoVController?
+    var selectedViewMapRect   : MKMapRect           = Constants.DEFAULT_VIEW.mapRect    
     var useViewForRouting     : Bool                = false
     var useSpotForRouting     : Bool                = false
     

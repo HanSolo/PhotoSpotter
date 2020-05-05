@@ -9,5 +9,6 @@
 import Foundation
 
 protocol FoVController {
-    var stateController : StateController? {get set}
+    var stateController    : StateController? {get set}
+    var sentViaSegueObject : FoVController? {get set}
 }
