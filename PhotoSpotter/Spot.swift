@@ -88,6 +88,8 @@ public class Spot: Equatable, Hashable {
     // Make sure the class conforms to hashable protocol
     public func hash(into hasher: inout Hasher) {
         hasher.combine(name)
-        hasher.combine(description)        
+        hasher.combine(description)
+        hasher.combine(country)
+        hasher.combine(tags)
     }
 }

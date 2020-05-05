@@ -80,6 +80,7 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
     
         
     @IBAction func addSpotButtonPressed(_ sender: Any) {
+        stateController!.setSpot(Spot(name: "current", description: "", point: MKMapPoint(stateController!.lastLocation.coordinate), country: ""))
         Helper.getCountryForSpot(spot: stateController!.spot)
         performSegue(withIdentifier: "spotsViewToSpotDetailsView", sender: self)
     }

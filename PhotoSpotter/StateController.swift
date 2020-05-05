@@ -517,6 +517,7 @@ class StateController {
         mergeSpots(appDelegate: appDelegate)
     }
     func storeSpotsToCD(appDelegate: AppDelegate) -> Void {
+        print("Store Spots to CoreData")
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity         = NSEntityDescription.entity(forEntityName: Constants.SPOT_CD, in: managedContext)!
         let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.SPOT_CD)
@@ -705,6 +706,7 @@ class StateController {
         mergeViews(appDelegate: appDelegate)
     }
     func storeViewsToCD(appDelegate: AppDelegate) -> Void {
+        print("Store Views to CoreData")
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity         = NSEntityDescription.entity(forEntityName: Constants.VIEW_CD, in: managedContext)!
         let fetchRequest   = NSFetchRequest<NSManagedObject>(entityName: Constants.VIEW_CD)
