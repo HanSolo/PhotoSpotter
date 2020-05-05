@@ -115,10 +115,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var heading               : CLLocationDirection?
     var elevationPoints       : [ElevationPoint]    = [] { didSet { drawElevationChart() } }
     var userLocation          : CLLocation?
-    var distanceToView        : CLLocationDistance  = 0
-    var timeToView            : TimeInterval        = TimeInterval()
+    var distanceToDestination        : CLLocationDistance  = 0
+    var timeToDestination            : TimeInterval        = TimeInterval()
     var selectedViewMapRect   : MKMapRect           = Constants.DEFAULT_VIEW.mapRect
     var sentViaSegueObject    : FoVController?
+    var useViewForRouting     : Bool                = false
+    var useSpotForRouting     : Bool                = false
     
     var cameraBodyButton      : UIButton?
 
@@ -220,7 +222,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.viewDidAppear(animated)
         
         if sentViaSegueObject is SpotViewController {
-            gotoSpot(spot: stateController!.spot)
+            setSpot(spot: stateController!.spot)
         }
     }
     
@@ -378,8 +380,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBAction func routingButtonPressed(_ sender: Any) {
         if self.routeVisible {
             self.routeVisible   = false
-            self.distanceToView = 0
-            self.timeToView     = TimeInterval()
+            self.distanceToDestination = 0
+            self.timeToDestination     = TimeInterval()
             self.mapView.removeOverlays(self.routePolylines)
             self.routingButton.setImage(UIImage(systemName: "car"), for: UIControl.State.normal)
         } else {
@@ -654,7 +656,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 }
             } else {
                 if let spot = stateController!.spots.filter({ $0.name == view.annotation?.title }).first {
-                    gotoSpot(spot: spot)
+                    setSpot(spot: spot)
                 }
             }
         }
@@ -681,12 +683,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     // Goto a spot
-    func gotoSpot(spot: Spot) -> Void {
+    func setSpot(spot: Spot) -> Void {
         self.routeVisible   = false
         self.routingButton.setImage(UIImage(systemName: "car"), for: UIControl.State.normal)
-        self.distanceToView = 0
-        self.timeToView     = TimeInterval()
+        self.distanceToDestination = 0
+        self.timeToDestination     = TimeInterval()
         self.mapView.removeOverlays(routePolylines)
+        self.useViewForRouting = false
+        self.useSpotForRouting = true
         stateController!.setSpot(spot)
         
         self.mapView!.setCenter(spot.point.coordinate, animated: false)
@@ -696,9 +700,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func setView(view: View) -> Void {
         self.routeVisible   = false
         self.routingButton.setImage(UIImage(systemName: "car"), for: UIControl.State.normal)
-        self.distanceToView = 0
-        self.timeToView     = TimeInterval()
+        self.distanceToDestination = 0
+        self.timeToDestination     = TimeInterval()
         self.mapView.removeOverlays(routePolylines)
+        self.useSpotForRouting = false;
+        self.useViewForRouting = true;
         
         stateController!.setView(view)
         stateController!.setLastLocation(CLLocation(latitude: view.cameraPoint.coordinate.latitude, longitude: view.cameraPoint.coordinate.longitude))
@@ -1020,9 +1026,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if (show) {
             let request                     = MKDirections.Request()
             request.source                  = MKMapItem(placemark: MKPlacemark(coordinate: self.userLocation?.coordinate ?? Constants.DEFAULT_POSITION.coordinate, addressDictionary: nil))
-            request.destination             = MKMapItem(placemark: MKPlacemark(coordinate: self.stateController?.view.cameraPoint.coordinate ?? Constants.DEFAULT_VIEW.cameraPoint.coordinate, addressDictionary: nil))
-            //request.requestsAlternateRoutes = true
-            request.transportType           = .automobile
+            if self.useSpotForRouting {
+                request.destination             = MKMapItem(placemark: MKPlacemark(coordinate: self.stateController?.spot.point.coordinate ?? Constants.DEFAULT_SPOT.point.coordinate, addressDictionary: nil))
+            } else {
+                request.destination             = MKMapItem(placemark: MKPlacemark(coordinate: self.stateController?.view.cameraPoint.coordinate ?? Constants.DEFAULT_VIEW.cameraPoint.coordinate, addressDictionary: nil))
+            }
+                //request.requestsAlternateRoutes = true
+            request.transportType = .automobile
             
             let directions = MKDirections(request: request)
 
@@ -1030,21 +1040,26 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 guard let unwrappedResponse = response else { return }
                 self.routePolylines.removeAll()
                 for route in unwrappedResponse.routes {
-                    self.distanceToView = route.distance
-                    self.timeToView     = route.expectedTravelTime
+                    self.distanceToDestination = route.distance
+                    self.timeToDestination     = route.expectedTravelTime
                     self.mapView.addOverlay(route.polyline)
                     self.routePolylines.append(route.polyline)
                     self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
                 }
                                 
-                let time  = Int(self.timeToView)
+                let time  = Int(self.timeToDestination)
                 let h = time / 3600
                 let m = time / 60 % 60
                 //let s = time % 60
                 
-                let title : String =  "Route to"
-                var text   : String =  "\(self.stateController?.view.name ?? Constants.DEFAULT_VIEW.name)\n"
-                text += "Distance: \(String(format:"%.0f km", self.distanceToView / 1000.0))\n"
+                let title : String =  "Route to \(self.useSpotForRouting ? "Spot" : "View")"
+                var text  : String
+                if self.useSpotForRouting {
+                    text =  "\(self.stateController?.spot.name ?? Constants.DEFAULT_SPOT.name)\n"
+                } else {
+                    text =  "\(self.stateController?.view.name ?? Constants.DEFAULT_VIEW.name)\n"
+                }
+                text += "Distance: \(String(format:"%.0f km", self.distanceToDestination / 1000.0))\n"
                 //text += "Time: \(String(format:"%02i:%02i:%02i", h, m, s))"
                 text += "Time: \(String(format:"%02i:%02i", h, m))"
                 
@@ -1058,14 +1073,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                         //.font           : UIFont.systemFont(ofSize: 12)
                 ])
                 
-                self.setRouteInfoText(distance: self.distanceToView, time: self.timeToView)
+                self.setRouteInfoText(distance: self.distanceToDestination, time: self.timeToDestination)
                 self.routeInfoView.isHidden   = false
                 
                 let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
                 alert.setValue(msg, forKey: "attributedMessage")
-                alert.addAction(UIAlertAction(title: "Open in maps",
-                                              style: .default,
-                                              handler: {(alert: UIAlertAction!) in self.openMapsAppWithDirections(to: self.stateController!.view.cameraPoint.coordinate, destinationName: self.stateController!.view.name)}))
+                if self.useSpotForRouting {
+                    alert.addAction(UIAlertAction(title: "Open in maps",
+                    style: .default,
+                    handler: {(alert: UIAlertAction!) in self.openMapsAppWithDirections(to: self.stateController!.spot.point.coordinate, destinationName: self.stateController!.spot.name)}))
+                } else {
+                    alert.addAction(UIAlertAction(title: "Open in maps",
+                                                  style: .default,
+                                                  handler: {(alert: UIAlertAction!) in self.openMapsAppWithDirections(to: self.stateController!.view.cameraPoint.coordinate, destinationName: self.stateController!.view.name)}))
+                }
                 alert.addAction(UIAlertAction(title: "Close",
                                               style: .default,
                                               handler: nil))
