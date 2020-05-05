@@ -421,11 +421,11 @@
                                         </connections>
                                     </button>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Es-az-Q0P" userLabel="InfoView" customClass="InfoView" customModule="PhotoSpotter" customModuleProvider="target">
-                                        <rect key="frame" x="362" y="0.0" width="300" height="1"/>
+                                        <rect key="frame" x="362" y="0.0" width="300" height="0.0"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="YTa-ZX-Ped"/>
-                                            <constraint firstAttribute="height" constant="1" id="zmV-a0-XS1"/>
+                                            <constraint firstAttribute="height" id="zmV-a0-XS1"/>
                                         </constraints>
                                     </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="7E7-Ih-Ugf" userLabel="CrossHair">
@@ -2026,10 +2026,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="nw4-yd-EiZ"/>
+        <segue reference="LcV-PU-V2T"/>
         <segue reference="Tqb-kX-mOs"/>
-        <segue reference="v21-rP-BLs"/>
-        <segue reference="dje-rX-Wew"/>
+        <segue reference="q1Q-0p-CtR"/>
+        <segue reference="6Gl-Tl-cdW"/>
         <segue reference="Wzc-Ww-caD"/>
     </inferredMetricsTieBreakers>
     <resources>

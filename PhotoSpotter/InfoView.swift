@@ -13,12 +13,13 @@ import MapKit
 
 public class InfoView: UIView {
     var fovData : FoVData?
+    var sunMoon : SunMoon?
     
     
     public override func draw(_ rect: CGRect) {
         let offsetTop              : Double          = 20
         let offsetLeft             : Double          = 20
-        let offsetLeftSecondColumn : Double          = 250
+        let offsetLeftSecondColumn : Double          = 280
         let lineSpacing            : Double          = 28
         let numberFormatter        : NumberFormatter = NumberFormatter()
         numberFormatter.minimumFractionDigits = 2
@@ -32,24 +33,23 @@ public class InfoView: UIView {
         ctx?.setFillColor(Constants.TRANSLUCENT_GRAY.cgColor)
         ctx?.fill(rect)
         
+        let font = UIFont.systemFont(ofSize: 16)
+        let paragraphText = NSMutableParagraphStyle()
+        paragraphText.alignment = .left
+        
+        let paragraphValue = NSMutableParagraphStyle()
+        paragraphValue.alignment = .right
+        
+        let textAttributes = [NSAttributedString.Key.font: font,
+                              NSAttributedString.Key.foregroundColor: Constants.YELLOW,
+                              NSAttributedString.Key.paragraphStyle: paragraphText]
+        
+        let valueAttributes = [NSAttributedString.Key.font: font,
+                               NSAttributedString.Key.foregroundColor: UIColor.lightText,
+        NSAttributedString.Key.paragraphStyle: paragraphValue]
+        
+        // FoV Data
         if let data = fovData {
-            let font = UIFont.systemFont(ofSize: 16)
-            let paragraphText = NSMutableParagraphStyle()
-            paragraphText.alignment = .left
-            
-            let paragraphValue = NSMutableParagraphStyle()
-            paragraphValue.alignment = .right
-            
-            let textAttributes = [NSAttributedString.Key.font: font,
-                                  NSAttributedString.Key.foregroundColor: Constants.YELLOW,
-                                  NSAttributedString.Key.paragraphStyle: paragraphText]
-            
-            let valueAttributes = [NSAttributedString.Key.font: font,
-                                   NSAttributedString.Key.foregroundColor: UIColor.lightText,
-            NSAttributedString.Key.paragraphStyle: paragraphValue]
-            
-            
-            
             let hyperfocalText = NSAttributedString(string: "Hyperfocal", attributes: textAttributes)
             hyperfocalText.draw(at: CGPoint(x: offsetLeft, y: offsetTop))
             let hyperfocalValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.hyperFocal))! + Constants.UNIT_LENGTH, attributes: valueAttributes)
@@ -79,8 +79,21 @@ public class InfoView: UIView {
             totalText.draw(at: CGPoint(x: offsetLeft, y: offsetTop + 5 * lineSpacing))
             let totalValueText = NSAttributedString(string: numberFormatter.string(from: NSNumber(value: data.total))! + Constants.UNIT_LENGTH, attributes: valueAttributes)
             totalValueText.draw(at: CGPoint(x: offsetLeftSecondColumn - Double(totalValueText.size().width), y: offsetTop + 5 * lineSpacing))
-        } else {
             
+            // Sunrise / Sunset Data
+            if let suncalc = sunMoon {
+                let sunEvents : Dictionary<String, String> = suncalc.getSunEvents(date: Date(), lat: data.camera.coordinate.latitude, lon: data.camera.coordinate.longitude)
+                let sunText = NSAttributedString(string: "Sunrise/Sunset", attributes: textAttributes)
+                sunText.draw(at: CGPoint(x: offsetLeft, y: offsetTop + 6 * lineSpacing))
+                let sunValueText = NSAttributedString(string: "\(sunEvents[Constants.EPD_SUNRISE]!) / \(sunEvents[Constants.EPD_SUNSET]!)", attributes: valueAttributes)
+                sunValueText.draw(at: CGPoint(x: offsetLeftSecondColumn - Double(totalValueText.size().width), y: offsetTop + 6 * lineSpacing))
+                
+                let moonEvents : Dictionary<String, String> = suncalc.getMoonEvents(date: Date(), lat: data.camera.coordinate.latitude, lon: data.camera.coordinate.longitude)
+                let moonText = NSAttributedString(string: "Moonrise/Moonset", attributes: textAttributes)
+                moonText.draw(at: CGPoint(x: offsetLeft, y: offsetTop + 7 * lineSpacing))
+                let moonValueText = NSAttributedString(string: "\(moonEvents[Constants.EPD_MOONRISE]!) / \(moonEvents[Constants.EPD_MOONSET]!)", attributes: valueAttributes)
+                moonValueText.draw(at: CGPoint(x: offsetLeftSecondColumn - Double(totalValueText.size().width), y: offsetTop + 7 * lineSpacing))
+            }
         }
     }
 }

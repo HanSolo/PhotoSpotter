@@ -234,7 +234,7 @@ public class Helper {
         dateFormatter.dateFormat = formatString.isEmpty ? "dd.MM.yyyy HH:mm:ss" : formatString
         return dateFormatter.string(from: date)
     }
-    
+        
     public static func setupTextFieldWithAlertIcon(field: UITextField, gestureRecognizer: UITapGestureRecognizer) -> UIView {
         let iconView       = UIImageView(frame: CGRect(x: 0, y: 0, width: Constants.ATTENTION_ICON.size.width, height: Constants.ATTENTION_ICON.size.height))
         iconView.image     = Constants.ATTENTION_ICON

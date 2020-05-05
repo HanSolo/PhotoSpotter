@@ -310,12 +310,12 @@ struct SunMoon {
         return result
     }
 
-    // get dictionary with sunrise, sunset blue- and golden-hours
-    func getEvents(date: Date, lat :Double, lon :Double) -> Dictionary<String,String> {
+    // Get dictionary with sunrise, sunset blue- and golden-hours
+    func getSunEvents(date: Date, lat :Double, lon :Double) -> Dictionary<String,String> {
         let times :Dictionary<String,Date> = getTimes(date: date, lat: lat, lon: lon)
-        return getEvents(times: times)
+        return getSunEvents(times: times)
     }
-    func getEvents(times :Dictionary<String,Date>) -> Dictionary<String,String> {
+    func getSunEvents(times :Dictionary<String,Date>) -> Dictionary<String,String> {
         let blueHourMorningString   :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DAWN]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DAWN_END]!, formatString: Constants.DATE_FORMAT))"
         let goldenHourMorningString :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DAWN_END]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_GOLDEN_HOUR_END]!, formatString: Constants.DATE_FORMAT))"
         let sunriseString           :String = Helper.dateToString(fromDate: times[Constants.EPD_SUNRISE]!, formatString: Constants.DATE_FORMAT)
@@ -335,18 +335,18 @@ struct SunMoon {
         return eventNames
     }
     
-    func getEventsWithNames(date: Date, lat :Double, lon :Double) -> Dictionary<String, [String]> {
+    func getSunEventsWithNames(date: Date, lat :Double, lon :Double) -> Dictionary<String, [String]> {
         let times :Dictionary<String,Date> = getTimes(date: date, lat: lat, lon: lon)
-        return getEventsWithNames(times: times)
+        return getSunEventsWithNames(times: times)
     }
-    func getEventsWithNames(times :Dictionary<String,Date>) -> Dictionary<String, [String]> {
+    func getSunEventsWithNames(times :Dictionary<String,Date>) -> Dictionary<String, [String]> {
         let blueHourMorningString   :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DAWN]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DAWN_END]!, formatString: Constants.DATE_FORMAT))"
         let goldenHourMorningString :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DAWN_END]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_GOLDEN_HOUR_END]!, formatString: Constants.DATE_FORMAT))"
         let sunriseString           :String = Helper.dateToString(fromDate: times[Constants.EPD_SUNRISE]!, formatString: Constants.DATE_FORMAT)
         let goldenHourEveningString :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_GOLDEN_HOUR]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DUSK]!, formatString: Constants.DATE_FORMAT))"
         let sunsetString            :String = Helper.dateToString(fromDate: times[Constants.EPD_SUNSET]!, formatString: Constants.DATE_FORMAT)
         let blueHourEveningString   :String = "\(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DUSK]!, formatString: Constants.DATE_FORMAT)) - \(Helper.dateToString(fromDate: times[Constants.EPD_BLUE_HOUR_DUSK_END]!, formatString: Constants.DATE_FORMAT))"
-        
+                
         let events :Dictionary<String, [String]> = [
             Constants.EPD_BLUE_HOUR_MORNING  : [ "Blue Hour",   blueHourMorningString   ],
             Constants.EPD_GOLDEN_HOUR_MORNING: [ "Golden Hour", goldenHourMorningString ],
@@ -354,6 +354,36 @@ struct SunMoon {
             Constants.EPD_GOLDEN_HOUR_EVENING: [ "Golden Hour", goldenHourEveningString ],
             Constants.EPD_SUNSET             : [ "Sunset",      sunsetString            ],
             Constants.EPD_BLUE_HOUR_EVENING  : [ "Blue Hour",   blueHourEveningString   ]
+        ]
+        return events
+    }
+
+    func getMoonEvents(date: Date, lat: Double, lon: Double) -> Dictionary<String,String> {
+        let times :Dictionary<String,Date> = getMoonTimes(date: date, lat: lat, lon: lon)
+        return getMoonEvents(times: times)
+    }
+    func getMoonEvents(times: Dictionary<String,Date>) -> Dictionary<String,String> {
+        let moonriseString : String = "\(Helper.dateToString(fromDate: times[Constants.EPD_RISE]!, formatString: Constants.DATE_FORMAT))"
+        let moonsetString  : String = "\(Helper.dateToString(fromDate: times[Constants.EPD_SET]!, formatString: Constants.DATE_FORMAT))"
+        
+        let eventNames :Dictionary<String,String> = [
+            Constants.EPD_MOONRISE : moonriseString,
+            Constants.EPD_MOONSET  : moonsetString
+        ]
+        
+        return eventNames
+    }
+    func getMoonEventsWithNames(date: Date, lat :Double, lon :Double) -> Dictionary<String, [String]> {
+        let times :Dictionary<String,Date> = getTimes(date: date, lat: lat, lon: lon)
+        return getMoonEventsWithNames(times: times)
+    }
+    func getMoonEventsWithNames(times :Dictionary<String,Date>) -> Dictionary<String, [String]> {
+        let moonriseString :String = Helper.dateToString(fromDate: times[Constants.EPD_MOONRISE]!, formatString: Constants.DATE_FORMAT)
+        let moonsetString  :String = Helper.dateToString(fromDate: times[Constants.EPD_MOONSET]!, formatString: Constants.DATE_FORMAT)
+                
+        let events :Dictionary<String, [String]> = [
+            Constants.EPD_MOONRISE : [ "Moonrise", moonriseString ],
+            Constants.EPD_MOONSET  : [ "Moonset",  moonsetString  ]
         ]
         return events
     }

@@ -1094,11 +1094,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func showInfoView(show: Bool) -> Void {
         if (show) {
-            self.infoView.fovData = self.fovData
+            self.infoView.fovData  = self.fovData
+            self.infoView.sunMoon  = self.sunMoonCalc
             self.infoView.isHidden = false
             self.infoView.setNeedsDisplay()
             UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseInOut, .transitionCrossDissolve], animations: {
-                self.infoViewHeight.constant = 200
+                self.infoViewHeight.constant = 240
                 self.view.layoutIfNeeded()
             }, completion: { finished in
             })
