@@ -431,7 +431,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
-    @IBAction func sunMoonDatePickerChanged(_ sender: Any) {
+    @IBAction func sunMoonDatePickerChanged(_ sender: Any) {        
         updateSunMoonOverlay(date: sunMoonDatePicker.date)
     }
     

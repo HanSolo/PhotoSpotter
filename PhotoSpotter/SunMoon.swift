@@ -147,7 +147,7 @@ struct SunMoon {
         
         var result :Dictionary<String, Date> = [
             Constants.EPD_SOLAR_NOON: fromJulianDate(jd: Jnoon),
-            Constants.EPD_NADIR    : fromJulianDate(jd: (Jnoon - 0.5))
+            Constants.EPD_NADIR     : fromJulianDate(jd: (Jnoon - 0.5))
         ]
     
         for i in 0..<times.count {
@@ -183,10 +183,10 @@ struct SunMoon {
         h = h + astroRefraction(height: h) // altitude correction for refraction
     
         return [
-            Constants.EPD_AZIMUTH         : azimuth(H: H, phi: phi, dec: c[Constants.EPD_DEC]!),
-            Constants.EPD_ALTITUDE        : h,
-            "distance"        : c[Constants.EPD_DIST]!,
-            "parallacticAngle": pa
+            Constants.EPD_AZIMUTH  : azimuth(H: H, phi: phi, dec: c[Constants.EPD_DEC]!),
+            Constants.EPD_ALTITUDE : h,
+            "distance"             : c[Constants.EPD_DIST]!,
+            "parallacticAngle"     : pa
         ]
     }
     
@@ -301,7 +301,11 @@ struct SunMoon {
         
         if rise >= 0.0 { result[Constants.EPD_RISE] = hoursLater(date: t, h: rise) }
         if set  >= 0.0 {
-            if set < rise { t = t.addingTimeInterval(86500.0) }
+            /*
+            if set < rise {
+                t = t.addingTimeInterval(86500.0)
+            }
+            */
             result[Constants.EPD_SET]  = hoursLater(date: t, h: set)
         }
     
