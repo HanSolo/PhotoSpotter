@@ -88,8 +88,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var dofTrapezoid          : MKPolygon?
     var moonriseLine          : MKPolyline?
     var moonsetLine           : MKPolyline?
+    var moonLine              : MKPolyline?
     var sunriseLine           : MKPolyline?
     var sunsetLine            : MKPolyline?
+    var sunLine               : MKPolyline?
     var routePolylines        : [MKPolyline]        = []
     var data                  : FoVData?
     var fovVisible            : Bool                = true
@@ -108,8 +110,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var eventAngles           : Dictionary<String, (Double, Double)>?
     var pointsSunrise         : [MKMapPoint]        = []
     var pointsSunset          : [MKMapPoint]        = []
+    var pointsSun             : [MKMapPoint]        = []
     var pointsMoonrise        : [MKMapPoint]        = []
     var pointsMoonset         : [MKMapPoint]        = []
+    var pointsMoon            : [MKMapPoint]        = []
     var spotAnnotations       : [MKPointAnnotation] = []
     var viewAnnotations       : [MKPointAnnotation] = []
     var visibleArea           : MKMapRect?
@@ -339,8 +343,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             self.moonVisible = true
             moonButton.setImage(UIImage(systemName: "moon.fill"), for: UIControl.State.normal)
         }
-        self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
-        updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
+        updateSunMoonOverlay()
     }
     
     @IBAction func sunButtonPressed(_ sender: Any) {
@@ -351,8 +354,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             self.sunVisible = true
             sunButton.setImage(UIImage(systemName: "sun.max.fill"), for: UIControl.State.normal)
         }
-        self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
-        updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
+        updateSunMoonOverlay()
     }
     
     @IBAction func showSpotsButtonPressed(_ sender: Any) {
@@ -506,7 +508,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                     center.y -= (mapView.visibleMapRect.height * 0.04941444)
                     mapView.setCenter(center.coordinate, animated: true)
                 }
-                self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
+                //self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
                 updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
                 updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
                 updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
@@ -623,12 +625,22 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             } else if overlay.id == "moonset" && moonVisible {
                 polylineRenderer.strokeColor = Constants.MOON_SET_STROKE
                 polylineRenderer.lineWidth   = 1.5
+            } else if overlay.id == "moon" && moonVisible {
+                polylineRenderer.strokeColor     = Constants.MOON_STROKE
+                polylineRenderer.lineWidth       = 1.5
+                polylineRenderer.lineDashPattern = [5, 5]
+                polylineRenderer.lineDashPhase   = 5
             } else if overlay.id == "sunrise" && sunVisible {
                 polylineRenderer.strokeColor = Constants.SUN_RISE_STROKE
                 polylineRenderer.lineWidth   = 1.5
             } else if overlay.id == "sunset" && sunVisible {
                 polylineRenderer.strokeColor = Constants.SUN_SET_STROKE
                 polylineRenderer.lineWidth   = 1.5
+            } else if overlay.id == "sun" && sunVisible {
+                polylineRenderer.strokeColor     = Constants.SUN_STROKE
+                polylineRenderer.lineWidth       = 1.5
+                polylineRenderer.lineDashPattern = [5, 5]
+                polylineRenderer.lineDashPhase   = 5
             }
             return polylineRenderer
         } else {
@@ -645,7 +657,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.visibleArea              = mapView.visibleMapRect
         self.heading                  = mapView.camera.heading
         stateController!.view.mapRect = mapView.visibleMapRect
-        stateController!.setLastLocation(CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude))        
+        stateController!.setLastLocation(CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude))
+        updateSunMoonOverlay()
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {}
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -754,7 +767,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.cameraLabel.text = camera.name
         self.lensLabel.text   = lens.name
         self.viewLabel.text   = view.name
-        self.eventAngles      = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
         self.visibleArea      = view.mapRect
         
         self.mapView.visibleMapRect = self.visibleArea!
@@ -811,6 +823,97 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         trapezoid!.p2 = Helper.rotatePointAroundCenter(point: trapezoid!.p2, rotationCenter: cameraPoint, rad: angle)
         trapezoid!.p3 = Helper.rotatePointAroundCenter(point: trapezoid!.p3, rotationCenter: cameraPoint, rad: angle)
         trapezoid!.p4 = Helper.rotatePointAroundCenter(point: trapezoid!.p4, rotationCenter: cameraPoint, rad: angle)
+    }
+    
+    func updateSunMoonOverlay() {
+        // Overlays
+        var overlaysToRemove : [MKOverlay] = []
+        
+        if let moonriseLine = self.moonriseLine { overlaysToRemove.append(moonriseLine) }
+        self.moonriseLine = nil
+        
+        if let moonsetLine = self.moonsetLine { overlaysToRemove.append(moonsetLine) }
+        self.moonsetLine = nil
+        
+        if let moonLine = self.moonLine { overlaysToRemove.append(moonLine) }
+        self.moonLine = nil
+        
+        if let sunriseLine = self.sunriseLine { overlaysToRemove.append(sunriseLine) }
+        self.sunriseLine = nil
+        
+        if let sunsetLine = self.sunsetLine { overlaysToRemove.append(sunsetLine) }
+        self.sunsetLine = nil
+        
+        if let sunLine = self.sunLine { overlaysToRemove.append(sunLine) }
+        self.sunLine = nil
+        
+        // Remove all overlays at once
+        mapView.removeOverlays(overlaysToRemove)
+        
+        // Update sunrise/sunset and moonrise/moonset
+        let currentPoint : MKMapPoint = MKMapPoint(self.stateController!.lastLocation.coordinate)
+        
+        pointsMoonrise.removeAll()
+        pointsMoonrise.append(currentPoint)
+        pointsMoonset.removeAll()
+        pointsMoonset.append(currentPoint)
+        pointsMoon.removeAll()
+        pointsMoon.append(currentPoint)
+    
+        pointsSunrise.removeAll()
+        pointsSunrise.append(currentPoint)
+        pointsSunset.removeAll()
+        pointsSunset.append(currentPoint)
+        pointsSun.removeAll()
+        pointsSun.append(currentPoint)
+        
+        self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: currentPoint.coordinate.latitude, lon: currentPoint.coordinate.longitude)
+        for (event, angles) in eventAngles! {
+            let startAngle : Double     = Helper.toDegrees(radians: angles.0) + 90.0
+            let point      : MKMapPoint = Helper.getPointByAngle(point: currentPoint, angleDeg: startAngle)
+            switch event {
+                case Constants.EPD_SUNRISE : pointsSunrise.append(point)
+                case Constants.EPD_SUNSET  : pointsSunset.append(point)
+                case Constants.EPD_SUN     : pointsSun.append(point)
+                case Constants.EPD_MOONRISE: pointsMoonrise.append(point)
+                case Constants.EPD_MOONSET : pointsMoonset.append(point)
+                case Constants.EPD_MOON    : pointsMoon.append(point)
+                default: break
+            }
+        }
+        
+        // Create coordinates for moonrise line
+        let moonriseLine :Line = Line(points: pointsMoonrise, count: pointsMoonrise.count)
+        moonriseLine.id = "moonrise"
+        self.moonriseLine = moonriseLine
+        
+        // Create coordinates for moonset line
+        let moonsetLine :Line = Line(points: pointsMoonset, count: pointsMoonset.count)
+        moonsetLine.id = "moonset"
+        self.moonsetLine  = moonsetLine
+        
+        // Create coordinates for moon line
+        let moonLine :Line = Line(points: pointsMoon, count: pointsMoon.count)
+        moonLine.id = "moon"
+        self.moonLine  = moonLine
+        
+        // Create coordinates for sunrise line
+        let sunriseLine :Line = Line(points: pointsSunrise, count: pointsSunrise.count)
+        sunriseLine.id = "sunrise"
+        self.sunriseLine = sunriseLine
+        
+        // Create coordinates for sunset line
+        let sunsetLine :Line = Line(points: pointsSunset, count: pointsSunset.count)
+        sunsetLine.id = "sunset"
+        self.sunsetLine  = sunsetLine
+        
+        // Create coordinates for sun line
+        let sunLine :Line = Line(points: pointsSun, count: pointsSun.count)
+        sunLine.id = "sun"
+        self.sunLine  = sunLine
+        
+        // Add all overlays at once
+        mapView.addOverlays([moonriseLine, moonsetLine, moonLine, sunriseLine, sunsetLine, sunLine])
     }
     
     func updateDragOverlay(cameraPoint: MKMapPoint, motifPoint: MKMapPoint) -> Void {
@@ -892,64 +995,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         if let dofTrapezoid = self.dofTrapezoid { overlaysToRemove.append(dofTrapezoid) }
         self.dofTrapezoid = nil
-        
-        if let moonriseLine = self.moonriseLine { overlaysToRemove.append(moonriseLine) }
-        self.moonriseLine = nil
-        
-        if let moonsetLine = self.moonsetLine { overlaysToRemove.append(moonsetLine) }
-        self.moonsetLine = nil
-        
-        if let sunriseLine = self.sunriseLine { overlaysToRemove.append(sunriseLine) }
-        self.sunriseLine = nil
-        
-        if let sunsetLine = self.sunsetLine { overlaysToRemove.append(sunsetLine) }
-        self.sunsetLine = nil
+                
         
         // Remove all overlays at once
         mapView.removeOverlays(overlaysToRemove)
-        
-        // Update sunrise/sunset and moonrise/moonset
-        pointsMoonrise.removeAll()
-        pointsMoonrise.append(cameraPoint)
-        pointsMoonset.removeAll()
-        pointsMoonset.append(cameraPoint)
-    
-        pointsSunrise.removeAll()
-        pointsSunrise.append(cameraPoint)
-        pointsSunset.removeAll()
-        pointsSunset.append(cameraPoint)
-        
-        for (event, angles) in eventAngles! {
-            let startAngle : Double     = Helper.toDegrees(radians: angles.0) + 90.0
-            let point      : MKMapPoint = Helper.getPointByAngle(point: cameraPoint, angleDeg: startAngle)
-            switch event {
-                case Constants.EPD_SUNRISE : pointsSunrise.append(point)
-                case Constants.EPD_SUNSET  : pointsSunset.append(point)
-                case Constants.EPD_MOONRISE: pointsMoonrise.append(point)
-                case Constants.EPD_MOONSET : pointsMoonset.append(point)
-                default: break
-            }
-        }
-        
-        // Create coordinates for moonrise line
-        let moonriseLine :Line = Line(points: pointsMoonrise, count: pointsMoonrise.count)
-        moonriseLine.id = "moonrise"
-        self.moonriseLine = moonriseLine
-        
-        // Create coordinates for moonset line
-        let moonsetLine :Line = Line(points: pointsMoonset, count: pointsMoonset.count)
-        moonsetLine.id = "moonset"
-        self.moonsetLine  = moonsetLine
-        
-        // Create coordinates for sunrise line
-        let sunriseLine :Line = Line(points: pointsSunrise, count: pointsSunrise.count)
-        sunriseLine.id = "sunrise"
-        self.sunriseLine = sunriseLine
-        
-        // Create coordinates for sunset line
-        let sunsetLine :Line = Line(points: pointsSunset, count: pointsSunset.count)
-        sunsetLine.id = "sunset"
-        self.sunsetLine  = sunsetLine
         
         
         // Create coordinates for min fov triangle
@@ -983,7 +1032,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.dofTrapezoid = dofTrapezoid
                 
         // Add all overlays at once
-        mapView.addOverlays([moonriseLine, moonsetLine, sunriseLine, sunsetLine, minFovTriangle, maxFovTriangle, fovTriangle, fovCenterLine, dofTrapezoid])
+        mapView.addOverlays([minFovTriangle, maxFovTriangle, fovTriangle, fovCenterLine, dofTrapezoid])
     }
     
     func createView(name: String, description: String) -> View {
