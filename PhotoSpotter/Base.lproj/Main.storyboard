@@ -433,11 +433,19 @@
                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="28" scale="large" weight="ultraLight"/>
                                     </imageView>
+                                    <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="myE-BO-9Y4" userLabel="SunMoonDatePicker">
+                                        <rect key="frame" x="684" y="758" width="320" height="216"/>
+                                        <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="sunMoonDatePickerChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="ElS-NZ-nRG"/>
+                                        </connections>
+                                    </datePicker>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="7E7-Ih-Ugf" firstAttribute="centerX" secondItem="6ir-dF-OFO" secondAttribute="centerX" id="3Xh-JU-ErM"/>
                                     <constraint firstItem="7E7-Ih-Ugf" firstAttribute="centerY" secondItem="6ir-dF-OFO" secondAttribute="centerY" id="8Tr-JW-e6i"/>
+                                    <constraint firstAttribute="trailing" secondItem="myE-BO-9Y4" secondAttribute="trailing" constant="20" id="CEX-ax-EXE"/>
                                     <constraint firstItem="YQT-CV-hyc" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" constant="20" id="CSM-i2-HsU"/>
                                     <constraint firstItem="dt3-lS-mdA" firstAttribute="top" secondItem="6ir-dF-OFO" secondAttribute="top" constant="20" id="EdY-db-6W1"/>
                                     <constraint firstItem="eEB-0J-bVb" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" id="LfX-Z4-qRb"/>
@@ -452,6 +460,7 @@
                                     <constraint firstItem="P8R-Ia-68G" firstAttribute="top" secondItem="6ir-dF-OFO" secondAttribute="top" constant="20" id="mep-KH-rNX"/>
                                     <constraint firstItem="eEB-0J-bVb" firstAttribute="top" secondItem="6ir-dF-OFO" secondAttribute="top" id="nXS-HL-XvF"/>
                                     <constraint firstItem="GtQ-2N-JhX" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" id="p1q-np-ZeJ"/>
+                                    <constraint firstItem="GtQ-2N-JhX" firstAttribute="top" secondItem="myE-BO-9Y4" secondAttribute="bottom" constant="20" id="yBU-Av-Lv7"/>
                                     <constraint firstItem="dt3-lS-mdA" firstAttribute="leading" secondItem="6ir-dF-OFO" secondAttribute="leading" constant="20" id="yg6-RD-QTJ"/>
                                 </constraints>
                             </view>
@@ -661,6 +670,7 @@
                         <outlet property="showViewsButton" destination="aPa-8a-0ta" id="0jF-Lq-CtX"/>
                         <outlet property="spotsButton" destination="mh3-ph-L6a" id="HgY-nM-VeJ"/>
                         <outlet property="sunButton" destination="I8n-ya-JHH" id="6rF-Lh-ncv"/>
+                        <outlet property="sunMoonDatePicker" destination="myE-BO-9Y4" id="OOo-18-H5e"/>
                         <outlet property="timeToViewLabel" destination="zvS-hH-GuU" id="b0w-bT-Kzh"/>
                         <outlet property="viewButton" destination="auU-zc-U9g" id="Ox5-pT-8xJ"/>
                         <outlet property="viewLabel" destination="Uor-yK-ven" id="BEg-0f-cSs"/>
@@ -674,7 +684,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-976" y="550"/>
+            <point key="canvasLocation" x="-976.17187499999989" y="549.92679355783309"/>
         </scene>
         <!--Cameras-->
         <scene sceneID="sVy-pe-ezY">

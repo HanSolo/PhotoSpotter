@@ -56,6 +56,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var elevationButton     : UIButton!
     @IBOutlet weak var infoButton          : UIButton!
     @IBOutlet weak var locateMeButton      : UIButton!
+    @IBOutlet weak var sunMoonDatePicker   : UIDatePicker!
     
     @IBOutlet weak var distanceToViewLabel : UILabel!
     @IBOutlet weak var timeToViewLabel     : UILabel!
@@ -337,24 +338,32 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     @IBAction func moonButtonPressed(_ sender: Any) {
         if self.moonVisible {
+            if !sunVisible {
+                self.sunMoonDatePicker.isHidden = true
+            }
             self.moonVisible = false
             moonButton.setImage(UIImage(systemName: "moon"), for: UIControl.State.normal)
         } else {
+            self.sunMoonDatePicker.isHidden = false
             self.moonVisible = true
             moonButton.setImage(UIImage(systemName: "moon.fill"), for: UIControl.State.normal)
         }
-        updateSunMoonOverlay()
+        updateSunMoonOverlay(date: sunMoonDatePicker.date)
     }
     
     @IBAction func sunButtonPressed(_ sender: Any) {
         if self.sunVisible {
+            if !self.moonVisible {
+                self.sunMoonDatePicker.isHidden = true
+            }
             self.sunVisible = false
             sunButton.setImage(UIImage(systemName: "sun.max"), for: UIControl.State.normal)
         } else {
+            self.sunMoonDatePicker.isHidden = false
             self.sunVisible = true
             sunButton.setImage(UIImage(systemName: "sun.max.fill"), for: UIControl.State.normal)
         }
-        updateSunMoonOverlay()
+        updateSunMoonOverlay(date: sunMoonDatePicker.date)
     }
     
     @IBAction func showSpotsButtonPressed(_ sender: Any) {
@@ -422,6 +431,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
+    @IBAction func sunMoonDatePickerChanged(_ sender: Any) {
+        updateSunMoonOverlay(date: sunMoonDatePicker.date)
+    }
     
     func createMapView() {
         switch stateController!.mapType {
@@ -658,7 +670,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.heading                  = mapView.camera.heading
         stateController!.view.mapRect = mapView.visibleMapRect
         stateController!.setLastLocation(CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude))
-        updateSunMoonOverlay()
+        // Take value from slider here
+        updateSunMoonOverlay(date: Date())
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {}
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -825,7 +838,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         trapezoid!.p4 = Helper.rotatePointAroundCenter(point: trapezoid!.p4, rotationCenter: cameraPoint, rad: angle)
     }
     
-    func updateSunMoonOverlay() {
+    func updateSunMoonOverlay(date : Date) {
         // Overlays
         var overlaysToRemove : [MKOverlay] = []
         
@@ -867,17 +880,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         pointsSun.removeAll()
         pointsSun.append(currentPoint)
         
-        self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: currentPoint.coordinate.latitude, lon: currentPoint.coordinate.longitude)
+        self.eventAngles = sunMoonCalc.getEventAngles(date: date, lat: currentPoint.coordinate.latitude, lon: currentPoint.coordinate.longitude)
         for (event, angles) in eventAngles! {
-            let startAngle : Double     = Helper.toDegrees(radians: angles.0) + 90.0
-            let point      : MKMapPoint = Helper.getPointByAngle(point: currentPoint, angleDeg: startAngle)
+            let angle  : Double     = Helper.toDegrees(radians: angles.0) + 90.0
+            let point  : MKMapPoint = Helper.getPointByAngle(point: currentPoint, angleDeg: angle)            
+            let point1 : MKMapPoint = Helper.getPointByAngle(point: currentPoint, angleDeg: angle - 90.0, distance: visibleArea?.width ?? 1000 * 0.5)
             switch event {
                 case Constants.EPD_SUNRISE : pointsSunrise.append(point)
                 case Constants.EPD_SUNSET  : pointsSunset.append(point)
-                case Constants.EPD_SUN     : pointsSun.append(point)
+                case Constants.EPD_SUN     : pointsSun.append(point1)
                 case Constants.EPD_MOONRISE: pointsMoonrise.append(point)
                 case Constants.EPD_MOONSET : pointsMoonset.append(point)
-                case Constants.EPD_MOON    : pointsMoon.append(point)
+                case Constants.EPD_MOON    : pointsMoon.append(point1)
                 default: break
             }
         }

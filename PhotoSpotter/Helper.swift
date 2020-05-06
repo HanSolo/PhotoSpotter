@@ -208,6 +208,9 @@ public class Helper {
     public static func getPointByAngle(point: MKMapPoint, angleDeg: Double) -> MKMapPoint {
         return rotatePointAroundCenter(point: MKMapPoint(CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude + .pi/2)), rotationCenter: point, rad: toRadians(degrees: angleDeg))
     }
+    public static func getPointByAngle(point: MKMapPoint, angleDeg: Double, distance: Double) -> MKMapPoint {        
+        return rotatePointAroundCenter(point: MKMapPoint(x: point.x, y: point.y + distance), rotationCenter: point, rad: toRadians(degrees: angleDeg))
+    }
     
     public static func getLatLonByAngleAndDistance(lat :Double, lon :Double, distanceInMeters :Double, angleDeg: Double) -> (Double, Double){
         let earthRadius      :Double = Constants.EARTH_RADIUS // m 
