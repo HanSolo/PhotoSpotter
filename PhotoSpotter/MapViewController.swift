@@ -70,13 +70,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     @IBOutlet weak var crossHair           : UIImageView!
     
-    let monitor               : NWPathMonitor       = NWPathMonitor()
-    var connected             : Bool                = false
+    let monitor               : NWPathMonitor        = NWPathMonitor()
+    var connected             : Bool                 = false
     var locationManager       : CLLocationManager!
     var fovData               : FoVData?
     var cameraPin             : MapPin?
     var motifPin              : MapPin?
-    var mapPins               : [MapPin]            = [MapPin]()
+    var mapPins               : [MapPin]             = [MapPin]()
     var triangle              : Triangle?
     var minTriangle           : Triangle?
     var maxTriangle           : Triangle?
@@ -93,39 +93,41 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var sunriseLine           : MKPolyline?
     var sunsetLine            : MKPolyline?
     var sunLine               : MKPolyline?
-    var routePolylines        : [MKPolyline]        = []
+    var routePolylines        : [MKPolyline]         = []
     var data                  : FoVData?
-    var fovVisible            : Bool                = true
-    var dofVisible            : Bool                = false
-    var moonVisible           : Bool                = false
-    var sunVisible            : Bool                = false
-    var spotsVisible          : Bool                = false
-    var viewsVisible          : Bool                = false
-    var routeVisible          : Bool                = false
-    var elevationChartVisible : Bool                = false
-    var infoVisible           : Bool                = false
-    var focalLength           : Double              = 50
-    var aperture              : Double              = 2.8
-    var orientation           : Orientation         = Orientation.landscape
-    let sunMoonCalc           : SunMoon             = SunMoon()    
+    var fovVisible            : Bool                 = true
+    var dofVisible            : Bool                 = false
+    var moonVisible           : Bool                 = false
+    var sunVisible            : Bool                 = false
+    var spotsVisible          : Bool                 = false
+    var viewsVisible          : Bool                 = false
+    var routeVisible          : Bool                 = false
+    var elevationChartVisible : Bool                 = false
+    var infoVisible           : Bool                 = false
+    var focalLength           : Double               = 50
+    var aperture              : Double               = 2.8
+    var orientation           : Orientation          = Orientation.landscape
+    let sunMoonCalc           : SunMoon              = SunMoon()
     var eventAngles           : Dictionary<String, (Double, Double)>?
-    var pointsSunrise         : [MKMapPoint]        = []
-    var pointsSunset          : [MKMapPoint]        = []
-    var pointsSun             : [MKMapPoint]        = []
-    var pointsMoonrise        : [MKMapPoint]        = []
-    var pointsMoonset         : [MKMapPoint]        = []
-    var pointsMoon            : [MKMapPoint]        = []
-    var spotAnnotations       : [MKPointAnnotation] = []
-    var viewAnnotations       : [MKPointAnnotation] = []
+    let sun                   : ImagePointAnnotation = ImagePointAnnotation()
+    let moon                  : ImagePointAnnotation = ImagePointAnnotation()
+    var pointsSunrise         : [MKMapPoint]         = []
+    var pointsSunset          : [MKMapPoint]         = []
+    var pointsSun             : [MKMapPoint]         = []
+    var pointsMoonrise        : [MKMapPoint]         = []
+    var pointsMoonset         : [MKMapPoint]         = []
+    var pointsMoon            : [MKMapPoint]         = []
+    var spotAnnotations       : [MKPointAnnotation]  = []
+    var viewAnnotations       : [MKPointAnnotation]  = []
     var visibleArea           : MKMapRect?
     var heading               : CLLocationDirection?
-    var elevationPoints       : [ElevationPoint]    = [] { didSet { drawElevationChart() } }
+    var elevationPoints       : [ElevationPoint]     = [] { didSet { drawElevationChart() } }
     var userLocation          : CLLocation?
-    var distanceToDestination        : CLLocationDistance  = 0
-    var timeToDestination            : TimeInterval        = TimeInterval()
-    var selectedViewMapRect   : MKMapRect           = Constants.DEFAULT_VIEW.mapRect    
-    var useViewForRouting     : Bool                = false
-    var useSpotForRouting     : Bool                = false
+    var distanceToDestination : CLLocationDistance  = 0
+    var timeToDestination     : TimeInterval        = TimeInterval()
+    var selectedViewMapRect   : MKMapRect            = Constants.DEFAULT_VIEW.mapRect
+    var useViewForRouting     : Bool                 = false
+    var useSpotForRouting     : Bool                 = false
     
     var cameraBodyButton      : UIButton?
 
@@ -153,6 +155,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         monitor.start(queue: queue)
         
         self.locateMeButton.layer.cornerRadius = 5
+        
+        self.sun.coordinate                 = Constants.DEFAULT_POSITION.coordinate
+        self.sun.title                      = "sun"
+        self.sun.image                      = "sun.png"
+        
+        self.moon.coordinate                = Constants.DEFAULT_POSITION.coordinate
+        self.moon.title                     = "moon"
+        self.moon.image                     = "moon.png"
         
         self.mapView.mapType                = MKMapType.standard
         self.mapView.isZoomEnabled          = true
@@ -342,10 +352,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 self.sunMoonDatePicker.isHidden = true
             }
             self.moonVisible = false
+            self.mapView.removeAnnotation(moon)
             moonButton.setImage(UIImage(systemName: "moon"), for: UIControl.State.normal)
         } else {
             self.sunMoonDatePicker.isHidden = false
             self.moonVisible = true
+            self.mapView.addAnnotation(moon)
             moonButton.setImage(UIImage(systemName: "moon.fill"), for: UIControl.State.normal)
         }
         updateSunMoonOverlay(date: sunMoonDatePicker.date)
@@ -357,10 +369,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 self.sunMoonDatePicker.isHidden = true
             }
             self.sunVisible = false
+            self.mapView.removeAnnotation(sun)
             sunButton.setImage(UIImage(systemName: "sun.max"), for: UIControl.State.normal)
         } else {
             self.sunMoonDatePicker.isHidden = false
             self.sunVisible = true
+            self.mapView.addAnnotation(sun)
             sunButton.setImage(UIImage(systemName: "sun.max.fill"), for: UIControl.State.normal)
         }
         updateSunMoonOverlay(date: sunMoonDatePicker.date)
@@ -455,7 +469,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         #else
             
         #endif
-        
+                
         updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
@@ -595,6 +609,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 viewButton.setImage(icon, for: .normal)
                 viewButton.tintColor = UIColor.systemTeal
                 annotationView!.rightCalloutAccessoryView = viewButton
+            } else {
+                annotationView!.annotation = annotation
+            }
+            return annotationView
+        } else if annotation is ImagePointAnnotation {
+            let reuseId = annotation.title ?? "ImageAnnotation"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId!)
+            if annotationView == nil {
+                let imageAnnotation = annotation as! ImagePointAnnotation
+                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+                annotationView!.canShowCallout = false
+                annotationView!.image = UIImage(named: imageAnnotation.image)
             } else {
                 annotationView!.annotation = annotation
             }
@@ -882,16 +908,25 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         self.eventAngles = sunMoonCalc.getEventAngles(date: date, lat: currentPoint.coordinate.latitude, lon: currentPoint.coordinate.longitude)
         for (event, angles) in eventAngles! {
-            let angle  : Double     = Helper.toDegrees(radians: angles.0) + 90.0
-            let point  : MKMapPoint = Helper.getPointByAngle(point: currentPoint, angleDeg: angle)            
-            let point1 : MKMapPoint = Helper.getPointByAngle(point: currentPoint, angleDeg: angle - 90.0, distance: visibleArea?.width ?? 1000 * 0.5)
+            let angle : Double     = Helper.toDegrees(radians: angles.0) + 90.0
+            let point : MKMapPoint = Helper.getPointByAngle(point: currentPoint, angleDeg: angle)
             switch event {
-                case Constants.EPD_SUNRISE : pointsSunrise.append(point)
-                case Constants.EPD_SUNSET  : pointsSunset.append(point)
-                case Constants.EPD_SUN     : pointsSun.append(point1)
-                case Constants.EPD_MOONRISE: pointsMoonrise.append(point)
-                case Constants.EPD_MOONSET : pointsMoonset.append(point)
-                case Constants.EPD_MOON    : pointsMoon.append(point1)
+                case Constants.EPD_SUNRISE :
+                    pointsSunrise.append(point)
+                case Constants.EPD_SUNSET  :
+                    pointsSunset.append(point)
+                case Constants.EPD_SUN     :
+                    pointsSun.append(point)
+                    let point1 : MKMapPoint = Helper.getPointByAngle(point: currentPoint, angleDeg: angle - 90.0, distance: (visibleArea?.width ?? 50000) * 0.35)
+                    sun.coordinate = point1.coordinate
+                case Constants.EPD_MOONRISE:
+                    pointsMoonrise.append(point)
+                case Constants.EPD_MOONSET :
+                    pointsMoonset.append(point)
+                case Constants.EPD_MOON    :
+                    pointsMoon.append(point)
+                    let point1 : MKMapPoint = Helper.getPointByAngle(point: currentPoint, angleDeg: angle - 90.0, distance: (visibleArea?.width ?? 50000) * 0.35)
+                    moon.coordinate = point1.coordinate
                 default: break
             }
         }
@@ -1417,6 +1452,11 @@ class SpotPinAnnotation: MKPointAnnotation {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+
+class ImagePointAnnotation: MKPointAnnotation {
+    var image: String!
 }
 
 class MultiPolygon: NSObject, MKOverlay {
