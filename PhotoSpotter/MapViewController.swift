@@ -278,7 +278,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
-        updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
     @IBAction func apertureChanged(_ sender: Any) {
@@ -308,7 +307,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
-        updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
     @IBAction func dofChanged(_ sender: Any) {
@@ -473,7 +471,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
-        updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
     func gotoCurrentLocation() {
@@ -534,7 +531,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                     center.y -= (mapView.visibleMapRect.height * 0.04941444)
                     mapView.setCenter(center.coordinate, animated: true)
                 }
-                //self.eventAngles = sunMoonCalc.getEventAngles(date: Date(), lat: (self.cameraPin?.coordinate.latitude)!, lon: (self.cameraPin?.coordinate.longitude)!)
                 updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
                 updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
                 updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
@@ -634,48 +630,48 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let polygonRenderer = MKPolygonRenderer(overlay: overlay)
             polygonRenderer.lineWidth = 1.0
             if overlay.id == "dof" && dofVisible {
-                polygonRenderer.fillColor       = Constants.DOF_FILL
-                polygonRenderer.strokeColor     = Constants.DOF_STROKE
+                polygonRenderer.fillColor       = overlay.fill
+                polygonRenderer.strokeColor     = overlay.stroke
                 polygonRenderer.lineDashPattern = [10, 10]
                 polygonRenderer.lineDashPhase   = 10
             } else if overlay.id == "maxFov" && fovVisible {
-                polygonRenderer.fillColor   = Constants.MAX_FOV_FILL
-                polygonRenderer.strokeColor = Constants.MAX_FOV_STROKE
+                polygonRenderer.fillColor   = overlay.fill
+                polygonRenderer.strokeColor = overlay.stroke
             } else if overlay.id == "minFov" && fovVisible {
-                polygonRenderer.fillColor   = Constants.MIN_FOV_FILL
-                polygonRenderer.strokeColor = Constants.MIN_FOV_STROKE
+                polygonRenderer.fillColor   = overlay.fill
+                polygonRenderer.strokeColor = overlay.stroke
             } else if overlay.id == "fov" && fovVisible {
-                polygonRenderer.fillColor   = Constants.FOV_FILL
-                polygonRenderer.strokeColor = Constants.FOV_STROKE
+                polygonRenderer.fillColor   = overlay.fill
+                polygonRenderer.strokeColor = overlay.stroke
             } else if overlay.id == "fovFrame" && fovVisible {
-                polygonRenderer.fillColor   = Constants.FOV_FRAME_FILL
-                polygonRenderer.strokeColor = Constants.FOV_FRAME_STROKE
+                polygonRenderer.fillColor   = overlay.fill
+                polygonRenderer.strokeColor = overlay.stroke 
             }
             return polygonRenderer
         } else if let overlay = overlay as? Line {
             let polylineRenderer = MKPolylineRenderer(overlay: overlay)
             if overlay.id == "centerLine" && fovVisible {
-                polylineRenderer.strokeColor = Constants.CENTER_LINE_STROKE
+                polylineRenderer.strokeColor = overlay.stroke
                 polylineRenderer.lineWidth   = 1.0
             } else if overlay.id == "moonrise" && moonVisible {
-                polylineRenderer.strokeColor = Constants.MOON_RISE_STROKE
+                polylineRenderer.strokeColor = overlay.stroke
                 polylineRenderer.lineWidth   = 1.5
             } else if overlay.id == "moonset" && moonVisible {
-                polylineRenderer.strokeColor = Constants.MOON_SET_STROKE
+                polylineRenderer.strokeColor = overlay.stroke
                 polylineRenderer.lineWidth   = 1.5
             } else if overlay.id == "moon" && moonVisible {
-                polylineRenderer.strokeColor     = Constants.MOON_STROKE
+                polylineRenderer.strokeColor     = overlay.stroke
                 polylineRenderer.lineWidth       = 1.5
                 polylineRenderer.lineDashPattern = [5, 5]
                 polylineRenderer.lineDashPhase   = 5
             } else if overlay.id == "sunrise" && sunVisible {
-                polylineRenderer.strokeColor = Constants.SUN_RISE_STROKE
+                polylineRenderer.strokeColor = overlay.stroke
                 polylineRenderer.lineWidth   = 1.5
             } else if overlay.id == "sunset" && sunVisible {
-                polylineRenderer.strokeColor = Constants.SUN_SET_STROKE
+                polylineRenderer.strokeColor = overlay.stroke
                 polylineRenderer.lineWidth   = 1.5
             } else if overlay.id == "sun" && sunVisible {
-                polylineRenderer.strokeColor     = Constants.SUN_STROKE
+                polylineRenderer.strokeColor     = overlay.stroke
                 polylineRenderer.lineWidth       = 1.5
                 polylineRenderer.lineDashPattern = [5, 5]
                 polylineRenderer.lineDashPhase   = 5
@@ -813,7 +809,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: focalLength, aperture: aperture, sensorFormat: camera.sensorFormat, orientation: orientation)
         updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: focalLength, aperture: aperture, sensorFormat: camera.sensorFormat, orientation: orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
-        updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
     
@@ -909,7 +904,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.eventAngles = sunMoonCalc.getEventAngles(date: date, lat: currentPoint.coordinate.latitude, lon: currentPoint.coordinate.longitude)
         for (event, angles) in eventAngles! {
             let angle : Double     = Helper.toDegrees(radians: angles.0) + 90.0
-            let point : MKMapPoint = Helper.getPointByAngle(point: currentPoint, angleDeg: angle)
+            let point : MKMapPoint = angle == -1 ? currentPoint : Helper.getPointByAngle(point: currentPoint, angleDeg: angle)
             switch event {
                 case Constants.EPD_SUNRISE :
                     pointsSunrise.append(point)
@@ -933,62 +928,76 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         // Create coordinates for moonrise line
         let moonriseLine :Line = Line(points: pointsMoonrise, count: pointsMoonrise.count)
-        moonriseLine.id = "moonrise"
-        self.moonriseLine = moonriseLine
+        moonriseLine.id     = "moonrise"
+        moonriseLine.stroke = Constants.MOON_RISE_STROKE
+        self.moonriseLine   = moonriseLine
         
         // Create coordinates for moonset line
         let moonsetLine :Line = Line(points: pointsMoonset, count: pointsMoonset.count)
-        moonsetLine.id = "moonset"
-        self.moonsetLine  = moonsetLine
+        moonsetLine.id     = "moonset"
+        moonsetLine.stroke = Constants.MOON_SET_STROKE
+        self.moonsetLine   = moonsetLine
         
         // Create coordinates for moon line
         let moonLine :Line = Line(points: pointsMoon, count: pointsMoon.count)
-        moonLine.id = "moon"
-        self.moonLine  = moonLine
+        moonLine.id     = "moon"
+        moonLine.stroke = Constants.MOON_STROKE
+        self.moonLine   = moonLine
         
         // Create coordinates for sunrise line
         let sunriseLine :Line = Line(points: pointsSunrise, count: pointsSunrise.count)
-        sunriseLine.id = "sunrise"
-        self.sunriseLine = sunriseLine
+        sunriseLine.id     = "sunrise"
+        sunriseLine.stroke = Constants.SUN_RISE_STROKE
+        self.sunriseLine   = sunriseLine
         
         // Create coordinates for sunset line
         let sunsetLine :Line = Line(points: pointsSunset, count: pointsSunset.count)
-        sunsetLine.id = "sunset"
-        self.sunsetLine  = sunsetLine
+        sunsetLine.id     = "sunset"
+        sunsetLine.stroke = Constants.SUN_SET_STROKE
+        self.sunsetLine   = sunsetLine
         
         // Create coordinates for sun line
         let sunLine :Line = Line(points: pointsSun, count: pointsSun.count)
-        sunLine.id = "sun"
-        self.sunLine  = sunLine
+        sunLine.id     = "sun"
+        sunLine.stroke = Constants.SUN_STROKE
+        self.sunLine   = sunLine
         
         // Add all overlays at once
         mapView.addOverlays([moonriseLine, moonsetLine, moonLine, sunriseLine, sunsetLine, sunLine])
     }
     
     func updateDragOverlay(cameraPoint: MKMapPoint, motifPoint: MKMapPoint) -> Void {
+        // Overlays
+        var overlaysToRemove : [MKOverlay] = []
+        
         if let fovTriangleFrame = self.fovTriangleFrame {
-            mapView.removeOverlay(fovTriangleFrame)
+            overlaysToRemove.append(fovTriangleFrame)
         }
         self.fovTriangleFrame = nil
         
         if let fovCenterLine = self.fovCenterLine {
-            mapView.removeOverlay(fovCenterLine)
+            overlaysToRemove.append(fovCenterLine)
         }
         self.fovCenterLine = nil
         
+        mapView.removeOverlays(overlaysToRemove)
+        
         // Create coordinates for fov triangle frame
         let fovTriangleCoordinates = triangle!.getPoints().map({ $0.coordinate })
-        let fovTriangleFrame = Polygon(coordinates: fovTriangleCoordinates, count: fovTriangleCoordinates.count)
-        fovTriangleFrame.id = "fovFrame"
-        mapView.addOverlay(fovTriangleFrame)
-        self.fovTriangleFrame = fovTriangleFrame
+        let fovTriangleFrame       = Polygon(coordinates: fovTriangleCoordinates, count: fovTriangleCoordinates.count)
+        fovTriangleFrame.id     = "fovFrame"
+        fovTriangleFrame.fill   = Constants.FOV_FRAME_FILL
+        fovTriangleFrame.stroke = Constants.FOV_FRAME_STROKE
+        self.fovTriangleFrame   = fovTriangleFrame
         
         // Create coordinates for fov center line
         let fovCenterLineCoordinates = [cameraPoint, motifPoint].map({ $0.coordinate })
-        let fovCenterLine = Line(coordinates: fovCenterLineCoordinates, count: fovCenterLineCoordinates.count)
-        fovCenterLine.id = "centerLine"
-        mapView.addOverlay(fovCenterLine)
-        self.fovCenterLine = fovCenterLine
+        let fovCenterLine            = Line(coordinates: fovCenterLineCoordinates, count: fovCenterLineCoordinates.count)
+        fovCenterLine.id     = "centerLine"
+        fovCenterLine.stroke = Constants.CENTER_LINE_STROKE
+        self.fovCenterLine   = fovCenterLine
+        
+        mapView.addOverlays([fovTriangleFrame, fovCenterLine])
     }
     
     func updateOverlay(cameraPoint: MKMapPoint, motifPoint: MKMapPoint) -> Void {
@@ -1030,6 +1039,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         // Overlays
         var overlaysToRemove : [MKOverlay] = []
                 
+        if let fovTriangleFrame = self.fovTriangleFrame {
+            overlaysToRemove.append(fovTriangleFrame)
+        }
+        self.fovTriangleFrame = nil
+        
+        if let fovCenterLine = self.fovCenterLine {
+            overlaysToRemove.append(fovCenterLine)
+        }
+        self.fovCenterLine = nil
+        
         if let minFovTriangle = self.minFovTriangle { overlaysToRemove.append(minFovTriangle) }
         self.minFovTriangle = nil
         
@@ -1052,34 +1071,43 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         // Create coordinates for min fov triangle
         let minFovTriangleCoordinates = minTriangle!.getPoints().map({ $0.coordinate })
-        let minFovTriangle = Polygon(coordinates: minFovTriangleCoordinates, count: minFovTriangleCoordinates.count)
-        minFovTriangle.id = "minFov"
-        self.minFovTriangle = minFovTriangle
+        let minFovTriangle            = Polygon(coordinates: minFovTriangleCoordinates, count: minFovTriangleCoordinates.count)
+        minFovTriangle.id     = "minFov"
+        minFovTriangle.fill   = Constants.MIN_FOV_FILL
+        minFovTriangle.stroke = Constants.MIN_FOV_STROKE
+        self.minFovTriangle   = minFovTriangle
         
         // Create coordinates for max fov triangle
         let maxFovTriangleCoordinates = maxTriangle!.getPoints().map({ $0.coordinate })
-        let maxFovTriangle = Polygon(coordinates: maxFovTriangleCoordinates, count: maxFovTriangleCoordinates.count)
-        maxFovTriangle.id = "maxFov"
-        self.maxFovTriangle = maxFovTriangle
+        let maxFovTriangle            = Polygon(coordinates: maxFovTriangleCoordinates, count: maxFovTriangleCoordinates.count)
+        maxFovTriangle.id     = "maxFov"
+        maxFovTriangle.fill   = Constants.MAX_FOV_FILL
+        maxFovTriangle.stroke = Constants.MAX_FOV_STROKE
+        self.maxFovTriangle   = maxFovTriangle
     
         // Create coordinates for fov triangle
         let fovTriangleCoordinates = triangle!.getPoints().map({ $0.coordinate })
-        let fovTriangle = Polygon(coordinates: fovTriangleCoordinates, count: fovTriangleCoordinates.count)
-        fovTriangle.id = "fov"
-        self.fovTriangle = fovTriangle
+        let fovTriangle            = Polygon(coordinates: fovTriangleCoordinates, count: fovTriangleCoordinates.count)
+        fovTriangle.id     = "fov"
+        fovTriangle.fill   = Constants.FOV_FILL
+        fovTriangle.stroke = Constants.FOV_STROKE
+        self.fovTriangle   = fovTriangle
         
         // Create coordinates for fov center line
         let fovCenterLineCoordinates = [cameraPoint, motifPoint].map({ $0.coordinate })
-        let fovCenterLine = Line(coordinates: fovCenterLineCoordinates, count: fovCenterLineCoordinates.count)
-        fovCenterLine.id = "centerLine"
-        self.fovCenterLine = fovCenterLine
+        let fovCenterLine            = Line(coordinates: fovCenterLineCoordinates, count: fovCenterLineCoordinates.count)
+        fovCenterLine.id     = "centerLine"
+        fovCenterLine.stroke = Constants.CENTER_LINE_STROKE
+        self.fovCenterLine   = fovCenterLine
         
         // Create coordinates for dof trapezoid
         let dofTrapezoidCoordinates = trapezoid!.getPoints().map({ $0.coordinate })
-        let dofTrapezoid = Polygon(coordinates: dofTrapezoidCoordinates, count: dofTrapezoidCoordinates.count)
-        dofTrapezoid.id = "dof"
-        self.dofTrapezoid = dofTrapezoid
-                
+        let dofTrapezoid            = Polygon(coordinates: dofTrapezoidCoordinates, count: dofTrapezoidCoordinates.count)
+        dofTrapezoid.id     = "dof"
+        dofTrapezoid.fill   = Constants.DOF_FILL
+        dofTrapezoid.stroke = Constants.DOF_STROKE
+        self.dofTrapezoid   = dofTrapezoid
+                                
         // Add all overlays at once
         mapView.addOverlays([minFovTriangle, maxFovTriangle, fovTriangle, fovCenterLine, dofTrapezoid])
     }
@@ -1219,6 +1247,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if (show) {
             self.infoView.fovData  = self.fovData
             self.infoView.sunMoon  = self.sunMoonCalc
+            self.infoView.date     = self.sunMoonDatePicker.date
             self.infoView.isHidden = false
             self.infoView.setNeedsDisplay()
             UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseInOut, .transitionCrossDissolve], animations: {
@@ -1421,10 +1450,13 @@ protocol MapPinEventObserver : class {
 
 
 class Polygon: MKPolygon {
-    var id: String?
+    var id    : String?
+    var fill  : UIColor?
+    var stroke: UIColor?
 }
 class Line: MKPolyline {
-    var id: String?
+    var id    : String?
+    var stroke: UIColor?
 }
 
 
@@ -1457,83 +1489,4 @@ class SpotPinAnnotation: MKPointAnnotation {
 
 class ImagePointAnnotation: MKPointAnnotation {
     var image: String!
-}
-
-class MultiPolygon: NSObject, MKOverlay {
-    var polygons: [MKPolygon]?
-
-    var boundingMapRect: MKMapRect
-
-    init(polygons: [MKPolygon]?) {
-        self.polygons = polygons
-        self.boundingMapRect = MKMapRect.null
-
-        super.init()
-
-        guard let pols = polygons else { return }
-        for (index, polygon) in pols.enumerated() {
-            if index == 0 { self.boundingMapRect = polygon.boundingMapRect; continue }
-            boundingMapRect = boundingMapRect.union(polygon.boundingMapRect)
-        }
-    }
-
-    var coordinate: CLLocationCoordinate2D {
-        return MKMapPoint(x: boundingMapRect.midX, y: boundingMapRect.maxY).coordinate
-    }
-}
-
-class MultiPolygonPathRenderer: MKOverlayPathRenderer {
-    /**
-     Returns a `CGPath` equivalent to this polygon in given renderer.
-
-     - parameter polygon: MKPolygon defining coordinates that will be drawn.
-
-     - returns: Path equivalent to this polygon in given renderer.
-     */
-    func polyPath(for polygon: MKPolygon?) -> CGPath? {
-        guard let polygon = polygon else { return nil }
-        let points = polygon.points()
-
-        if polygon.pointCount < 3 { return nil }
-        let pointCount = polygon.pointCount
-
-        let path = CGMutablePath()
-
-        if let interiorPolygons = polygon.interiorPolygons {
-            for interiorPolygon in interiorPolygons {
-                guard let interiorPath = polyPath(for: interiorPolygon) else { continue }
-                path.addPath(interiorPath, transform: .identity)
-            }
-        }
-
-        let startPoint = point(for: points[0])
-        path.move(to: CGPoint(x: startPoint.x, y: startPoint.y), transform: .identity)
-
-        for i in 1..<pointCount {
-            let nextPoint = point(for: points[i])
-            path.addLine(to: CGPoint(x: nextPoint.x, y: nextPoint.y), transform: .identity)
-        }
-
-        return path
-    }
-
-    /// Draws the overlay’s contents at the specified location on the map.
-    override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
-        // Taken from: http://stackoverflow.com/a/17673411
-
-        guard let multiPolygon = self.overlay as? MultiPolygon else { return }
-        guard let polygons = multiPolygon.polygons else { return }
-
-        for polygon in polygons {
-            guard let path = self.polyPath(for: polygon) else { continue }
-            self.applyFillProperties(to: context, atZoomScale: zoomScale)
-            context.beginPath()
-            context.addPath(path)
-            context.drawPath(using: CGPathDrawingMode.eoFill)
-            self.applyStrokeProperties(to: context, atZoomScale: zoomScale)
-            context.beginPath()
-            context.addPath(path)
-            context.strokePath()
-        }
-    }
 }

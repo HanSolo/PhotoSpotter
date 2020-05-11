@@ -14,6 +14,7 @@ import MapKit
 public class InfoView: UIView {
     var fovData : FoVData?
     var sunMoon : SunMoon?
+    var date    : Date = Date()
     
     
     public override func draw(_ rect: CGRect) {
@@ -82,15 +83,16 @@ public class InfoView: UIView {
             
             // Sunrise / Sunset Data
             if let suncalc = sunMoon {
-                let sunEvents : Dictionary<String, String> = suncalc.getSunEvents(date: Date(), lat: data.camera.coordinate.latitude, lon: data.camera.coordinate.longitude)
+                let sunEvents : Dictionary<String, String> = suncalc.getSunEvents(date: date, lat: data.camera.coordinate.latitude, lon: data.camera.coordinate.longitude)
                 let sunText = NSAttributedString(string: "Sunrise/Sunset", attributes: textAttributes)
                 sunText.draw(at: CGPoint(x: offsetLeft, y: offsetTop + 6 * lineSpacing))
                 let sunValueText = NSAttributedString(string: "\(sunEvents[Constants.EPD_SUNRISE]!) / \(sunEvents[Constants.EPD_SUNSET]!)", attributes: valueAttributes)
                 sunValueText.draw(at: CGPoint(x: offsetLeftSecondColumn - Double(totalValueText.size().width), y: offsetTop + 6 * lineSpacing))
                 
-                let moonEvents : Dictionary<String, String> = suncalc.getMoonEvents(date: Date(), lat: data.camera.coordinate.latitude, lon: data.camera.coordinate.longitude)
+                let moonEvents : Dictionary<String, String> = suncalc.getMoonEvents(date: date, lat: data.camera.coordinate.latitude, lon: data.camera.coordinate.longitude)
                 let moonText = NSAttributedString(string: "Moonrise/Moonset", attributes: textAttributes)
                 moonText.draw(at: CGPoint(x: offsetLeft, y: offsetTop + 7 * lineSpacing))
+                
                 let moonValueText = NSAttributedString(string: "\(moonEvents[Constants.EPD_MOONRISE]!) / \(moonEvents[Constants.EPD_MOONSET]!)", attributes: valueAttributes)
                 moonValueText.draw(at: CGPoint(x: offsetLeftSecondColumn - Double(totalValueText.size().width), y: offsetTop + 7 * lineSpacing))
             }

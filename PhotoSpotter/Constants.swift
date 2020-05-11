@@ -65,18 +65,19 @@ public class Constants {
     public static let RED                 : UIColor = UIColor(red: 1.00, green: 0.42, blue: 0.37, alpha: 1.00)
     public static let BLUE                : UIColor = UIColor(red: 0.30, green: 0.78, blue: 1.00, alpha: 1.00)
     
-    public static let DOF_FILL            : UIColor = UIColor.init(red: 0.45490196, green: 0.80784314, blue: 1.0,        alpha: 0.25)
+    public static let BLUE_STROKE         : UIColor = UIColor.init(red: 0.0,        green: 0.56078431, blue:  0.8627451, alpha: 1.0)
+    public static let DOF_FILL            : UIColor = UIColor.init(red: 0.45490196, green: 0.80784314, blue: 1.0,        alpha: 0.1)
     public static let DOF_STROKE          : UIColor = UIColor.init(red: 0.45490196, green: 0.80784314, blue: 1.0,        alpha: 1.0)
-    public static let MAX_FOV_FILL        : UIColor = UIColor.init(red: 0.0,        green: 0.56078431, blue: 0.8627451,  alpha: 0.15)
-    public static let MAX_FOV_STROKE      : UIColor = UIColor.init(red: 0.0,        green: 0.56078431, blue:  0.8627451, alpha: 1.0)
+    public static let MAX_FOV_FILL        : UIColor = UIColor.init(red: 0.0,        green: 0.56078431, blue: 0.8627451,  alpha: 0.1)
+    public static let MAX_FOV_STROKE      : UIColor = BLUE_STROKE
     public static let MIN_FOV_FILL        : UIColor = UIColor.clear
-    public static let MIN_FOV_STROKE      : UIColor = UIColor.init(red: 0.0,        green: 0.56078431, blue:  0.8627451, alpha: 1.0)
-    public static let FOV_FILL            : UIColor = UIColor.init(red: 0.0,        green: 0.56078431, blue:  0.8627451, alpha: 0.45)
-    public static let FOV_STROKE          : UIColor = UIColor.init(red: 0.0,        green: 0.56078431, blue:  0.8627451, alpha: 1.0)
+    public static let MIN_FOV_STROKE      : UIColor = BLUE_STROKE
+    public static let FOV_FILL            : UIColor = UIColor.init(red: 0.0,        green: 0.56078431, blue:  0.8627451, alpha: 0.3)
+    public static let FOV_STROKE          : UIColor = BLUE_STROKE
     public static let FOV_FRAME_FILL      : UIColor = UIColor.clear
-    public static let FOV_FRAME_STROKE    : UIColor = UIColor.init(red: 0.0,        green: 0.56078431, blue:  0.8627451, alpha: 1.0)
+    public static let FOV_FRAME_STROKE    : UIColor = BLUE_STROKE
 
-    public static let CENTER_LINE_STROKE  : UIColor = UIColor.init(red: 0.0,  green: 0.56078431, blue:  0.8627451, alpha: 1.0)
+    public static let CENTER_LINE_STROKE  : UIColor = BLUE_STROKE
     public static let MOON_RISE_STROKE    : UIColor = UIColor.init(red: 0.0,  green: 0.9,        blue:  0.9,       alpha: 1.0)
     public static let MOON_SET_STROKE     : UIColor = UIColor.init(red: 0.0,  green: 0.375,      blue:  0.75,      alpha: 1.0)
     public static let MOON_STROKE         : UIColor = UIColor.init(red: 0.0,  green: 0.5,        blue:  0.5,       alpha: 1.0)
