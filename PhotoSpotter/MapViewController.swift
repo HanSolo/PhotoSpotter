@@ -982,14 +982,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         // Overlays
         var overlaysToRemove : [MKOverlay] = []
         
-        if let fovTriangleFrame = self.fovTriangleFrame {
-            overlaysToRemove.append(fovTriangleFrame)
-        }
+        if let fovTriangleFrame = self.fovTriangleFrame { overlaysToRemove.append(fovTriangleFrame) }
         self.fovTriangleFrame = nil
         
-        if let fovCenterLine = self.fovCenterLine {
-            overlaysToRemove.append(fovCenterLine)
-        }
+        if let fovCenterLine = self.fovCenterLine { overlaysToRemove.append(fovCenterLine) }
         self.fovCenterLine = nil
         
         mapView.removeOverlays(overlaysToRemove)
@@ -1014,10 +1010,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func updateOverlay(cameraPoint: MKMapPoint, motifPoint: MKMapPoint) -> Void {
         // Spot Annotations
-        if !spotAnnotations.isEmpty {
-            mapView.removeAnnotations(spotAnnotations)
-        }
+        if !spotAnnotations.isEmpty { mapView.removeAnnotations(spotAnnotations) }
         spotAnnotations.removeAll()
+        
         if spotsVisible {
             for spot in self.stateController!.spots {
                 let spotAnnotation : SpotPinAnnotation = SpotPinAnnotation(spot: spot)
@@ -1030,10 +1025,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         
         // View Annotations
-        if !viewAnnotations.isEmpty {
-            mapView.removeAnnotations(viewAnnotations)
-        }
+        if !viewAnnotations.isEmpty { mapView.removeAnnotations(viewAnnotations) }
         viewAnnotations.removeAll()
+        
         if viewsVisible {
             for view in self.stateController!.views {
                 if view.cameraPoint.coordinate.latitude != self.cameraPin!.coordinate.latitude &&
@@ -1051,14 +1045,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         // Overlays
         var overlaysToRemove : [MKOverlay] = []
                 
-        if let fovTriangleFrame = self.fovTriangleFrame {
-            overlaysToRemove.append(fovTriangleFrame)
-        }
+        if let fovTriangleFrame = self.fovTriangleFrame { overlaysToRemove.append(fovTriangleFrame) }
         self.fovTriangleFrame = nil
         
-        if let fovCenterLine = self.fovCenterLine {
-            overlaysToRemove.append(fovCenterLine)
-        }
+        if let fovCenterLine = self.fovCenterLine { overlaysToRemove.append(fovCenterLine) }
         self.fovCenterLine = nil
         
         if let minFovTriangle = self.minFovTriangle { overlaysToRemove.append(minFovTriangle) }
@@ -1293,7 +1283,12 @@ public enum PinType {
 }
 
 public class MapPin: NSObject, MKAnnotation {
-    public var coordinate: CLLocationCoordinate2D
+    public var onMapPinLocationChanged: (() -> ())?
+    public var coordinate: CLLocationCoordinate2D {
+        didSet {
+            onMapPinLocationChanged?()
+        }
+    }
     
     public let pinType  : PinType
     public var imageName: String? {
@@ -1309,7 +1304,6 @@ public class MapPin: NSObject, MKAnnotation {
         }
     }
     
-    
     convenience init(pinType: PinType, latitude: Double, longitude: Double) {
         self.init(pinType: pinType, coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
     }
@@ -1319,7 +1313,6 @@ public class MapPin: NSObject, MKAnnotation {
         super.init()
     }
     
-    
     public func point() -> MKMapPoint {
         return MKMapPoint(coordinate)
     }
@@ -1327,7 +1320,7 @@ public class MapPin: NSObject, MKAnnotation {
 
 
 class MapPinAnnotationView: MKAnnotationView {
-    var observers : [MapPinEventObserver] = []
+    var observer  : MapPinEventObserver?
     var mapPin    : MapPin?
     var mapView   : MKMapView?
     
@@ -1421,25 +1414,16 @@ class MapPinAnnotationView: MKAnnotationView {
     }
     
     
-    // Event handling
+    // Event handling (just one observer possible)
     func setOnMapPinEvent(observer: MapPinEventObserver) -> Void {
-        if !observers.isEmpty {
-            for i in 0..<observers.count {
-                if observers[i] === observer { return }
-            }
-        }
-        observers.append(observer)
+        self.observer = observer
     }
-    func removeOnMapPinEvent(observer: MapPinEventObserver) -> Void {
-        for i in 0..<observers.count {
-            if observers[i] === observer {
-                observers.remove(at: i)
-                return
-            }
-        }
+    func removeOnMapPinEvent() -> Void {
+        self.observer = nil
     }
     func fireMapPinEvent(evt: MapPinEvent) -> Void {
-        observers.forEach { observer in observer.onMapPinEvent(evt: evt) }
+        if nil == self.observer { return }
+        self.observer!.onMapPinEvent(evt: evt)
     }
 }
 
