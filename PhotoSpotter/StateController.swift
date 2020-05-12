@@ -1042,6 +1042,19 @@ class StateController {
             print("Error saving last location. \(error)")
         }
     }
+
+    func storeCameraAndLensToUserDefaults() {
+        let defaults = UserDefaults.standard
+        do {
+            let cameraData = try NSKeyedArchiver.archivedData(withRootObject: self.view.camera, requiringSecureCoding: false)
+            defaults.set(cameraData, forKey: "camera")
+            
+            let lensData = try NSKeyedArchiver.archivedData(withRootObject: self.view.lens, requiringSecureCoding: false)
+            defaults.set(lensData, forKey: "lens")
+        } catch {
+            print("Error storing camera and lens to user defaults. \(error)")
+        }
+    }
     
     func storeToUserDefaults() {
         let defaults = UserDefaults.standard
@@ -1051,7 +1064,7 @@ class StateController {
         
             let lensesData = try NSKeyedArchiver.archivedData(withRootObject: self.lenses, requiringSecureCoding: false)
             defaults.set(lensesData, forKey: "lenses")
-            
+                        
             print("Cameras and Lenses stored to defaults")
             
             defaults.set(true, forKey: "useCloud")
@@ -1078,6 +1091,7 @@ class StateController {
         defaults.set(self.mapType, forKey: "mapType")
         print("MapType stored to defaults")
     }
+
     
     // Retrieve from UserDefaults
     func retrieveLocationFromUserDefaults() {
@@ -1089,6 +1103,30 @@ class StateController {
                 }
             } catch {
                 print("Error retrieving last location from UserDefaults. \(error)")
+            }
+        }
+    }
+    
+    func retrieveCameraAndLensFromUserDefaults() {
+        let defaults = UserDefaults.standard
+        if let cameraData = defaults.data(forKey: "camera") {
+            do {
+                if let camera = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(cameraData) as? Camera {
+                    print("Camera loaded from user defaults: \(camera.name)")
+                    view.camera = camera
+                }
+            } catch {
+                print("Error loading camera from UserDefaults. \(error)")
+            }
+        }
+        if let lensData = defaults.data(forKey: "lens") {
+            do {
+                if let lens = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(lensData) as? Lens {
+                    print("Lens loaded from user defaults: \(lens.name)")
+                    view.lens = lens
+                }
+            } catch {
+                print("Error loading camera from UserDefaults. \(error)")
             }
         }
     }

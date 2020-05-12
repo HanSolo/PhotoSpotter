@@ -523,6 +523,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 }
                 break;
             case .dragging:
+                updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
                 break;
             case .ending, .canceling:
                 if annotationView is MapPinAnnotationView {
@@ -722,11 +723,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if evt.src === cameraPin {
             stateController!.view.cameraPoint = MKMapPoint(evt.coordinate)
             updateFoVTriangle(cameraPoint: evt.point, motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
-            updateDragOverlay(cameraPoint: evt.point, motifPoint: self.motifPin!.point())
         } else if evt.src === motifPin {
             stateController!.view.motifPoint = MKMapPoint(evt.coordinate)
-            updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: evt.point, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
-            updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: evt.point)
+            updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: evt.point, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)            
         }
     }
     

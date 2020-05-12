@@ -31,6 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Retrieve data from UserDefaults and CoreData
         self.stateController.retrieveLocationFromUserDefaults()
+        self.stateController.retrieveCameraAndLensFromUserDefaults()
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             appDelegate.stateController = stateController
             self.stateController.retrieveFromCoreData(appDelegate: appDelegate)
@@ -66,6 +67,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
         self.stateController.storeLocationToUserDefaults()
+        self.stateController.storeCameraAndLensToUserDefaults()
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             appDelegate.saveContext()
             self.stateController.storeToCoreData(appDelegate: appDelegate)
