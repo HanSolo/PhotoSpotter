@@ -176,6 +176,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.maxTriangle                    = Triangle()
         self.trapezoid                      = Trapezoid()
         
+        self.stateController?.onCameraChanged = {
+            
+        }
+        self.stateController?.onLensChanged = {
+            
+        }
+        self.stateController?.onViewChanged = {
+            
+        }
+        self.stateController?.onLocationChanged = {
+            
+        }
+        
         self.mapView.delegate               = self
                         
         let mapTypeSelectorTextAttr         = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -208,7 +221,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         routeInfoView.addBackground(color: Constants.TRANSLUCENT_GRAY)
         distanceToViewLabel.textColor = Constants.YELLOW
         timeToViewLabel.textColor     = Constants.YELLOW
-        routeInfoView.isHidden = true
+        routeInfoView.isHidden        = true
         
         self.view.bringSubviewToFront(self.crossHair)
         

@@ -12,6 +12,23 @@ import CoreLocation
 
 
 class StateController {
+    // Current Camera
+    public var onCameraChanged: (() ->())?
+    public var camera : Camera = Constants.DEFAULT_CAMERA {
+        didSet { // Call closure if camera changed
+            if oldValue != camera { onCameraChanged?() }
+        }
+    }
+    
+    
+    // Current Lens
+    public var onLensChanged: (() -> ())?
+    public var lens : Lens = Constants.DEFAULT_LENS {
+        didSet {
+            if oldValue != lens { onLensChanged?() }
+        }
+    }
+    
     
     // Current spot
     private(set) var spot : Spot = Constants.DEFAULT_SPOT
@@ -19,16 +36,27 @@ class StateController {
         self.spot = spot.clone()
     }
     
-    
     // Current view
-    private(set) var view : View = Constants.DEFAULT_VIEW
+    public var onViewChanged: (() -> ())?
+    private(set) var view : View = Constants.DEFAULT_VIEW {
+        didSet {
+            if oldValue != view { onViewChanged?() }
+        }
+    }
     func setView(_ view: View) {
-        self.view = view.clone()
+        self.view   = view.clone()
+        self.camera = self.view.camera
+        self.lens   = self.view.lens
     }
     
     
     // Last location
-    private(set) var lastLocation : CLLocation = CLLocation(latitude: Constants.DEFAULT_POSITION.coordinate.latitude, longitude: Constants.DEFAULT_POSITION.coordinate.longitude)
+    public var onLocationChanged: (() -> ())?
+    private(set) var lastLocation : CLLocation = CLLocation(latitude: Constants.DEFAULT_POSITION.coordinate.latitude, longitude: Constants.DEFAULT_POSITION.coordinate.longitude) {
+        didSet {
+            if oldValue != lastLocation { onLocationChanged?() }
+        }
+    }
     func setLastLocation(_ location: CLLocation) {
         self.lastLocation = location        
     }
@@ -1046,10 +1074,10 @@ class StateController {
     func storeCameraAndLensToUserDefaults() {
         let defaults = UserDefaults.standard
         do {
-            let cameraData = try NSKeyedArchiver.archivedData(withRootObject: self.view.camera, requiringSecureCoding: false)
+            let cameraData = try NSKeyedArchiver.archivedData(withRootObject: self.camera, requiringSecureCoding: false)
             defaults.set(cameraData, forKey: "camera")
             
-            let lensData = try NSKeyedArchiver.archivedData(withRootObject: self.view.lens, requiringSecureCoding: false)
+            let lensData = try NSKeyedArchiver.archivedData(withRootObject: self.lens, requiringSecureCoding: false)
             defaults.set(lensData, forKey: "lens")
         } catch {
             print("Error storing camera and lens to user defaults. \(error)")
@@ -1113,7 +1141,7 @@ class StateController {
             do {
                 if let camera = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(cameraData) as? Camera {
                     print("Camera loaded from user defaults: \(camera.name)")
-                    view.camera = camera
+                    self.view.camera = camera
                 }
             } catch {
                 print("Error loading camera from UserDefaults. \(error)")
@@ -1123,7 +1151,7 @@ class StateController {
             do {
                 if let lens = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(lensData) as? Lens {
                     print("Lens loaded from user defaults: \(lens.name)")
-                    view.lens = lens
+                    self.view.lens = lens
                 }
             } catch {
                 print("Error loading camera from UserDefaults. \(error)")
