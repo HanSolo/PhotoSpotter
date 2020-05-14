@@ -1101,8 +1101,7 @@ class StateController {
             let lensData = try NSKeyedArchiver.archivedData(withRootObject: self.lens, requiringSecureCoding: false)
             defaults.set(lensData, forKey: Constants.LENS_UD)
             
-            defaults.set(focalLength, forKey: Constants.FOCAL_LENGTH_UD)
-            print("focalLength stored to UserDefaults to \(self.focalLength)")
+            defaults.set(focalLength, forKey: Constants.FOCAL_LENGTH_UD)            
             
             defaults.set(aperture, forKey: Constants.APERTURE_UD)
         } catch {
