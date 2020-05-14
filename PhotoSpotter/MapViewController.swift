@@ -182,6 +182,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.stateController?.onLensChanged = {
             
         }
+        self.stateController?.onFocalLengthChanged = {
+            
+        }
+        self.stateController?.onApertureChanged = {
+            
+        }
         self.stateController?.onViewChanged = {
             
         }
@@ -284,10 +290,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBAction func viewButtonPressed(_ sender: Any) {
         self.mapView.setVisibleMapRect(selectedViewMapRect, animated: true)
     }
+    
     @IBAction func focalLengthChanged(_ sender: Any) {
         self.focalLengthLabel.text             = String(format: "%.0f mm", Double(round(focalLengthSlider!.value)))
         self.stateController!.view.focalLength = Double(round(focalLengthSlider!.value))
-        
+        self.stateController!.focalLength      = Double(round(focalLengthSlider!.value))
         updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
@@ -295,8 +302,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     @IBAction func apertureChanged(_ sender: Any) {
         self.apertureLabel.text = String(format: "f %.1f", Double(round(apertureSlider!.value * 10) / 10))
-        stateController!.view.aperture = Double(round(apertureSlider!.value * 10) / 10)
-        
+        self.stateController!.view.aperture = Double(round(apertureSlider!.value * 10) / 10)
+        self.stateController!.aperture      = Double(round(apertureSlider!.value * 10) / 10)
         if dofVisible {
             updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
             updateDoFTrapezoid(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point(), focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)
@@ -766,6 +773,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.useSpotForRouting = false;
         self.useViewForRouting = true;
         
+        print("FocalLength in given view (\(view.name)) -> \(view.focalLength)")
+        
         stateController!.setView(view)
         stateController!.setLastLocation(CLLocation(latitude: view.cameraPoint.coordinate.latitude, longitude: view.cameraPoint.coordinate.longitude))
         
@@ -779,6 +788,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let focalLength : Double      = view.focalLength
         let aperture    : Double      = view.aperture
         let orientation : Orientation = view.orientation
+        
+        stateController!.lens   = view.lens
+        stateController!.camera = view.camera
         
         self.mapView.removeAnnotations(self.mapPins)
         self.mapPins.removeAll()

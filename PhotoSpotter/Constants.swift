@@ -198,6 +198,13 @@ public class Constants {
         TAG_SUNRISE, TAG_SUNSET, TAG_MOON, TAG_ARCHITECTURE, TAG_CLOSEUP, TAG_RIVER, TAG_CHURCH, TAG_TRAIN
     ]
     
+    // UserDefaults keys
+    public static let CAMERA_UD       : String = "camera"
+    public static let LENS_UD         : String = "lens"
+    public static let FOCAL_LENGTH_UD : String = "focalLength"
+    public static let APERTURE_UD     : String = "aperture"
+    
+    
     // CoreData entities
     public static let LENS_CD   : String = "LensCD"
     public static let CAMERA_CD : String = "CameraCD"

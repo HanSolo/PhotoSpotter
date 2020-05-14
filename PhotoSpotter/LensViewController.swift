@@ -251,6 +251,7 @@ class LensViewController: UIViewController, UITableViewDelegate, UITableViewData
         stateController!.view.lens                              = lens
         stateController!.view.focalLength                       = lens.minFocalLength
         stateController!.view.aperture                          = lens.minAperture
+        stateController!.lens                                   = lens
         self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         performSegue(withIdentifier: "lensesViewToMapView", sender: self)
     }

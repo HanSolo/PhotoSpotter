@@ -178,6 +178,7 @@ class CameraViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let camera = cameraSelection![indexPath.item]
         stateController!.view.camera = camera
+        stateController!.camera      = camera
         if stateController!.view.lens.sensorFormat != camera.sensorFormat {
             stateController!.view.lens = stateController!.lenses.first(where: { $0.sensorFormat == camera.sensorFormat }) ?? Constants.DEFAULT_LENS
         }

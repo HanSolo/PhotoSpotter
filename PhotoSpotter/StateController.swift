@@ -30,11 +30,30 @@ class StateController {
     }
     
     
+    // Current focal length
+    public var onFocalLengthChanged: (() -> ())?
+    public var focalLength : Double = (Constants.DEFAULT_LENS.maxFocalLength - Constants.DEFAULT_LENS.minFocalLength) / 2 + Constants.DEFAULT_LENS.minFocalLength {
+        didSet {
+            if oldValue != focalLength { onFocalLengthChanged?() }
+        }
+    }
+    
+    
+    // Current aperture
+    public var onApertureChanged: (() -> ())?
+    public var aperture : Double = (Constants.DEFAULT_LENS.maxAperture - Constants.DEFAULT_LENS.minAperture) / 2 + Constants.DEFAULT_LENS.minAperture {
+        didSet {
+            if oldValue != aperture { onApertureChanged?() }
+        }
+    }
+    
+    
     // Current spot
     private(set) var spot : Spot = Constants.DEFAULT_SPOT
     func setSpot(_ spot: Spot) {
         self.spot = spot.clone()
     }
+    
     
     // Current view
     public var onViewChanged: (() -> ())?
@@ -44,9 +63,11 @@ class StateController {
         }
     }
     func setView(_ view: View) {
-        self.view   = view.clone()
-        self.camera = self.view.camera
-        self.lens   = self.view.lens
+        self.view        = view.clone()
+        self.camera      = self.view.camera
+        self.lens        = self.view.lens
+        self.focalLength = self.view.focalLength
+        self.aperture    = self.view.aperture
     }
     
     
@@ -1075,10 +1096,15 @@ class StateController {
         let defaults = UserDefaults.standard
         do {
             let cameraData = try NSKeyedArchiver.archivedData(withRootObject: self.camera, requiringSecureCoding: false)
-            defaults.set(cameraData, forKey: "camera")
+            defaults.set(cameraData, forKey: Constants.CAMERA_UD)
             
             let lensData = try NSKeyedArchiver.archivedData(withRootObject: self.lens, requiringSecureCoding: false)
-            defaults.set(lensData, forKey: "lens")
+            defaults.set(lensData, forKey: Constants.LENS_UD)
+            
+            defaults.set(focalLength, forKey: Constants.FOCAL_LENGTH_UD)
+            print("focalLength stored to UserDefaults to \(self.focalLength)")
+            
+            defaults.set(aperture, forKey: Constants.APERTURE_UD)
         } catch {
             print("Error storing camera and lens to user defaults. \(error)")
         }
@@ -1137,25 +1163,29 @@ class StateController {
     
     func retrieveCameraAndLensFromUserDefaults() {
         let defaults = UserDefaults.standard
-        if let cameraData = defaults.data(forKey: "camera") {
+        if let cameraData = defaults.data(forKey: Constants.CAMERA_UD) {
             do {
                 if let camera = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(cameraData) as? Camera {
-                    print("Camera loaded from user defaults: \(camera.name)")
                     self.view.camera = camera
                 }
             } catch {
                 print("Error loading camera from UserDefaults. \(error)")
             }
         }
-        if let lensData = defaults.data(forKey: "lens") {
+        if let lensData = defaults.data(forKey: Constants.LENS_UD) {
             do {
                 if let lens = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(lensData) as? Lens {
-                    print("Lens loaded from user defaults: \(lens.name)")
                     self.view.lens = lens
                 }
             } catch {
-                print("Error loading camera from UserDefaults. \(error)")
+                print("Error loading lens from UserDefaults. \(error)")
             }
+        }
+        if defaults.double(forKey: Constants.FOCAL_LENGTH_UD) != 0 {
+            self.view.focalLength = defaults.double(forKey: Constants.FOCAL_LENGTH_UD)
+        }
+        if defaults.double(forKey: Constants.APERTURE_UD) != 0 {
+            self.view.aperture = defaults.double(forKey: Constants.APERTURE_UD)
         }
     }
     
@@ -1179,59 +1209,5 @@ class StateController {
                 print("Error loading cameras from UserDefaults. \(error)")
             }
         }
-        
-        /* Retrieve views from User defaults
-        if let viewsData = UserDefaults.standard.data(forKey: "views") {
-            do {
-                guard let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(viewsData) as? [Dictionary<String,String>] else {
-                    fatalError("Error loading views form UserDefaults")
-                }
-                var loadedViews : [View] = []
-                for dict in array {
-                    let view : View = Helper.dictionaryToView(dictionary: dict, cameras: self.cameras, lenses: self.lenses)
-                    loadedViews.append(view)
-                }
-                setViews(loadedViews)
-            } catch {
-                fatalError("load views - Can't encode data: \(error)")
-            }
-        }
-        */
-        
-        /* Retrieve views from iCloud documents json file
-        if defaults.dictionary(forKey: "view") != nil {
-        let dictionary : Dictionary<String,String> = defaults.dictionary(forKey: "view")! as! Dictionary<String,String>
-            setView(Helper.dictionaryToView(dictionary: dictionary, cameras: self.cameras, lenses: self.lenses))
-        } else {
-            print("No view found in UserDefaults")
-        }        
-        if defaults.integer(forKey: "mapType") != 0 {
-            updateMapType(defaults.integer(forKey: "mapType"))
-        } else {
-            print("No mapType found in UserDefaults")
-        }
-        
-        let iCloudViews : [View] = Helper.loadViewsFromDocuments()
-        print("Views found on iCloud:")
-        
-        for view in iCloudViews {
-            // check lens against lenses
-            let lens      = view.lens
-            let lensFound = self.lenses.filter { $0.name == lens.name }
-            if lensFound.isEmpty {
-                self.lenses.append(lens)
-            }
-            
-            // check camera against cameras
-            let camera      = view.camera
-            let cameraFound = self.cameras.filter { $0.name == camera.name }
-            if cameraFound.isEmpty {
-                self.cameras.append(camera)
-            }
-            
-            print("View: \(view.name)")
-        }
-        setViews(iCloudViews)
-        */                
     }
 }
