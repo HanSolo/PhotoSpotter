@@ -498,6 +498,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.delegate        = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
+        self.userLocation = locationManager.location
         
         if CLLocationManager.locationServicesEnabled() {
             //locationManager.startUpdatingHeading()
@@ -519,8 +520,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
     // MARK: CLLocationManagerDelegate methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.userLocation = locations[0] as CLLocation
-        manager.stopUpdatingLocation()
+        self.userLocation                  = locations[0] as CLLocation
+        self.stateController!.userLocation = locations[0] as CLLocation
         
         let center = CLLocationCoordinate2D(latitude: userLocation!.coordinate.latitude, longitude: userLocation!.coordinate.longitude)
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))

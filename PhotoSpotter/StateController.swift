@@ -71,6 +71,10 @@ class StateController {
     }
     
     
+    // Current user location
+    public var userLocation : CLLocation = CLLocation(latitude: Constants.DEFAULT_POSITION.coordinate.latitude, longitude: Constants.DEFAULT_POSITION.coordinate.longitude)
+    
+    
     // Last location
     public var onLocationChanged: (() -> ())?
     private(set) var lastLocation : CLLocation = CLLocation(latitude: Constants.DEFAULT_POSITION.coordinate.latitude, longitude: Constants.DEFAULT_POSITION.coordinate.longitude) {

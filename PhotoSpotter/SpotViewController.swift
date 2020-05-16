@@ -166,7 +166,8 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     private func filterByDistance(distance : Double) -> [Spot] {
-        return self.spotSelection!.filter({ $0.point.distance(to: MKMapPoint(self.stateController!.lastLocation.coordinate)) <= distance })
+        let currentLocation : MKMapPoint = MKMapPoint(self.stateController!.userLocation.coordinate)
+        return self.spotSelection!.filter({ $0.point.distance(to: currentLocation) <= distance })
     }
     
     
@@ -193,8 +194,10 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let country = Array(groupedSpots!.keys.sorted())[indexPath.section]
         let spot    = groupedSpots![country]?[indexPath.row] ?? Constants.DEFAULT_SPOT
-                                
-        cell.textLabel?.text = (spot.name)
+            
+        let currentLocation : MKMapPoint = MKMapPoint(self.stateController!.userLocation.coordinate)
+        let distanceText    : String     = String(format: "%.1f km", currentLocation.distance(to: spot.point) / 1000.0)
+        cell.textLabel?.text = "\(spot.name) (-> \(distanceText))"
         
         var text : String = ""
         var tags : String = ""

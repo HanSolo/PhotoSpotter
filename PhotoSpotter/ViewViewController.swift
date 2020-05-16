@@ -181,7 +181,8 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     private func filterByDistance(distance : Double) -> [View] {
-        return self.viewSelection!.filter({ $0.cameraPoint.distance(to: MKMapPoint(self.stateController!.lastLocation.coordinate)) <= distance })
+        let currentLocation : MKMapPoint = MKMapPoint(self.stateController!.userLocation.coordinate)
+        return self.viewSelection!.filter({ $0.cameraPoint.distance(to: currentLocation) <= distance })
     }
     
     
@@ -208,8 +209,10 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let country = Array(groupedViews!.keys.sorted())[indexPath.section]
         let view    = groupedViews![country]?[indexPath.row] ?? Constants.DEFAULT_VIEW
-                                
-        cell.textLabel?.text = (view.name)
+                             
+        let currentLocation : MKMapPoint = MKMapPoint(self.stateController!.userLocation.coordinate)
+        let distanceText    : String     = String(format: "%.1f km", currentLocation.distance(to: view.cameraPoint) / 1000.0)
+        cell.textLabel?.text = "\(view.name) (-> \(distanceText))"
         
         var text           : String
         var equipmentBegin : Int
