@@ -1415,44 +1415,70 @@
                                 <rect key="frame" x="0.0" y="50" width="1024" height="1246"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fka-5F-yN6" userLabel="ToolsView">
-                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="48"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="64"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="IhS-kF-E1w">
-                                                <rect key="frame" x="20" y="0.0" width="984" height="40"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8Bq-xN-UyR">
+                                                <rect key="frame" x="20" y="0.0" width="984" height="64"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Views" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gbx-Qu-hNx" userLabel="ViewLabel">
-                                                        <rect key="frame" x="0.0" y="16" width="52.5" height="24"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1O-kc-Aro" userLabel="AddViewButton">
-                                                        <rect key="frame" x="962.5" y="19" width="21.5" height="20"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="IhS-kF-E1w">
+                                                        <rect key="frame" x="0.0" y="0.0" width="984" height="29"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Views" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gbx-Qu-hNx" userLabel="ViewLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="52.5" height="24"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1O-kc-Aro" userLabel="AddViewButton">
+                                                                <rect key="frame" x="962.5" y="9" width="21.5" height="20"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
+                                                                <state key="normal" image="plus" catalog="system">
+                                                                    <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="addViewButtonPressed:" destination="5BG-JW-kIW" eventType="touchUpInside" id="tE3-EE-rNV"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pD3-QO-1xU" userLabel="RangeFilter">
+                                                        <rect key="frame" x="0.0" y="39" width="984" height="26"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <segments>
+                                                            <segment title="All"/>
+                                                            <segment title="100 km"/>
+                                                            <segment title="50 km"/>
+                                                            <segment title="20 km"/>
+                                                            <segment title="10 km"/>
+                                                        </segments>
                                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
-                                                        <state key="normal" image="plus" catalog="system">
-                                                            <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
-                                                        </state>
+                                                        <color key="selectedSegmentTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <connections>
-                                                            <action selector="addViewButtonPressed:" destination="5BG-JW-kIW" eventType="touchUpInside" id="tE3-EE-rNV"/>
+                                                            <action selector="rangeFilterSelectionChanged:" destination="5BG-JW-kIW" eventType="valueChanged" id="2gf-CB-RgE"/>
                                                         </connections>
-                                                    </button>
+                                                    </segmentedControl>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="IhS-kF-E1w" firstAttribute="leading" secondItem="8Bq-xN-UyR" secondAttribute="leading" id="06x-Cp-AxT"/>
+                                                    <constraint firstAttribute="trailing" secondItem="IhS-kF-E1w" secondAttribute="trailing" id="AK9-nZ-crs"/>
+                                                    <constraint firstItem="pD3-QO-1xU" firstAttribute="leading" secondItem="8Bq-xN-UyR" secondAttribute="leading" id="iUV-dr-a29"/>
+                                                </constraints>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="IhS-kF-E1w" secondAttribute="trailing" constant="20" id="7fU-sk-rLq"/>
-                                            <constraint firstAttribute="height" constant="48" id="88T-a8-Dl5"/>
-                                            <constraint firstItem="IhS-kF-E1w" firstAttribute="top" secondItem="Fka-5F-yN6" secondAttribute="top" id="YfW-ZM-WdZ"/>
-                                            <constraint firstItem="IhS-kF-E1w" firstAttribute="leading" secondItem="Fka-5F-yN6" secondAttribute="leading" constant="20" id="gx5-QG-qKO"/>
-                                            <constraint firstAttribute="bottom" secondItem="IhS-kF-E1w" secondAttribute="bottom" constant="8" id="k1U-da-7u7"/>
+                                            <constraint firstItem="8Bq-xN-UyR" firstAttribute="leading" secondItem="Fka-5F-yN6" secondAttribute="leading" constant="20" id="5ql-xL-X4v"/>
+                                            <constraint firstAttribute="height" constant="64" id="88T-a8-Dl5"/>
+                                            <constraint firstAttribute="bottom" secondItem="8Bq-xN-UyR" secondAttribute="bottom" id="KZI-SD-EK3"/>
+                                            <constraint firstItem="8Bq-xN-UyR" firstAttribute="top" secondItem="Fka-5F-yN6" secondAttribute="top" id="Lcd-OA-3ib"/>
+                                            <constraint firstAttribute="trailing" secondItem="8Bq-xN-UyR" secondAttribute="trailing" constant="20" id="si8-CG-hz8"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n34-ih-Ers" userLabel="ViewTableView">
-                                        <rect key="frame" x="0.0" y="48" width="1024" height="1198"/>
+                                        <rect key="frame" x="0.0" y="64" width="1024" height="1182"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
@@ -1544,6 +1570,7 @@
                         <outlet property="lensesButton" destination="sFq-T1-7Fo" id="RwO-8J-PRg"/>
                         <outlet property="mapButton" destination="3zj-hc-Yok" id="T0Y-mD-3MH"/>
                         <outlet property="navBar" destination="hlu-vr-GCU" id="dPL-Tg-f7g"/>
+                        <outlet property="rangeFilter" destination="pD3-QO-1xU" id="drn-Nm-oD0"/>
                         <outlet property="spotsButton" destination="XSJ-eX-8cR" id="hH3-VG-2FL"/>
                         <outlet property="tableView" destination="n34-ih-Ers" id="6U0-X6-ggQ"/>
                         <outlet property="viewsButton" destination="9r7-fs-59W" id="7rN-M9-VIP"/>
@@ -1756,44 +1783,71 @@
                                 <rect key="frame" x="0.0" y="50" width="1024" height="1246"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dXF-4D-Dgl" userLabel="ToolsView">
-                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="48"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="64"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="uBs-GT-H8Z">
-                                                <rect key="frame" x="20" y="0.0" width="984" height="40"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="YMV-ks-2Xm">
+                                                <rect key="frame" x="20" y="0.0" width="984" height="64"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spots" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fqm-7i-UYO" userLabel="SpotsLabel">
-                                                        <rect key="frame" x="0.0" y="16" width="51" height="24"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u2q-p4-Pnf" userLabel="AddSpotButton">
-                                                        <rect key="frame" x="962.5" y="19" width="21.5" height="20"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="193" translatesAutoresizingMaskIntoConstraints="NO" id="uBs-GT-H8Z">
+                                                        <rect key="frame" x="0.0" y="0.0" width="984" height="29"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spots" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fqm-7i-UYO" userLabel="SpotsLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="51" height="24"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u2q-p4-Pnf" userLabel="AddSpotButton">
+                                                                <rect key="frame" x="962.5" y="9" width="21.5" height="20"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
+                                                                <state key="normal" image="plus" catalog="system">
+                                                                    <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="addSpotButtonPressed:" destination="3Xq-N8-mWk" eventType="touchUpInside" id="eUt-Ga-3Dz"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uM9-JZ-OMc" userLabel="RangeFilter">
+                                                        <rect key="frame" x="0.0" y="39" width="984" height="26"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <segments>
+                                                            <segment title="All"/>
+                                                            <segment title="100 km"/>
+                                                            <segment title="50 km"/>
+                                                            <segment title="20 km"/>
+                                                            <segment title="10 km"/>
+                                                        </segments>
                                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
-                                                        <state key="normal" image="plus" catalog="system">
-                                                            <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="regular"/>
-                                                        </state>
+                                                        <color key="selectedSegmentTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <connections>
-                                                            <action selector="addSpotButtonPressed:" destination="3Xq-N8-mWk" eventType="touchUpInside" id="eUt-Ga-3Dz"/>
+                                                            <action selector="rangeFilterSelectionChanged:" destination="3Xq-N8-mWk" eventType="valueChanged" id="I4Q-Wv-Gvv"/>
                                                         </connections>
-                                                    </button>
+                                                    </segmentedControl>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="uM9-JZ-OMc" firstAttribute="leading" secondItem="YMV-ks-2Xm" secondAttribute="leading" id="K8l-PP-ybB"/>
+                                                    <constraint firstAttribute="trailing" secondItem="uBs-GT-H8Z" secondAttribute="trailing" id="Y4j-lG-lep"/>
+                                                    <constraint firstAttribute="trailing" secondItem="uM9-JZ-OMc" secondAttribute="trailing" id="YnL-en-lfu"/>
+                                                    <constraint firstItem="uBs-GT-H8Z" firstAttribute="leading" secondItem="YMV-ks-2Xm" secondAttribute="leading" id="fPe-7w-qtY"/>
+                                                </constraints>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="uBs-GT-H8Z" firstAttribute="top" secondItem="dXF-4D-Dgl" secondAttribute="top" id="AZ9-2L-kyG"/>
-                                            <constraint firstAttribute="trailing" secondItem="uBs-GT-H8Z" secondAttribute="trailing" constant="20" id="gMH-Zd-QSm"/>
-                                            <constraint firstAttribute="height" constant="48" id="lW8-vO-qpe"/>
-                                            <constraint firstAttribute="bottom" secondItem="uBs-GT-H8Z" secondAttribute="bottom" constant="8" id="qF6-tq-xqf"/>
-                                            <constraint firstItem="uBs-GT-H8Z" firstAttribute="leading" secondItem="dXF-4D-Dgl" secondAttribute="leading" constant="20" id="z6y-of-smG"/>
+                                            <constraint firstAttribute="trailing" secondItem="YMV-ks-2Xm" secondAttribute="trailing" constant="20" id="1g2-wu-zaY"/>
+                                            <constraint firstAttribute="bottom" secondItem="YMV-ks-2Xm" secondAttribute="bottom" id="HIU-oX-5Zb"/>
+                                            <constraint firstItem="YMV-ks-2Xm" firstAttribute="leading" secondItem="dXF-4D-Dgl" secondAttribute="leading" constant="20" id="WCl-rj-XDH"/>
+                                            <constraint firstAttribute="height" constant="64" id="lW8-vO-qpe"/>
+                                            <constraint firstItem="YMV-ks-2Xm" firstAttribute="top" secondItem="dXF-4D-Dgl" secondAttribute="top" id="nbO-1W-cHR"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n1p-Uv-GNd" userLabel="SpotTableView">
-                                        <rect key="frame" x="0.0" y="48" width="1024" height="1198"/>
+                                        <rect key="frame" x="0.0" y="64" width="1024" height="1182"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
@@ -1888,6 +1942,7 @@
                         <outlet property="lensesButton" destination="CCA-Fq-ZZw" id="Icr-wx-Ryh"/>
                         <outlet property="mapButton" destination="3A2-KJ-Izm" id="YZn-Te-Wyo"/>
                         <outlet property="navBar" destination="fuh-v1-r4X" id="8OA-uu-SrV"/>
+                        <outlet property="rangeFilter" destination="uM9-JZ-OMc" id="YGG-vu-w0M"/>
                         <outlet property="tableView" destination="n1p-Uv-GNd" id="hjB-3r-cw7"/>
                         <outlet property="viewsButton" destination="DLU-c1-OPN" id="Rbk-Dh-IET"/>
                         <segue destination="7vO-tA-kDQ" kind="presentation" identifier="spotsViewToSpotDetailsView" id="EZd-my-FGF"/>
@@ -2036,7 +2091,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="LcV-PU-V2T"/>
+        <segue reference="yDZ-IK-3lV"/>
         <segue reference="9kl-OT-FTv"/>
         <segue reference="bVp-BO-Ms6"/>
         <segue reference="9wG-xL-2Aj"/>

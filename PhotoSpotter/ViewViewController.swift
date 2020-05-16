@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 class ViewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FoVController {
     var stateController    : StateController?
@@ -25,7 +26,8 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView     : UITableView!
     @IBOutlet weak var editViewButton: UIButton!
     @IBOutlet weak var addViewButton : UIButton!
-        
+    @IBOutlet weak var rangeFilter   : UISegmentedControl!
+    
     @IBOutlet weak var navBar: UINavigationBar!
     
     var viewSelection : [View]?
@@ -89,6 +91,11 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func editViewButtonPressed(_ sender: Any) {
+    }
+    
+    @IBAction func rangeFilterSelectionChanged(_ sender: Any) {
+        groupedViews = groupByCountry()
+        tableView.reloadData()
     }
     
     
@@ -157,7 +164,24 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     private func groupByCountry() -> Dictionary<String, [View]> {
+        var distance : Double
+        switch self.rangeFilter.selectedSegmentIndex {
+            case 0 : distance = 40000000
+            case 1 : distance = 100000
+            case 2 : distance = 50000
+            case 3 : distance = 20000
+            case 4 : distance = 10000
+            default: distance = 40000000
+        }
+        let hideDefaultView : Bool = stateController!.views.count > 1
+        self.viewSelection = hideDefaultView ? stateController!.views.filter { $0.name != Constants.DEFAULT_VIEW.name } : stateController!.views
+        self.viewSelection! = filterByDistance(distance: distance)
+        
         return Dictionary(grouping: viewSelection!, by: { $0.country })
+    }
+    
+    private func filterByDistance(distance : Double) -> [View] {
+        return self.viewSelection!.filter({ $0.cameraPoint.distance(to: MKMapPoint(self.stateController!.lastLocation.coordinate)) <= distance })
     }
     
     

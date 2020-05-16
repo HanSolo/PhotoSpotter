@@ -26,7 +26,8 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView     : UITableView!
     @IBOutlet weak var editSpotButton: UIButton!
     @IBOutlet weak var addSpotButton : UIButton!
-        
+    @IBOutlet weak var rangeFilter   : UISegmentedControl!
+    
     @IBOutlet weak var navBar: UINavigationBar!
     
     var spotSelection : [Spot]?
@@ -89,6 +90,11 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func editSpotButtonPressed(_ sender: Any) {
     }
     
+    @IBAction func rangeFilterSelectionChanged(_ sender: Any) {
+        groupedSpots = groupByCountry()
+        tableView.reloadData()
+    }
+    
     
     @IBAction func done(segue:UIStoryboardSegue) {        
         let spotDetailVC = segue.source as! SpotDetailViewController
@@ -144,7 +150,23 @@ class SpotViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     private func groupByCountry() -> Dictionary<String, [Spot]> {
+        var distance : Double
+        switch self.rangeFilter.selectedSegmentIndex {
+            case 0 : distance = 40000000
+            case 1 : distance = 100000
+            case 2 : distance = 50000
+            case 3 : distance = 20000
+            case 4 : distance = 10000
+            default: distance = 40000000
+        }
+        self.spotSelection! = stateController!.spots
+        self.spotSelection! = filterByDistance(distance: distance)
+        
         return Dictionary(grouping: spotSelection!, by: { $0.country })
+    }
+    
+    private func filterByDistance(distance : Double) -> [Spot] {
+        return self.spotSelection!.filter({ $0.point.distance(to: MKMapPoint(self.stateController!.lastLocation.coordinate)) <= distance })
     }
     
     
