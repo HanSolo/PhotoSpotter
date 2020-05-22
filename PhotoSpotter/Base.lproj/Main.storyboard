@@ -355,14 +355,20 @@
                                     <constraint firstItem="qjA-Xy-mP7" firstAttribute="top" secondItem="X8s-17-0Cl" secondAttribute="top" id="sK6-Jw-p6F"/>
                                 </constraints>
                             </stackView>
+                            <searchBar contentMode="redraw" showsSearchResultsButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gGA-ad-Ved">
+                                <rect key="frame" x="20" y="186" width="984" height="56"/>
+                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ir-dF-OFO" userLabel="MainView">
-                                <rect key="frame" x="0.0" y="196" width="1024" height="994"/>
+                                <rect key="frame" x="0.0" y="242" width="1024" height="948"/>
                                 <subviews>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eEB-0J-bVb">
-                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="994"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="948"/>
                                     </mapView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="YQT-CV-hyc" userLabel="RouteInfo">
-                                        <rect key="frame" x="20" y="933.5" width="215" height="40.5"/>
+                                        <rect key="frame" x="20" y="887.5" width="215" height="40.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6F-h6-dXV" userLabel="DistanceToViewLabel">
                                                 <rect key="frame" x="10" y="10" width="72" height="20.5"/>
@@ -398,7 +404,7 @@
                                         </connections>
                                     </segmentedControl>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GtQ-2N-JhX" userLabel="ElevationChart" customClass="ElevationChartView" customModule="PhotoSpotter" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="994" width="1024" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="948" width="1024" height="0.0"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="hrY-dB-gR5"/>
@@ -429,12 +435,12 @@
                                         </constraints>
                                     </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="7E7-Ih-Ugf" userLabel="CrossHair">
-                                        <rect key="frame" x="495" y="481" width="34.5" height="32.5"/>
+                                        <rect key="frame" x="495" y="458" width="34.5" height="32.5"/>
                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="28" scale="large" weight="ultraLight"/>
                                     </imageView>
                                     <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="myE-BO-9Y4" userLabel="SunMoonDatePicker">
-                                        <rect key="frame" x="684" y="758" width="320" height="216"/>
+                                        <rect key="frame" x="684" y="712" width="320" height="216"/>
                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="sunMoonDatePickerChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="ElS-NZ-nRG"/>
@@ -619,13 +625,16 @@
                             <constraint firstItem="X8s-17-0Cl" firstAttribute="top" secondItem="YLE-9w-5zA" secondAttribute="bottom" constant="20" id="W22-QR-oSO"/>
                             <constraint firstItem="sHc-ik-fhZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Xyp-vX-E9H"/>
                             <constraint firstAttribute="trailing" secondItem="sHc-ik-fhZ" secondAttribute="trailing" constant="20" id="Yxk-8L-oVY"/>
+                            <constraint firstItem="gGA-ad-Ved" firstAttribute="top" secondItem="X8s-17-0Cl" secondAttribute="bottom" constant="10" id="au5-UD-LvR"/>
+                            <constraint firstItem="gGA-ad-Ved" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="dkd-uP-fpr"/>
                             <constraint firstItem="22Y-OU-r3J" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="eih-DX-dFQ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gGA-ad-Ved" secondAttribute="trailing" constant="20" id="emk-6p-m6E"/>
                             <constraint firstItem="X8s-17-0Cl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="f1J-cU-YUb"/>
                             <constraint firstItem="YLE-9w-5zA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hZo-vd-CIv"/>
                             <constraint firstItem="YLE-9w-5zA" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="kYh-MU-lKe"/>
+                            <constraint firstItem="6ir-dF-OFO" firstAttribute="top" secondItem="gGA-ad-Ved" secondAttribute="bottom" id="oGe-Ch-hhQ"/>
                             <constraint firstItem="sHc-ik-fhZ" firstAttribute="top" secondItem="6ir-dF-OFO" secondAttribute="bottom" constant="20" id="qY7-7X-25P"/>
                             <constraint firstItem="YLE-9w-5zA" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="xIj-ey-5cO"/>
-                            <constraint firstItem="6ir-dF-OFO" firstAttribute="top" secondItem="X8s-17-0Cl" secondAttribute="bottom" constant="20" id="xkd-Jc-l4X"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -666,6 +675,7 @@
                         <outlet property="placeButton" destination="xp3-1c-EGH" id="RKG-WR-YCE"/>
                         <outlet property="routeInfoView" destination="YQT-CV-hyc" id="58b-Fq-8OR"/>
                         <outlet property="routingButton" destination="f21-dR-J3l" id="o0a-GA-sKP"/>
+                        <outlet property="searchBar" destination="gGA-ad-Ved" id="y2j-3L-0GM"/>
                         <outlet property="showSpotsButton" destination="gyl-Qk-HLX" id="cNB-oK-enh"/>
                         <outlet property="showViewsButton" destination="aPa-8a-0ta" id="0jF-Lq-CtX"/>
                         <outlet property="spotsButton" destination="mh3-ph-L6a" id="HgY-nM-VeJ"/>
@@ -2091,11 +2101,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yDZ-IK-3lV"/>
-        <segue reference="9kl-OT-FTv"/>
-        <segue reference="bVp-BO-Ms6"/>
-        <segue reference="9wG-xL-2Aj"/>
-        <segue reference="Vr5-m4-xts"/>
+        <segue reference="LcV-PU-V2T"/>
+        <segue reference="Tqb-kX-mOs"/>
+        <segue reference="q1Q-0p-CtR"/>
+        <segue reference="6Gl-Tl-cdW"/>
+        <segue reference="Yg0-Ub-0Bk"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.up.and.down.circle" catalog="system" width="128" height="121"/>

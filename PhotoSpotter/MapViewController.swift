@@ -15,7 +15,7 @@ import CoreData
 import CloudKit
 
 
-class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, MapPinEventObserver, FoVController {
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, MapPinEventObserver, UISearchBarDelegate, UISearchResultsUpdating, FoVController {
     var stateController    : StateController?
     var sentViaSegueObject : FoVController?
     
@@ -67,6 +67,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     @IBOutlet weak var navBar              : UINavigationBar!
     @IBOutlet weak var navBarItem          : UINavigationItem!
+    @IBOutlet weak var searchBar           : UISearchBar!
     
     @IBOutlet weak var crossHair           : UIImageView!
     
@@ -228,6 +229,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         distanceToViewLabel.textColor = Constants.YELLOW
         timeToViewLabel.textColor     = Constants.YELLOW
         routeInfoView.isHidden        = true
+        
+        searchBar.backgroundImage = UIImage()
+        searchBar.delegate        = self
+        
         
         self.view.bringSubviewToFront(self.crossHair)
         
@@ -739,6 +744,44 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     
+    func updateSearchResults(for searchController: UISearchController) {
+        print("reached")
+    }
+    
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        //print("searchBarTextDidEndEditing")
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("searchBarSearchButtonClicked")
+        
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = searchBar.text
+        let search = MKLocalSearch(request: searchRequest)
+        search.start { response, error in
+            guard let response = response else {
+                print("Error: \(error?.localizedDescription ?? "Unknown error").")
+                return
+            }
+            if response.mapItems.isEmpty { return }
+            
+            let region = MKCoordinateRegion(center: response.mapItems[0].placemark.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+            self.mapView.setRegion(region, animated: true)
+            /*
+            for item in response.mapItems {
+                print(item)
+            }
+            */
+        }
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        //print("searchBarCancelButtonClicked")
+    }
+    func searchBarResultsListButtonClicked(_ searchBar: UISearchBar) {
+        //print("searchBarResultsListButtonClicked")
+        // TODO: Show tableview with search results
+    }
+        
     // MapPin event handling
     func onMapPinEvent(evt: MapPinEvent) {
         if evt.src === cameraPin {
