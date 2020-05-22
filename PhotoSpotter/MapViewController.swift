@@ -531,6 +531,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let center = CLLocationCoordinate2D(latitude: userLocation!.coordinate.latitude, longitude: userLocation!.coordinate.longitude)
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
         mapView.setRegion(region, animated: true)
+        
+        locationManager.stopUpdatingLocation();
     }
     private func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print("Error \(error)")
@@ -745,7 +747,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     
     func updateSearchResults(for searchController: UISearchController) {
-        print("reached")
+        //print("reached")
     }
     
     
@@ -753,8 +755,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         //print("searchBarTextDidEndEditing")
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("searchBarSearchButtonClicked")
-        
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = searchBar.text
         let search = MKLocalSearch(request: searchRequest)
@@ -791,6 +791,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             stateController!.view.motifPoint = MKMapPoint(evt.coordinate)
             updateFoVTriangle(cameraPoint: self.cameraPin!.point(), motifPoint: evt.point, focalLength: stateController!.view.focalLength, aperture: stateController!.view.aperture, sensorFormat: stateController!.view.camera.sensorFormat, orientation: stateController!.view.orientation)            
         }
+        updateDragOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
     
     // Goto a spot
@@ -816,8 +817,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.mapView.removeOverlays(routePolylines)
         self.useSpotForRouting = false;
         self.useViewForRouting = true;
-        
-        print("FocalLength in given view (\(view.name)) -> \(view.focalLength)")
         
         stateController!.setView(view)
         stateController!.setLastLocation(CLLocation(latitude: view.cameraPoint.coordinate.latitude, longitude: view.cameraPoint.coordinate.longitude))
