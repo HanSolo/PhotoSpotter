@@ -70,6 +70,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var searchBar           : UISearchBar!
     
     @IBOutlet weak var crossHair           : UIImageView!
+    @IBOutlet weak var pickerTop: NSLayoutConstraint!
     
     let monitor               : NWPathMonitor        = NWPathMonitor()
     var connected             : Bool                 = false
@@ -132,6 +133,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     var cameraBodyButton      : UIButton?
 
+    @IBOutlet weak var pickerTopConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var elevationChartView: ElevationChartView!
     @IBOutlet weak var infoView          : InfoView!
@@ -488,7 +490,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         #if targetEnvironment(macCatalyst)
             // Add zoom controls to mapview
-            mapView.showsZoomControls = true
+            mapView.showsZoomControls    = true
+            pickerTopConstraint.constant = 60;
+            sunMoonDatePicker.backgroundColor = Constants.TRANSLUCENT_GRAY;
         #else
             
         #endif
