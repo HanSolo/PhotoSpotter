@@ -101,9 +101,9 @@ public class Constants {
     
     public static let DEFAULT_ORIENTATION : Orientation = Orientation.landscape
     
-    public static let DEFAULT_ORIGIN      : MKMapPoint  = MKMapPoint(CLLocationCoordinate2D(latitude: 51.911821, longitude: 7.633703))
+    public static let DEFAULT_ORIGIN      : MKMapPoint  = MKMapPoint(x: 139861109.1421626, y: 88744796.20247081)
 
-    public static let DEFAULT_MAP_SIZE    : MKMapSize   = MKMapSize(width: 46585.40107989311, height: 49490.00642307103)
+    public static let DEFAULT_MAP_SIZE    : MKMapSize   = MKMapSize(width: 97313.02098080516, height: 60438.11837643385)
     
     public static let DEFAULT_SPOT        : Spot        = Spot(name: "Home", description: "Test", point: DEFAULT_POSITION, country: DEFAULT_COUNTRY)
     

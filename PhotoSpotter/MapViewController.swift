@@ -726,7 +726,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         stateController!.view.mapRect = mapView.visibleMapRect
         stateController!.setLastLocation(CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude))
         // Take value from slider here
-        updateSunMoonOverlay(date: self.sunMoonDatePicker.date)
+        updateSunMoonOverlay(date: self.sunMoonDatePicker.date)        
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {}
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
