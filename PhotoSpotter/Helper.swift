@@ -12,6 +12,10 @@ import SystemConfiguration
 
 
 public class Helper {
+    public static func isICloudAvailable() -> Bool {
+        return FileManager.default.ubiquityIdentityToken != nil
+    }
+    
     public static func toDegrees(radians: Double) -> Double {
         return radians * 180 / .pi
     }

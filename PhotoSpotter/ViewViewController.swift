@@ -209,7 +209,7 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let country = Array(groupedViews!.keys.sorted())[indexPath.section]
         let view    = groupedViews![country]?[indexPath.row] ?? Constants.DEFAULT_VIEW
-                             
+        
         let currentLocation : MKMapPoint = MKMapPoint(self.stateController!.userLocation.coordinate)
         let distanceText    : String     = String(format: "%.1f km", currentLocation.distance(to: view.cameraPoint) / 1000.0)
         cell.textLabel?.text = "\(view.name) (-> \(distanceText))"
@@ -264,15 +264,23 @@ class ViewViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         tagsBegin = times.count == 0 ? timesEnd : timesEnd + 1
         tagsEnd   = equipment.count > 2 ? tags.count : tags.count + 1
-       
+        print("Check")
+        print("equipmentBegin: \(equipmentBegin)")
+        print("equipmentEnd  : \(equipmentEnd)")
+        print("timesBegin    : \(timesBegin)")
+        print("timesEnd      : \(timesEnd)")
+        print("tagsBegin     : \(tagsBegin)")
+        print("tagsEnd       : \(tagsEnd)")
+        
         if text.count > 0 {
             let detailText :NSMutableAttributedString = NSMutableAttributedString(string: text)
             detailText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.YELLOW], range: NSRange(location: equipmentBegin, length: equipment.count > 2 ? equipment.count : 0))
             detailText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.BLUE], range: NSRange(location: timesBegin, length: times.count))
             detailText.addAttributes([NSAttributedString.Key.foregroundColor: Constants.RED], range: NSRange(location: tagsBegin, length: tagsEnd))
-        
+            
             cell.detailTextLabel?.attributedText = detailText
         }
+        
         return cell
     }
     

@@ -1113,7 +1113,7 @@ class StateController {
         }
     }
     
-    func storeToUserDefaults() {
+    func storeCamerasAndLensesToUserDefaults() {
         let defaults = UserDefaults.standard
         do {
             let camerasData = try NSKeyedArchiver.archivedData(withRootObject: self.cameras, requiringSecureCoding: false)
@@ -1139,6 +1139,42 @@ class StateController {
             */
         } catch {
             print("Error saving cameras and lenses: \(error)")
+        }
+        
+        let dictionary : Dictionary<String,String> = Helper.viewToDictionary(view: self.view)
+        defaults.set(dictionary, forKey: "view")
+        print("Current view stored to defaults")
+        
+        defaults.set(self.mapType, forKey: "mapType")
+        print("MapType stored to defaults")
+    }
+    
+    func storeViewsAndSpotsToUserDefaults() {
+        let defaults = UserDefaults.standard
+        do {
+            defaults.set(true, forKey: "useCloud")
+            
+            // Store views in UserDefaults
+            var viewDict : [Dictionary<String,String>] = []
+            for view in views {
+                let dictionary : Dictionary<String,String> = Helper.viewToDictionary(view: view)
+                viewDict.append(dictionary)
+            }
+            let viewsData = try NSKeyedArchiver.archivedData(withRootObject: viewDict, requiringSecureCoding: false)
+            defaults.set(viewsData, forKey: "views")
+            
+            // Store spots in UserDefaults
+            var spotDict : [Dictionary<String,String>] = []
+            for spot in spots {
+                let dictionary : Dictionary<String,String> = Helper.spotToDictionary(spot: spot)
+                spotDict.append(dictionary)
+            }
+            let spotsData = try NSKeyedArchiver.archivedData(withRootObject: spotDict, requiringSecureCoding: false)
+            defaults.set(spotsData, forKey: "spots")
+            
+            print("Views stored to defaults")
+        } catch {
+            print("Error saving views and spots to icloud: \(error)")
         }
         
         let dictionary : Dictionary<String,String> = Helper.viewToDictionary(view: self.view)
@@ -1192,7 +1228,44 @@ class StateController {
         }
     }
     
-    func retrieveFromUserDefaults() {
+    func retrieveViewsAndSpotsFromUserDefaults() {
+        let defaults = UserDefaults.standard
+        // Retrieve views
+        if let viewsData = defaults.data(forKey: "views") {
+            do {
+                guard let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(viewsData) as? [Dictionary<String,String>] else {
+                    fatalError("Error loading views form UserDefaults")
+                }
+                var loadedViews : [View] = []
+                for dict in array {
+                    let view : View = Helper.dictionaryToView(dictionary: dict, cameras: self.cameras, lenses: self.lenses)
+                    loadedViews.append(view)
+                }
+                setViews(loadedViews)
+            } catch {
+                fatalError("load views - Can't encode data: \(error)")
+            }
+        }
+        
+        // Retrieve spots
+        if let spotsData = defaults.data(forKey: "spots") {
+            do {
+                guard let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(spotsData) as? [Dictionary<String,String>] else {
+                    fatalError("Error loading spots form UserDefaults")
+                }
+                var loadedSpots : [Spot] = []
+                for dict in array {
+                    let spot : Spot = Helper.dictionaryToSpot(dictionary: dict)
+                    loadedSpots.append(spot)
+                }
+                setSpots(loadedSpots)
+            } catch {
+                fatalError("load spots - Can't encode data: \(error)")
+            }
+        }
+    }
+    
+    func retrieveCamerasAndLensesFromUserDefaults() {
         let defaults = UserDefaults.standard
         if let lensesData = defaults.data(forKey: "lenses") {
             do {

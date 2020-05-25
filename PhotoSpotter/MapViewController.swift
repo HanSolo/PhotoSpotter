@@ -250,10 +250,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         // Update data from iCloud
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            stateController!.loadCamerasFromCD(appDelegate: appDelegate)
-            stateController!.loadLensesFromCD(appDelegate: appDelegate)
-            stateController!.loadSpotsFromCD(appDelegate: appDelegate)
-            stateController!.loadViewsFromCD(appDelegate: appDelegate)
+            if Helper.isICloudAvailable() {
+                stateController!.loadCamerasFromCD(appDelegate: appDelegate)
+                stateController!.loadLensesFromCD(appDelegate: appDelegate)
+                stateController!.loadSpotsFromCD(appDelegate: appDelegate)
+                stateController!.loadViewsFromCD(appDelegate: appDelegate)
+            } else {
+                stateController!.retrieveCameraAndLensFromUserDefaults()
+                stateController!.retrieveViewsAndSpotsFromUserDefaults()
+            }
         }
                 
         createMapView()

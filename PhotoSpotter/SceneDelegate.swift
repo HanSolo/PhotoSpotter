@@ -32,11 +32,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Retrieve data from UserDefaults and CoreData
         self.stateController.retrieveLocationFromUserDefaults()
         self.stateController.retrieveCameraAndLensFromUserDefaults()
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            appDelegate.stateController = stateController
-            self.stateController.retrieveFromCoreData(appDelegate: appDelegate)
-        } else {
-            self.stateController.retrieveFromUserDefaults()
+        if Helper.isICloudAvailable() {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                appDelegate.stateController = stateController
+                self.stateController.retrieveFromCoreData(appDelegate: appDelegate)
+            } else {
+                self.stateController.retrieveCamerasAndLensesFromUserDefaults()
+            }
+        } else {            
+            self.stateController.retrieveCamerasAndLensesFromUserDefaults()
+            self.stateController.retrieveCamerasAndLensesFromUserDefaults()
         }
     }
 
@@ -68,11 +73,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
         self.stateController.storeLocationToUserDefaults()
         self.stateController.storeCameraAndLensToUserDefaults()
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            appDelegate.saveContext()
-            self.stateController.storeToCoreData(appDelegate: appDelegate)
+        if Helper.isICloudAvailable() {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                appDelegate.saveContext()
+                self.stateController.storeToCoreData(appDelegate: appDelegate)
+            } else {
+                self.stateController.storeCamerasAndLensesToUserDefaults()
+            }
         } else {
-            self.stateController.storeToUserDefaults()
+            self.stateController.storeCamerasAndLensesToUserDefaults()
+            self.stateController.storeViewsAndSpotsToUserDefaults()
         }
     }
 }

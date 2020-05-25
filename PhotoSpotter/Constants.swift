@@ -85,48 +85,6 @@ public class Constants {
     public static let SUN_SET_STROKE      : UIColor = UIColor.init(red: 0.75, green: 0.375,      blue:  0.0,       alpha: 1.0)
     public static let SUN_STROKE          : UIColor = UIColor.init(red: 0.5,  green: 0.5,        blue:  0.0,       alpha: 1.0)
     
-    public static let DEFAULT_COUNTRY     : String     = "DE"
-    
-    public static let DEFAULT_POSITION    : MKMapPoint = MKMapPoint(CLLocationManager().location?.coordinate ?? CLLocationCoordinate2D(latitude : 51.911821, longitude: 7.633703))
-    
-    public static let DEFAULT_CAMERA      : Camera = Camera(name        : "DEFAULT DSLR",
-                                                            sensorFormat: SensorFormat.FULL_FORMAT.id)
-    
-    public static let DEFAULT_LENS        : Lens   = Lens(name          : "DEFAULT LENS",
-                                                          minFocalLength: 8,
-                                                          maxFocalLength: 1000,
-                                                          minAperture   : 0.7,
-                                                          maxAperture   : 99,
-                                                          sensorFormat  : SensorFormat.FULL_FORMAT.id)
-    
-    public static let DEFAULT_ORIENTATION : Orientation = Orientation.landscape
-    
-    public static let DEFAULT_MAP_SIZE    : MKMapSize   = MKMapSize(width: 97313.02098080516, height: 60438.11837643385)
-    
-    public static let DEFAULT_ORIGIN      : MKMapPoint  = MKMapPoint(x: DEFAULT_POSITION.x - DEFAULT_MAP_SIZE.width / 2, y: DEFAULT_POSITION.y - DEFAULT_MAP_SIZE.height / 2)
-            
-    public static let DEFAULT_SPOT        : Spot        = Spot(name: "Home", description: "Test", point: DEFAULT_POSITION, country: DEFAULT_COUNTRY)
-    
-    public static let DEFAULT_VIEW        : View        = View(name       : "View",
-                                                               description: "Default View",
-                                                               cameraPoint: DEFAULT_POSITION,
-                                                               motifPoint : MKMapPoint(CLLocationCoordinate2D(latitude: DEFAULT_POSITION.coordinate.latitude + 0.005, longitude: DEFAULT_POSITION.coordinate.longitude)),
-                                                               camera     : DEFAULT_CAMERA,
-                                                               lens       : DEFAULT_LENS,
-                                                               focalLength: DEFAULT_LENS.minFocalLength + (DEFAULT_LENS.maxFocalLength - DEFAULT_LENS.minFocalLength) / 2,
-                                                               aperture   : DEFAULT_LENS.minAperture + (DEFAULT_LENS.maxAperture - DEFAULT_LENS.minAperture) / 2,
-                                                               orientation: Orientation.landscape,
-                                                               country    : DEFAULT_COUNTRY,
-                                                               mapRect    : MKMapRect(origin: DEFAULT_ORIGIN, size: DEFAULT_MAP_SIZE)
-                                                              )
-    
-    public static let VALID_CLEAR         : CGColor = CGColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 0)
-    public static let INVALID_RED         : CGColor = UIColor(red: 1.00, green: 0.42, blue: 0.37, alpha: 1.00).cgColor
-    
-    public static let ATTENTION_ICON      : UIImage = UIImage(systemName: "exclamationmark.circle")!
-    public static let INFO_ICON           : UIImage = UIImage(systemName: "info.circle")!
-    public static let ERROR_ICON          : UIImage = UIImage(systemName: "xmark.octagon")!
-    public static let STAR_ICON           : UIImage = (UIImage(named: "star")?.resize(to: CGSize(width: 24, height: 24)))!   
     
     // Equipment
     public static let EQP_TRIPOD     : (String, Int32) = ("Tripod",     1 << 0) //  1
@@ -197,6 +155,54 @@ public class Constants {
         TAG_STREET, TAG_BRIDGE, TAG_LAKE, TAG_SHIP, TAG_CAR, TAG_FLOWER, TAG_TREE, TAG_BUILDING, TAG_BEACH,
         TAG_SUNRISE, TAG_SUNSET, TAG_MOON, TAG_ARCHITECTURE, TAG_CLOSEUP, TAG_RIVER, TAG_CHURCH, TAG_TRAIN
     ]
+    
+    
+    public static let DEFAULT_COUNTRY     : String     = "DE"
+    
+    public static let DEFAULT_POSITION    : MKMapPoint = MKMapPoint(CLLocationManager().location?.coordinate ?? CLLocationCoordinate2D(latitude : 51.911821, longitude: 7.633703))
+    
+    public static let DEFAULT_CAMERA      : Camera = Camera(name        : "DEFAULT DSLR",
+                                                            sensorFormat: SensorFormat.FULL_FORMAT.id)
+    
+    public static let DEFAULT_LENS        : Lens   = Lens(name          : "DEFAULT LENS",
+                                                          minFocalLength: 8,
+                                                          maxFocalLength: 1000,
+                                                          minAperture   : 0.7,
+                                                          maxAperture   : 99,
+                                                          sensorFormat  : SensorFormat.FULL_FORMAT.id)
+    
+    public static let DEFAULT_ORIENTATION : Orientation = Orientation.landscape
+    
+    public static let DEFAULT_MAP_SIZE    : MKMapSize   = MKMapSize(width: 97313.02098080516, height: 60438.11837643385)
+    
+    public static let DEFAULT_ORIGIN      : MKMapPoint  = MKMapPoint(x: DEFAULT_POSITION.x - DEFAULT_MAP_SIZE.width / 2, y: DEFAULT_POSITION.y - DEFAULT_MAP_SIZE.height / 2)
+            
+    public static let DEFAULT_SPOT        : Spot        = Spot(name: "Home", description: "Test", point: DEFAULT_POSITION, country: DEFAULT_COUNTRY)
+    
+    public static let DEFAULT_VIEW        : View        = View(name       : "View",
+                                                               description: "Default View",
+                                                               cameraPoint: DEFAULT_POSITION,
+                                                               motifPoint : MKMapPoint(CLLocationCoordinate2D(latitude: DEFAULT_POSITION.coordinate.latitude + 0.005, longitude: DEFAULT_POSITION.coordinate.longitude)),
+                                                               camera     : DEFAULT_CAMERA,
+                                                               lens       : DEFAULT_LENS,
+                                                               focalLength: DEFAULT_LENS.minFocalLength + (DEFAULT_LENS.maxFocalLength - DEFAULT_LENS.minFocalLength) / 2,
+                                                               aperture   : DEFAULT_LENS.minAperture + (DEFAULT_LENS.maxAperture - DEFAULT_LENS.minAperture) / 2,
+                                                               orientation: Orientation.landscape,
+                                                               country    : DEFAULT_COUNTRY,
+                                                               mapRect    : MKMapRect(origin: DEFAULT_ORIGIN, size: DEFAULT_MAP_SIZE),
+                                                               tags       : TAG_STREET.1,
+                                                               equipment  : EQP_TRIPOD.1,
+                                                               times      : TMS_ALL_YEAR.1
+                                                              )
+    
+    public static let VALID_CLEAR         : CGColor = CGColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 0)
+    public static let INVALID_RED         : CGColor = UIColor(red: 1.00, green: 0.42, blue: 0.37, alpha: 1.00).cgColor
+    
+    public static let ATTENTION_ICON      : UIImage = UIImage(systemName: "exclamationmark.circle")!
+    public static let INFO_ICON           : UIImage = UIImage(systemName: "info.circle")!
+    public static let ERROR_ICON          : UIImage = UIImage(systemName: "xmark.octagon")!
+    public static let STAR_ICON           : UIImage = (UIImage(named: "star")?.resize(to: CGSize(width: 24, height: 24)))!   
+    
     
     // UserDefaults keys
     public static let CAMERA_UD       : String = "camera"
