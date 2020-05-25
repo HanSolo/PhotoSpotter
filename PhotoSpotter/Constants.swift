@@ -87,7 +87,7 @@ public class Constants {
     
     public static let DEFAULT_COUNTRY     : String     = "DE"
     
-    public static let DEFAULT_POSITION    : MKMapPoint = MKMapPoint(CLLocationCoordinate2D(latitude : 51.911821, longitude: 7.633703))
+    public static let DEFAULT_POSITION    : MKMapPoint = MKMapPoint(CLLocationManager().location?.coordinate ?? CLLocationCoordinate2D(latitude : 51.911821, longitude: 7.633703))
     
     public static let DEFAULT_CAMERA      : Camera = Camera(name        : "DEFAULT DSLR",
                                                             sensorFormat: SensorFormat.FULL_FORMAT.id)
@@ -101,10 +101,10 @@ public class Constants {
     
     public static let DEFAULT_ORIENTATION : Orientation = Orientation.landscape
     
-    public static let DEFAULT_ORIGIN      : MKMapPoint  = MKMapPoint(x: 139861109.1421626, y: 88744796.20247081)
-
     public static let DEFAULT_MAP_SIZE    : MKMapSize   = MKMapSize(width: 97313.02098080516, height: 60438.11837643385)
     
+    public static let DEFAULT_ORIGIN      : MKMapPoint  = MKMapPoint(x: DEFAULT_POSITION.x - DEFAULT_MAP_SIZE.width / 2, y: DEFAULT_POSITION.y - DEFAULT_MAP_SIZE.height / 2)
+            
     public static let DEFAULT_SPOT        : Spot        = Spot(name: "Home", description: "Test", point: DEFAULT_POSITION, country: DEFAULT_COUNTRY)
     
     public static let DEFAULT_VIEW        : View        = View(name       : "View",
