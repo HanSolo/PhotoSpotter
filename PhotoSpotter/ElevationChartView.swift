@@ -16,11 +16,13 @@ public class ElevationChartView: UIView {
     var distance        : CLLocationDistance = 0
     var minElevation    : Double             = 0
     var maxElevation    : Double             = 0
+    var deltaElevation  : Double             = 0
     var elevationDelta  : Double             = 0
     var elevationPoints : [ElevationPoint]   = [] { didSet {
-        self.minElevation = (elevationPoints.min { $0.elevation < $1.elevation })?.elevation ?? 0
-        self.maxElevation = (elevationPoints.max { $0.elevation < $1.elevation })?.elevation ?? 0
+        self.minElevation   = (elevationPoints.min { $0.elevation < $1.elevation })?.elevation ?? 0
+        self.maxElevation   = (elevationPoints.max { $0.elevation < $1.elevation })?.elevation ?? 0
         self.elevationDelta = abs(self.maxElevation - self.minElevation)
+        self.deltaElevation = self.maxElevation - self.minElevation
         }
     }
     
@@ -49,12 +51,20 @@ public class ElevationChartView: UIView {
                               NSAttributedString.Key.foregroundColor: Constants.YELLOW,
                               NSAttributedString.Key.paragraphStyle: paragraph]
         
+        let tickmarkAttributes = [NSAttributedString.Key.font: font,
+                                  NSAttributedString.Key.foregroundColor: UIColor.white,
+                                  NSAttributedString.Key.paragraphStyle: paragraph]
+        
         let minY : Double = Double(frame.size.height) - offsetBottom
         let maxY : Double = Double(frame.size.height) - offsetBottom - (maxElevation - minElevation) * elevationStep
         
         // Min- and MaxElevation
         let minElevationText = NSAttributedString(string: String(format: "%.1fm", minElevation), attributes: textAttributes)
         minElevationText.draw(at: CGPoint(x: 40 - Double(minElevationText.size().width * 0.5), y: minY))
+        
+        let deltaElevationText = NSAttributedString(string: String(format: "%.1fm", deltaElevation), attributes: textAttributes)
+        deltaElevationText.draw(at: CGPoint(x: 45, y: ((minY - maxY) / 2.0) + Double(deltaElevationText.size().height)))
+        
         let maxElevationText = NSAttributedString(string: String(format: "%.1fm", maxElevation), attributes: textAttributes)
         maxElevationText.draw(at: CGPoint(x: 40 - Double(maxElevationText.size().width * 0.5), y: maxY))
       
@@ -80,7 +90,7 @@ public class ElevationChartView: UIView {
             if (toggle) {
                 let elevationText : NSAttributedString = NSAttributedString(string: String(format: "%.1fm", elevationPoint.elevation), attributes: textAttributes)
                 elevationText.draw(at: CGPoint(x: x - Double(elevationText.size().width * 0.5), y: y - 15))
-                let distanceText  : NSAttributedString = NSAttributedString(string: String(format: "%.0fm", dist), attributes: textAttributes)
+                let distanceText  : NSAttributedString = NSAttributedString(string: String(format: "%.0fm", dist), attributes: tickmarkAttributes)
                 distanceText.draw(at: CGPoint(x: x - Double(distanceText.size().width * 0.5), y: Double(frame.size.height) - offsetBottom + 2))
             }
             toggle = !toggle

@@ -367,8 +367,15 @@ struct SunMoon {
         return getMoonEvents(times: times)
     }
     func getMoonEvents(times: Dictionary<String,Date>) -> Dictionary<String,String> {
-        let moonriseString : String = "\(Helper.dateToString(fromDate: times[Constants.EPD_RISE]!, formatString: Constants.DATE_FORMAT))"
-        let moonsetString  : String = "\(Helper.dateToString(fromDate: times[Constants.EPD_SET]!, formatString: Constants.DATE_FORMAT))"
+        var moonriseString : String = "-"
+        if let moonRise = times[Constants.EPD_RISE] {
+            moonriseString = "\(Helper.dateToString(fromDate: moonRise, formatString: Constants.DATE_FORMAT))"
+        }
+        
+        var moonsetString : String = "-"
+        if let moonSet = times[Constants.EPD_SET] {
+            moonsetString = "\(Helper.dateToString(fromDate: moonSet, formatString: Constants.DATE_FORMAT))"
+        }
         
         let eventNames :Dictionary<String,String> = [
             Constants.EPD_MOONRISE : moonriseString,
