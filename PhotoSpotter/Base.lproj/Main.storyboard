@@ -96,7 +96,7 @@
                                                                     <action selector="infoButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="D3p-Af-CWn"/>
                                                                 </connections>
                                                             </button>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="byt-oB-wqj">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="byt-oB-wqj" userLabel="InfoLabel">
                                                                 <rect key="frame" x="0.0" y="26" width="25" height="12"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="textColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -234,7 +234,7 @@
                                                                     <action selector="moonButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AJG-w7-bjK"/>
                                                                 </connections>
                                                             </button>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wmh-18-qUJ">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wmh-18-qUJ" userLabel="MoonLabel">
                                                                 <rect key="frame" x="0.0" y="25.5" width="27" height="12"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="textColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -427,10 +427,10 @@
                                         </connections>
                                     </button>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Es-az-Q0P" userLabel="InfoView" customClass="InfoView" customModule="PhotoSpotter" customModuleProvider="target">
-                                        <rect key="frame" x="362" y="0.0" width="300" height="0.0"/>
+                                        <rect key="frame" x="337" y="0.0" width="350" height="0.0"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="300" id="YTa-ZX-Ped"/>
+                                            <constraint firstAttribute="width" constant="350" id="YTa-ZX-Ped"/>
                                             <constraint firstAttribute="height" id="zmV-a0-XS1"/>
                                         </constraints>
                                     </view>
@@ -648,13 +648,16 @@
                         <outlet property="distanceLabel" destination="g1m-Vc-WVH" id="nQT-DG-QlX"/>
                         <outlet property="distanceToViewLabel" destination="L6F-h6-dXV" id="4t3-kH-7oB"/>
                         <outlet property="dofButton" destination="kFe-Iv-Phh" id="BdE-6l-LkE"/>
+                        <outlet property="dofLabel" destination="x5b-Vi-LPt" id="Bph-y3-71s"/>
                         <outlet property="elevationButton" destination="Ouh-Jp-2aV" id="M24-XH-h8E"/>
                         <outlet property="elevationChartHeight" destination="hrY-dB-gR5" id="ILx-xR-xW0"/>
                         <outlet property="elevationChartView" destination="GtQ-2N-JhX" id="cXg-jp-LxC"/>
+                        <outlet property="elevationLabel" destination="d5H-pO-1aJ" id="VGY-QS-WSr"/>
                         <outlet property="focalLengthLabel" destination="XW8-VG-CXA" id="1o5-8C-ZiB"/>
                         <outlet property="focalLengthSlider" destination="nZ1-QP-Zsj" id="HE1-DM-Nks"/>
                         <outlet property="heightLabel" destination="UVq-V9-mwq" id="Wqo-YG-qzo"/>
                         <outlet property="infoButton" destination="Cpf-Fo-DMK" id="aS2-4X-XzI"/>
+                        <outlet property="infoLabel" destination="byt-oB-wqj" id="bKj-pk-ObF"/>
                         <outlet property="infoView" destination="3Es-az-Q0P" id="FYf-0U-VYa"/>
                         <outlet property="infoViewHeight" destination="zmV-a0-XS1" id="9aR-JY-aEH"/>
                         <outlet property="lensLabel" destination="GnP-8L-rec" id="Bw3-CP-Gkf"/>
@@ -668,6 +671,7 @@
                         <outlet property="minApertureLabel" destination="VpR-RU-dec" id="8t5-12-jFk"/>
                         <outlet property="minFocalLengthLabel" destination="94S-EW-znH" id="eTv-iH-eIZ"/>
                         <outlet property="moonButton" destination="9KS-Fw-qnA" id="M5G-eZ-uik"/>
+                        <outlet property="moonLabel" destination="wmh-18-qUJ" id="xbU-KD-xlG"/>
                         <outlet property="navBar" destination="YLE-9w-5zA" id="vx4-m4-4LK"/>
                         <outlet property="navBarItem" destination="MAW-bR-kSY" id="PtB-Ao-ry1"/>
                         <outlet property="orientationButton" destination="oIT-Ve-K0R" id="jMp-v7-FTy"/>
@@ -679,9 +683,12 @@
                         <outlet property="routingButton" destination="f21-dR-J3l" id="o0a-GA-sKP"/>
                         <outlet property="searchBar" destination="gGA-ad-Ved" id="y2j-3L-0GM"/>
                         <outlet property="showSpotsButton" destination="gyl-Qk-HLX" id="cNB-oK-enh"/>
+                        <outlet property="showSpotsLabel" destination="OK2-n2-Pwl" id="hDc-8Q-M7B"/>
                         <outlet property="showViewsButton" destination="aPa-8a-0ta" id="0jF-Lq-CtX"/>
+                        <outlet property="showViewsLabel" destination="cQl-v6-3MC" id="K76-oK-6kF"/>
                         <outlet property="spotsButton" destination="mh3-ph-L6a" id="HgY-nM-VeJ"/>
                         <outlet property="sunButton" destination="I8n-ya-JHH" id="6rF-Lh-ncv"/>
+                        <outlet property="sunLabel" destination="BFS-UG-bTb" id="5BF-YM-Lrs"/>
                         <outlet property="sunMoonDatePicker" destination="myE-BO-9Y4" id="OOo-18-H5e"/>
                         <outlet property="timeToViewLabel" destination="zvS-hH-GuU" id="b0w-bT-Kzh"/>
                         <outlet property="viewButton" destination="auU-zc-U9g" id="Ox5-pT-8xJ"/>
@@ -2103,9 +2110,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="pUo-dC-VJ5"/>
-        <segue reference="xGg-4x-7zw"/>
-        <segue reference="Gpb-NS-Hlh"/>
+        <segue reference="LcV-PU-V2T"/>
+        <segue reference="Tqb-kX-mOs"/>
+        <segue reference="q1Q-0p-CtR"/>
         <segue reference="6Gl-Tl-cdW"/>
         <segue reference="8Mg-Zc-6jN"/>
     </inferredMetricsTieBreakers>

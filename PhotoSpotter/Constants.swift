@@ -65,10 +65,10 @@ public class Constants {
     public static let RED                 : UIColor = UIColor(red: 1.00, green: 0.42, blue: 0.37, alpha: 1.00)
     public static let BLUE                : UIColor = UIColor(red: 0.30, green: 0.78, blue: 1.00, alpha: 1.00)
     
-    public static let BLUE_STROKE         : UIColor = UIColor.init(red: 0.0,        green: 0.56078431, blue:  0.8627451, alpha: 1.0)
-    public static let DOF_FILL            : UIColor = UIColor.init(red: 0.45490196, green: 0.80784314, blue: 1.0,        alpha: 0.1)
-    public static let DOF_STROKE          : UIColor = UIColor.init(red: 0.45490196, green: 0.80784314, blue: 1.0,        alpha: 1.0)
-    public static let MAX_FOV_FILL        : UIColor = UIColor.init(red: 0.0,        green: 0.56078431, blue: 0.8627451,  alpha: 0.1)
+    public static let BLUE_STROKE         : UIColor = UIColor.init(red: 0.0, green: 0.56078431, blue: 0.8627451, alpha: 1.0)
+    public static let DOF_FILL            : UIColor = UIColor.init(red: 1.0, green: 0.77,       blue: 0.32,      alpha: 0.3)
+    public static let DOF_STROKE          : UIColor = UIColor.init(red: 1.0, green: 0.77,       blue: 0.32,      alpha: 1.0)
+    public static let MAX_FOV_FILL        : UIColor = UIColor.init(red: 0.0, green: 0.56078431, blue: 0.8627451, alpha: 0.1)
     public static let MAX_FOV_STROKE      : UIColor = BLUE_STROKE
     public static let MIN_FOV_FILL        : UIColor = UIColor.clear
     public static let MIN_FOV_STROKE      : UIColor = BLUE_STROKE

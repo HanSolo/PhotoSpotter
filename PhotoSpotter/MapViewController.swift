@@ -37,6 +37,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var minApertureLabel    : UILabel!
     @IBOutlet weak var maxApertureLabel    : UILabel!
     @IBOutlet weak var dofButton           : UIButton!
+    @IBOutlet weak var dofLabel            : UILabel!
     @IBOutlet weak var placeButton         : UIButton!
     @IBOutlet weak var orientationButton   : UIButton!
     @IBOutlet weak var orientationLabel    : UILabel!
@@ -45,16 +46,22 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var widthLabel          : UILabel!
     @IBOutlet weak var heightLabel         : UILabel!
     @IBOutlet weak var moonButton          : UIButton!
+    @IBOutlet weak var moonLabel           : UILabel!
     @IBOutlet weak var sunButton           : UIButton!
+    @IBOutlet weak var sunLabel            : UILabel!
     @IBOutlet weak var showSpotsButton     : UIButton!
+    @IBOutlet weak var showSpotsLabel      : UILabel!
     @IBOutlet weak var showViewsButton     : UIButton!
+    @IBOutlet weak var showViewsLabel      : UILabel!
     @IBOutlet weak var routingButton       : UIButton!
     @IBOutlet weak var cameraLabel         : UILabel!
     @IBOutlet weak var lensLabel           : UILabel!
     @IBOutlet weak var viewLabel           : UILabel!
     @IBOutlet weak var viewButton          : UIButton!
     @IBOutlet weak var elevationButton     : UIButton!
+    @IBOutlet weak var elevationLabel      : UILabel!
     @IBOutlet weak var infoButton          : UIButton!
+    @IBOutlet weak var infoLabel           : UILabel!
     @IBOutlet weak var locateMeButton      : UIButton!
     @IBOutlet weak var sunMoonDatePicker   : UIDatePicker!
     
@@ -345,9 +352,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if self.dofVisible {
             self.dofVisible = false
             dofButton.setImage(UIImage(systemName: "arrowtriangle.down"), for: UIControl.State.normal)
+            dofButton.tintColor = UIColor.systemTeal
+            dofLabel.textColor  = UIColor.systemTeal
         } else {
             self.dofVisible = true
             dofButton.setImage(UIImage(systemName: "arrowtriangle.down.fill"), for: UIControl.State.normal)
+            dofButton.tintColor = Constants.YELLOW
+            dofLabel.textColor  = Constants.YELLOW
         }
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
@@ -384,11 +395,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             self.moonVisible = false
             self.mapView.removeAnnotation(moon)
             moonButton.setImage(UIImage(systemName: "moon"), for: UIControl.State.normal)
+            moonButton.tintColor = UIColor.systemTeal
+            moonLabel.textColor  = UIColor.systemTeal
         } else {
             self.sunMoonDatePicker.isHidden = false
             self.moonVisible = true
             self.mapView.addAnnotation(moon)
             moonButton.setImage(UIImage(systemName: "moon.fill"), for: UIControl.State.normal)
+            moonButton.tintColor = Constants.YELLOW
+            moonLabel.textColor  = Constants.YELLOW
         }
         updateSunMoonOverlay(date: sunMoonDatePicker.date)
     }
@@ -401,11 +416,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             self.sunVisible = false
             self.mapView.removeAnnotation(sun)
             sunButton.setImage(UIImage(systemName: "sun.max"), for: UIControl.State.normal)
+            sunButton.tintColor = UIColor.systemTeal
+            sunLabel.textColor  = UIColor.systemTeal
         } else {
             self.sunMoonDatePicker.isHidden = false
             self.sunVisible = true
             self.mapView.addAnnotation(sun)
             sunButton.setImage(UIImage(systemName: "sun.max.fill"), for: UIControl.State.normal)
+            sunButton.tintColor = Constants.YELLOW
+            sunLabel.textColor  = Constants.YELLOW
         }
         updateSunMoonOverlay(date: sunMoonDatePicker.date)
     }
@@ -414,9 +433,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if self.spotsVisible {
             self.spotsVisible = false
             showSpotsButton.setImage(UIImage(systemName: "star.circle"), for: UIControl.State.normal)
+            showSpotsButton.tintColor = UIColor.systemTeal
+            showSpotsLabel.textColor  = UIColor.systemTeal
         } else {
             self.spotsVisible = true
             showSpotsButton.setImage(UIImage(systemName: "star.circle.fill"), for: UIControl.State.normal)
+            showSpotsButton.tintColor = Constants.YELLOW
+            showSpotsLabel.textColor  = Constants.YELLOW
         }
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
@@ -425,9 +448,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if self.viewsVisible {
             self.viewsVisible = false
             showViewsButton.setImage(UIImage(systemName: "mappin.circle"), for: UIControl.State.normal)
+            showViewsButton.tintColor = UIColor.systemTeal
+            showViewsLabel.textColor  = UIColor.systemTeal
         } else {
             self.viewsVisible = true
             showViewsButton.setImage(UIImage(systemName: "mappin.circle.fill"), for: UIControl.State.normal)
+            showViewsButton.tintColor = Constants.YELLOW
+            showViewsLabel.textColor  = Constants.YELLOW
         }
         updateOverlay(cameraPoint: self.cameraPin!.point(), motifPoint: self.motifPin!.point())
     }
@@ -450,9 +477,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if self.infoVisible {
             self.infoVisible = false
             self.infoButton.setImage(UIImage(systemName: "info.circle"), for: UIControl.State.normal)
+            infoButton.tintColor = UIColor.systemTeal
+            infoLabel.textColor  = UIColor.systemTeal
         } else {
             self.infoVisible = true
             self.infoButton.setImage(UIImage(systemName: "info.circle.fill"), for: UIControl.State.normal)
+            infoButton.tintColor = Constants.YELLOW
+            infoLabel.textColor  = Constants.YELLOW
         }
         showInfoView(show: self.infoVisible)
     }
@@ -466,10 +497,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             if self.elevationChartVisible {
                 self.elevationChartVisible = false
                 self.elevationButton.setImage(UIImage(systemName: "arrow.up.and.down.circle"), for: UIControl.State.normal)
+                elevationButton.tintColor = UIColor.systemTeal
+                elevationLabel.textColor  = UIColor.systemTeal
                 showElevationChart(show: false)
             } else {
                 self.elevationChartVisible = true
                 self.elevationButton.setImage(UIImage(systemName: "arrow.up.and.down.circle.fill"), for: UIControl.State.normal)
+                elevationButton.tintColor = Constants.YELLOW
+                elevationLabel.textColor  = Constants.YELLOW
                 getElevation(camera: cameraPin!, motif: motifPin!)
             }
         }
